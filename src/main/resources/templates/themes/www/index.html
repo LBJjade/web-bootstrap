@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
+
+    <title>index</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
+
+    <style type="text/css">
+        *{
+            font-family: 微软雅黑;
+        }
+        #div_total{
+            height: 400px;
+            margin-top: 10px;
+            border: 1px #e9e9e9 solid;
+        }
+
+        #ul_total{
+            list-style: none;
+        }
+
+        .left_item{
+            width: 900px;
+        }
+
+        .div_project{
+            height: 160px;
+            margin-top: 5px;
+        }
+
+        .hr_10{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #div_bottom{
+            width: 100%;
+            height: 50px;
+            background-color: #00a0e9;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+        }
+
+        .right_panel{
+            margin-top: 10px;
+            border: 1px #e9e9e9 solid;
+        }
+
+        #div_recent{
+            height: 400px;
+        }
+
+        #div_recent img{
+            height: 40px;
+            width: 40px;
+            float: left;
+        }
+
+        #div_project{
+            height: 300px;
+        }
+
+        #div_project img{
+            height: 40px;
+            width: 40px;
+            float: left;
+        }
+
+        #div_question{
+            height: 200px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div class="container-fluid div-shadown-3-5" id="div_header">
+    <div class="center-block" style="width: 1200px;">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="ibox float-e-margins">
+                    我们将认真对待每一笔捐赠，将您的爱心传递到每一位需要帮助的人手中。
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins"  id="div_header_link">
+                    <a href="#"><span>关注微博</span></a>
+                    <span>&nbsp; | &nbsp;</span>
+                    <a href="#"><span>关于我们</span></a>
+                    <span> &nbsp;| &nbsp;</span>
+                    <a href="#"><span>联系我们</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="center-block" style="width: 1200px; height: 150px;">
+    <div class="row">
+        <div class="col-sm-6">
+            <img id="img_logo" th:src="@{/image/logo.png}"/>
+        </div>
+        <div class="col-sm-6" style="height: 80px">
+            <ul id="ul_login">
+                <li>您好,欢迎您!</li>
+                <li></li>
+                <li><a href="member/login.html">登录</a></li>
+                <li>|</li>
+                <li><a href="member/register_1.html">注册</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="div_main_menu">
+                <ul id="ul_menu">
+                    <li class="li_meun"><a href="index.html">首页</a></li>
+                    <li class="li_split"></li>
+                    <li class="li_meun"><a href="about_us.html">关于我们</a></li>
+                    <li class="li_split"></li>
+                    <li class="li_meun"><a href="publicity.html">信息公开</a></li>
+                    <li class="li_split"></li>
+                    <li class="li_meun"><a href="project_list.html">慈善项目</a></li>
+                    <li class="li_split"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-9"  style="height: 400px">
+            <div id="div_banner">
+                <div id="div_prev">
+                    <img th:src="@{/plugin/banner/image/l.png}"/>
+                </div>
+                <div id="div_next">
+                    <img th:src="@{/plugin/banner/image/r.png}"/>
+                </div>
+                <ul id="ul_img">
+                    <li style="display: block"><a href="project.html" target="_blank"><img th:src="@{/image/banner_1.png}" alt="关注空气污染,还孩子们一片蓝天"/></a></li>
+                    <li><a href="project.html" target="_blank"><img th:src="@{/image/banner_4.png}" alt="军人贫困学子助学基金项目"/></a></li>
+                    <li><a href="project.html" target="_blank"><img th:src="@{/image/banner_3.png}" alt="汇聚爱心、助学育才，支持贫困初、高中学生顺利完成学业"/></a></li>
+                </ul>
+                <div id="div_banner_title">
+                    <p id="p_banner"></p>
+                    <ul id="ul_index">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3" style="padding-left: 5px; height: 400px">
+            <div id="div_total">
+                <div class="div_title">
+                    <h2 class="h2_title">爱心动态</h2>
+                </div>
+                <ul id="ul_total">
+                    <span></span>
+                    <li>
+                        <p>爱心总人数</p>
+                        <input type="number" value="21231" />人次
+                    </li>
+                    <li>
+                        <p>善款总额</p>
+                        <input type="number" value="8736498.23" />元
+                    </li>
+                    <li>
+                        <p>受益人数</p>
+                        <input type="number" value="8736498.23" />人次
+                    </li>
+                    <li align="center" style="position: relative;top: 120px;">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#div_qr_donate"  data-dismiss="modal">
+                            我要捐赠
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-9">
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{image/list_1.png}" style="float: left" />
+                <a>中医名家卢汝昌义诊基金项目</a>
+                <a> 发布时间:2017-07-28 09:58</a>
+                <p><span>摘要:</span> 项目背景：权威调查报告显示，在中国癌症造成的健康负担逐年增加，每年超过160万人诊断为癌症，120万人因癌症而死亡。与大多数国家一样，乳腺癌也成为了中国女性最常见癌症；每年中国乳腺癌新发数量和死亡数量分</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{/image/list_2.png}" style="float: left" />
+                <a>军人贫困学子助学基金项目</a>
+                <a> 发布时间:2017-07-15 12:12</a>
+                <p><span>摘要:</span> 项目背景：项目简介：教育公平是社会公平的基石，是困难群体通过努力获得上升空间的一条有效通道。世纪爱心慈善基金会的成立，将充分发挥好平台的作用，以“汇聚爱心、助学育才”为宗旨，支持贫困初、高中学生顺利完成学业</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{/image/list_4.png}" style="float: left" />
+                <a>孤寡老人助困基金项目</a>
+                <a> 发布时间:2017-07-08 14:12</a>
+                <p><span>摘要:</span> 项目背景：孤寡老人是指无配偶，无子女，没人照顾的、年纪超过60周岁、且丧失劳动能力的老年人。随着老龄化社会的到来，城市孤寡老人问题也日益突出，已开始成为一个社会问题，应得到全社会的积极关注。</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{/image/list_1.png}" style="float: left" />
+                <a>中医名家卢汝昌义诊基金项目</a>
+                <a> 发布时间:2017-07-28 09:58</a>
+                <p><span>摘要:</span> 项目背景：权威调查报告显示，在中国癌症造成的健康负担逐年增加，每年超过160万人诊断为癌症，120万人因癌症而死亡。与大多数国家一样，乳腺癌也成为了中国女性最常见癌症；每年中国乳腺癌新发数量和死亡数量分</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{/image/list_2.png}" style="float: left" />
+                <a>军人贫困学子助学基金项目</a>
+                <a> 发布时间:2017-07-15 12:12</a>
+                <p><span>摘要:</span> 项目背景：项目简介：教育公平是社会公平的基石，是困难群体通过努力获得上升空间的一条有效通道。世纪爱心慈善基金会的成立，将充分发挥好平台的作用，以“汇聚爱心、助学育才”为宗旨，支持贫困初、高中学生顺利完成学业</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{/image/list_4.png}" style="float: left" />
+                <a>孤寡老人助困基金项目</a>
+                <a> 发布时间:2017-07-08 14:12</a>
+                <p><span>摘要:</span> 项目背景：孤寡老人是指无配偶，无子女，没人照顾的、年纪超过60周岁、且丧失劳动能力的老年人。随着老龄化社会的到来，城市孤寡老人问题也日益突出，已开始成为一个社会问题，应得到全社会的积极关注。</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{/image/list_1.png}" style="float: left" />
+                <a>中医名家卢汝昌义诊基金项目</a>
+                <a> 发布时间:2017-07-28 09:58</a>
+                <p><span>摘要:</span> 项目背景：权威调查报告显示，在中国癌症造成的健康负担逐年增加，每年超过160万人诊断为癌症，120万人因癌症而死亡。与大多数国家一样，乳腺癌也成为了中国女性最常见癌症；每年中国乳腺癌新发数量和死亡数量分</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item div_project">
+                <img th:src="@{/image/list_2.png}" style="float: left" />
+                <a>军人贫困学子助学基金项目</a>
+                <a> 发布时间:2017-07-15 12:12</a>
+                <p><span>摘要:</span> 项目背景：项目简介：教育公平是社会公平的基石，是困难群体通过努力获得上升空间的一条有效通道。世纪爱心慈善基金会的成立，将充分发挥好平台的作用，以“汇聚爱心、助学育才”为宗旨，支持贫困初、高中学生顺利完成学业</p>
+                <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+            </div>
+            <hr class="left_item hr_10"/>
+            <div class="left_item" style="text-align: center">
+                <ul class="pagination">
+                    <li><a href="#">上一页</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li class="disabled"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">下一页</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-3" style="padding-left: 5px; height: 400px;margin-top: 10px">
+            <div class="right_panel" id="div_recent">
+                <div class="div_title">
+                    <h2 class="h2_title">爱心动态</h2>
+                    <ul>
+                        <li><img th:src="@{/image/avator_1.jpg}" /></li>
+                        <li>广州市网友</li>
+                        <li>捐赠 孤寡老人助困基金项目 100元</li>
+                    </ul>
+                    <ul>
+                        <li><img th:src="@{/image/avator_2.jpg}" /></li>
+                        <li>游**天</li>
+                        <li>捐赠 军人贫困学子助学基金项目 800元</li>
+                    </ul>
+                    <ul>
+                        <li><img th:src="@{/image/avator_3.jpg}" /></li>
+                        <li>深圳市网友</li>
+                        <li>捐赠 乡村支教美丽中国项目 200元</li>
+                    </ul>
+                    <ul>
+                        <li><img th:src="@{/image/avator_4.jpg}" /></li>
+                        <li>珠海市网友</li>
+                        <li>捐赠 爱心包裹一对一圆梦项目 500元</li>
+                    </ul>
+                    <ul>
+                        <li><img th:src="@{/image/avator_5.jpg}" /></li>
+                        <li>唯***婉</li>
+                        <li>捐赠 贫困孤儿助养基金项目 600元</li>
+                    </ul>
+                    <ul>
+                        <li><img th:src="@{/image/avator_1.jpg}" /></li>
+                        <li>佛山市网友</li>
+                        <li>捐赠  深山独居老人关怀项目 50元</li>
+                    </ul>
+                    <ul>
+                        <li><img th:src="@{/image/avator_2.jpg}" /></li>
+                        <li>明***空</li>
+                        <li>捐赠 抗战老兵关怀项目 150元</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="right_panel" id="div_project">
+                <div class="div_title">
+                    <h2 class="h2_title">项目推荐</h2>
+                    <ul>
+                        <li><img src="/image/list_4.png" /></li>
+                        <li><a href="project.html" target="_blank">孤寡老人助困基金项目</a></li>
+                    </ul><br/>
+                    <ul>
+                        <li><img src="/image/list_2.png" /></li>
+                        <li><a href="project.html" target="_blank">军人贫困学子助学基金项目</a></li>
+                    </ul><br/>
+                    <ul>
+                        <li><img th:src="@{/image/list_1.png}" /></li>
+                        <li><a href="project.html" target="_blank">中医名家卢汝昌义诊基金项目</a></li>
+                    </ul><br/>
+                    <ul>
+                        <li><img th:src="@{/image/list3.jpg}" /></li>
+                        <li><a href="project.html" target="_blank">先心儿童的‘心’声项目</a></li>
+                    </ul><br/>
+                    <ul>
+
+                        <li><img th:src="@{/image/list5.jpg}" /></li>
+                        <li><a href="project.html" target="_blank">困境儿童关怀项目</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="right_panel" id="div_question">
+                <div class="div_title">
+                    <h2 class="h2_title">常见问题</h2>
+                    <p>1.捐赠流程是什么</p>
+                    <p>2.如何查询自己捐赠的善款使用情况</p>
+                    <p>3.是否支持匿名捐赠</p>
+                    <p>4.个人可以发起捐赠项目吗</p>
+                    <p>5.世纪爱心慈善基金会是一个怎样的组织</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12" style="padding: 0px">
+            <div id="div_bottom">
+                Copyright  ©2017  广东省世纪爱心慈善基金会  All Rights reserved.  粤ICP备14004079号-3  Technical support：300.CN
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--直接捐赠弹出层-->
+<div class="modal fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true">
+    <div class="modal-dialog" style="margin-top:100px">
+        <div class="modal-content" style="width: 450px">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h6 class="modal-title" style="width: 100%;text-align: center;">
+                    扫描二维码,向基金会捐赠
+                </h6>
+            </div>
+            <div class="modal-body" style="text-align: center">
+                <img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>
+            <div class="modal-footer" style="text-align: center">
+                支持微信,支付宝扫码捐赠
+            </div>
+        </div>
+    </div>
+</div>
+<!--全局JS-->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugin/banner/js.js}"></script>
+</body>
+</html>
