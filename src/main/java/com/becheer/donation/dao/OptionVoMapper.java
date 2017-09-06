@@ -1,7 +1,7 @@
 package com.becheer.donation.dao;
 
-import com.becheer.donation.modal.Vo.OptionVo;
-import com.becheer.donation.modal.Vo.OptionVoExample;
+import com.becheer.donation.model.OptionVo;
+import com.becheer.donation.model.OptionVoExample;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.becheer.donation.service.impl;
 
-import com.becheer.donation.modal.Vo.RelationshipVoKey;
-import com.becheer.donation.modal.Vo.RelationshipVoExample;
+import com.becheer.donation.model.RelationshipVoKey;
+import com.becheer.donation.model.RelationshipVoExample;
 import com.becheer.donation.service.IRelationshipService;
 import com.becheer.donation.dao.RelationshipVoMapper;
 import org.slf4j.Logger;

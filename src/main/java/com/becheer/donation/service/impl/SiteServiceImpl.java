@@ -1,14 +1,13 @@
 package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.MetaVoMapper;
-import com.becheer.donation.modal.Vo.*;
+import com.becheer.donation.model.*;
 import com.becheer.donation.utils.ZipUtils;
 import com.github.pagehelper.PageHelper;
 import com.becheer.donation.dao.AttachVoMapper;
 import com.becheer.donation.dto.MetaDto;
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.modal.Bo.ArchiveBo;
-import com.becheer.donation.modal.Vo.*;
+import com.becheer.donation.model.extension.ArchiveBo;
 import com.becheer.donation.service.ISiteService;
 import com.becheer.donation.utils.DateKit;
 import com.becheer.donation.utils.TaleUtils;
@@ -18,8 +17,8 @@ import com.becheer.donation.controller.admin.AttachController;
 import com.becheer.donation.dao.CommentVoMapper;
 import com.becheer.donation.dao.ContentVoMapper;
 import com.becheer.donation.dto.Types;
-import com.becheer.donation.modal.Bo.BackResponseBo;
-import com.becheer.donation.modal.Bo.StatisticsBo;
+import com.becheer.donation.model.extension.BackResponseBo;
+import com.becheer.donation.model.extension.StatisticsBo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

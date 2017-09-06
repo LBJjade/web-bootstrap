@@ -176,7 +176,7 @@
                         <input type="number" value="8736498.23" />人次
                     </li>
                     <li align="center" style="position: relative;top: 120px;">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#div_qr_donate"  data-dismiss="modal">
+                        <button type="button" class="btn btn-primary" data-toggle="model" data-target="#div_qr_donate"  data-dismiss="model">
                             我要捐赠
                         </button>
                     </li>
@@ -340,6 +340,7 @@
                     <p>3.是否支持匿名捐赠</p>
                     <p>4.个人可以发起捐赠项目吗</p>
                     <p>5.世纪爱心慈善基金会是一个怎样的组织</p>
+                    <p th:text="${option.description}" />
                 </div>
             </div>
 
@@ -358,20 +359,20 @@
 </div>
 
 <!--直接捐赠弹出层-->
-<div class="modal fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true">
-    <div class="modal-dialog" style="margin-top:100px">
-        <div class="modal-content" style="width: 450px">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+<div class="model fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: 450px">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
-                <h6 class="modal-title" style="width: 100%;text-align: center;">
+                <h6 class="model-title" style="width: 100%;text-align: center;">
                     扫描二维码,向基金会捐赠
                 </h6>
             </div>
-            <div class="modal-body" style="text-align: center">
+            <div class="model-body" style="text-align: center">
                 <img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>
-            <div class="modal-footer" style="text-align: center">
+            <div class="model-footer" style="text-align: center">
                 支持微信,支付宝扫码捐赠
             </div>
         </div>
@@ -381,5 +382,30 @@
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/banner/js.js}"></script>
+<!--页面JS-->
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var pageSize=20;
+    var pageNum=1;
+    $(document).ready(function () {
+        f_GetArticle();
+    });
+
+    function f_GetArticle() {
+        $.ajax({
+            url:'/project/'+pageNum+"/"+pageSize,
+            type:'get',
+            dataType:'json',
+            success:function (result) {
+                alert(JSON.stringify(result));
+            }
+        });
+    }
+
+    function f_GetModuleInfo(mid){
+
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

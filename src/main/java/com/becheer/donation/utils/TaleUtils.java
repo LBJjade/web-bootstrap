@@ -24,7 +24,7 @@ import javax.sql.DataSource;
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.controller.admin.AttachController;
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.modal.Vo.UserVo;
+import com.becheer.donation.model.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
@@ -78,7 +78,7 @@ public class TaleUtils {
      * @param fileName 获取jar外部的文件
      * @return 返回属性
      */
-    private static Properties getPropFromFile(String fileName) {
+    public static Properties getPropFromFile(String fileName) {
         Properties properties = new Properties();
         try {
 //            默认是classPath路径

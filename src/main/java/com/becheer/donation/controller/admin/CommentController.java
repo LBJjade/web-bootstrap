@@ -2,13 +2,13 @@ package com.becheer.donation.controller.admin;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.modal.Bo.RestResponseBo;
-import com.becheer.donation.modal.Vo.CommentVo;
-import com.becheer.donation.modal.Vo.UserVo;
+import com.becheer.donation.model.extension.RestResponseBo;
+import com.becheer.donation.model.CommentVo;
+import com.becheer.donation.model.UserVo;
 import com.becheer.donation.service.ICommentService;
 import com.github.pagehelper.PageInfo;
 import com.vdurmont.emoji.EmojiParser;
-import com.becheer.donation.modal.Vo.CommentVoExample;
+import com.becheer.donation.model.CommentVoExample;
 import com.becheer.donation.utils.TaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

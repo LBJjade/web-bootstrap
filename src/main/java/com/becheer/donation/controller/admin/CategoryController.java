@@ -5,7 +5,7 @@ import com.becheer.donation.exception.TipException;
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.dto.MetaDto;
 import com.becheer.donation.dto.Types;
-import com.becheer.donation.modal.Bo.RestResponseBo;
+import com.becheer.donation.model.extension.RestResponseBo;
 import com.becheer.donation.service.IMetaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

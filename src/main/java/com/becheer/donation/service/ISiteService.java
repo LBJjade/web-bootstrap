@@ -1,11 +1,11 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.modal.Bo.ArchiveBo;
-import com.becheer.donation.modal.Bo.BackResponseBo;
+import com.becheer.donation.model.extension.ArchiveBo;
+import com.becheer.donation.model.extension.BackResponseBo;
 import com.becheer.donation.dto.MetaDto;
-import com.becheer.donation.modal.Bo.StatisticsBo;
-import com.becheer.donation.modal.Vo.CommentVo;
-import com.becheer.donation.modal.Vo.ContentVo;
+import com.becheer.donation.model.extension.StatisticsBo;
+import com.becheer.donation.model.CommentVo;
+import com.becheer.donation.model.ContentVo;
 
 import java.util.List;
 

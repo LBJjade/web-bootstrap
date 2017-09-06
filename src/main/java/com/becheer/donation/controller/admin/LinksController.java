@@ -2,8 +2,8 @@ package com.becheer.donation.controller.admin;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.modal.Bo.RestResponseBo;
-import com.becheer.donation.modal.Vo.MetaVo;
+import com.becheer.donation.model.extension.RestResponseBo;
+import com.becheer.donation.model.MetaVo;
 import com.becheer.donation.service.IMetaService;
 import com.becheer.donation.dto.Types;
 import org.slf4j.Logger;

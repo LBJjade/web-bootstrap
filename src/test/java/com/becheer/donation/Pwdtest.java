@@ -1,6 +1,6 @@
 package com.becheer.donation;
 
-import com.becheer.donation.modal.Vo.UserVo;
+import com.becheer.donation.model.UserVo;
 import com.becheer.donation.utils.TaleUtils;
 
 /**

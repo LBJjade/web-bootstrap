@@ -1,8 +1,8 @@
 package com.becheer.donation.dao;
 
-import com.becheer.donation.modal.Bo.ArchiveBo;
-import com.becheer.donation.modal.Vo.ContentVo;
-import com.becheer.donation.modal.Vo.ContentVoExample;
+import com.becheer.donation.model.extension.ArchiveBo;
+import com.becheer.donation.model.ContentVo;
+import com.becheer.donation.model.ContentVoExample;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

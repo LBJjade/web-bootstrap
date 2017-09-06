@@ -1,6 +1,6 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.modal.Vo.MetaVo;
+import com.becheer.donation.model.MetaVo;
 import com.becheer.donation.dto.MetaDto;
 
 import java.util.List;

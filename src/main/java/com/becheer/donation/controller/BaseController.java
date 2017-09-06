@@ -1,6 +1,6 @@
 package com.becheer.donation.controller;
 
-import com.becheer.donation.modal.Vo.UserVo;
+import com.becheer.donation.model.UserVo;
 import com.becheer.donation.utils.TaleUtils;
 import com.becheer.donation.utils.MapCache;
 
@@ -33,6 +33,8 @@ public abstract class BaseController {
         request.setAttribute("keywords", keywords);
         return this;
     }
+
+
 
     /**
      * 获取请求绑定的登录对象

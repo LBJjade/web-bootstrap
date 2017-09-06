@@ -1,6 +1,6 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.modal.Vo.UserVo;
+import com.becheer.donation.model.UserVo;
 
 /**
  * Created by BlueT on 2017/3/3.

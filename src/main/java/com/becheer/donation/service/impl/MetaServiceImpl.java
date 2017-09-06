@@ -1,16 +1,16 @@
 package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.MetaVoMapper;
-import com.becheer.donation.modal.Vo.RelationshipVoKey;
+import com.becheer.donation.model.RelationshipVoKey;
 import com.becheer.donation.service.IRelationshipService;
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.dto.MetaDto;
 import com.becheer.donation.dto.Types;
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.modal.Vo.MetaVo;
+import com.becheer.donation.model.MetaVo;
 import com.becheer.donation.service.IMetaService;
-import com.becheer.donation.modal.Vo.ContentVo;
-import com.becheer.donation.modal.Vo.MetaVoExample;
+import com.becheer.donation.model.ContentVo;
+import com.becheer.donation.model.MetaVoExample;
 import com.becheer.donation.service.IContentService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

@@ -7,8 +7,8 @@ import com.vdurmont.emoji.EmojiParser;
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.dto.MetaDto;
 import com.becheer.donation.dto.Types;
-import com.becheer.donation.modal.Vo.CommentVo;
-import com.becheer.donation.modal.Vo.ContentVo;
+import com.becheer.donation.model.CommentVo;
+import com.becheer.donation.model.ContentVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,9 @@
 package com.becheer.donation.controller;
 
-import com.becheer.donation.modal.Bo.CommentBo;
-import com.becheer.donation.modal.Vo.MetaVo;
+import com.becheer.donation.model.extension.CommentBo;
+import com.becheer.donation.model.MetaVo;
+import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.service.*;
 import com.becheer.donation.utils.IPKit;
 import com.github.pagehelper.PageInfo;
 import com.becheer.donation.constant.WebConst;
@@ -9,17 +11,13 @@ import com.becheer.donation.dto.ErrorCode;
 import com.becheer.donation.dto.MetaDto;
 import com.becheer.donation.dto.Types;
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.modal.Bo.ArchiveBo;
-import com.becheer.donation.modal.Bo.RestResponseBo;
-import com.becheer.donation.modal.Vo.CommentVo;
-import com.becheer.donation.service.IMetaService;
-import com.becheer.donation.service.ISiteService;
+import com.becheer.donation.model.extension.ArchiveBo;
+import com.becheer.donation.model.extension.RestResponseBo;
+import com.becheer.donation.model.CommentVo;
 import com.becheer.donation.utils.PatternKit;
 import com.becheer.donation.utils.TaleUtils;
 import com.vdurmont.emoji.EmojiParser;
-import com.becheer.donation.modal.Vo.ContentVo;
-import com.becheer.donation.service.ICommentService;
-import com.becheer.donation.service.IContentService;
+import com.becheer.donation.model.ContentVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,8 +34,7 @@ import java.net.URLEncoder;
 import java.util.List;
 
 /**
- * 首页
- * Created by Administrator on 2017/3/8 008.
+ * 首页控制器
  */
 @Controller
 public class IndexController extends BaseController {
@@ -54,6 +51,9 @@ public class IndexController extends BaseController {
 
     @Resource
     private ISiteService siteService;
+
+    @Resource
+    private IProjectService projectService;
 
     /**
      * 首页
@@ -102,9 +102,25 @@ public class IndexController extends BaseController {
         completeArticle(request, contents);
         updateArticleHit(contents.getCid(), contents.getHits());
         return this.render("post");
-
-
     }
+
+
+    /**
+     * 获取首页项目列表
+     */
+    @GetMapping(value = "project/{pageNum}/{pageSize}")
+    @ResponseBody
+    public ResponseDto GetProject(HttpServletRequest request,@PathVariable int pageNum, @PathVariable int pageSize) {
+        if (pageNum<=0){
+            pageNum=1;
+        }
+        if (pageSize>50||pageSize<=0){
+            pageSize=10;
+        }
+        return ResponseDto.GetResponse(200,"success",projectService.getProjectList(pageNum,pageSize));
+    }
+
+
 
     /**
      * 文章页(预览)
@@ -124,8 +140,6 @@ public class IndexController extends BaseController {
         completeArticle(request, contents);
         updateArticleHit(contents.getCid(), contents.getHits());
         return this.render("post");
-
-
     }
 
     /**
@@ -416,5 +430,4 @@ public class IndexController extends BaseController {
         cookie.setSecure(false);
         response.addCookie(cookie);
     }
-
 }

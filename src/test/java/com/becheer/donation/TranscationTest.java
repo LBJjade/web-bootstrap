@@ -1,7 +1,7 @@
 package com.becheer.donation;
 
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.modal.Vo.UserVo;
+import com.becheer.donation.model.UserVo;
 import com.becheer.donation.service.IOptionService;
 import com.becheer.donation.service.IUserService;
 import org.junit.Ignore;

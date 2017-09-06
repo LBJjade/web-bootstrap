@@ -1,7 +1,7 @@
 package com.becheer.donation.service;
 
 import com.github.pagehelper.PageInfo;
-import com.becheer.donation.modal.Vo.AttachVo;
+import com.becheer.donation.model.AttachVo;
 
 /**
  * Created by wangq on 2017/3/20.

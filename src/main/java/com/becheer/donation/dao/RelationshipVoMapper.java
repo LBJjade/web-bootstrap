@@ -1,7 +1,7 @@
 package com.becheer.donation.dao;
 
-import com.becheer.donation.modal.Vo.RelationshipVoKey;
-import com.becheer.donation.modal.Vo.RelationshipVoExample;
+import com.becheer.donation.model.RelationshipVoKey;
+import com.becheer.donation.model.RelationshipVoExample;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

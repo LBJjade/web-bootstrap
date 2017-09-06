@@ -1,8 +1,8 @@
 package com.becheer.donation.dao;
 
 import com.becheer.donation.dto.MetaDto;
-import com.becheer.donation.modal.Vo.MetaVo;
-import com.becheer.donation.modal.Vo.MetaVoExample;
+import com.becheer.donation.model.MetaVo;
+import com.becheer.donation.model.MetaVoExample;
 
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package com.becheer.donation.service;
 
 import com.github.pagehelper.PageInfo;
-import com.becheer.donation.modal.Vo.ContentVoExample;
-import com.becheer.donation.modal.Vo.ContentVo;
+import com.becheer.donation.model.ContentVoExample;
+import com.becheer.donation.model.ContentVo;
 
 /**
  * Created by Administrator on 2017/3/13 013.

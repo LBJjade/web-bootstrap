@@ -1,6 +1,6 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.modal.Vo.OptionVo;
+import com.becheer.donation.model.OptionVo;
 
 import java.util.List;
 import java.util.Map;

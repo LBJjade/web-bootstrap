@@ -1,7 +1,7 @@
 package com.becheer.donation.utils;
 
 
-import com.becheer.donation.modal.Vo.MetaVo;
+import com.becheer.donation.model.MetaVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 

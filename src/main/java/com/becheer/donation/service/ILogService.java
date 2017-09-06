@@ -1,6 +1,6 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.modal.Vo.LogVo;
+import com.becheer.donation.model.LogVo;
 
 import java.util.List;
 

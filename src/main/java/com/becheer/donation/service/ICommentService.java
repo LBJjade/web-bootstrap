@@ -1,9 +1,9 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.modal.Bo.CommentBo;
-import com.becheer.donation.modal.Vo.CommentVo;
+import com.becheer.donation.model.extension.CommentBo;
+import com.becheer.donation.model.CommentVo;
 import com.github.pagehelper.PageInfo;
-import com.becheer.donation.modal.Vo.CommentVoExample;
+import com.becheer.donation.model.CommentVoExample;
 
 /**
  * Created by BlueT on 2017/3/16.

@@ -1,6 +1,6 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.modal.Vo.RelationshipVoKey;
+import com.becheer.donation.model.RelationshipVoKey;
 
 import java.util.List;
 

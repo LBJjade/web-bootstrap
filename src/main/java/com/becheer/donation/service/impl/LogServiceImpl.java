@@ -2,8 +2,8 @@ package com.becheer.donation.service.impl;
 
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.dao.LogVoMapper;
-import com.becheer.donation.modal.Vo.LogVo;
-import com.becheer.donation.modal.Vo.LogVoExample;
+import com.becheer.donation.model.LogVo;
+import com.becheer.donation.model.LogVoExample;
 import com.becheer.donation.service.ILogService;
 import com.becheer.donation.utils.DateKit;
 import com.github.pagehelper.PageHelper;

@@ -1,9 +1,9 @@
 package com.becheer.donation.service.impl;
 
-import com.becheer.donation.modal.Vo.OptionVo;
+import com.becheer.donation.model.OptionVo;
 import com.becheer.donation.service.IOptionService;
 import com.becheer.donation.dao.OptionVoMapper;
-import com.becheer.donation.modal.Vo.OptionVoExample;
+import com.becheer.donation.model.OptionVoExample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,11 @@
 package com.becheer.donation.interceptor;
 
-import com.becheer.donation.modal.Vo.OptionVo;
+import com.becheer.donation.Config;
+import com.becheer.donation.model.OptionVo;
 import com.becheer.donation.service.IOptionService;
 import com.becheer.donation.service.IUserService;
 import com.becheer.donation.utils.*;
-import com.becheer.donation.modal.Vo.UserVo;
-import com.becheer.donation.utils.*;
+import com.becheer.donation.model.UserVo;
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.dto.Types;
 import org.slf4j.Logger;
@@ -79,6 +79,7 @@ public class BaseInterceptor implements HandlerInterceptor {
         httpServletRequest.setAttribute("commons", commons);//一些工具类和公共方法
         httpServletRequest.setAttribute("option", ov);
         httpServletRequest.setAttribute("adminCommons", adminCommons);
+        httpServletRequest.setAttribute("config",Config.getConfig());
     }
 
     @Override

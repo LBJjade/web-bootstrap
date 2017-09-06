@@ -1,7 +1,7 @@
 package com.becheer.donation.dao;
 
-import com.becheer.donation.modal.Vo.UserVoExample;
-import com.becheer.donation.modal.Vo.UserVo;
+import com.becheer.donation.model.UserVoExample;
+import com.becheer.donation.model.UserVo;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;

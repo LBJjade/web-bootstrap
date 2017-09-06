@@ -1,7 +1,7 @@
 package com.becheer.donation.dao;
 
-import com.becheer.donation.modal.Vo.AttachVo;
-import com.becheer.donation.modal.Vo.AttachVoExample;
+import com.becheer.donation.model.AttachVo;
+import com.becheer.donation.model.AttachVoExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
