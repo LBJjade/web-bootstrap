@@ -1,6 +1,5 @@
 package com.becheer.donation.controller;
 
-import com.becheer.donation.model.UserVo;
 import com.becheer.donation.utils.TaleUtils;
 import com.becheer.donation.utils.MapCache;
 
@@ -32,21 +31,6 @@ public abstract class BaseController {
     public BaseController keywords(HttpServletRequest request, String keywords) {
         request.setAttribute("keywords", keywords);
         return this;
-    }
-
-
-
-    /**
-     * 获取请求绑定的登录对象
-     * @param request
-     * @return
-     */
-    public UserVo user(HttpServletRequest request) {
-        return TaleUtils.getLoginUser(request);
-    }
-
-    public Integer getUid(HttpServletRequest request){
-        return this.user(request).getUid();
     }
 
     public String render_404() {

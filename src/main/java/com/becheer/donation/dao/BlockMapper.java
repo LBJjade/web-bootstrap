@@ -14,9 +14,9 @@ import java.util.List;
 public interface BlockMapper {
 
     //根据板块ID获取板块下的项目
-    List<ListProjectExtension> getProjectById(long blockId);
+    List<ListProjectExtension> selectProjectByBlockId(long blockId);
 
     //根据板块ID获取板块下的文章
-    List<ListArticleExtension> getArticleById(long blockId);
+    List<ListArticleExtension> selectArticleByBlockId(long blockId);
 
 }

@@ -1,85 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.becheer.donation.dao.">
-  <resultMap id="BaseResultMap" type="com.becheer.donation.model.Block">
-    <id column="id_" jdbcType="BIGINT" property="id" />
-    <result column="block_name" jdbcType="VARCHAR" property="blockName" />
-    <result column="summary_" jdbcType="VARCHAR" property="summary" />
-    <result column="article_limit" jdbcType="INTEGER" property="articleLimit" />
-    <result column="enable_" jdbcType="INTEGER" property="enable" />
-    <result column="create_time" jdbcType="DATE" property="createTime" />
-    <result column="create_by" jdbcType="BIGINT" property="createBy" />
-    <result column="update_time" jdbcType="DATE" property="updateTime" />
-    <result column="update_by" jdbcType="BIGINT" property="updateBy" />
-    <result column="remark_" jdbcType="VARCHAR" property="remark" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.becheer.donation.model.Project">
-    <result column="content" jdbcType="LONGVARCHAR" property="content" />
-  </resultMap>
+<mapper namespace="com.becheer.donation.dao.BlockMapper">
 
-  <sql id="List_Page_Column">
-    id_,project_name,summary,create_time
-  </sql>
+    <resultMap id="BlockProjectResultMap" type="com.becheer.donation.model.extension.ListProjectExtension">
+        <id column="id_" jdbcType="BIGINT" property="projectId" />
+        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+        <result column="create_time" jdbcType="DATE" property="createTime" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
+        <result column="thumb_img" jdbcType="VARCHAR" property="img" />
+    </resultMap>
 
-  <sql id="Detail_Page_column">
-    id_,project_name,summary,create_time,content,project_target_amount,start_time,end_time,long_term,record_status
-  </sql>
+    <resultMap id="BlockArticleResultMap" type="com.becheer.donation.model.extension.ListArticleExtension">
+        <id column="id_" jdbcType="BIGINT" property="articleId" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
+        <result column="create_time" jdbcType="DATE" property="createTime" />
+        <result column="sort" jdbcType="INTEGER" property="sort" />
+        <result column="thumb_img" jdbcType="VARCHAR" property="img" />
+    </resultMap>
 
-  <sql id="Example_Where_Clause">
-    <where>
-      <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
+    <select id="selectProjectByBlockId" parameterType="java.lang.Long" resultMap="BlockProjectResultMap">
+        SELECT
+        p.id_,p.project_name,p.summary,p.create_time,p.thumb_img,b.sort
+        FROM dnt_project p
+        RIGHT JOIN dnt_block_detail b ON p.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
+        ORDER BY b.sort ASC
+    </select>
 
-  <select id="selectByExample" parameterType="com.becheer.donation.model.ProjectCondition" resultMap="BaseResultMap">
-    select
-    <include refid="List_Page_Column" />
-    from dnt_project
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-    <if test="limit != null">
-      <if test="offset != null">
-        limit ${offset}, ${limit}
-      </if>
-      <if test="offset == null">
-        limit ${limit}
-      </if>
-    </if>
-  </select>
-
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
-    select 
-    <include refid="Detail_Page_column" />
-    from dnt_project
-    where id_ = #{id,jdbcType=BIGINT}
-  </select>
+    <select id="selectArticleByBlockId" parameterType="java.lang.Long" resultMap="BlockArticleResultMap">
+        SELECT
+        a.id_,a.title,a.summary,a.create_time,a.thumb_img,b.sort
+        FROM dnt_article a
+        RIGHT JOIN dnt_block_detail b ON a.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
+        ORDER BY b.sort ASC
+    </select>
 
 </mapper>

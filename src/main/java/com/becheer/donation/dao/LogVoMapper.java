@@ -1,7 +1,7 @@
 package com.becheer.donation.dao;
 
-import com.becheer.donation.model.LogVo;
-import com.becheer.donation.model.LogVoExample;
+import com.becheer.donation.model.Log;
+import com.becheer.donation.model.LogCondition;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -9,25 +9,25 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface LogVoMapper {
-    long countByExample(LogVoExample example);
+    long countByExample(LogCondition example);
 
-    int deleteByExample(LogVoExample example);
+    int deleteByExample(LogCondition example);
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(LogVo record);
+    int insert(Log record);
 
-    int insertSelective(LogVo record);
+    int insertSelective(Log record);
 
-    List<LogVo> selectByExample(LogVoExample example);
+    List<Log> selectByExample(LogCondition example);
 
-    LogVo selectByPrimaryKey(Integer id);
+    Log selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") LogVo record, @Param("example") LogVoExample example);
+    int updateByExampleSelective(@Param("record") Log record, @Param("example") LogCondition example);
 
-    int updateByExample(@Param("record") LogVo record, @Param("example") LogVoExample example);
+    int updateByExample(@Param("record") Log record, @Param("example") LogCondition example);
 
-    int updateByPrimaryKeySelective(LogVo record);
+    int updateByPrimaryKeySelective(Log record);
 
-    int updateByPrimaryKey(LogVo record);
+    int updateByPrimaryKey(Log record);
 }

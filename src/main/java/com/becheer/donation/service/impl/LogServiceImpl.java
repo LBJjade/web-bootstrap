@@ -2,8 +2,8 @@ package com.becheer.donation.service.impl;
 
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.dao.LogVoMapper;
-import com.becheer.donation.model.LogVo;
-import com.becheer.donation.model.LogVoExample;
+import com.becheer.donation.model.Log;
+import com.becheer.donation.model.LogCondition;
 import com.becheer.donation.service.ILogService;
 import com.becheer.donation.utils.DateKit;
 import com.github.pagehelper.PageHelper;
@@ -26,13 +26,13 @@ public class LogServiceImpl implements ILogService {
     private LogVoMapper logDao;
 
     @Override
-    public void insertLog(LogVo logVo) {
-        logDao.insert(logVo);
+    public void insertLog(Log log) {
+        logDao.insert(log);
     }
 
     @Override
     public void insertLog(String action, String data, String ip, Integer authorId) {
-        LogVo logs = new LogVo();
+        Log logs = new Log();
         logs.setAction(action);
         logs.setData(data);
         logs.setIp(ip);
@@ -42,7 +42,7 @@ public class LogServiceImpl implements ILogService {
     }
 
     @Override
-    public List<LogVo> getLogs(int page, int limit) {
+    public List<Log> getLogs(int page, int limit) {
         LOGGER.debug("Enter getLogs method:page={},linit={}",page,limit);
         if (page <= 0) {
             page = 1;
@@ -50,11 +50,11 @@ public class LogServiceImpl implements ILogService {
         if (limit < 1 || limit > WebConst.MAX_POSTS) {
             limit = 10;
         }
-        LogVoExample logVoExample = new LogVoExample();
-        logVoExample.setOrderByClause("id desc");
+        LogCondition logCondition = new LogCondition();
+        logCondition.setOrderByClause("id desc");
         PageHelper.startPage((page - 1) * limit, limit);
-        List<LogVo> logVos = logDao.selectByExample(logVoExample);
+        List<Log> logs = logDao.selectByExample(logCondition);
         LOGGER.debug("Exit getLogs method");
-        return logVos;
+        return logs;
     }
 }

@@ -4,8 +4,7 @@ var currentImg=0; //当前显示的图片的下标
 var nextImg=0;//下一张图片下标
 var timeOut;//setTimeOut
 var shotTime=3000;//图片轮换时间
-
-$(document).ready(function(){
+function f_begin() {
     totalImg=$("#ul_img").children().length;
     if (totalImg==0){
         return;
@@ -32,7 +31,7 @@ $(document).ready(function(){
     $("#div_next").click(function () {
         changeImg();
     });
-});
+}
 
 function changeImg() {
     clearTimeout(timeOut);

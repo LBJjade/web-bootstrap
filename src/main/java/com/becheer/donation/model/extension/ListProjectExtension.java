@@ -12,13 +12,16 @@ public class ListProjectExtension {
     private long projectId;
 
     //项目标题
-    private String title;
+    private String projectName;
 
     //创建日期
-    private String createDate;
+    private String createTime;
 
     //项目简介
     private String summary;
+
+    //图片路径
+    private String img;
 
     //排序
     private int sort;
@@ -31,20 +34,20 @@ public class ListProjectExtension {
         this.projectId = projectId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getProjectName() {
+        return projectName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getSummary() {
@@ -55,6 +58,14 @@ public class ListProjectExtension {
         this.summary = summary;
     }
 
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public int getSort() {
         return sort;
     }
@@ -62,5 +73,4 @@ public class ListProjectExtension {
     public void setSort(int sort) {
         this.sort = sort;
     }
-
 }

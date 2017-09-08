@@ -2,8 +2,6 @@ package com.becheer.donation;
 
 import com.becheer.donation.exception.TipException;
 import com.becheer.donation.model.UserVo;
-import com.becheer.donation.service.IOptionService;
-import com.becheer.donation.service.IUserService;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -23,20 +21,20 @@ import javax.annotation.Resource;
 @Transactional(rollbackFor = TipException.class)
 public class TranscationTest {
 
-    @Resource
-    private IUserService userService;
-
-    @Resource
-    private IOptionService optionService;
-
-    @org.junit.Test
-    @Ignore
-    public void test() {
-        UserVo user = new UserVo();
-        user.setUsername("wangqiang111");
-        user.setPassword("123456");
-        user.setEmail("8888");
-        userService.insertUser(user);
-        optionService.insertOption("site_keywords", "qwqwq");
-    }
+//    @Resource
+//    private IUserService userService;
+//
+//    @Resource
+//    private IOptionService optionService;
+//
+//    @org.junit.Test
+//    @Ignore
+//    public void test() {
+//        UserVo user = new UserVo();
+//        user.setUsername("wangqiang111");
+//        user.setPassword("123456");
+//        user.setEmail("8888");
+//        userService.insertUser(user);
+//        optionService.insertOption("site_keywords", "qwqwq");
+//    }
 }

@@ -22,9 +22,7 @@ import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import com.becheer.donation.constant.WebConst;
-import com.becheer.donation.controller.admin.AttachController;
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.model.UserVo;
 import org.apache.commons.lang3.StringUtils;
 import org.commonmark.Extension;
 import org.commonmark.ext.gfm.tables.TablesExtension;
@@ -146,13 +144,13 @@ public class TaleUtils {
      *
      * @return
      */
-    public static UserVo getLoginUser(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        if (null == session) {
-            return null;
-        }
-        return (UserVo) session.getAttribute(WebConst.LOGIN_SESSION_KEY);
-    }
+//    public static UserVo getLoginUser(HttpServletRequest request) {
+//        HttpSession session = request.getSession();
+//        if (null == session) {
+//            return null;
+//        }
+//        return (UserVo) session.getAttribute(WebConst.LOGIN_SESSION_KEY);
+//    }
 
 
     /**
@@ -228,24 +226,6 @@ public class TaleUtils {
         return "";
     }
 
-    /**
-     * markdown转换为html
-     *
-     * @param markdown
-     * @return
-     */
-    public static String mdToHtml(String markdown) {
-        if (StringUtils.isBlank(markdown)) {
-            return "";
-        }
-        java.util.List<Extension> extensions = Arrays.asList(TablesExtension.create());
-        Parser parser = Parser.builder().extensions(extensions).build();
-        Node document = parser.parse(markdown);
-        HtmlRenderer renderer = HtmlRenderer.builder().extensions(extensions).build();
-        String content = renderer.render(document);
-        content = Commons.emoji(content);
-        return content;
-    }
 
     /**
      * 退出登录状态
@@ -352,27 +332,6 @@ public class TaleUtils {
             return matcher.find();
         }
         return false;
-    }
-
-    public static String getFileKey(String name) {
-        String prefix = "/upload/" + DateKit.dateFormat(new Date(), "yyyy/MM");
-        if (!new File(AttachController.CLASSPATH + prefix).exists()) {
-            new File(AttachController.CLASSPATH + prefix).mkdirs();
-        }
-
-        name = StringUtils.trimToNull(name);
-        if (name == null) {
-            return prefix + "/" + UUID.UU32() + "." + null;
-        } else {
-            name = name.replace('\\', '/');
-            name = name.substring(name.lastIndexOf("/") + 1);
-            int index = name.lastIndexOf(".");
-            String ext = null;
-            if (index >= 0) {
-                ext = StringUtils.trimToNull(name.substring(index + 1));
-            }
-            return prefix + "/" + UUID.UU32() + "." + (ext == null ? null : (ext));
-        }
     }
 
     /**

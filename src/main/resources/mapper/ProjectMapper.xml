@@ -24,7 +24,7 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
 
-  <sql id="List_Page_Column">
+  <sql id="ListPageColumn">
     id_,project_name,summary,create_time
   </sql>
 
@@ -64,7 +64,7 @@
 
   <select id="selectByExample" parameterType="com.becheer.donation.model.ProjectCondition" resultMap="BaseResultMap">
     select
-    <include refid="List_Page_Column" />
+    <include refid="ListPageColumn" />
     from dnt_project
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

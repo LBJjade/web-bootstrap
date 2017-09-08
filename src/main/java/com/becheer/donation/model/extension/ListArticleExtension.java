@@ -9,46 +9,68 @@ package com.becheer.donation.model.extension;
 public class ListArticleExtension {
 
     //文章ID
-    private long ArticleId;
+    private long articleId;
 
     //文章标题
-    private String Title;
+    private String title;
 
     //文章摘要
-    private String Summary;
+    private String summary;
+
+    //创建时间
+    private String createTime;
+
+    //图片路径
+    private String img;
 
     //排序
-    private int Sort;
+    private int sort;
 
     public long getArticleId() {
-        return ArticleId;
+        return articleId;
     }
 
     public void setArticleId(long articleId) {
-        ArticleId = articleId;
+        this.articleId = articleId;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getSummary() {
-        return Summary;
+        return summary;
     }
 
     public void setSummary(String summary) {
-        Summary = summary;
+        this.summary = summary;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public int getSort() {
-        return Sort;
+        return sort;
     }
 
     public void setSort(int sort) {
-        Sort = sort;
+        this.sort = sort;
     }
 }
