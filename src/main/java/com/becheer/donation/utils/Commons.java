@@ -139,17 +139,6 @@ public final class Commons {
 
 
     /**
-     * 获取随机数
-     *
-     * @param max
-     * @param str
-     * @return
-     */
-    public static String random(int max, String str) {
-        return UUID.random(1, max) + str;
-    }
-
-    /**
      * 返回文章链接地址
      *
      * @param cid
@@ -179,7 +168,7 @@ public final class Commons {
      */
     public static String fmtdate(Integer unixTime, String patten) {
         if (null != unixTime && StringUtils.isNotBlank(patten)) {
-            return DateKit.formatDateByUnixTime(unixTime, patten);
+            return DateUtils.formatDateByUnixTime(unixTime, patten);
         }
         return "";
     }

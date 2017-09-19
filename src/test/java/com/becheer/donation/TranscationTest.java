@@ -1,7 +1,6 @@
 package com.becheer.donation;
 
 import com.becheer.donation.exception.TipException;
-import com.becheer.donation.model.UserVo;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;

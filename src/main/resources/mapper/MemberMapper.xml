@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.MemberMapper">
+
+    <resultMap id="BaseResultMap" type="com.becheer.donation.model.Member">
+        <id column="_id" jdbcType="BIGINT" property="id" />
+        <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+        <result column="organization_type" jdbcType="VARCHAR" property="organizationType" />
+        <result column="organization_code" jdbcType="INTEGER" property="organizationCode" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
+        <result column="donate_contract_amount" jdbcType="BIGINT" property="donateContractAmount" />
+        <result column="no_contract_amount" jdbcType="BIGINT" property="noContractAmount" />
+        <result column="password" jdbcType="VARCHAR" property="password" />
+        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+        <result column="contact_tel" jdbcType="VARCHAR" property="contactTel" />
+        <result column="avator_img" jdbcType="VARCHAR" property="avatorImg" />
+        <result column="summary" jdbcType="VARCHAR" property="aummary" />
+        <result column="project" jdbcType="VARCHAR" property="project" />
+        <result column="id_card_front_img" jdbcType="VARCHAR" property="idCardFrontImg" />
+        <result column="id_card_back_img" jdbcType="VARCHAR" property="idCardBackImg" />
+        <result column="license" jdbcType="VARCHAR" property="license" />
+        <result column="validation" jdbcType="INTEGER" property="validation" />
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+        <result column="id_card" jdbcType="VARCHAR" property="idCard" />
+        <result column="sex" jdbcType="INTEGER" property="sex" />
+        <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+        <result column="role" jdbcType="INTEGER" property="role" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="create_by" jdbcType="BIGINT" property="createBy" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="update_by" jdbcType="BIGINT" property="updateBy" />
+        <result column="remark_" jdbcType="VARCHAR" property="remark" />
+    </resultMap>
+
+    <insert id="insertMember" parameterType="com.becheer.donation.model.Member" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO dnt_member
+        (
+        id_,
+        mobile,
+        create_time,
+        role,
+        enable_,
+        password
+        )
+        VALUES
+        (
+        #{id,jdbcType=BIGINT},
+        #{mobile,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{role,jdbcType=INTEGER},
+        #{enable,jdbcType=INTEGER},
+        #{password,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="selectMemberByMobile" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT * FROM dnt_member
+        WHERE mobile=#{mobile,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

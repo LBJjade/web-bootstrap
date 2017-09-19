@@ -1,4 +1,4 @@
-package com.becheer.donation.model;
+package com.becheer.donation.model.condition;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.ArticleTypeMapper">
+
+    <resultMap id="ArticleTypeMapper" type="com.becheer.donation.model.extension.ArticleTypeExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="article_type_name" jdbcType="VARCHAR" property="articleTypeName" />
+    </resultMap>
+
+    <select id="selectPublicyArticleType" resultMap="ArticleTypeMapper">
+        SELECT id_,article_type_name,parent_id FROM dnt_article_type
+        WHERE content_type=1 AND enable_=1
+    </select>
+    
+</mapper>

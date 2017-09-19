@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
+
+    <title>信息公开</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/plugin/timeline/css.css}" />
+
+    <style type="text/css">
+        #div_menu{
+            width: 300px;
+            height: 600px;
+            margin-bottom: 20px;
+            border-left: 1px #eee solid;
+            border-right: 1px #eee solid;
+            border-top: 2px #eee solid;
+            border-bottom: 3px #eee solid;
+        }
+        #div_menu a{
+            display: block;
+            margin: 10px;
+        }
+        #div_menu span{
+            float: left;
+            font-size: 20px;
+        }
+        #div_menu ul{
+            margin-left: 30px;
+            display: none;
+        }
+        #div_menu_name{
+            width: 300px;
+            height: 40px;
+            height: 40px;
+            background-color: #00a0ea;
+            margin-top: 30px;
+        }
+        #div_menu_name p{
+            margin-left: 15px;
+            line-height: 40px;
+            font-size: 18px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-3">
+
+            <div id="div_menu_name">
+                <p>信息公开</p>
+            </div>
+
+            <div id="div_menu">
+                <a class="glyphicon glyphicon-plus" v-on:click="f_getArticle(item.id)" v-for="item in items">{{item.articleTypeName}}</a>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div id="div_navbar">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li>><a href="#">&gt;</a></li>
+                    <li class="active"><a href="#">信息公开</a></li>
+                    <li>><a href="#">&gt;</a></li>
+                    <li class="active"><a href="#">年度报告</a></li>
+                </ul>
+            </div>
+            <br/>
+            <div id="div_content">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>文件名称</th>
+                        <th>发布时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in items">
+                        <td>{{item.title}}</td>
+                        <td>{{item.createTime}}</td>
+                        <td>
+                            <a :href="docUrl+item.attachmentUrl" target="_blank"><button class="btn btn-primary">查看</button></a>
+                            <!--<button class="btn btn-primary">下载</button>-->
+                        </td>
+                    </tr>
+                    <tr class="tr_hide"><td colspan="4" class="text-center">暂无数据</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 100%;text-align: center">
+                <ul class="pagination" style="text-align: center">
+                    <li><a href="#">上一页</a></li>
+                    <li class="active"><a href="#">1</a></li>
+                    <li><a href="#">下一页</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="themes/default/footer::footer"></div>
+
+<!--全局JS-->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugin/layer/layer.js}"></script>
+<script th:src="@{/plugin/vue/vue.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var vueContent;
+    var docRoot= /*[[${config.getDocRoot()}]]*/ ;  //图片服务器地址
+
+    $(document).ready(function () {
+        f_getArticleType();
+    });
+
+    //获取文章分类
+    function f_getArticleType(){
+        $.ajax({
+            url:'/publicity/type',
+            type:'post',
+            success:function (data) {
+                if(data.code===200) {
+                    new Vue({
+                        el: "#div_menu",
+                        data: {
+                            items: data.result
+                        }
+                    });
+                    if (data.result != null) {
+                        f_getArticle(data.result[0].id);
+                    }
+                }
+            }
+        });
+    }
+
+    //获取文章
+    function f_getArticle(tid) {
+        $.ajax({
+            url: '/publicity/article',
+            type: 'post',
+            data: {pageSize: 10, pageNum: 1, tid: tid},
+            success: function (data) {
+                if (data.code === 200) {
+                    if (vueContent === undefined) {
+                        vueContent = new Vue({
+                            el: "#div_content",
+                            data: {
+                                items: data.result.list,
+                                docUrl:docRoot
+                            }
+                        });
+                    } else {
+                        for (var i = 0; i<data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                    }
+                    data.result.list.length===0?$(".tr_hide").show():$(".tr_hide").hide();
+                }
+            }
+        })
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

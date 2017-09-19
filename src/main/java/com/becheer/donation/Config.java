@@ -7,10 +7,11 @@ import java.util.Properties;
 
 @Component
 public class Config {
-//    private static Properties properties = TaleUtils.getPropFromFile("application.properties");
+    private static Properties properties = TaleUtils.getPropFromFile("src/main/resources/application.properties");
 
     public String imageRoot;
     public String projectImage;
+    public String docRoot;
 
     public String getImageRoot() {
         return imageRoot;
@@ -20,13 +21,14 @@ public class Config {
         return projectImage;
     }
 
+    public String getDocRoot() {
+        return docRoot;
+    }
 
     public Config(){
-        //todo  配置文件读取不到，此处暂时搁置
-//        this.imageRoot=properties.getProperty("resource.imageRoot");
-//        this.projectImage=properties.getProperty("resource.projectImage");
-        this.imageRoot="image/";
-        this.projectImage="image/project/";
+        this.imageRoot=properties.getProperty("resource.imageRoot");
+        this.projectImage=properties.getProperty("resource.projectImage");
+        this.docRoot=properties.getProperty("resource.docRoot");
     }
 
     public static Config getConfig(){

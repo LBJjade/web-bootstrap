@@ -24,7 +24,7 @@
         SELECT
         p.id_,p.project_name,p.summary,p.create_time,p.thumb_img,b.sort
         FROM dnt_project p
-        RIGHT JOIN dnt_block_detail b ON p.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
+        INNER JOIN dnt_block_detail b ON p.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
         ORDER BY b.sort ASC
     </select>
 
@@ -32,7 +32,7 @@
         SELECT
         a.id_,a.title,a.summary,a.create_time,a.thumb_img,b.sort
         FROM dnt_article a
-        RIGHT JOIN dnt_block_detail b ON a.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
+        INNER JOIN dnt_block_detail b ON a.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
         ORDER BY b.sort ASC
     </select>
 

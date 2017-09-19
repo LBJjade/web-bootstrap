@@ -3,9 +3,9 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.constant.WebConst;
 import com.becheer.donation.dao.LogVoMapper;
 import com.becheer.donation.model.Log;
-import com.becheer.donation.model.LogCondition;
+import com.becheer.donation.model.condition.LogCondition;
 import com.becheer.donation.service.ILogService;
-import com.becheer.donation.utils.DateKit;
+import com.becheer.donation.utils.DateUtils;
 import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class LogServiceImpl implements ILogService {
         logs.setData(data);
         logs.setIp(ip);
         logs.setAuthorId(authorId);
-        logs.setCreated(DateKit.getCurrentUnixTime());
+        logs.setCreated(DateUtils.getCurrentUnixTime());
         logDao.insert(logs);
     }
 

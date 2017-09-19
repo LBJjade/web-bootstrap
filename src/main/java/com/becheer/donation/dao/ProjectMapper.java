@@ -1,7 +1,7 @@
 package com.becheer.donation.dao;
 
 import com.becheer.donation.model.Project;
-import com.becheer.donation.model.ProjectCondition;
+import com.becheer.donation.model.condition.ProjectCondition;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

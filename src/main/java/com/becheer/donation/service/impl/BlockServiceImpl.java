@@ -26,19 +26,15 @@ public class BlockServiceImpl  implements IBlockService{
 
     //根据板块id 获取板块下的文章
     @Override
-    public List<ListArticleExtension> getArticleByBlockId(long blockId) {
-        LOGGER.debug("Enter getArticleByBlockId method");
+    public List<ListArticleExtension> GetArticleByBlockId(long blockId) {
         List<ListArticleExtension> result=blockMapper.selectArticleByBlockId(blockId);
-        LOGGER.debug("Exit getArticleByBlockId method");
         return result;
     }
 
     //根据板块id 获取板块下的项目
     @Override
-    public List<ListProjectExtension> getProjectByBlockId(long blockId) {
-        LOGGER.debug("Enter getProjectByBlockId method");
+    public List<ListProjectExtension> GetProjectByBlockId(long blockId) {
         List<ListProjectExtension> result=blockMapper.selectProjectByBlockId(blockId);
-        LOGGER.debug("Exit getProjectByBlockId method");
         return result;
     }
 }

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
+
+    <title>login</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+
+    <style type="text/css">
+        #div_menu a{
+            display: block;
+            margin: 10px;
+        }
+        #div_menu span{
+            float: left;
+            font-size: 20px;
+        }
+        #div_menu ul{
+            margin-left: 30px;
+            display: none;
+        }
+        .table_member_content{
+            width: 60%;
+            margin-left: 20%;
+            text-align: center;
+            line-height: 50px;
+        }
+        .table_member_content input{
+            line-height: 28px;
+        }
+        .table_member_content td{
+            border-bottom: 1px #ccc dashed;
+        }
+
+        .input_text{
+            width: 234px;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="div_navbar" style="margin-top: 10px">
+                <ul>
+                    <li><a href="#">登录</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12" style="height: 500px; padding-top: 20px">
+            <table class="table_member_content">
+                <tr>
+                    <td>手机号码</td>
+                    <td>
+                        <input type="text" class="input_text" id="ipt_mobile" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>登录密码</td>
+                    <td>
+                        <input type="password" class="input_text" id="ipt_pwd" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: none">验证码</td>
+                    <td style="border-bottom: none">
+                        <input type="text" class="input_text" id="ipt_code" />
+                    </td>
+                </tr>
+                <tr style="line-height: 15px;">
+                    <td colspan="2" style="text-align: center;font-size: 12px; border-bottom: none">请输入下图中的字符</td>
+                </tr>
+                <tr style="line-height: 15px;">
+                    <td colspan="2" style="padding-bottom: 10px">
+                        <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
+                        <button class="btn btn-info btn_login" style="width: 80px;padding-left: 4px">登录</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="themes/default/footer::footer"></div>
+
+<!--全局JS-->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugin/layer/layer.js}"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    $(".btn_login").click(function () {
+        var mobile=$("#ipt_mobile").val();
+        var pwd=$("#ipt_pwd").val();
+        var code=$("#ipt_code").val();
+        $.ajax({
+            url:"/login/submit",
+            data:{mobile:mobile,code:code,pwd:pwd},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                layer.alert(data.message,function () {
+                    if (data.code===200){
+                        window.location.href="/member/index"
+                    }else{
+                        layer.closeAll('dialog');
+                    }
+                })
+            }
+        });
+
+    });
+
+    $(".verify_code").click(function () {
+        $(this).attr("src","Verify/code.jpg?t="+Math.random());
+    });
+
+    function f_redirect(){
+        window.location.href="member.html";
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

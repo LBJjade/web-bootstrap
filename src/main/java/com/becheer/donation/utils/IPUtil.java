@@ -10,7 +10,7 @@ import java.util.Enumeration;
  * ip工具类
  * Created by BlueT on 2017/3/9.
  */
-public class IPKit {
+public class IPUtil {
     /**
      * @param request 请求
      * @return IP Address

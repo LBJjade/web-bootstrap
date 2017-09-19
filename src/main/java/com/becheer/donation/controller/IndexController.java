@@ -21,18 +21,17 @@ public class IndexController extends BaseController {
      * 首页
      * @return
      */
-    @GetMapping(value = "/")
-    public String index(HttpServletRequest request, @RequestParam(value = "limit", defaultValue = "12") int limit) {
+    @GetMapping(value = {"/","/index"})
+    public String index(HttpServletRequest request) {
         return this.render("index");
     }
-
 
     /**
      * 获取首页项目列表
      */
-    @GetMapping(value = "project/{pageNum}/{pageSize}")
+    @PostMapping(value = "/project")
     @ResponseBody
-    public ResponseDto GetProject(HttpServletRequest request,@PathVariable int pageNum, @PathVariable int pageSize) {
+    public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageNum, @RequestParam int pageSize) {
         if (pageNum<=0){
             pageNum=1;
         }

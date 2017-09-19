@@ -40,7 +40,16 @@ public class ResponseDto<T> {
         this.result=t;
     }
 
+    public ResponseDto(int code, String msg){
+        this.code=code;
+        this.msg=msg;
+    }
+
     public static  <T>ResponseDto GetResponse(int code, String msg, T t){
         return new ResponseDto<T>(code,msg,t);
+    }
+
+    public static ResponseDto GetResponse(int code,String msg){
+        return new ResponseDto(code,msg);
     }
 }

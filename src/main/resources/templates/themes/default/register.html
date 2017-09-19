@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
+
+    <title>register</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/plugin/step/step.css}" />
+
+    <style type="text/css">
+        #div_menu a{
+            display: block;
+            margin: 10px;
+        }
+        #div_menu span{
+            float: left;
+            font-size: 20px;
+        }
+        #div_menu ul{
+            margin-left: 30px;
+            display: none;
+        }
+        .table_member_content{
+            width: 60%;
+            margin-left: 20%;
+            text-align: center;
+            line-height: 50px;
+        }
+        .table_member_content input{
+            line-height: 28px;
+        }
+        .table_member_content td{
+            border-bottom: 1px #ccc dashed;
+        }
+
+        .input_code{
+            width: 234px;
+        }
+
+        .div_register_content{
+            height: 500px;
+            padding-top: 50px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="div_navbar" style="margin-top: 10px">
+                <ul>
+                    <li><a href="#">注册</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-12 div_register_content" id="div_step1" style="display: block">
+            <div style="padding-left: 15%;padding-right: 15%">
+                <div class="ui-step-wrap">
+                    <ol class="ui-step ui-step-light-blue ui-step-3">
+                        <li class="step-active">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">1</span>
+                                <span class="ui-step-cont-text">验证手机</span>
+                            </div>
+                        </li>
+                        <li class="step-middle">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">2</span>
+                                <span class="ui-step-cont-text">输入基本信息</span>
+                            </div>
+                        </li>
+                        <li class="step-end">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">3</span>
+                                <span class="ui-step-cont-text">注册成功</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <br/>
+            <table class="table_member_content">
+                <tr>
+                    <td>注册类型</td>
+                    <td style="line-height: 20px">
+                        <label class="radio-inline">
+                            <input type="radio" value="0" name="input_register_type" checked="checked" />个人
+                        </label>
+                        <label class="radio-inline" style="margin-left: 60px">
+                            <input type="radio" value="1" name="input_register_type" />公司或社会组织
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>手机号码</td>
+                    <td>
+                        <input type="number" id="ipt_mobile"/>
+                        <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">发送验证码</button>
+                    </td>
+                </tr>
+                <tr><td>验证码</td><td><input type="text" class="input_code" /></td></tr>
+                <tr>
+                    <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
+                        <label class="radio-inline">
+                            <input type="radio" /><a href="#">同意网站服务条款</a></label>
+                        <button class="btn btn-info btn_checkSms" style="width: 80px;padding-left: 4px">下一步</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-12 div_register_content" id="div_step2">
+            <div style="padding-left: 15%;padding-right: 15%">
+                <div class="ui-step-wrap">
+                    <ol class="ui-step ui-step-light-blue ui-step-3">
+                        <li class="step-done">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">1</span>
+                                <span class="ui-step-cont-text">验证手机</span>
+                            </div>
+                        </li>
+                        <li class="step-active">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">2</span>
+                                <span class="ui-step-cont-text">输入基本信息</span>
+                            </div>
+                        </li>
+                        <li class="step-end">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">3</span>
+                                <span class="ui-step-cont-text">注册成功</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <br/>
+            <table class="table_member_content">
+                <tr>
+                    <td>登录密码</td>
+                    <td style="line-height: 20px">
+                        <input type="password" class="input_234"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>确认密码</td>
+                    <td style="line-height: 20px">
+                        <input type="password" id="ipt_pwd" class="input_234"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <button class="btn btn-info btn_pwd" style="width: 80px;padding-left: 4px">下一步</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-12 div_register_content" id="div_step3">
+            <div style="padding-left: 15%;padding-right: 15%">
+                <div class="ui-step-wrap">
+                    <ol class="ui-step ui-step-light-blue ui-step-3">
+                        <li class="step-done">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">1</span>
+                                <span class="ui-step-cont-text">验证手机</span>
+                            </div>
+                        </li>
+                        <li class="step-done">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">2</span>
+                                <span class="ui-step-cont-text">输入基本信息</span>
+                            </div>
+                        </li>
+                        <li class="step-finish">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">3</span>
+                                <span class="ui-step-cont-text">注册成功</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <br/>
+            <table class="table_member_content">
+                <tr>
+                    <td style="collapse: 2"><h4>注册成功!<a href="login.html">点此登录</a> </h4></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <a href="login.html"><button class="btn btn-info" style="width: 80px;padding-left: 4px">登录</button></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="themes/default/footer::footer"></div>
+
+<!--全局JS-->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugin/layer/layer.js}"></script>
+<script type="text/javascript"  th:inline="javascript">
+    /*<![CDATA[*/
+    var registerType;
+
+    //发送短信验证码
+    $(".btn_send").click(function () {
+        var mobile = $("#ipt_mobile").val();
+        $.ajax({
+            url:'/Sms/SendSms',
+            type:'post',
+            data:{mobile:mobile,tid:"1"},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    layer.alert("验证码发送成功");
+                }else if (data.code===401){
+                    layer.alert("您本天的短信次数已用尽");
+                }else{
+                    layer.alert("验证码发送失败");
+                }
+            }
+        })
+    });
+
+
+    $(".btn_checkSms").click(function () {
+        var smsCode=$(".input_code").val();
+        var mobile = $("#ipt_mobile").val();
+        registerType=$("input[name='input_register_type']:checked").val();
+        $.ajax({
+            url:'/Sms/CheckSms',
+            type:'post',
+            data:{mobile:mobile,code:smsCode,registerType:registerType},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    $("#div_step1").hide();
+                    $("#div_step2").show();
+                }else if (data.code==402){
+                    layer.alert("验证码已过期，请重新获取");
+                }else if(data.code==403){
+                    layer.alert("验证码错误")
+                }else{
+                    layer.alert("验证码错误");
+                }
+            }
+        })
+    });
+
+    $(".btn_pwd").click(function () {
+        var pwd=$("#ipt_pwd").val();
+        $.ajax({
+            url:'/register/submit',
+            type:'post',
+            data:{pwd:pwd},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    $("#div_step2").hide();
+                    $("#div_step3").show();
+                }else{
+                    layer.alert("注册失败，请重试");
+                }
+            }
+        })
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

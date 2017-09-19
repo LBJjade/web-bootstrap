@@ -26,6 +26,9 @@ public class ListArticleExtension {
     //排序
     private int sort;
 
+    //附件地址
+    private String attachmentUrl;
+
     public long getArticleId() {
         return articleId;
     }
@@ -72,5 +75,13 @@ public class ListArticleExtension {
 
     public void setSort(int sort) {
         this.sort = sort;
+    }
+
+    public String getAttachmentUrl() {
+        return attachmentUrl;
+    }
+
+    public void setAttachmentUrl(String attachmentUrl) {
+        this.attachmentUrl = attachmentUrl;
     }
 }

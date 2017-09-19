@@ -12,7 +12,7 @@ import com.becheer.donation.model.extension.ListProjectExtension;
 import java.util.List;
 
 public interface IBlockService {
-    List<ListArticleExtension> getArticleByBlockId(long blockId);
+    List<ListArticleExtension> GetArticleByBlockId(long blockId);
 
-    List<ListProjectExtension> getProjectByBlockId(long blockId);
+    List<ListProjectExtension> GetProjectByBlockId(long blockId);
 }

@@ -1,7 +1,7 @@
 package com.becheer.donation.dao;
 
 import com.becheer.donation.model.Log;
-import com.becheer.donation.model.LogCondition;
+import com.becheer.donation.model.condition.LogCondition;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
