@@ -1,7 +1,7 @@
 package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.ListArticleExtension;
+import com.becheer.donation.model.extension.article.ListArticleExtension;
 import com.becheer.donation.service.IArticleService;
 import com.becheer.donation.service.IArticleTypeService;
 import com.becheer.donation.strings.Message;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /*
 * PublicyController 信息公开页面控制器

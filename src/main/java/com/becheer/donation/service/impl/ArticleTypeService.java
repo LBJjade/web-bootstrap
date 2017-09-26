@@ -8,7 +8,7 @@ package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.ArticleTypeMapper;
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.ArticleTypeExtension;
+import com.becheer.donation.model.extension.article.ArticleTypeExtension;
 import com.becheer.donation.service.IArticleTypeService;
 import com.becheer.donation.strings.Message;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,11 @@
 package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.ProjectMapper;
+import com.becheer.donation.dao.ProjectTypeMapper;
 import com.becheer.donation.model.Project;
 import com.becheer.donation.model.condition.ProjectCondition;
+import com.becheer.donation.model.extension.project.ListProjectExtension;
+import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import com.becheer.donation.service.IProjectService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -21,17 +24,35 @@ public class ProjectServiceImpl implements IProjectService {
     private ProjectMapper projectMapper;
 
     @Override
-    public PageInfo<Project> getProjectList(int pageNum, int pageSize) {
+    public PageInfo<ListProjectExtension> GetProjectList(int pageNum, int pageSize) {
         ProjectCondition condition = new ProjectCondition();
         condition.setOrderByClause("create_time desc");
+        condition.createCriteria().addEnable(1);
         PageHelper.startPage(pageNum, pageSize);
-        List<Project> data = projectMapper.selectByExample(condition);
-        PageInfo<Project> pageInfo = new PageInfo<Project>(data);
+        List<ListProjectExtension> data = projectMapper.SelectByCondition(condition);
+        PageInfo<ListProjectExtension> pageInfo = new PageInfo<ListProjectExtension>(data);
         return pageInfo;
     }
 
     @Override
-    public Project getProject(long id) {
-        return projectMapper.selectByPrimaryKey(id);
+    public List<ListProjectExtension> GetProjectOption(long projectType) {
+        List<ListProjectExtension> result = projectMapper.SelectOptionList(projectType);
+        return result;
+    }
+
+    @Override
+    public PageInfo<ListProjectExtension> GetProjectList(int pageNum, int pageSize, int projectTypeId) {
+        ProjectCondition condition=new ProjectCondition();
+        condition.setOrderByClause("create_time desc");
+        condition.createCriteria().addEnable(1).addProjectType(projectTypeId);
+        PageHelper.startPage(pageNum,pageSize);
+        List<ListProjectExtension> data = projectMapper.SelectByCondition(condition);
+        PageInfo<ListProjectExtension> pageInfo = new PageInfo<ListProjectExtension>(data);
+        return pageInfo;
+    }
+
+    @Override
+    public ProjectDetailExtension GetProjectDetail(long id) {
+        return projectMapper.SelectProjectDetail(id);
     }
 }

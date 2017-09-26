@@ -7,12 +7,8 @@ package com.becheer.donation.service.impl;
 */
 
 import com.becheer.donation.dao.ArticleMapper;
-import com.becheer.donation.model.Project;
-import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.condition.ArticleCondition;
-import com.becheer.donation.model.condition.ProjectCondition;
-import com.becheer.donation.model.extension.ArticleTypeExtension;
-import com.becheer.donation.model.extension.ListArticleExtension;
+import com.becheer.donation.model.extension.article.ListArticleExtension;
 import com.becheer.donation.service.IArticleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

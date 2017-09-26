@@ -48,4 +48,21 @@ public class Message {
     public static final String BLOCK_GET_ARTICLE_SUCCESS="获取文章成功";
 
     public static final String BLOCK_GET_PROJECT_SUCCESS="获取项目成功";
+
+    /*
+     *无合同捐赠
+     */
+    public static final String NOCONTRACT_GET_RECENT_SUCCESS="获取爱心动态成功";
+
+    /*
+     *项目分类
+     */
+    public static final String PROJECT_TYPE_GET_SUCCESS="获取项目类别成功";
+
+    /**
+     * 项目
+     */
+    public static final String PROJECT_GET_LIST_SUCCESS="获取项目列表成功";
+
+    public static final String PROJECT_PROGRESS_GET_SUCCESS="获取项目进展成功";
 }

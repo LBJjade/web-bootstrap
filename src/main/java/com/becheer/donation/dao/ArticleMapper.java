@@ -8,10 +8,12 @@ package com.becheer.donation.dao;
 
 
 import com.becheer.donation.model.condition.ArticleCondition;
-import com.becheer.donation.model.extension.ListArticleExtension;
+import com.becheer.donation.model.extension.article.ListArticleExtension;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public interface ArticleMapper {
 
     List<ListArticleExtension> selectListByExample(ArticleCondition condition);

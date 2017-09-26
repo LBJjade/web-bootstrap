@@ -7,7 +7,9 @@ package com.becheer.donation.dao;
 */
 
 import com.becheer.donation.model.Member;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface MemberMapper {
     int insertMember(Member member);
 

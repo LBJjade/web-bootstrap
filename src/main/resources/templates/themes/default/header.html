@@ -24,7 +24,7 @@
 <div class="center-block" style="width: 1200px; height: 150px;">
     <div class="row">
         <div class="col-sm-6">
-            <img id="img_logo" th:src="@{image/logo/375x100.png}"/>
+            <img id="img_logo" th:src="@{~/image/logo/375x100.png}"/>
         </div>
         <div class="col-sm-6" style="height: 80px">
             <ul id="ul_login">
@@ -32,7 +32,7 @@
                 <li></li>
                 <li><a href="member/login.html">登录</a></li>
                 <li>|</li>
-                <li><a href="member/register_1.html">注册</a></li>
+                <li><a href="register">注册</a></li>
             </ul>
         </div>
     </div>
@@ -40,13 +40,13 @@
         <div class="col-sm-12">
             <div id="div_main_menu">
                 <ul id="ul_menu">
-                    <li class="li_meun"><a href="index.html">首页</a></li>
+                    <li class="li_meun"><a th:href="@{~/index}">首页</a></li>
                     <li class="li_split"></li>
-                    <li class="li_meun"><a href="about_us.html">关于我们</a></li>
+                    <li class="li_meun"><a th:href="@{~/about_us.html}">关于我们</a></li>
                     <li class="li_split"></li>
-                    <li class="li_meun"><a href="publicity.html">信息公开</a></li>
+                    <li class="li_meun"><a th:href="@{~/publicity}">信息公开</a></li>
                     <li class="li_split"></li>
-                    <li class="li_meun"><a href="project_list.html">慈善项目</a></li>
+                    <li class="li_meun"><a th:href="@{~/project}">慈善项目</a></li>
                     <li class="li_split"></li>
                 </ul>
             </div>

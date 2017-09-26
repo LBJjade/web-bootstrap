@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.becheer.donation.dao.BlockMapper">
 
-    <resultMap id="BlockProjectResultMap" type="com.becheer.donation.model.extension.ListProjectExtension">
+    <resultMap id="BlockProjectResultMap" type="com.becheer.donation.model.extension.project.ListProjectExtension">
         <id column="id_" jdbcType="BIGINT" property="projectId" />
         <result column="project_name" jdbcType="VARCHAR" property="projectName" />
         <result column="summary" jdbcType="VARCHAR" property="summary" />
@@ -11,7 +11,7 @@
         <result column="thumb_img" jdbcType="VARCHAR" property="img" />
     </resultMap>
 
-    <resultMap id="BlockArticleResultMap" type="com.becheer.donation.model.extension.ListArticleExtension">
+    <resultMap id="BlockArticleResultMap" type="com.becheer.donation.model.extension.article.ListArticleExtension">
         <id column="id_" jdbcType="BIGINT" property="articleId" />
         <result column="title" jdbcType="VARCHAR" property="title" />
         <result column="summary" jdbcType="VARCHAR" property="summary" />

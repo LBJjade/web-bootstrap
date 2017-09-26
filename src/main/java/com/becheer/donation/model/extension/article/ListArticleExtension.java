@@ -1,4 +1,4 @@
-package com.becheer.donation.model.extension;
+package com.becheer.donation.model.extension.article;
 
 /*
 * 扩展类，列表所显示的文章实体

@@ -1,7 +1,7 @@
 package com.becheer.donation.service;
 
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.ArticleTypeExtension;
+import com.becheer.donation.model.extension.article.ArticleTypeExtension;
 
 import java.util.List;
 

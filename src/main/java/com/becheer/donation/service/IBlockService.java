@@ -6,8 +6,8 @@ package com.becheer.donation.service;
 * Date : 2017-09-07
 */
 
-import com.becheer.donation.model.extension.ListArticleExtension;
-import com.becheer.donation.model.extension.ListProjectExtension;
+import com.becheer.donation.model.extension.article.ListArticleExtension;
+import com.becheer.donation.model.extension.project.ListProjectExtension;
 
 import java.util.List;
 

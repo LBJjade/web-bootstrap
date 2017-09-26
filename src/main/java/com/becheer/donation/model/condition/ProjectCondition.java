@@ -124,6 +124,16 @@ public class ProjectCondition {
             }
             criteria.add(new Criterion(condition, value1, value2));
         }
+
+        public Criteria addEnable(int value) {
+            addCriterion("enable_ =", value, "enable_");
+            return (Criteria) this;
+        }
+
+        public Criteria addProjectType(int value){
+            addCriterion("project_type_id =",value,"project_type_id");
+            return (Criteria) this;
+        }
     }
 
     /**

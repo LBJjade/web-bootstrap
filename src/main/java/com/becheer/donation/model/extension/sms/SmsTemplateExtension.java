@@ -1,4 +1,4 @@
-package com.becheer.donation.model.extension;
+package com.becheer.donation.model.extension.sms;
 
 /*
 * SmsTemplateExtension

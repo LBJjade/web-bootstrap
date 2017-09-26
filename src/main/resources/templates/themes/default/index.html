@@ -111,15 +111,19 @@
                     <span></span>
                     <li>
                         <p>爱心总人数</p>
-                        <input type="number" value="21231" />人次
+                        <input type="number" :value="model.totalDonator" />人次
                     </li>
                     <li>
                         <p>善款总额</p>
-                        <input type="number" value="8736498.23" />元
+                        <input type="number" :value="model.totalAmout" />元
                     </li>
                     <li>
                         <p>受益人数</p>
-                        <input type="number" value="8736498.23" />人次
+                        <input type="number" :value="model.totalAcceptor" />人次
+                    </li>
+                    <li>
+                        <p>受益群体</p>
+                        <input type="number" :value="model.totalGroup" />个
                     </li>
                     <li align="center" style="position: relative;top: 120px;">
                         <button type="button" class="btn btn-primary" data-toggle="model" data-target="#div_qr_donate"  data-dismiss="model">
@@ -145,55 +149,16 @@
 
             <hr class="left_item hr_10"/>
             <div class="left_item" style="text-align: center" id="div_page">
-                <!--<ul class="pagination">-->
-                <!--<li><a href="#">上一页</a></li>-->
-                <!--<li class="active"><a href="#">1</a></li>-->
-                <!--<li class="disabled"><a href="#">2</a></li>-->
-                <!--<li><a href="#">3</a></li>-->
-                <!--<li><a href="#">4</a></li>-->
-                <!--<li><a href="#">5</a></li>-->
-                <!--<li><a href="#">下一页</a></li>-->
-            <!--</ul>-->
             </div>
         </div>
         <div class="col-sm-3" style="padding-left: 5px; height: 400px;margin-top: 10px">
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <ul>
-                        <li><img th:src="@{/image/avator_1.jpg}" /></li>
-                        <li>广州市网友</li>
-                        <li>捐赠 孤寡老人助困基金项目 100元</li>
-                    </ul>
-                    <ul>
-                        <li><img th:src="@{/image/avator_2.jpg}" /></li>
-                        <li>游**天</li>
-                        <li>捐赠 军人贫困学子助学基金项目 800元</li>
-                    </ul>
-                    <ul>
-                        <li><img th:src="@{/image/avator_3.jpg}" /></li>
-                        <li>深圳市网友</li>
-                        <li>捐赠 乡村支教美丽中国项目 200元</li>
-                    </ul>
-                    <ul>
-                        <li><img th:src="@{/image/avator_4.jpg}" /></li>
-                        <li>珠海市网友</li>
-                        <li>捐赠 爱心包裹一对一圆梦项目 500元</li>
-                    </ul>
-                    <ul>
-                        <li><img th:src="@{/image/avator_5.jpg}" /></li>
-                        <li>唯***婉</li>
-                        <li>捐赠 贫困孤儿助养基金项目 600元</li>
-                    </ul>
-                    <ul>
-                        <li><img th:src="@{/image/avator_1.jpg}" /></li>
-                        <li>佛山市网友</li>
-                        <li>捐赠  深山独居老人关怀项目 50元</li>
-                    </ul>
-                    <ul>
-                        <li><img th:src="@{/image/avator_2.jpg}" /></li>
-                        <li>明***空</li>
-                        <li>捐赠 抗战老兵关怀项目 150元</li>
+                    <ul v-for="item in items">
+                        <li><img :src="imgUrl+'avator/'+item.avator" /></li>
+                        <li>{{item.memberName}}</li>
+                        <li>捐赠{{item.projectName==null?item.projectTypeName:item.projectName}}{{item.amount/1000}}元</li>
                     </ul>
                 </div>
             </div>
@@ -235,6 +200,22 @@
                     扫描二维码,向基金会捐赠
                 </h6>
             </div>
+
+            <div class="model-body" style="text-align: center">
+                请选择项目类别：
+                <select>
+                    <option>弘扬传统文化</option>
+                    <option>助老</option>
+                    <option>请选择</option>
+                </select>
+                <br />
+                请选择项目:
+                <select>
+                    <option>贫困孤儿助养项目</option>
+                    <option>困境儿童关怀项目项目</option>
+                </select>
+            </div>
+
             <div class="model-body" style="text-align: center">
                 <img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>
             <div class="model-footer" style="text-align: center">
@@ -258,20 +239,27 @@
     var pageNum=1;
     var pageCount;
     var imgRoot= /*[[${config.getProjectImage()}]]*/ ;  //图片服务器地址
+    var avatorRoot= /*[[${config.getImageRoot()}]]*/;
+    var vueContent;
 
     $(document).ready(function () {
-        $("#div_page").attr("pagenumber",10).attr("totalpage",30);
-        initPagination($("#div_page"));
         f_getBanner();
         f_GetArticle();
         f_getRecommend();
         f_getQuestion();
+        f_GetRecentDonate();
+        f_GetDonationInfo();
     });
+
+    function f_OnPageChange(newPage){
+        pageNum=newPage;
+        f_GetArticle();
+    }
 
     //获取首页文章，默认按照创建时间倒序排列
     function f_GetArticle() {
         $.ajax({
-            url:'/project',
+            url:'/index/project',
             data:{pageNum:pageNum,pageSize:pageSize},
             type:'post',
             dataType:'json',
@@ -279,13 +267,23 @@
                 if(data.code===200){
                     pageCount=data.result.pages;
                     pageNum=data.result.pageNum;
-                    new Vue({
-                        el:'#div_project_list',
-                        data:{
-                            items:data.result.list,
-                            imgUrl:imgRoot
+                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+                    f_InitPagination($("#div_page"));
+                    if (vueContent==undefined) {
+                        vueContent=new Vue({
+                            el: '#div_project_list',
+                            data: {
+                                items: data.result.list,
+                                imgUrl: imgRoot
+                            }
+                        });
+                    }else{
+                        for (var i = 0; i<data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
                         }
-                    });
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0,0);
+                    }
                 }
             }
         });
@@ -323,7 +321,6 @@
             data:{blockId:3},
             dataType:'json',
             success:function (data) {
-                alert(JSON.stringify(data));
                 if (data.code===200){
                     new Vue({
                         el:'#div_question',
@@ -355,6 +352,42 @@
                 }
             }
         });
+    }
+
+    //获取最近捐赠
+    function f_GetRecentDonate() {
+        $.ajax({
+            url:'/donate/recent',
+            type:'post',
+            data:{num:7},
+            dataType:'json',
+            success:function (data) {
+                if (data.code===200){
+                    new Vue({
+                        el:"#div_recent",
+                        data:{
+                            items:data.result,
+                            imgUrl:avatorRoot
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    function f_GetDonationInfo() {
+        new Vue({
+            el:"#ul_total",
+            data:{
+                model:{totalDonator:627361,totalAmout:68263.87,totalAcceptor:1736,totalGroup:20}
+            }
+        });
+    }
+
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum=newPage;
+        f_GetArticle();
     }
     /*]]>*/
 </script>

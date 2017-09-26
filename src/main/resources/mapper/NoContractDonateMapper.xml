@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.NoContractDonateMapper">
+    <resultMap id="NoContractDonateMap" type="com.becheer.donation.model.extension.contract.NoContractDonateExtension">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+        <result column="donated_amount" jdbcType="BIGINT" property="amount" />
+        <result column="project_type_id" jdbcType="BIGINT" property="projectTypeId" />
+        <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName" />
+        <result column="project_id" jdbcType="BIGINT" property="projectId" />
+        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+        <result column="avator_img" jdbcType="VARCHAR" property="avator" />
+        <result column="ip" jdbcType="VARCHAR" property="ip" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
+
+
+    <select id="selectRecentNoContractDonate" parameterType="java.lang.Integer" resultMap="NoContractDonateMap">
+        SELECT
+        d.id_,
+        m.member_name,
+        d.donated_amount,
+        d.project_type_id,
+        t.project_type_name,
+        d.project_id,
+        p.project_name,
+        m.avator_img,
+        d.ip,
+        d.create_time
+        FROM dnt_no_contract_donate d
+        LEFT JOIN dnt_project p ON d.project_id=p.id_
+        LEFT JOIN dnt_project_type t ON d.project_type_id=t.id_
+        LEFT JOIN dnt_member m ON d.member_id= m.id_
+        WHERE d.enable_=1
+        ORDER by d.create_time DESC
+        LIMIT #{number,jdbcType=INTEGER}
+    </select>
+    
+</mapper>

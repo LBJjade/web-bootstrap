@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.ProjectTypeMapper">
+
+    <resultMap id="ListProjectTypeMap" type="com.becheer.donation.model.extension.project.ListProjectTypeExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="parent_id" jdbcType="BIGINT" property="pid" />
+        <result column="project_type_name" jdbcType="VARCHAR" property="name" />
+    </resultMap>
+
+    <select id="SelectProjectType" resultMap="ListProjectTypeMap">
+        SELECT
+          id_,
+          parent_id,
+          project_type_name
+        FROM
+          dnt_project_type
+        WHERE enable_=1
+    </select>
+</mapper>

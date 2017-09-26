@@ -117,6 +117,8 @@
 <script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    var pageSize=10;
+    var pageNum=1;
     var vueContent;
     var docRoot= /*[[${config.getDocRoot()}]]*/ ;  //图片服务器地址
 
@@ -150,7 +152,7 @@
         $.ajax({
             url: '/publicity/article',
             type: 'post',
-            data: {pageSize: 10, pageNum: 1, tid: tid},
+            data: {pageSize: pageSize, pageNum: pageNum, tid: tid},
             success: function (data) {
                 if (data.code === 200) {
                     if (vueContent === undefined) {

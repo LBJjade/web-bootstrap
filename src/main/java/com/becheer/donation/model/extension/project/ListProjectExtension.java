@@ -1,4 +1,4 @@
-package com.becheer.donation.model.extension;
+package com.becheer.donation.model.extension.project;
 
 /*
 * 扩展类，列表所展示的项目实体
@@ -10,6 +10,9 @@ public class ListProjectExtension {
 
     //项目ID
     private long projectId;
+
+    //项目类别ID
+    private int projectTypeId;
 
     //项目标题
     private String projectName;
@@ -32,6 +35,14 @@ public class ListProjectExtension {
 
     public void setProjectId(long projectId) {
         this.projectId = projectId;
+    }
+
+    public int getProjectTypeId() {
+        return projectTypeId;
+    }
+
+    public void setProjectTypeId(int projectTypeId) {
+        this.projectTypeId = projectTypeId;
     }
 
     public String getProjectName() {

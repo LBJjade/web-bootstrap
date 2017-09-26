@@ -1,110 +1,47 @@
-var paginationMaxLength=7;//分页栏的最大显示条数
-var onlyOnePageIsShow = true;//只有一页的时候是否显示
-function paginationInit(){
-    $('[pagination =pagination_new ]').each(function(){
-        initPagination($(this));
-    });
-}
-function isNeedPagination(totalpage,settingfromHTML){
-    var condition ;
-    if(settingfromHTML == "true"){
-        condition = true;
-    }else if(settingfromHTML == 'false'){
-        condition = false;
-    }else {
-        condition = onlyOnePageIsShow;
-    }
-    if(condition && totalpage<1){
-        return false;
-    }else if(!condition && totalpage<=1){
-        return false;
-    }
-    return true;
-}
-function setDisplayMaxLength(element,len){
-    var currentpage =  Number(element.attr('pagenumber'));
-    var totoalpage = Number(element.attr('totalpage'));
-    if(checkParamIsPositiveInteger(len)){
-        len = Number(len);
-    }else{
-        len =paginationMaxLength;
-    }
-    if(len<totoalpage){
-        var temp1 = parseInt((len-1)/2);
-        var temp2 = parseInt(len/2);
-        if(temp1<temp2){
-            var leftstart = currentpage - temp1;
-            var rightend = currentpage + temp1 + 1;
-        }else{
-            var leftstart = currentpage - temp1;
-            var rightend = currentpage + temp1;
-        }
-        if(leftstart<1){
-            rightend +=(1-leftstart);
-            leftstart = 1;
-        }
-        if(rightend>totoalpage){
-            if(leftstart>1){
-                leftstart -=(rightend-totoalpage);
-            }
-            rightend =totoalpage;
-        }
-        if(leftstart<1){
-            leftstart=1
-        }
-        while(leftstart >1){
-            element.children('ul').children('li[value = '+(--leftstart)+']').css('display','none');
-        }
-        while(rightend <totoalpage){
-            element.children('ul').children('li[value = '+(++rightend)+']').css('display','none');
-        }
-    }
-}
-//根据页面pagenumber、my_totoalpage更新分页，参数element传的是分页的容器
-function initPagination(element){
+function f_InitPagination(element){
     element.html('');
-    var pagenumber = element.attr('pagenumber');
-    var totalpage = element.attr('totalpage');
-    var pMaxLength = element.attr('paginationMaxLength');
-    var onePageIsShow = element.attr('onlyOnePageIsShow');
-    if(isNeedPagination(Number(totalpage),onePageIsShow)){
-        var content = '<ul class="pagination"><li value="0"><a href="javascript:void(0);">«</a></li>';
-        for(var i =1; i<=totalpage;i++){
-            content +='<li value="'+i+'"><a href="javascript:void(0);">'+i+'</a></li>'
-        }
-        content +='<li value="-1"><a href="javascript:void(0);">»</a></li></ul>';
-        element.append(content);
-        element.children('ul').children('li[value='+pagenumber+']').attr('class','active');
-        setDisplayMaxLength(element,pMaxLength);
-        addClickListener(element);
+    var pageNum = Number(element.attr('pageNum'));
+    var pageCount = Number(element.attr('pageCount'));
+    var pageExtra = Number(element.attr('pageExtra'));
+    var beginPage,endPage;
+    if (pageNum-pageExtra>0){
+        beginPage=pageNum-pageExtra;
+    }else{
+        beginPage=1;
+    }
+    if (pageNum+pageExtra>=pageCount){
+        endPage=pageCount;
+    }else{
+        endPage=pageNum+pageExtra;
+    }
+    var firstPage,lastPage;
+    if (beginPage-pageExtra>1){
+        firstPage=beginPage-pageExtra-1;
+    }else{
+        firstPage=1;
+    }
+    if (endPage+pageExtra+1<pageCount){
+        lastPage=endPage+pageExtra+1
+    }else{
+        lastPage=pageCount;
+    }
+    var content = '<ul class="pagination"><li value="'+(pageNum-1==0?1:pageNum-1)+'"><a href="javascript:f_PageClick('+(pageNum-1==0?1:pageNum-1)+');">上一页</a></li>';
+    content+='<li value="'+firstPage+'"><a href="javascript:f_PageClick('+firstPage+');">...</a></li>';
+    for(var i =beginPage; i<=endPage;i++){
+        content +='<li value="'+(-i)+'"><a href="javascript:f_PageClick('+i+');">'+i+'</a></li>'
+    }
+    content +='<li value="'+lastPage+'"><a href="javascript:f_PageClick('+lastPage+');">...</a></li>';
+    content +='<li value="'+(pageNum+1>=pageCount?pageCount:pageNum+1)+'"><a href="javascript:f_PageClick('+(pageNum+1>=pageCount?pageCount:pageNum+1)+');">下一页</a></li></ul>';
+    element.append(content);
+    element.children('ul').children('li[value='+(-pageNum)+']').attr('class','active');
+    element.children('ul').children('li[value='+pageNum+']').attr('class','disabled')
+}
+//点击事件
+function f_PageClick(newPage){
+    if (newPage==pageNum){
+        return;
+    }else{
+        //回调函数
+        f_PageCallBack(newPage);
     }
 }
-function addClickListener(element){
-    element.children('ul').children('li').bind('click',function(){
-        var temp = Number($(this).attr('value'));
-        var pagenumber = Number($(this).parent().parent().attr('pagenumber'));
-        var totalpage = Number($(this).parent().parent().attr('totalpage'));
-        if(temp == 0){
-            temp = pagenumber-1;
-        }else if(temp == -1){
-            temp = pagenumber+1;
-        }
-        if(temp != pagenumber && temp !=0 && temp<=totalpage){
-            $(this).parent().parent().attr('pagenumber',temp);
-            paginationClick(element.attr("id"));
-            initPagination(element);
-        }
-        return false;
-    })
-}
-function checkParamIsPositiveInteger(param){
-    var reg = /^[1-9]+[0-9]*]*$/;
-    return reg.test(param);
-}
-
-function paginationClick(pagination_id){
-    alert(0);
-}
-$(function(){
-    paginationInit();
-});

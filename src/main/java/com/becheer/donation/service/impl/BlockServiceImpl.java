@@ -1,8 +1,8 @@
 package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.BlockMapper;
-import com.becheer.donation.model.extension.ListArticleExtension;
-import com.becheer.donation.model.extension.ListProjectExtension;
+import com.becheer.donation.model.extension.article.ListArticleExtension;
+import com.becheer.donation.model.extension.project.ListProjectExtension;
 import com.becheer.donation.service.IBlockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

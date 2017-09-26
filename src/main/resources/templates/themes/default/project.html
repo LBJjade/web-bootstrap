@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
+
+    <title>project</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
+
+    <style type="text/css">
+        #div_menu{
+            width: 300px;
+            height: 600px;
+            border-left: 1px #eee solid;
+            border-right: 1px #eee solid;
+            border-top: 2px #eee solid;
+            border-bottom: 3px #eee solid;
+        }
+        #div_menu a{
+            display: block;
+            margin: 10px;
+        }
+        #div_menu span{
+            float: left;
+            font-size: 20px;
+        }
+        #div_menu ul{
+            margin-left: 30px;
+            display: none;
+        }
+        #div_menu_name{
+            width: 300px;
+            height: 40px;
+            height: 40px;
+            background-color: #00a0ea;
+            margin-top: 30px;
+        }
+        #div_menu_name p{
+            margin-left: 15px;
+            line-height: 40px;
+            font-size: 18px;
+            color: #fff;
+        }
+        #div_project img{
+            width: 560px;
+            height: 370px;
+            margin: 10px;
+        }
+
+        .div_project_item{
+            width: 100%;
+            height: 140px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-bottom: 1px #cccccc solid;
+        }
+
+        .div_project_item_img{
+            float: left;
+            height: 140px;
+            width:210px;
+        }
+
+        .div_project_item_content{
+            height: 140px;
+            width: 640px;
+            padding-left: 20px;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-3">
+
+            <div id="div_menu_name">
+                <p>慈善项目</p>
+            </div>
+
+            <div id="div_menu">
+                <a class="glyphicon glyphicon-plus" v-on:click="f_SetProjectType(item.id)" v-for="item in items">{{item.name}}</a>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div id="div_navbar">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li>><a href="#">&gt;</a></li>
+                    <li class="active"><a href="#">慈善项目</a></li>
+                </ul>
+            </div>
+            <br/>
+            <div id="div_content" style="min-height: 600px">
+                <div v-for="item in items" class="div_project_item">
+                    <img class="div_project_item_img" :alt="item.projectName" :src="imgUrl+'240x160/'+item.img" />
+                    <div class="div_project_item_content">
+                        <span>&gt;</span><span>{{item.projectName}}</span>
+                        <span style="float: right">{{item.createtime}}</span>
+                        <span style="float: right">发布时间</span>
+                        <br/>
+                        <span>摘要:</span>
+                        <span>{{item.summary}}</span>
+                        <br/>
+                        <a :href="'project/'+item.projectId"><button class="btn btn-primary" style="float: right">查看详情</button></a>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 100%;text-align: center" id="div_page">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="themes/default/footer::footer"></div>
+
+<!--全局JS-->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugin/vue/vue.min.js}"></script>
+<script th:src="@{/plugin/layer/layer.js}"></script>
+<script th:src="@{/plugin/pagination/pagination.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var pageSize=6;
+    var pageNum=1;
+    var pageCount;
+    var imgRoot= /*[[${config.getProjectImage()}]]*/ ;
+    var typeId;
+    var vueContent;
+
+    $(document).ready(function(){
+        f_GetProjectType();
+    });
+
+    function f_GetProjectType() {
+        $.ajax({
+            url:'/project/type',
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if (data.code===200){
+                    new Vue({
+                        el:"#div_menu",
+                        data:{
+                            items:data.result
+                        }
+                    });
+                    if (data.result != null) {
+                        f_SetProjectType(data.result[0].id);
+                    }
+                }
+            }
+        });
+    }
+
+    function f_SetProjectType(tid) {
+        typeId=tid;
+        f_GetProject(tid);
+    }
+
+    function f_GetProject() {
+        $.ajax({
+            url:'/project/list',
+            type:'post',
+            data:{pageSize:pageSize,pageNum:pageNum,tid:typeId},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    pageCount=data.result.pages;
+                    pageNum=data.result.pageNum;
+                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+                    f_InitPagination($("#div_page"));
+                    if (vueContent==undefined) {
+                        vueContent=new Vue({
+                            el: '#div_content',
+                            data: {
+                                items: data.result.list,
+                                imgUrl: imgRoot
+                            }
+                        });
+                    }else{
+                        for (var i = 0; i<data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0,0);
+                    }
+                }
+            }
+        });
+    }
+
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum=newPage;
+        f_GetProject();
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

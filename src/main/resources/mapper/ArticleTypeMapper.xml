@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.becheer.donation.dao.ArticleTypeMapper">
 
-    <resultMap id="ArticleTypeMapper" type="com.becheer.donation.model.extension.ArticleTypeExtension">
+    <resultMap id="ArticleTypeMapper" type="com.becheer.donation.model.extension.article.ArticleTypeExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
         <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
         <result column="article_type_name" jdbcType="VARCHAR" property="articleTypeName" />

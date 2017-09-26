@@ -9,7 +9,7 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.dao.SmsMapper;
 import com.becheer.donation.model.Sms;
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.SmsTemplateExtension;
+import com.becheer.donation.model.extension.sms.SmsTemplateExtension;
 import com.becheer.donation.service.ISmsService;
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.UUID;

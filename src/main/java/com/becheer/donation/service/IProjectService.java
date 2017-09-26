@@ -1,17 +1,37 @@
 package com.becheer.donation.service;
 
 import com.becheer.donation.model.Project;
+import com.becheer.donation.model.extension.project.ListProjectExtension;
+import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import com.github.pagehelper.PageInfo;
+
+import java.util.List;
 
 public interface IProjectService {
 
     /**
      * 根据主键id获取项目
     */
-    Project getProject(long id);
+    ProjectDetailExtension GetProjectDetail(long id);
 
     /**
      * 获取项目列表
      */
-    PageInfo<Project> getProjectList(int pageNum,int pageSize);
+    PageInfo<ListProjectExtension> GetProjectList(int pageNum,int pageSize);
+
+    /**
+     * 根据项目类别获取项目
+     * @param projectType
+     * @return
+     */
+    List<ListProjectExtension> GetProjectOption(long projectType);
+
+    /**
+     * 根据项目类别获取项目
+     * @param pageNum
+     * @param pageSize
+     * @param projectTypeId
+     * @return
+     */
+    PageInfo<ListProjectExtension> GetProjectList(int pageNum,int pageSize,int projectTypeId);
 }

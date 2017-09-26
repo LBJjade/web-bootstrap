@@ -6,12 +6,8 @@ package com.becheer.donation.service;
 * Date : 2017-09-18
 */
 
-import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.ArticleTypeExtension;
-import com.becheer.donation.model.extension.ListArticleExtension;
+import com.becheer.donation.model.extension.article.ListArticleExtension;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 
 public interface IArticleService {

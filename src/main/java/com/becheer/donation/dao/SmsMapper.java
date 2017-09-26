@@ -7,8 +7,10 @@ package com.becheer.donation.dao;
 */
 
 import com.becheer.donation.model.Sms;
-import com.becheer.donation.model.extension.SmsTemplateExtension;
+import com.becheer.donation.model.extension.sms.SmsTemplateExtension;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface SmsMapper {
 
     //根据主键Id获取短信模板

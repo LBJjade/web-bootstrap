@@ -1,31 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.becheer.donation.dao.ProjectMapper">
-  <!--<resultMap id="BaseResultMap" type="com.becheer.donation.model.Project">-->
-    <!--<id column="id_" jdbcType="BIGINT" property="id" />-->
-    <!--<result column="project_no" jdbcType="VARCHAR" property="projectNo" />-->
-    <!--<result column="project_name" jdbcType="VARCHAR" property="projectName" />-->
-    <!--<result column="project_type_id" jdbcType="BIGINT" property="projectTypeId" />-->
-    <!--<result column="summary" jdbcType="VARCHAR" property="summary" />-->
-    <!--<result column="project_target_amount" jdbcType="BIGINT" property="projectTargetAmount" />-->
-    <!--<result column="thumb_img" jdbcType="VARCHAR" property="thumbImg" />-->
-    <!--<result column="enable_" jdbcType="INTEGER" property="enable" />-->
-    <!--<result column="create_time" jdbcType="DATE" property="createTime" />-->
-    <!--<result column="create_by" jdbcType="BIGINT" property="createBy" />-->
-    <!--<result column="update_time" jdbcType="DATE" property="updateTime" />-->
-    <!--<result column="update_by" jdbcType="BIGINT" property="updateBy" />-->
-    <!--<result column="start_time" jdbcType="DATE" property="startTime" />-->
-    <!--<result column="end_time" jdbcType="DATE" property="endTime" />-->
-    <!--<result column="long_term" jdbcType="INTEGER" property="longTerm" />-->
-    <!--<result column="remark_" jdbcType="VARCHAR" property="remark" />-->
-    <!--<result column="record_status" jdbcType="INTEGER" property="recordStatus" />-->
-  <!--</resultMap>-->
-  <!--<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.becheer.donation.model.Project">-->
-    <!--<result column="content" jdbcType="LONGVARCHAR" property="content" />-->
-  <!--</resultMap>-->
 
-
-  <resultMap id="ListProjectResultMap" type="com.becheer.donation.model.extension.ListProjectExtension">
+  <resultMap id="DetailResultMap" type="com.becheer.donation.model.extension.project.ProjectDetailExtension">
+    <id column="id_" jdbcType="BIGINT" property="id" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="long_term" jdbcType="INTEGER" property="longTerm"/>
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="accepted_amount" jdbcType="BIGINT" property="acceptedAmount" />
+    <result column="project_target_amount" jdbcType="BIGINT" property="projectTargetAmount" />
+    <result column="thumb_img" jdbcType="VARCHAR" property="thumbImg" />
+  </resultMap>
+  
+  <resultMap id="ListProjectResultMap" type="com.becheer.donation.model.extension.project.ListProjectExtension">
     <id column="id_" jdbcType="BIGINT" property="projectId" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="summary" jdbcType="VARCHAR" property="summary" />
@@ -33,9 +22,9 @@
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="thumb_img" jdbcType="VARCHAR" property="img" />
   </resultMap>
-
+  
   <sql id="ListPageColumn">
-    id_,project_name,summary,create_time,thumb_img
+    id_,project_type_id,project_name,summary,create_time,thumb_img
   </sql>
 
   <sql id="Detail_Page_column">
@@ -72,7 +61,7 @@
     </where>
   </sql>
 
-  <select id="selectByExample" parameterType="com.becheer.donation.model.condition.ProjectCondition" resultMap="ListProjectResultMap">
+  <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.ProjectCondition" resultMap="ListProjectResultMap">
     select
     <include refid="ListPageColumn" />
     from dnt_project
@@ -92,11 +81,28 @@
     </if>
   </select>
 
-  <!--<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">-->
-    <!--select -->
-    <!--<include refid="Detail_Page_column" />-->
-    <!--from dnt_project-->
-    <!--where id_ = #{id,jdbcType=BIGINT}-->
-  <!--</select>-->
+  <select id="SelectOptionList" parameterType="java.lang.Long" resultMap="ListProjectResultMap">
+    SELECT
+      id_,
+      project_type_id,
+      project_name
+    FROM dnt_project WHERE enable_ = 1
+  </select>
+  
+  <select id="SelectProjectDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
+    SELECT
+      id_,
+      project_name,
+      start_time,
+      end_time,
+      long_term,
+      content,
+      project_target_amount,
+      accepted_amount,
+      thumb_img
+    FROM
+      dnt_project
+    WHERE id_=#{projectId,jdbcType=BIGINT} AND enable_ = 1
+  </select>
 
 </mapper>

@@ -25,7 +25,7 @@
         <result column="remark_" jdbcType="VARCHAR" property="remark" />
     </resultMap>
 
-    <resultMap id="ExtensionResultMap" type="com.becheer.donation.model.extension.SmsTemplateExtension">
+    <resultMap id="ExtensionResultMap" type="com.becheer.donation.model.extension.sms.SmsTemplateExtension">
         <id column="id_" jdbcType="BIGINT" property="templateId" />
         <result column="content" jdbcType="VARCHAR" property="content" />
     </resultMap>

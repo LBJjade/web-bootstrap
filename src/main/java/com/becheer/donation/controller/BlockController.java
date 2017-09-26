@@ -7,8 +7,8 @@ package com.becheer.donation.controller;
 */
 
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.ListArticleExtension;
-import com.becheer.donation.model.extension.ListProjectExtension;
+import com.becheer.donation.model.extension.article.ListArticleExtension;
+import com.becheer.donation.model.extension.project.ListProjectExtension;
 import com.becheer.donation.service.IBlockService;
 import com.becheer.donation.strings.Message;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class BlockController extends BaseController {
 
     @PostMapping(value = "/project")
     @ResponseBody
-    public ResponseDto GetProject(HttpServletRequest request, @RequestParam int blockId) {
+    public ResponseDto GetProject(HttpServletRequest request, @RequestParam long blockId) {
         try {
             if (blockId <= 0) {
                 return ResponseDto.GetResponse(400, Message.PARAMETER_ERROR);

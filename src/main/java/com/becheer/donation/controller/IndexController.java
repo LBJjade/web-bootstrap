@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
  * 首页控制器
  */
 @Controller
+@RequestMapping({"/index",""})
 public class IndexController extends BaseController {
 
     @Resource
@@ -21,7 +22,7 @@ public class IndexController extends BaseController {
      * 首页
      * @return
      */
-    @GetMapping(value = {"/","/index"})
+    @GetMapping(value = "")
     public String index(HttpServletRequest request) {
         return this.render("index");
     }
@@ -38,7 +39,6 @@ public class IndexController extends BaseController {
         if (pageSize>50||pageSize<=0){
             pageSize=10;
         }
-        return ResponseDto.GetResponse(200,"success",projectService.getProjectList(pageNum,pageSize));
+        return ResponseDto.GetResponse(200,"success",projectService.GetProjectList(pageNum,pageSize));
     }
-
 }
