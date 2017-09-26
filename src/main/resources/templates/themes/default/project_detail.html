@@ -154,7 +154,8 @@
                                                     </div>
                                                 </div>
                                                 <div style="width: 100%;text-align: center">
-                                                    <button class="btn btn-primary" onclick="f_GetMoreProgress()">加载更多</button>
+                                                    <button class="btn btn-primary btn_show_more" onclick="f_GetMoreProgress()">加载更多</button>
+                                                    <p id="p_no_data" style="line-height: 200px;display: none">暂无数据</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -343,6 +344,10 @@
             success:function (data) {
                 if(data.code===200){
                     totalPage=data.result.pages;
+                    if (data.result.list.length===0){
+                        $(".btn_show_more").hide();
+                        $("#p_no_data").show();
+                    }
                     f_GetClass(data);
                 }
             }
