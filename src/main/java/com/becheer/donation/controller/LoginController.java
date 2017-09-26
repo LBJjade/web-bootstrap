@@ -6,7 +6,9 @@ package com.becheer.donation.controller;
 * Date : 2017-09-15
 */
 
+import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
@@ -49,7 +51,16 @@ public class LoginController extends BaseController {
         if (!sessionCode.equals(code.toUpperCase())){
             return new ResponseDto(403,Message.LOGIN_CODE_ERROE);
         }
-        return memberService.Login(mobile,pwd);
+        ResponseDto<Member> result = memberService.Login(mobile,pwd);
+        if (result.getCode()==407){
+            MemberSessionExtension memberSessionExtension=new MemberSessionExtension();
+            memberSessionExtension.setMemberId(result.getResult().getId());
+            memberSessionExtension.setMemberName(result.getResult().getMemberName());
+            memberSessionExtension.setMobile(result.getResult().getMobile());
+            String a = memberSessionExtension.getMemberName();
+            request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE,memberSessionExtension);
+        }
+        return result;
     }
 
 }

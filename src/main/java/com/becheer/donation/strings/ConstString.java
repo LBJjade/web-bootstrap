@@ -13,4 +13,7 @@ public class ConstString {
 
     //登录二维码SessionKey
     public static final String LOGIN_VERIFY_CODE="LoginVerifyCode";
+
+    //登录Session
+    public static final String MEMBER_SESSION_CODE="member";
 }

@@ -12,5 +12,8 @@ import java.util.List;
 */
 @Component
 public interface NoContractDonateMapper {
-    List<NoContractDonateExtension> selectRecentNoContractDonate(int num);
+    List<NoContractDonateExtension> SelectRecentNoContractDonate(int num);
+
+
+    List<NoContractDonateExtension> SelectRecentNoContractDonateByProject(long projectId,int num);
 }

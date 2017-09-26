@@ -85,13 +85,13 @@ a:visited,a:focus,a:hover{
     list-style: none;
 }
 
-#ul_login{
+.ul_login{
     list-style: none;
     float: right;
     margin-top: 70px;
 }
 
-#ul_login li{
+.ul_login li{
     float: left;
     font-weight: 300;
     font-size: 14px;

@@ -15,7 +15,7 @@
     </resultMap>
 
 
-    <select id="selectRecentNoContractDonate" parameterType="java.lang.Integer" resultMap="NoContractDonateMap">
+    <select id="SelectRecentNoContractDonate" parameterType="java.lang.Integer" resultMap="NoContractDonateMap">
         SELECT
         d.id_,
         m.member_name,
@@ -34,6 +34,27 @@
         WHERE d.enable_=1
         ORDER by d.create_time DESC
         LIMIT #{number,jdbcType=INTEGER}
+    </select>
+
+    <select id="SelectRecentNoContractDonateByProject" resultMap="NoContractDonateMap">
+        SELECT
+        d.id_,
+        m.member_name,
+        d.donated_amount,
+        d.project_type_id,
+        t.project_type_name,
+        d.project_id,
+        p.project_name,
+        m.avator_img,
+        d.ip,
+        d.create_time
+        FROM dnt_no_contract_donate d
+        LEFT JOIN dnt_project p ON d.project_id=p.id_
+        LEFT JOIN dnt_project_type t ON d.project_type_id=t.id_
+        LEFT JOIN dnt_member m ON d.member_id= m.id_
+        WHERE d.enable_=1 AND  d.project_id=#{param1}
+        ORDER by d.create_time DESC
+        LIMIT #{param2}
     </select>
     
 </mapper>

@@ -27,12 +27,21 @@
             <img id="img_logo" th:src="@{~/image/logo/375x100.png}"/>
         </div>
         <div class="col-sm-6" style="height: 80px">
-            <ul id="ul_login">
+            <ul class="ul_login" id="ul_login">
                 <li>您好,欢迎您!</li>
                 <li></li>
                 <li><a href="member/login.html">登录</a></li>
                 <li>|</li>
                 <li><a href="register">注册</a></li>
+            </ul>
+            <ul class="ul_login" id="ul_logined" style="display: none">
+                <li></li>
+                <li></li>
+                <li><a href="member/login.html">消息(5)</a></li>
+                <li>|</li>
+                <li><a href="register">个人中心</a></li>
+                <li>|</li>
+                <li><a href="register">退出</a></li>
             </ul>
         </div>
     </div>
@@ -53,5 +62,18 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+        var memberId= /*[[${session.member==null?0:session.member.getMemberId()}]]*/;
+        var memberMobile=/*[[${session.member==null?0:session.member.getMobile()}]]*/;
+        var memberName=/*[[${session.member==null?0:session.member.getMemberName()}]]*/;
+        if (memberId!=0){
+            $("#ul_login").hide();
+            $("#ul_logined").show();
+            $("#ul_logined").children().first().html((memberName==null?memberMobile:memberName)+",欢迎您！")
+        }
+    /*]]>*/
+</script>
 </body>
 </html>

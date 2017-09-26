@@ -46,7 +46,7 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public ResponseDto Login(String mobile,String pwd) {
-         Member member = memberMapper.selectMemberByMobile(mobile);
+         Member member = memberMapper.SelectMemberByMobile(mobile);
          if (member==null){
              return new ResponseDto(404, Message.LOGIN_MOBILE_NOT_EXIST);
          }
@@ -56,7 +56,7 @@ public class MemberServiceImpl implements IMemberService {
          if (!member.getPassword().equals(HashUtil.GetPassword(pwd))){
              return new ResponseDto(406,Message.LOGIN_PASSWORD_ERROR);
          }else{
-             return new ResponseDto(407,Message.LOGIN_SUCCESS);
+             return new ResponseDto(407,Message.LOGIN_SUCCESS,member);
          }
     }
 }

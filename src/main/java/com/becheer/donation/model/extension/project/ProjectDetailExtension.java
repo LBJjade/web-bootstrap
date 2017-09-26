@@ -9,7 +9,9 @@ package com.becheer.donation.model.extension.project;
 import java.util.Date;
 
 public class ProjectDetailExtension {
-    private int id;
+    private long id;
+
+    private long projectTypeId;
 
     private String projectName;
 
@@ -27,12 +29,20 @@ public class ProjectDetailExtension {
 
     private String thumbImg;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public long getProjectTypeId() {
+        return projectTypeId;
+    }
+
+    public void setProjectTypeId(long projectTypeId) {
+        this.projectTypeId = projectTypeId;
     }
 
     public String getProjectName() {

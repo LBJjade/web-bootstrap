@@ -21,12 +21,13 @@ public class NoContractDonateServiceImpl implements INoContractDonateService {
 
     @Override
     public List<NoContractDonateExtension> GetRecentNoContractDonate(int num) {
-        List<NoContractDonateExtension> result= noContractDonateMapper.selectRecentNoContractDonate(num);
-//        if (result!=null){
-//            for (int i=0;i<result.size();i++){
-//
-//            }
-//        }
+        List<NoContractDonateExtension> result= noContractDonateMapper.SelectRecentNoContractDonate(num);
+        return result;
+    }
+
+    @Override
+    public List<NoContractDonateExtension> GetRecentNoContractDonate(long projectId,int num) {
+        List<NoContractDonateExtension> result= noContractDonateMapper.SelectRecentNoContractDonateByProject(projectId,num);
         return result;
     }
 }

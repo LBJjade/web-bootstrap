@@ -35,9 +35,9 @@ public class ProjectServiceImpl implements IProjectService {
     }
 
     @Override
-    public List<ListProjectExtension> GetProjectOption(long projectType) {
-        List<ListProjectExtension> result = projectMapper.SelectOptionList(projectType);
-        return result;
+    public List<ListProjectExtension> GetRelationProject(long typeId, long projectId, int nums) {
+        List<ListProjectExtension> data =projectMapper.SelectRelationProject(typeId,projectId,nums);
+        return data;
     }
 
     @Override

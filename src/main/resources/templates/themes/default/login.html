@@ -112,13 +112,16 @@
             type:'post',
             dataType:'json',
             success:function (data) {
-                layer.alert(data.message,function () {
-                    if (data.code===200){
-                        window.location.href="/member/index"
-                    }else{
-                        layer.closeAll('dialog');
-                    }
-                })
+                if (data.code===200){
+                    layer.alert(data.msg,function () {
+                        window.location.href = "/member/index";
+                    });
+                    setTimeout(function(){
+                        window.location.href = "/member/index";
+                    },3000);
+                }else{
+                    layer.alert(data.msg);
+                }
             }
         });
 

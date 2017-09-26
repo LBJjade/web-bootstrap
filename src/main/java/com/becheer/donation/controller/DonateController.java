@@ -39,4 +39,18 @@ public class DonateController extends BaseController {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
+
+    @ResponseBody
+    @PostMapping("/project")
+    public ResponseDto<List<NoContractDonateExtension>>GetRecentDonate(HttpServletRequest request, @RequestParam int num,@RequestParam long projectId){
+        if (num>20||num<1){
+            num=8;
+        }
+        try{
+            List<NoContractDonateExtension> resultList= noContractDonateService.GetRecentNoContractDonate(projectId, num);
+            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS,resultList);
+        }catch (Exception ex){
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
 }

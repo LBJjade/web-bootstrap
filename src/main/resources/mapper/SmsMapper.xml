@@ -11,7 +11,7 @@
         <result column="reply" jdbcType="VARCHAR" property="reply" />
         <result column="sms_type" jdbcType="VARCHAR" property="smsType" />
         <result column="send_date_time" jdbcType="DATE" property="sendTime" />
-        <result column="isinvalid_date_time" jdbcType="TIMESTAMP" property="invalidTime" />
+        <result column="invalid_date_time" jdbcType="TIMESTAMP" property="invalidTime" />
         <result column="send_status" jdbcType="VARCHAR" property="sendStatus" />
         <result column="send_id" jdbcType="VARCHAR" property="sendId" />
         <result column="sms_credits" jdbcType="VARCHAR" property="smsCredit" />
@@ -60,7 +60,7 @@
         code,
         text,
         send_date_time,
-        isinvalid_date_time,
+        invalid_date_time,
         enable_,
         create_time
         )

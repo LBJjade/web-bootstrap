@@ -77,6 +77,12 @@
             float: left;
         }
 
+        .recommend_item{
+            height: 40px;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+
     </style>
 </head>
 <body>
@@ -170,72 +176,24 @@
         <div class="col-sm-3" style="padding-left: 5px; height: 400px;margin-top: 10px">
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
-                    <h2 class="h2_title">参与动态</h2>
-                    <ul>
-                        <li><img src="/image/avator/1.jpg"/></li>
-                        <li>广州市网友</li>
-                        <li>捐赠 100元</li>
-                    </ul>
-                    <ul>
-                        <li><img src="/image/avator/2.jpg"/></li>
-                        <li>游**天</li>
-                        <li>捐赠 800元</li>
-                    </ul>
-                    <ul>
-                        <li><img src="/image/avator/3.jpg"/></li>
-                        <li>深圳市网友</li>
-                        <li>捐赠 200元</li>
-                    </ul>
-                    <ul>
-                        <li><img src="/image/avator/4.jpg"/></li>
-                        <li>珠海市网友</li>
-                        <li>捐赠 500元</li>
-                    </ul>
-                    <ul>
-                        <li><img src="/image/avator/5.jpg"/></li>
-                        <li>唯***婉</li>
-                        <li>捐赠 600元</li>
-                    </ul>
-                    <ul>
-                        <li><img src="/image/avator/1.jpg"/></li>
-                        <li>佛山市网友</li>
-                        <li>捐赠 50元</li>
-                    </ul>
-                    <ul>
-                        <li><img src="/image/avator/2.jpg"/></li>
-                        <li>明***空</li>
-                        <li>捐赠 150元</li>
+                    <h2 class="h2_title">爱心动态</h2>
+                    <ul v-for="item in items">
+                        <li><img :src="imgUrl+'avator/'+item.avator" /></li>
+                        <li>{{item.memberName}}</li>
+                        <li>捐赠本项目{{item.amount/1000}}元</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="right_panel">
+            <div class="right_panel" id="div_relative">
                 <div class="div_title">
                     <h2 class="h2_title">相关项目</h2>
-                    <ul>
-                        <li><img src="/image/project/90x60/1.jpg"/></li>
-                        <li><a href="project.html" target="_blank">孤寡老人助困基金项目</a></li>
-                    </ul>
-                    <br/>
-                    <ul>
-                        <li><img src="/image/project/90x60/2.jpg"/></li>
-                        <li><a href="project.html" target="_blank">军人贫困学子助学基金项目</a></li>
-                    </ul>
-                    <br/>
-                    <ul>
-                        <li><img src="/image/project/90x60/3.jpg"/></li>
-                        <li><a href="project.html" target="_blank">中医名家卢汝昌义诊基金项目</a></li>
-                    </ul>
-                    <br/>
-                    <ul>
-                        <li><img src="/image/project/90x60/1.jpg"/></li>
-                        <li><a href="project.html" target="_blank">先心儿童的‘心’声项目</a></li>
-                    </ul>
-                    <br/>
-                    <ul>
-                        <li><img src="/image/project/90x60/2.jpg"/></li>
-                        <li><a href="project.html" target="_blank">困境儿童关怀项目</a></li>
-                    </ul>
+                    <div class="recommend_item"  v-for="item in items">
+                        <ul>
+                            <li><img :alt="item.projectName" :src="imgUrl+'90x60/'+item.img" /></li>
+                            <li><a href="project.html" target="_blank">{{item.projectName}}</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -318,6 +276,9 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var projectId=/*[[${project.getId()}]]*/;
+    var projectTypeId=/*[[${project.getProjectTypeId()}]]*/;
+    var avatorRoot= /*[[${config.getImageRoot()}]]*/;
+    var imgRoot= /*[[${config.getProjectImage()}]]*/ ;
     var pageSize=2;
     var pageNum=1;
     var totalPage=0;
@@ -325,8 +286,11 @@
 
     $(document).ready(function () {
         f_GetProjectProgress();
+        f_GetRecentDonate();
+        f_GetRelative();
     });
 
+    //获取更多按钮点击事件
     function f_GetMoreProgress() {
         if(pageNum>=totalPage){
             layer.alert("没有更多数据了")
@@ -335,6 +299,7 @@
         f_GetProjectProgress();
     }
 
+    //获取项目进展
     function f_GetProjectProgress() {
         $.ajax({
             url:'/progress/list',
@@ -354,6 +319,7 @@
         });
     }
 
+    //获取时间轴图标样式
     function f_GetClass(data) {
         $.each(data.result.list, function (i, item) {
             item.createTime = f_FormatDateTime(item.createTime);
@@ -394,6 +360,49 @@
             }
             vueProgress.items.splice(currentNum+data.result.list.length);
         }
+    }
+
+    //获取项目最近捐赠
+    function f_GetRecentDonate() {
+        $.ajax({
+            url:'/donate/project',
+            type:'post',
+            data:{projectId:projectId,num:7},
+            dataType:'json',
+            success:function (data) {
+                if (data.code===200){
+                    new Vue({
+                        el:"#div_recent",
+                        data:{
+                            items:data.result,
+                            imgUrl:"../"+avatorRoot
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //获取相关项目
+    function f_GetRelative() {
+        $.ajax({
+            url:'/project/relative',
+            type:'post',
+            data:{tid:projectTypeId,pid:projectId,nums:8},
+            dataType:'json',
+            success:function (data) {
+//                alert(JSON.stringify(data));
+                if (data.code===200){
+                    new Vue({
+                        el:'#div_relative',
+                        data:{
+                            items:data.result,
+                            imgUrl:"../"+imgRoot
+                        }
+                    });
+                }
+            }
+        });
     }
     /*]]>*/
 </script>

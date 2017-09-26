@@ -13,5 +13,5 @@ import org.springframework.stereotype.Component;
 public interface MemberMapper {
     int insertMember(Member member);
 
-    Member selectMemberByMobile(String mobile);
+    Member SelectMemberByMobile(String mobile);
 }

@@ -4,6 +4,7 @@
 
   <resultMap id="DetailResultMap" type="com.becheer.donation.model.extension.project.ProjectDetailExtension">
     <id column="id_" jdbcType="BIGINT" property="id" />
+    <result column="project_type_id" jdbcType="BIGINT" property="projectTypeId" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
@@ -81,17 +82,18 @@
     </if>
   </select>
 
-  <select id="SelectOptionList" parameterType="java.lang.Long" resultMap="ListProjectResultMap">
+  <select id="SelectRelationProject"  resultMap="ListProjectResultMap">
     SELECT
       id_,
-      project_type_id,
-      project_name
-    FROM dnt_project WHERE enable_ = 1
+      project_name,
+      thumb_img
+    FROM dnt_project WHERE enable_ = 1 AND project_type_id= #{param1} AND  id_ != #{param2} LIMIT #{param3}
   </select>
   
   <select id="SelectProjectDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
     SELECT
       id_,
+      project_type_id,
       project_name,
       start_time,
       end_time,

@@ -83,6 +83,21 @@ public class ProjectController extends BaseController {
         }
     }
 
+    @PostMapping("/relative")
+    @ResponseBody
+    public ResponseDto GetRelativeProject(HttpServletRequest request,@RequestParam long tid,@RequestParam int nums,@RequestParam long pid){
+        if (nums<1||nums>20){
+            nums=8;
+        }
+        try{
+            List<ListProjectExtension> result = projectService.GetRelationProject(tid,pid,nums);
+            return new ResponseDto(200,Message.PROJECT_GET_LIST_SUCCESS,result);
+        }catch(Exception ex){
+            LOGGER.error("GetProject", ex);
+            return new ResponseDto(500,Message.SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/{pid}")
     public String View_Detail(HttpServletRequest request,@PathVariable long pid){
         ProjectDetailExtension result=projectService.GetProjectDetail(pid);

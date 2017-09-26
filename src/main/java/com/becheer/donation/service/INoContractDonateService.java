@@ -11,4 +11,6 @@ import java.util.List;
 */
 public interface INoContractDonateService {
     List<NoContractDonateExtension> GetRecentNoContractDonate(int num);
+
+    List<NoContractDonateExtension> GetRecentNoContractDonate(long projectId,int num);
 }

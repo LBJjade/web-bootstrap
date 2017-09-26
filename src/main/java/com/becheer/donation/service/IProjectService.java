@@ -21,10 +21,8 @@ public interface IProjectService {
 
     /**
      * 根据项目类别获取项目
-     * @param projectType
-     * @return
      */
-    List<ListProjectExtension> GetProjectOption(long projectType);
+    List<ListProjectExtension> GetRelationProject(long typeId,long projectId,int nums);
 
     /**
      * 根据项目类别获取项目

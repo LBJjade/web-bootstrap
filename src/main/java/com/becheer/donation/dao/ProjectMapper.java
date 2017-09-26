@@ -13,7 +13,9 @@ public interface ProjectMapper {
 
     List<ListProjectExtension> SelectByCondition(ProjectCondition condition);
 
-    List<ListProjectExtension> SelectOptionList(long typeId);
+    List<ListProjectExtension> SelectRelationProject(long typeId,long projectId,int nums);
+
+//    List<ListProjectExtension> SelectProjectByTypeId(long projectTypeId,int nums);
 
     ProjectDetailExtension SelectProjectDetail(long projectId);
 
