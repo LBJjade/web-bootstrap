@@ -99,7 +99,7 @@
             <br/>
             <div id="div_content" style="min-height: 600px">
                 <div v-for="item in items" class="div_project_item">
-                    <img class="div_project_item_img" :alt="item.projectName" :src="imgUrl+'240x160/'+item.img" />
+                    <img class="div_project_item_img" :alt="item.projectName" :src="imgUrl+'project/240x160/'+item.img" />
                     <div class="div_project_item_content">
                         <span>&gt;</span><span>{{item.projectName}}</span>
                         <span style="float: right">{{item.createtime}}</span>
@@ -132,7 +132,6 @@
     var pageSize=6;
     var pageNum=1;
     var pageCount;
-    var imgRoot= /*[[${config.getProjectImage()}]]*/ ;
     var typeId;
     var vueContent;
 

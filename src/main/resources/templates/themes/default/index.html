@@ -92,7 +92,7 @@
                 </div>
                 <ul id="ul_img">
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
-                        <a href="project.html" target="_blank"><img :alt="item.projectName" :src="imgUrl+'900x600/'+item.img"/></a>
+                        <a href="project.html" target="_blank"><img :alt="item.projectName" :src="imgUrl+'project/900x600/'+item.img"/></a>
                     </li>
                 </ul>
                 <div id="div_banner_title">
@@ -139,7 +139,7 @@
             <div v-for="item in items">
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
-                    <img :alt="item.projectName" :src="imgUrl+'240x160/'+item.img" style="float: left"/>
+                    <img :alt="item.projectName" :src="imgUrl+'project/240x160/'+item.img" style="float: left"/>
                     <a>{{item.projectName}}</a>
                     <a>发布时间:{{item.createTime}}</a>
                     <p><span>摘要:</span>{{item.summary}}</p>
@@ -168,7 +168,7 @@
                     <h2 class="h2_title">项目推荐</h2>
                     <div class="recommend_item"  v-for="item in items">
                         <ul>
-                            <li><img :alt="item.projectName" :src="imgUrl+'90x60/'+item.img" /></li>
+                            <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img" /></li>
                             <li><a href="project.html" target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
@@ -227,7 +227,6 @@
 <!--全局JS-->
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/banner/js.js}"></script>
-<script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <!--页面JS-->
@@ -237,8 +236,6 @@
     var pageSize=8;
     var pageNum=1;
     var pageCount;
-    var imgRoot= /*[[${config.getProjectImage()}]]*/ ;  //图片服务器地址
-    var avatorRoot= /*[[${config.getImageRoot()}]]*/;
     var vueContent;
 
     $(document).ready(function () {
@@ -366,7 +363,7 @@
                         el:"#div_recent",
                         data:{
                             items:data.result,
-                            imgUrl:avatorRoot
+                            imgUrl:imgRoot
                         }
                     });
                 }

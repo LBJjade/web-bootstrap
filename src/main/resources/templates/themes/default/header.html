@@ -63,16 +63,18 @@
     </div>
 </div>
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-        var memberId= /*[[${session.member==null?0:session.member.getMemberId()}]]*/;
-        var memberMobile=/*[[${session.member==null?0:session.member.getMobile()}]]*/;
-        var memberName=/*[[${session.member==null?0:session.member.getMemberName()}]]*/;
-        if (memberId!=0){
-            $("#ul_login").hide();
-            $("#ul_logined").show();
-            $("#ul_logined").children().first().html((memberName==null?memberMobile:memberName)+",欢迎您！")
-        }
+    var imgRoot= /*[[${config.getImageRoot()}]]*/;
+    var docRoot= /*[[${config.getDocRoot()}]]*/
+    var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
+
+    if (memberInfo!=null){
+        $("#ul_login").hide();
+        $("#ul_logined").show();
+        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！")
+    }
     /*]]>*/
 </script>
 </body>

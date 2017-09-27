@@ -14,4 +14,6 @@ public interface MemberMapper {
     int insertMember(Member member);
 
     Member SelectMemberByMobile(String mobile);
+
+    Member SelectMemberById(Long memberId);
 }

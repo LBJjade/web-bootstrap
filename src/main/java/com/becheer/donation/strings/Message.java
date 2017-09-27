@@ -65,4 +65,17 @@ public class Message {
     public static final String PROJECT_GET_LIST_SUCCESS="获取项目列表成功";
 
     public static final String PROJECT_PROGRESS_GET_SUCCESS="获取项目进展成功";
+
+    /**
+     * 个人信息页面
+     */
+
+    public static final String MEMBER_GET_SUCCESS="获取会员成功";
+
+    public static final String MEMBER_NOT_EXISTS="会员不存在";
+
+    public static final String MEMBER_DISABLED="会员已禁用";
+
+    public static final String MEMBER_ROLE_ERROR="未知的角色";
+
 }

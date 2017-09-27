@@ -61,4 +61,9 @@
         WHERE mobile=#{mobile,jdbcType=VARCHAR}
     </select>
 
+    <select id="SelectMemberById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM dnt_member
+        where id_=#{memberId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

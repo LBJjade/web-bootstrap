@@ -6,6 +6,7 @@ package com.becheer.donation.controller;
 * Date : 2017-09-15
 */
 
+import com.alibaba.fastjson.JSON;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
@@ -55,10 +56,12 @@ public class LoginController extends BaseController {
         if (result.getCode()==407){
             MemberSessionExtension memberSessionExtension=new MemberSessionExtension();
             memberSessionExtension.setMemberId(result.getResult().getId());
-            memberSessionExtension.setMemberName(result.getResult().getMemberName());
+            memberSessionExtension.setMemberName(result.getResult().getMemberName()==null?"":result.getResult().getMemberName());
             memberSessionExtension.setMobile(result.getResult().getMobile());
-            String a = memberSessionExtension.getMemberName();
-            request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE,memberSessionExtension);
+            memberSessionExtension.setRole(result.getResult().getRole());
+            memberSessionExtension.setValidation(result.getResult().getValidation());
+
+            request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
         }
         return result;
     }

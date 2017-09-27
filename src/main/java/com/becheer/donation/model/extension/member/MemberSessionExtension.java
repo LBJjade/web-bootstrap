@@ -13,6 +13,10 @@ public class MemberSessionExtension {
 
     private String mobile;
 
+    private int role;
+
+    private int validation;
+
     public long getMemberId() {
         return memberId;
     }
@@ -35,5 +39,21 @@ public class MemberSessionExtension {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public int getValidation() {
+        return validation;
+    }
+
+    public void setValidation(int validation) {
+        this.validation = validation;
     }
 }

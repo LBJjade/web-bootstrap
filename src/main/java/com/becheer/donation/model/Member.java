@@ -15,7 +15,7 @@ public class Member {
 
     private String organizationType;
 
-    private int organizationCode;
+    private String organizationCode;
 
     private String address;
 
@@ -95,11 +95,11 @@ public class Member {
         this.organizationType = organizationType;
     }
 
-    public int getOrganizationCode() {
+    public String getOrganizationCode() {
         return organizationCode;
     }
 
-    public void setOrganizationCode(int organizationCode) {
+    public void setOrganizationCode(String organizationCode) {
         this.organizationCode = organizationCode;
     }
 

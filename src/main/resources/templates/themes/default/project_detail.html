@@ -99,7 +99,7 @@
                 </ul>
             </div>
             <div id="div_project">
-                <img th:src='${"../"+config.getProjectImage()+"900x600/"+project.getThumbImg()}'/>
+                <img th:src='${config.getImageRoot()+"project/900x600/"+project.getThumbImg()}'/>
             </div>
             <div id="div_project_info">
                 <div class="div_title">
@@ -190,7 +190,7 @@
                     <h2 class="h2_title">相关项目</h2>
                     <div class="recommend_item"  v-for="item in items">
                         <ul>
-                            <li><img :alt="item.projectName" :src="imgUrl+'90x60/'+item.img" /></li>
+                            <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img" /></li>
                             <li><a href="project.html" target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
@@ -277,8 +277,6 @@
     /*<![CDATA[*/
     var projectId=/*[[${project.getId()}]]*/;
     var projectTypeId=/*[[${project.getProjectTypeId()}]]*/;
-    var avatorRoot= /*[[${config.getImageRoot()}]]*/;
-    var imgRoot= /*[[${config.getProjectImage()}]]*/ ;
     var pageSize=2;
     var pageNum=1;
     var totalPage=0;
@@ -375,7 +373,7 @@
                         el:"#div_recent",
                         data:{
                             items:data.result,
-                            imgUrl:"../"+avatorRoot
+                            imgUrl:imgRoot
                         }
                     });
                 }
@@ -397,7 +395,7 @@
                         el:'#div_relative',
                         data:{
                             items:data.result,
-                            imgUrl:"../"+imgRoot
+                            imgUrl:imgRoot
                         }
                     });
                 }
