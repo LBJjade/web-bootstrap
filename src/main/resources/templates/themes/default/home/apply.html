@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
+
+    <title>index</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <style type="text/css">
+        #div_menu{
+            width: 200px;
+            height: 600px;
+            border-left: 1px #eee solid;
+            border-right: 1px #eee solid;
+            border-top: 2px #eee solid;
+            border-bottom: 3px #eee solid;
+        }
+        #div_menu a{
+            display: block;
+            margin: 10px;
+        }
+
+        #div_menu span{
+            float: left;
+            font-size: 20px;
+        }
+        #div_menu ul{
+            margin-left: 30px;
+            display: none;
+        }
+        #div_menu_name{
+            width: 200px;
+            height: 40px;
+            height: 40px;
+            background-color: #00a0ea;
+            margin-top: 15px;
+        }
+        #div_menu_name p{
+            margin-left: 15px;
+            line-height: 40px;
+            font-size: 18px;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="div_navbar" style="margin-top: 10px">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li>><a href="#">&gt;</a></li>
+                    <li class="active"><a href="#">个人中心</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            <div th:replace="themes/default/home/menu::menu"></div>
+        </div>
+        <div class="col-sm-10">
+            <div class="div_member_title">
+                <p>我的捐赠申请</p>
+                <hr/>
+            </div>
+            <div style="min-height: 600px;">
+                <table class="table table-bordered" id="table_content">
+                    <thead>
+                    <tr>
+                        <th>项目类别</th>
+                        <th>项目名称</th>
+                        <th>捐赠金额</th>
+                        <th>申请时间</th>
+                        <th>备注</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="item in items">
+                        <td>{{item.projectTypeName}}</td>
+                        <td>{{item.projectName}}</td>
+                        <td>{{item.intentionAmount/100}}</td>
+                        <td>{{item.createTime}}</td>
+                        <td>{{item.remark}}</td>
+                        <td>{{item.enable}}</td>
+                        <td>
+                            <a href="/home/apply/detail" target="_blank"><button class="btn btn-info btn_primary">查看</button></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div  style="text-align: center; width: 100%;" id="div_page">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="themes/default/footer::footer"></div>
+
+<!--全局JS-->
+<script th:src="@{/js/date.js}"></script>
+<script th:src="@{/plugin/pagination/pagination.js}"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var pageSize=10;
+    var pageNum=1;
+    var pageCount;
+    var vueContent;
+
+    $(".btn_cancel").click(function () {
+        layer.alert("撤回成功");
+    });
+
+    $(document).ready(function () {
+        f_GetApply();
+    })
+
+    function f_GetApply() {
+        $.ajax({
+            url:'/home/apply/list',
+            data:{pageNum:pageNum,pageSize:pageSize},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    f_FormatData(data.result.list)
+                    pageCount=data.result.pages;
+                    pageNum=data.result.pageNum;
+                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+                    f_InitPagination($("#div_page"));
+                    if (vueContent==undefined) {
+                        vueContent=new Vue({
+                            el: '#table_content',
+                            data: {
+                                items: data.result.list
+                            }
+                        });
+                        if (data.result.list.length===0){
+                            $(".p_no_data").show();
+                        }
+                    }else{
+                        for (var i = 0; i<data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0,0);
+                    }
+                }
+            }
+        });
+    }
+    
+    function f_FormatData(items) {
+        $.each(items,function (i,item) {
+            item.createTime=f_FormatDateTime(item.createTime);
+            switch (item.enable){
+                case -1:
+                    item.enable="已作废";
+                    break;
+                case 0:
+                    item.enable="待审核";
+                    break;
+                case 1:
+                    item.enable="审核中";
+                    break;
+                case 2:
+                    item.enable="合同确认中";
+                    break;
+                case 3:
+                    item.enable="已驳回";
+                    break;
+                case 4:
+                    item.enable="已完成";
+                    break;
+            }
+        });
+    }
+
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum=newPage;
+        f_GetApply();
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

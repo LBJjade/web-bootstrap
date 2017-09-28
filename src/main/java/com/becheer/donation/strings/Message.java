@@ -84,4 +84,9 @@ public class Message {
      */
     public static final String MESSAGE_GET_SUCCESS="获取会员成功";
 
+    /**
+     * 捐赠意向
+     */
+    public static final String INTENTION_GET_SUCCESS="获取捐赠意向成功";
+
 }

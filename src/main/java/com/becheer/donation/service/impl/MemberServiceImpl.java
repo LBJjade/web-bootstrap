@@ -27,11 +27,29 @@ public class MemberServiceImpl implements IMemberService {
     @Resource
     private MemberMapper memberMapper;
 
+//    @Override
+//    public ResponseDto SubmitRegister(String registerInfo, String pwd) {
+//        Member member = new Member();
+//        member.setMobile(registerInfo.substring(0,12));
+//        member.setRole(Integer.parseInt(registerInfo.substring(14,15)));
+//        member.setPassword(pwd);
+//        member.setEnable(1);
+//        member.setCreateTime(new Date());
+//        member.setPassword(HashUtil.GetPassword(pwd));
+//        member.setId(UUID.GetInt64UUID());
+//        int result = memberMapper.insertMember(member);
+//        if (result==1){
+//            return new ResponseDto(200,"注册成功");
+//        }else{
+//            return new ResponseDto(400,"注册失败，请重试");
+//        }
+//    }
+
     @Override
-    public ResponseDto SubmitRegister(String registerInfo, String pwd) {
+    public ResponseDto SubmitRegister(String mobile, String pwd, int role) {
         Member member = new Member();
-        member.setMobile(registerInfo.split("|")[0]);
-        member.setRole(Integer.parseInt(registerInfo.split("|")[1]));
+        member.setMobile(mobile);
+        member.setRole(role);
         member.setPassword(pwd);
         member.setEnable(1);
         member.setCreateTime(new Date());

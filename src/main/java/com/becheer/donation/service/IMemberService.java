@@ -10,7 +10,7 @@ import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 
 public interface IMemberService {
-    ResponseDto SubmitRegister(String mobile,String pwd);
+    ResponseDto SubmitRegister(String mobile,String pwd,int role);
 
     ResponseDto Login(String mobile,String pwd);
 

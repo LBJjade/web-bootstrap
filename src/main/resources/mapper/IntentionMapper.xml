@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.IntentionMapper">
+
+    <resultMap id="ListResultMap" type="com.becheer.donation.model.extension.intention.IntentionExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+        <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName" />
+        <result column="intention_amount" jdbcType="BIGINT" property="intentionAmount" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="remark_" jdbcType="VARCHAR" property="remark" />
+    </resultMap>
+
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+
+    <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.IntentionCondition" resultMap="ListResultMap">
+        SELECT
+        i.id_,
+        p.project_name,
+        t.project_type_name,
+        i.intention_amount,
+        i.enable_,
+        i.create_time,
+        i.remark_
+        FROM dnt_intention i
+        LEFT JOIN dnt_project p on p.id_= i.project_id
+        LEFT JOIN dnt_project_type t on t.id_=i.project_type_id
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause" />
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="limit != null">
+            <if test="offset != null">
+                limit ${offset}, ${limit}
+            </if>
+            <if test="offset == null">
+                limit ${limit}
+            </if>
+        </if>
+    </select>
+
+</mapper>

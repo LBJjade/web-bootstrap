@@ -7,6 +7,7 @@ package com.becheer.donation.controller;
 */
 
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.member.MemberRegisterExtension;
 import com.becheer.donation.service.ISmsService;
 import com.becheer.donation.strings.ConstString;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,14 @@ public class SmsController extends BaseController {
      */
     @PostMapping(value = "/CheckSms")
     @ResponseBody
-    public ResponseDto CheckSms(HttpServletRequest request,@RequestParam String mobile,@RequestParam String code,String registerType){
+    public ResponseDto CheckSms(HttpServletRequest request,@RequestParam String mobile,@RequestParam String code,int registerType){
         ResponseDto result = smsService.CheckLoginCode(mobile,code);
+
         if (result.getCode()==200){
-            request.getSession().setAttribute(ConstString.REGISTER_SMS_SESSION, mobile+"|"+registerType);
+            MemberRegisterExtension memberRegisterExtension=new MemberRegisterExtension();
+            memberRegisterExtension.setMobile(mobile);
+            memberRegisterExtension.setRole(registerType);
+            request.getSession().setAttribute(ConstString.REGISTER_SMS_SESSION, memberRegisterExtension);
         }
         return result;
     }

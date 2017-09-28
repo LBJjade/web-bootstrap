@@ -1,6 +1,7 @@
 package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.member.MemberRegisterExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
 import org.springframework.stereotype.Controller;
@@ -37,16 +38,15 @@ public class RegisterController extends BaseController {
     @PostMapping(value = "/submit")
     @ResponseBody
     public ResponseDto SendSms(HttpServletRequest request,  @RequestParam String pwd) {
-        Object objMobile =request.getSession().getAttribute(ConstString.REGISTER_SMS_SESSION);
-        if (objMobile==null){
+        MemberRegisterExtension memberRegisterExtension =(MemberRegisterExtension)request.getSession().getAttribute(ConstString.REGISTER_SMS_SESSION);
+        if (memberRegisterExtension==null){
             return new ResponseDto(401,"Bad Request");
         }
-        String registerInfo=objMobile.toString();
         if (pwd==null||pwd.trim().length()<8){
             return new ResponseDto(402,"error pwd");
         }
         pwd=pwd.trim();
-        ResponseDto result = memberService.SubmitRegister(registerInfo,pwd);
+        ResponseDto result = memberService.SubmitRegister(memberRegisterExtension.getMobile(),pwd,memberRegisterExtension.getRole());
         if (result.getCode()==200){
             //注册成功，删除Session
             request.getSession().removeAttribute(ConstString.REGISTER_SMS_SESSION);

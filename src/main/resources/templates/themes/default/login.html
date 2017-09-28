@@ -112,12 +112,12 @@
             type:'post',
             dataType:'json',
             success:function (data) {
-                if (data.code===200){
+                if (data.code===407){
                     layer.alert(data.msg,function () {
-                        window.location.href = "/member/index";
+                        window.location.href = "/member/home";
                     });
                     setTimeout(function(){
-                        window.location.href = "/member/index";
+                        window.location.href = "/member/home";
                     },3000);
                 }else{
                     layer.alert(data.msg);
