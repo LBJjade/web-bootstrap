@@ -114,10 +114,10 @@
             success:function (data) {
                 if (data.code===407){
                     layer.alert(data.msg,function () {
-                        window.location.href = "/member/home";
+                        window.location.href = "/home";
                     });
                     setTimeout(function(){
-                        window.location.href = "/member/home";
+                        window.location.href = "/home";
                     },3000);
                 }else{
                     layer.alert(data.msg);
