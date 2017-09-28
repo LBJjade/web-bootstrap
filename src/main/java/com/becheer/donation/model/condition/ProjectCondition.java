@@ -130,7 +130,7 @@ public class ProjectCondition {
             return (Criteria) this;
         }
 
-        public Criteria addProjectType(int value){
+        public Criteria addProjectType(long value){
             addCriterion("project_type_id =",value,"project_type_id");
             return (Criteria) this;
         }

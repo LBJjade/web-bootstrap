@@ -107,4 +107,11 @@
     WHERE id_=#{projectId,jdbcType=BIGINT} AND enable_ = 1
   </select>
 
+  <select id="SelectProjectByTypeId" parameterType="java.lang.Long" resultMap="ListProjectResultMap">
+    SELECT
+      id_,
+      project_name
+    FROM dnt_project WHERE enable_ = 1 AND project_type_id = #{projectTypeId,jdbcType=BIGINT}
+  </select>
+
 </mapper>

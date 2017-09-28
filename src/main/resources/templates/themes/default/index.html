@@ -7,9 +7,7 @@
 
     <title>index</title>
 
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
 
     <style type="text/css">
         *{
@@ -187,7 +185,6 @@
 </div>
 
 <div th:replace="themes/default/footer::footer"></div>
-
 <!--直接捐赠弹出层-->
 <div class="model fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true">
     <div class="model-dialog" style="margin-top:100px">
@@ -203,16 +200,15 @@
 
             <div class="model-body" style="text-align: center">
                 请选择项目类别：
-                <select>
-                    <option>弘扬传统文化</option>
-                    <option>助老</option>
-                    <option>请选择</option>
+                <select id="sel_project_type" onchange="f_GetProject()">
+                    <option value="0">请选择项目类别</option>
+                    <option v-for="item in items" :value="item.id">{{item.name}}</option>
                 </select>
                 <br />
                 请选择项目:
-                <select>
-                    <option>贫困孤儿助养项目</option>
-                    <option>困境儿童关怀项目项目</option>
+                <select id="sel_project">
+                    <option value="0">请先选择项目类别</option>
+                    <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
                 </select>
             </div>
 
@@ -225,9 +221,7 @@
     </div>
 </div>
 <!--全局JS-->
-<script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/banner/js.js}"></script>
-<script th:src="@{/plugin/layer/layer.js}"></script>
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <!--页面JS-->
 <!--##IMPORTANT 此处加上th:inline是为了在JS中使用模板引擎-->
@@ -237,6 +231,7 @@
     var pageNum=1;
     var pageCount;
     var vueContent;
+    var vueProject;
 
     $(document).ready(function () {
         f_getBanner();
@@ -245,6 +240,7 @@
         f_getQuestion();
         f_GetRecentDonate();
         f_GetDonationInfo();
+        f_GetProjectType();
     });
 
     function f_OnPageChange(newPage){
@@ -370,6 +366,56 @@
             }
         });
     }
+
+    //获取所有项目类型
+    function f_GetProjectType() {
+        $.ajax({
+            url:'/project/type',
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if (data.code===200){
+                    new Vue({
+                        el:"#sel_project_type",
+                        data:{
+                            items:data.result
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //获取所有项目
+    function f_GetProject() {
+        var tid=$("#sel_project_type").val();
+        if(tid!=="0"){
+            $.ajax({
+                url:'/project/all',
+                data:{tid:tid},
+                type:'post',
+                dataType:'json',
+                success:function (data) {
+                    if (data.code===200){
+                        if (vueProject==undefined) {
+                            vueProject = new Vue({
+                                el: "#sel_project",
+                                data: {
+                                    items: data.result
+                                }
+                            });
+                        }else{
+                            for (var i = 0; i<data.result.length; i++) {
+                                Vue.set(vueProject.items, i, data.result[i]);
+                            }
+                            vueProject.items.splice(data.result.length);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 
     function f_GetDonationInfo() {
         new Vue({

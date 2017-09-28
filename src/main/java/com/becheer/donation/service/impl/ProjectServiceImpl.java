@@ -41,7 +41,7 @@ public class ProjectServiceImpl implements IProjectService {
     }
 
     @Override
-    public PageInfo<ListProjectExtension> GetProjectList(int pageNum, int pageSize, int projectTypeId) {
+    public PageInfo<ListProjectExtension> GetProjectList(int pageNum, int pageSize, long projectTypeId) {
         ProjectCondition condition=new ProjectCondition();
         condition.setOrderByClause("create_time desc");
         condition.createCriteria().addEnable(1).addProjectType(projectTypeId);
@@ -49,6 +49,12 @@ public class ProjectServiceImpl implements IProjectService {
         List<ListProjectExtension> data = projectMapper.SelectByCondition(condition);
         PageInfo<ListProjectExtension> pageInfo = new PageInfo<ListProjectExtension>(data);
         return pageInfo;
+    }
+
+    @Override
+    public List<ListProjectExtension> GetProjectList(long projectTypeId) {
+        List<ListProjectExtension> data=projectMapper.SelectProjectByTypeId(projectTypeId);
+        return data;
     }
 
     @Override

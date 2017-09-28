@@ -31,5 +31,10 @@ public interface IProjectService {
      * @param projectTypeId
      * @return
      */
-    PageInfo<ListProjectExtension> GetProjectList(int pageNum,int pageSize,int projectTypeId);
+    PageInfo<ListProjectExtension> GetProjectList(int pageNum,int pageSize,long projectTypeId);
+
+    /**
+     * 获取所有项目
+     */
+    List<ListProjectExtension> GetProjectList(long projectTypeId);
 }

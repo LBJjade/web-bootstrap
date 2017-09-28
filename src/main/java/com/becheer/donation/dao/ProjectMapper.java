@@ -15,7 +15,7 @@ public interface ProjectMapper {
 
     List<ListProjectExtension> SelectRelationProject(long typeId,long projectId,int nums);
 
-//    List<ListProjectExtension> SelectProjectByTypeId(long projectTypeId,int nums);
+    List<ListProjectExtension> SelectProjectByTypeId(long projectTypeId);
 
     ProjectDetailExtension SelectProjectDetail(long projectId);
 

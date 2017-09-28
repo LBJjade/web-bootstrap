@@ -67,7 +67,7 @@ public class ProjectController extends BaseController {
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseDto GetProject(HttpServletRequest request,@RequestParam int pageSize,@RequestParam int pageNum,@RequestParam int tid){
+    public ResponseDto GetProject(HttpServletRequest request,@RequestParam int pageSize,@RequestParam int pageNum,@RequestParam long tid){
         if (pageSize>50||pageSize<1){
             pageSize=6;
         }
@@ -76,6 +76,18 @@ public class ProjectController extends BaseController {
         }
         try{
             PageInfo<ListProjectExtension> result = projectService.GetProjectList(pageNum,pageSize,tid);
+            return new ResponseDto(200,Message.PROJECT_GET_LIST_SUCCESS,result);
+        }catch(Exception ex){
+            LOGGER.error("GetProject", ex);
+            return new ResponseDto(500,Message.SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/all")
+    @ResponseBody
+    public ResponseDto GetProject(HttpServletRequest request,@RequestParam long tid){
+        try{
+            List<ListProjectExtension> result = projectService.GetProjectList(tid);
             return new ResponseDto(200,Message.PROJECT_GET_LIST_SUCCESS,result);
         }catch(Exception ex){
             LOGGER.error("GetProject", ex);

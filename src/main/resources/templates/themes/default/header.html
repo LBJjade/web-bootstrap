@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="header">
-
+<head>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
+</head>
 <body>
 <div class="container-fluid div-shadown-3-5" id="div_header">
     <div class="center-block" style="width: 1200px;">
@@ -63,9 +66,11 @@
         </div>
     </div>
 </div>
+
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
-<script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugin/vue/vue.min.js}"></script>
+<script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var imgRoot= /*[[${config.getImageRoot()}]]*/;
