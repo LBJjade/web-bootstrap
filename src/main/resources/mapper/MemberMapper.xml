@@ -15,7 +15,7 @@
         <result column="mobile" jdbcType="VARCHAR" property="mobile" />
         <result column="contact_tel" jdbcType="VARCHAR" property="contactTel" />
         <result column="avator_img" jdbcType="VARCHAR" property="avatorImg" />
-        <result column="summary" jdbcType="VARCHAR" property="aummary" />
+        <result column="summary" jdbcType="VARCHAR" property="summary" />
         <result column="project" jdbcType="VARCHAR" property="project" />
         <result column="id_card_front_img" jdbcType="VARCHAR" property="idCardFrontImg" />
         <result column="id_card_back_img" jdbcType="VARCHAR" property="idCardBackImg" />

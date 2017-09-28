@@ -1,5 +1,7 @@
 package com.becheer.donation.controller;
 
+import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.utils.HttpUtil;
 import com.becheer.donation.utils.TaleUtils;
 import com.becheer.donation.utils.MapCache;
 
@@ -31,6 +33,15 @@ public abstract class BaseController {
     public BaseController keywords(HttpServletRequest request, String keywords) {
         request.setAttribute("keywords", keywords);
         return this;
+    }
+
+    /**
+     * 获取当前登录的用户
+     * @param request
+     * @return
+     */
+    public MemberSessionExtension GetCurrentUser(HttpServletRequest request) {
+        return HttpUtil.GetCurrentUser(request);
     }
 
     public String render_404() {

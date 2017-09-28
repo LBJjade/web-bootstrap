@@ -78,4 +78,10 @@ public class Message {
 
     public static final String MEMBER_ROLE_ERROR="未知的角色";
 
+
+    /**
+     * 我的消息页面
+     */
+    public static final String MESSAGE_GET_SUCCESS="获取会员成功";
+
 }

@@ -34,7 +34,10 @@ function f_InitPagination(element){
     content +='<li value="'+(pageNum+1>=pageCount?pageCount:pageNum+1)+'"><a href="javascript:f_PageClick('+(pageNum+1>=pageCount?pageCount:pageNum+1)+');">下一页</a></li></ul>';
     element.append(content);
     element.children('ul').children('li[value='+(-pageNum)+']').attr('class','active');
-    element.children('ul').children('li[value='+pageNum+']').attr('class','disabled')
+    element.children('ul').children('li[value='+pageNum+']').attr('class','disabled');
+    if (pageCount===0){
+        element.hide();
+    }
 }
 //点击事件
 function f_PageClick(newPage){

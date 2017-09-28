@@ -7,15 +7,15 @@ package com.becheer.donation.model.extension.member;
 */
 
 public class MemberSessionExtension {
-    private long memberId;
+    public long memberId;
 
-    private String memberName;
+    public String memberName;
 
-    private String mobile;
+    public String mobile;
 
-    private int role;
+    public int role;
 
-    private int validation;
+    public int validation;
 
     public long getMemberId() {
         return memberId;

@@ -1,14 +1,43 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="menu">
+<style type="text/css">
+    #div_menu{
+        width: 200px;
+        height: 600px;
+        border-left: 1px #eee solid;
+        border-right: 1px #eee solid;
+        border-top: 2px #eee solid;
+        border-bottom: 3px #eee solid;
+    }
 
+    #div_menu a{
+        display: block;
+        margin: 10px;
+    }
+
+    #div_menu_name{
+        width: 200px;
+        height: 40px;
+        height: 40px;
+        background-color: #00a0ea;
+        margin-top: 15px;
+    }
+
+    #div_menu_name p{
+        margin-left: 15px;
+        line-height: 40px;
+        font-size: 18px;
+        color: #fff;
+    }
+</style>
 <body>
 <div id="div_menu_name">
     <p>个人中心</p>
 </div>
 <div id="div_menu">
-    <a class="glyphicon" href="member.html">我的信息</a>
+    <a class="glyphicon" href="/home">我的信息</a>
     <hr/>
-    <a class="glyphicon" href="message.html">我的消息</a>
+    <a class="glyphicon" href="/home/message">我的消息</a>
     <hr/>
     <a class="glyphicon" href="">我的捐赠意向</a>
     <hr/>

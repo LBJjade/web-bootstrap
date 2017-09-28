@@ -10,59 +10,6 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
-        #div_login{
-            width: 350px;
-            height: 80px;
-            float: right;
-            padding: 20px 10px 10px 10px ;
-        }
-        #div_login_l{
-            width: 270px;
-            height: 70px;
-            border-right: 1px #eee solid;
-            float: left;
-        }
-        #div_login_r{
-            width: 60px;
-            height: 70px;
-            float: left;
-        }
-
-        #div_menu{
-            width: 200px;
-            height: 600px;
-            border-left: 1px #eee solid;
-            border-right: 1px #eee solid;
-            border-top: 2px #eee solid;
-            border-bottom: 3px #eee solid;
-        }
-        #div_menu a{
-            display: block;
-            margin: 10px;
-        }
-
-        #div_menu span{
-            float: left;
-            font-size: 20px;
-        }
-        #div_menu ul{
-            margin-left: 30px;
-            display: none;
-        }
-        #div_menu_name{
-            width: 200px;
-            height: 40px;
-            height: 40px;
-            background-color: #00a0ea;
-            margin-top: 15px;
-        }
-        #div_menu_name p{
-            margin-left: 15px;
-            line-height: 40px;
-            font-size: 18px;
-            color: #fff;
-        }
-
         .div_content{
             width: 985px;
             height: 600px;
@@ -124,7 +71,7 @@
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img :src="imgRoot+member.avator" height="200" width="200"/>
+                    <img :src="imgRoot+'avator/'+member.avator" height="200" width="200"/>
                     <br/>
                     <br/>
                     <button class="btn btn-info">更换头像</button>
@@ -145,15 +92,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-12" style="padding: 0px">
-            <div id="div_bottom">
-                Copyright  ©2017  广东省世纪爱心慈善基金会  All Rights reserved.  粤ICP备14004079号-3  Technical support：300.CN
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script type="text/javascript">
