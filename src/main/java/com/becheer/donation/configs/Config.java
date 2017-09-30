@@ -1,4 +1,4 @@
-package com.becheer.donation;
+package com.becheer.donation.configs;
 
 import com.becheer.donation.utils.TaleUtils;
 import org.springframework.stereotype.Component;

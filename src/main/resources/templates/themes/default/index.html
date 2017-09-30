@@ -141,7 +141,7 @@
                     <a>{{item.projectName}}</a>
                     <a>发布时间:{{item.createTime}}</a>
                     <p><span>摘要:</span>{{item.summary}}</p>
-                    <a href="project.html" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+                    <a :href="'project/'+item.projectId" target="_blank"><button class="btn btn-primary">查看详情</button></a>
                 </div>
             </div>
 

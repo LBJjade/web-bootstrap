@@ -111,13 +111,19 @@ public class ProjectController extends BaseController {
     }
 
     @GetMapping("/{pid}")
-    public String View_Detail(HttpServletRequest request,@PathVariable long pid){
-        ProjectDetailExtension result=projectService.GetProjectDetail(pid);
-        if (result==null) {
+    public String View_Detail(HttpServletRequest request,@PathVariable String pid){
+        try{
+            long tempId=Long.valueOf(pid);
+            ProjectDetailExtension result=projectService.GetProjectDetail(tempId);
+            if (result==null) {
+                return render_404();
+            }else{
+                request.setAttribute("project",result);
+                return this.render("project_detail");
+            }
+        }catch(Exception ex){
+            LOGGER.error("GetProject", ex);
             return render_404();
-        }else{
-            request.setAttribute("project",result);
-            return this.render("project_detail");
         }
     }
 }

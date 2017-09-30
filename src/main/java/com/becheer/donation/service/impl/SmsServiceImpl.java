@@ -9,9 +9,12 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.dao.SmsMapper;
 import com.becheer.donation.model.Sms;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.sms.SmsResponse;
 import com.becheer.donation.model.extension.sms.SmsTemplateExtension;
 import com.becheer.donation.service.ISmsService;
+import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.DateUtils;
+import com.becheer.donation.utils.SmsUtil;
 import com.becheer.donation.utils.UUID;
 import org.springframework.stereotype.Service;
 
@@ -27,37 +30,42 @@ public class SmsServiceImpl implements ISmsService {
     @Override
     public ResponseDto SendSms(String mobile, long templateId) {
         //检查短信模板是否存在
-        SmsTemplateExtension smsTemplateExtension=smsMapper.selectSmsTemplateById(templateId);
-        if (smsTemplateExtension==null){
+        SmsTemplateExtension smsTemplateExtension = smsMapper.selectSmsTemplateById(templateId);
+        if (smsTemplateExtension == null) {
             //短信模板无效
-            return new ResponseDto(400,"individual templateId");
+            return new ResponseDto(400, Message.REGISTER_SMS_INDIVIDUAL_TEMPLATE);
         }
         //检查当前手机已发送短信数量
-        int totalSms=smsMapper.selectSmsCountByMobile(mobile);
-        if (totalSms>=3){
+        int totalSms = smsMapper.selectSmsCountByMobile(mobile);
+        if (totalSms >= 3) {
             //当日短信用尽
-            return new ResponseDto(401,"sms used up");
+            return new ResponseDto(401, Message.REGISTER_SMS_USE_OUT);
         }
 
-        String smsCode= UUID.getRandomNumber(4);
+        String smsCode = UUID.getRandomNumber(4);
 
-        Sms sms=new Sms();
+        Sms sms = new Sms();
         sms.setEnable(1);
-        Date date=new Date();
+        Date date = new Date();
         sms.setCreateTime(date);
-        sms.setInvalidTime(DateUtils.dateAdd(6,date,1));
+        sms.setInvalidTime(DateUtils.dateAdd(6, date, 1));
         sms.setSmsTemplateId(templateId);
         sms.setMobile(mobile);
         sms.setCode(smsCode);
-        sms.setText(smsTemplateExtension.getContent().replace("{{code}}",smsCode));
+        sms.setText(smsTemplateExtension.getContent().replace("{{code}}", smsCode));
         sms.setId(UUID.GetInt64UUID());
-        int result=smsMapper.insertSms(sms);
-        if (result==1){
-            return new ResponseDto(200,"success");
-        }else{
-            return new ResponseDto(500,"sms send failed");
+        SmsResponse sendResult = SmsUtil.SendSms(sms.getMobile(), sms.getText());
+        if (sendResult == null || !sendResult.getStatus().equals("10")) {
+            return new ResponseDto(501, Message.REGISTER_SMS_SEND_ERROR);
         }
-
+        sms.setSendErrorCode(sendResult.getStatus());
+        sms.setSendErrorMessage(sendResult.getErrorCode());
+        int result = smsMapper.insertSms(sms);
+        if (result == 1) {
+            return new ResponseDto(200, Message.REGISTER_SMS_SEND_SUCCESS);
+        } else {
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
     }
 
     //检查验证码是否有效

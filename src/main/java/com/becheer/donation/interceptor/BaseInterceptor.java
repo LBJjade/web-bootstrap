@@ -1,6 +1,6 @@
 package com.becheer.donation.interceptor;
 
-import com.becheer.donation.Config;
+import com.becheer.donation.configs.Config;
 import com.becheer.donation.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

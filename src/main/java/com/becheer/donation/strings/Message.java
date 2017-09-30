@@ -16,6 +16,15 @@ public class Message {
     public static final String SERVER_ERROR="服务器错误";
     public static final String PARAMETER_ERROR="参数错误";
 
+    /**
+     * 注册
+     */
+    public static final String REGISTER_SMS_SEND_ERROR="短信发送失败，请重试";
+    public static final String REGISTER_SMS_SEND_SUCCESS="短信发送成功";
+    public static final String REGISTER_SMS_INDIVIDUAL_TEMPLATE="短信模板错误";
+    public static final String REGISTER_SMS_USE_OUT="您本天的短信次数已用尽";
+
+
     /*
      *登录
      */
