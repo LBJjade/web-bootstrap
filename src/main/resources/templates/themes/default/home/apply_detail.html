@@ -47,34 +47,22 @@
                 <hr/>
             </div>
             <table class="table_member_content">
-                <tr><td>捐赠项目</td><td>孤寡老人助困基金项目</td></tr>
-                <tr><td>捐赠金额</td><td>正在进行</td></tr>
-                <tr><td>申请时间</td><td>2017-08-07 17:50</td></tr>
-                <tr><td>状态</td><td>线下沟通中</td></tr>
-                <tr><td>备注</td><td>为社会和谐贡献自己的力量</td></tr>
+                <tr><td>捐赠项目类别</td><td><th:block th:text="${apply.getProjectTypeName()}"/></td></tr>
+                <tr th:if="${apply.getProjectName()}!=null"><td>捐赠项目</td><td><th:block th:text="${apply.getProjectName()}"/></td></tr>
+                <tr><td>捐赠金额</td><td><th:block th:text="${apply.getIntentionAmount()!=0?apply.getIntentionAmount()/100:0}"/></td></tr>
+                <tr><td>申请时间</td><td><th:block th:text="${apply.getCreateTime()}"/></td></tr>
+                <tr><td>状态</td><td><th:block th:text="${apply.getStatus()}"/></td></tr>
+                <tr><td>备注</td><td><th:block th:text="${apply.getRemark()}"/></td></tr>
             </table>
             <div class="div_member_title">
                 <p>捐赠申请进度</p>
                 <hr/>
             </div>
-            <table class="table_member_content">
-
-                <tr><td>2017-10-08</td><td>提交捐赠申请</td></tr>
-
-                <tr><td>2017-10-10</td><td>基金会审批通过</td></tr>
-
-                <tr><td>2017-10-10</td><td>基金会与您沟通确认捐赠明细中</td></tr>
-
-                <tr><td>2017-10-10</td><td>捐赠明细确认完毕</td></tr>
-
-                <tr><td>2017-10-17</td><td>基金会制作合同中</td></tr>
-
-                <tr><td>2017-10-18</td><td>合同制作完毕,已通过短信形式发送到您,待您签署合同 <a>点击下载合同</a></td></tr>
-
-                <tr><td>2017-10-18</td><td>您提交了意见"对合同条款存在疑问,需要重新沟通"</td></tr>
+            <table class="table_member_content" id="table_member_content">
+                <tr v-for="item in items"><td>{{item.createTime}}</td><td>{{item.title}}</td></tr>
                 <tr>
                     <td colspan="2">
-                        <textarea class="form-control" style="margin-top: 20px;width: 300px;height: 150px;">000</textarea>
+                        <textarea class="form-control" style="margin-top: 20px;width: 300px;height: 150px;"></textarea>
                         <button class="btn btn-success">提交意见</button>
                     </td>
                 </tr>
@@ -84,5 +72,39 @@
 </div>
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
+<script th:src="@{/js/date.js}"></script>
+<script type="text/javascript"  th:inline="javascript">
+    /*<![CDATA[*/
+
+    var applyId=/*[[${apply.getId()}]]*/;
+
+    $(document).ready(function () {
+        f_GetProgress();
+    })
+
+
+    function f_GetProgress() {
+        $.ajax({
+            url:'/home/apply/progress',
+            data:{applyId:applyId},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    $.each(data.result, function (i, item) {
+                        item.createTime = f_FormatDateTime(item.createTime);
+                    });
+                    new Vue({
+                        el: '#table_member_content',
+                        data: {
+                            items: data.result
+                        }
+                    });
+                }
+            }
+        });
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

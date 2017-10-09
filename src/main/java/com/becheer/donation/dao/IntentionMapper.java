@@ -8,6 +8,7 @@ package com.becheer.donation.dao;
 
 import com.becheer.donation.model.Intention;
 import com.becheer.donation.model.condition.IntentionCondition;
+import com.becheer.donation.model.extension.intention.IntentionExtension;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,4 +16,6 @@ import java.util.List;
 @Component
 public interface IntentionMapper {
     List<Intention> SelectByCondition(IntentionCondition condition);
+
+    IntentionExtension SelectIntentionById (long intentionId);
 }

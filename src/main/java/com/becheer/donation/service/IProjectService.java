@@ -2,6 +2,7 @@ package com.becheer.donation.service;
 
 import com.becheer.donation.model.Project;
 import com.becheer.donation.model.extension.project.ListProjectExtension;
+import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import com.github.pagehelper.PageInfo;
 
@@ -37,4 +38,9 @@ public interface IProjectService {
      * 获取所有项目
      */
     List<ListProjectExtension> GetProjectList(long projectTypeId);
+
+    /**
+     *获取会员参与的项目
+     */
+    PageInfo<MemberProjectExtension>GetProjectList(long memberId, int pageNum, int pageSize);
 }

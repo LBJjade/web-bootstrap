@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.ProgressMapper">
+
+    <resultMap id="MemberProgressMapper" type="com.becheer.donation.model.extension.progress.ProgressExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="content" jdbcType="VARCHAR" property="content" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+    </resultMap>
+
+
+    <select id="SelectAllProgress" resultMap="MemberProgressMapper">
+        SELECT
+            id_,
+            title,
+            content,
+            enable_,
+            create_time
+        FROM
+            dnt_progress
+        WHERE
+            ref_table=#{param2}
+        AND
+            ref_record_id=#{param1}
+        AND
+            enable_=1
+        ORDER BY create_time
+    </select>
+</mapper>

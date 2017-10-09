@@ -24,6 +24,18 @@
     <result column="thumb_img" jdbcType="VARCHAR" property="img" />
   </resultMap>
   
+  <resultMap id="MemberProjectResultMap" type="com.becheer.donation.model.extension.project.MemberProjectExtension">
+    <id column="id_" jdbcType="BIGINT" property="id" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="thumb_img" jdbcType="VARCHAR" property="thumbImg" />
+    <result column="project_target_amount" jdbcType="BIGINT" property="projectTargetAmount" />
+    <result column="accepted_amount" jdbcType="BIGINT" property="acceptedAmount" />
+    <result column="contract_id" jdbcType="BIGINT" property="contractId" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
+    <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
+  </resultMap>
+  
   <sql id="ListPageColumn">
     id_,project_type_id,project_name,summary,create_time,thumb_img
   </sql>
@@ -112,6 +124,24 @@
       id_,
       project_name
     FROM dnt_project WHERE enable_ = 1 AND project_type_id = #{projectTypeId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="SelectProjectByMemberId" parameterType="java.lang.Long" resultMap="MemberProjectResultMap">
+    SELECT
+      c.id_,
+      p.project_name,
+      p.thumb_img,
+      p.project_target_amount,
+      p.accepted_amount,
+      c.contract_id,
+      c.project_id,
+      c.contract_amount,
+      c.donated_amount
+    FROM dnt_contract_project c
+    LEFT JOIN dnt_project p on c.project_id=p.id_
+    WHERE c.contract_id in (SELECT id_ FROM dnt_contract WHERE member_id=#{memberId,jdbcType=BIGINT})
+    AND c.enable_=1
+    ORDER BY c.create_time DESC
   </select>
 
 </mapper>

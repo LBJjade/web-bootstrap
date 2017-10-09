@@ -98,4 +98,14 @@ public class Message {
      */
     public static final String INTENTION_GET_SUCCESS="获取捐赠意向成功";
 
+    /**
+     * 合同
+     */
+    public static final String MEMBER_GET_CONTRACT_SUCCESS="获取合同成功";
+
+    /**
+     * 捐赠意向明细页
+     */
+    public static final String MEMBER_INTENTION_PROGRESS_SUCCESS="获取捐赠申请进度成功";
+
 }

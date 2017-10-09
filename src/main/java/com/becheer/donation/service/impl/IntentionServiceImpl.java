@@ -3,6 +3,7 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.dao.IntentionMapper;
 import com.becheer.donation.model.Intention;
 import com.becheer.donation.model.condition.IntentionCondition;
+import com.becheer.donation.model.extension.intention.IntentionExtension;
 import com.becheer.donation.model.extension.message.MessageExtension;
 import com.becheer.donation.service.IIntentionService;
 import com.github.pagehelper.PageHelper;
@@ -32,5 +33,10 @@ public class IntentionServiceImpl implements IIntentionService {
         List<Intention> data=intentionMapper.SelectByCondition(condition);
         PageInfo<Intention> pageInfo = new PageInfo<Intention>(data);
         return pageInfo;
+    }
+
+    @Override
+    public IntentionExtension GetIntention(long intentionId) {
+        return intentionMapper.SelectIntentionById(intentionId);
     }
 }

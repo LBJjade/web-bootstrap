@@ -70,4 +70,19 @@
         </if>
     </select>
 
+    <select id="SelectIntentionById" parameterType="java.lang.Long" resultMap="ListResultMap">
+        SELECT
+        i.id_,
+        p.project_name,
+        t.project_type_name,
+        i.intention_amount,
+        i.enable_,
+        i.create_time,
+        i.remark_
+        FROM dnt_intention i
+        LEFT JOIN dnt_project p on p.id_= i.project_id
+        LEFT JOIN dnt_project_type t on t.id_=i.project_type_id
+        WHERE i.id_=#{intentionId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

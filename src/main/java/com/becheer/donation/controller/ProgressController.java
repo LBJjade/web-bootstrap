@@ -21,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @RequestMapping("/progress")
 public class ProgressController extends BaseController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProgressController.class);
 
     @Resource
     IProjectProgressService  projectProgressService;

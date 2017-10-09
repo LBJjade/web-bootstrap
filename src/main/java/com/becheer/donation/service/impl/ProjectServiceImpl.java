@@ -5,6 +5,7 @@ import com.becheer.donation.dao.ProjectTypeMapper;
 import com.becheer.donation.model.Project;
 import com.becheer.donation.model.condition.ProjectCondition;
 import com.becheer.donation.model.extension.project.ListProjectExtension;
+import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import com.becheer.donation.service.IProjectService;
 import com.github.pagehelper.PageHelper;
@@ -55,6 +56,14 @@ public class ProjectServiceImpl implements IProjectService {
     public List<ListProjectExtension> GetProjectList(long projectTypeId) {
         List<ListProjectExtension> data=projectMapper.SelectProjectByTypeId(projectTypeId);
         return data;
+    }
+
+    @Override
+    public PageInfo<MemberProjectExtension> GetProjectList(long memberId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<MemberProjectExtension> data=projectMapper.SelectProjectByMemberId(memberId);
+        PageInfo<MemberProjectExtension> pageInfo=new PageInfo<>(data);
+        return pageInfo;
     }
 
     @Override
