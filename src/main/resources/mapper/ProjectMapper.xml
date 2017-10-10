@@ -35,6 +35,21 @@
     <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
     <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
   </resultMap>
+
+  <resultMap id="MemberProjectDetailMap" type="com.becheer.donation.model.extension.project.MemberProjectDetailExtension">
+    <id column="id_" jdbcType="BIGINT" property="id" />
+    <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+    <result column="project_id" jdbcType="BIGINT" property="projectId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+    <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
+    <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
+    <result column="accepted_amount" jdbcType="BIGINT" property="acceptedAmount" />
+    <result column="allocate_amount" jdbcType="BIGINT" property="allocateAmount" />
+    <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="enable_" jdbcType="INTEGER" property="enable" />
+  </resultMap>
   
   <sql id="ListPageColumn">
     id_,project_type_id,project_name,summary,create_time,thumb_img
@@ -142,6 +157,29 @@
     WHERE c.contract_id in (SELECT id_ FROM dnt_contract WHERE member_id=#{memberId,jdbcType=BIGINT})
     AND c.enable_=1
     ORDER BY c.create_time DESC
+  </select>
+
+  <select id="SelectMemberProjectDetail" parameterType="java.lang.Long" resultMap="MemberProjectDetailMap">
+    SELECT
+      cp.id_,
+      p.project_name,
+      p.id_ AS project_id,
+      p.content,
+      c.contract_name,
+      cp.contract_amount,
+      cp.donated_amount,
+      cp.accepted_amount,
+      cp.allocate_amount,
+      c.begin_time,
+      c.end_time,
+      c.enable_
+    FROM
+    dnt_contract_project cp
+    LEFT JOIN dnt_project p ON cp.project_id = p.id_
+    LEFT JOIN dnt_contract c on cp.contract_id = c.id_
+     WHERE
+    cp.enable_=1 AND cp.id_=#{contractProjectId,jdbcType=BIGINT}
+
   </select>
 
 </mapper>

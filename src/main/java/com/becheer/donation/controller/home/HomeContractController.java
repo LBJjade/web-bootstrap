@@ -2,6 +2,7 @@ package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;
@@ -49,8 +50,25 @@ public class HomeContractController extends BaseController {
             PageInfo<MemberContractExtension> result=contractService.GetContractList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectType", ex);
+            LOGGER.error("GetContract", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
+    }
+
+    @GetMapping(value = "/{contractId}")
+    public String GetContractDetail(HttpServletRequest request,@PathVariable long contractId) {
+        try{
+            MemberContractDetailExtension memberContractDetailExtension=contractService.GetMemberContractDetail(contractId);
+            if (memberContractDetailExtension==null){
+                render_404();
+            }else{
+                render_404();
+            }
+        }catch(Exception ex){
+            LOGGER.error("GetContract", ex);
+            return render_500();
+        }
+
+        return this.render("home/contract_detail");
     }
 }

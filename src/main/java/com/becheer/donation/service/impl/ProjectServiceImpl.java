@@ -5,6 +5,7 @@ import com.becheer.donation.dao.ProjectTypeMapper;
 import com.becheer.donation.model.Project;
 import com.becheer.donation.model.condition.ProjectCondition;
 import com.becheer.donation.model.extension.project.ListProjectExtension;
+import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import com.becheer.donation.service.IProjectService;
@@ -19,6 +20,11 @@ import java.util.List;
 
 @Service
 public class ProjectServiceImpl implements IProjectService {
+    @Override
+    public MemberProjectDetailExtension GetMemberProjectDetail(long contractProjectId) {
+        return projectMapper.SelectMemberProjectDetail(contractProjectId);
+    }
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     @Resource

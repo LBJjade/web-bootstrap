@@ -71,7 +71,7 @@
                     <p>合同名称:{{item.contractName}}</p>
                     <p>签订日期:{{item.signTime}}</p>
                     <p>合同金额:{{item.contractAmount>0?item.contractAmount/100:0}}</p>
-                    <p>合同状态:{{item.status}}<a href="contract.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
+                    <p>合同状态:{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
                 </div>
             </div>
         </div>

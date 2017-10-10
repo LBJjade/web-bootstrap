@@ -3,6 +3,7 @@ package com.becheer.donation.dao;
 import com.becheer.donation.model.Project;
 import com.becheer.donation.model.condition.ProjectCondition;
 import com.becheer.donation.model.extension.project.ListProjectExtension;
+import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import org.springframework.stereotype.Component;
@@ -22,4 +23,5 @@ public interface ProjectMapper {
 
     ProjectDetailExtension SelectProjectDetail(long projectId);
 
+    MemberProjectDetailExtension SelectMemberProjectDetail(long contractProjectId);
 }

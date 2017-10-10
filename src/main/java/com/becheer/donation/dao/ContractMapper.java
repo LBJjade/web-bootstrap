@@ -1,5 +1,6 @@
 package com.becheer.donation.dao;
 
+import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import org.springframework.stereotype.Component;
 
@@ -13,4 +14,6 @@ import java.util.List;
 @Component
 public interface ContractMapper {
     List<MemberContractExtension>SelectContractByMemberId(long memberId);
+
+    MemberContractDetailExtension SelectContractDetail(long contractId);
 }

@@ -20,6 +20,12 @@
             border-bottom: 1px #ccc dashed;
         }
 
+        #textarea_apply{
+            margin-top: 20px;
+            width: 300px;
+            height: 150px;
+        }
+
     </style>
 </head>
 <body>
@@ -62,8 +68,8 @@
                 <tr v-for="item in items"><td>{{item.createTime}}</td><td>{{item.title}}</td></tr>
                 <tr>
                     <td colspan="2">
-                        <textarea class="form-control" style="margin-top: 20px;width: 300px;height: 150px;"></textarea>
-                        <button class="btn btn-success">提交意见</button>
+                        <textarea id="textarea_apply" class="form-control"></textarea>
+                        <button class="btn btn-success" v-on:click="add()">提交意见</button>
                     </td>
                 </tr>
             </table>
@@ -77,6 +83,7 @@
     /*<![CDATA[*/
 
     var applyId=/*[[${apply.getId()}]]*/;
+    var vueContent;
 
     $(document).ready(function () {
         f_GetProgress();
@@ -94,10 +101,28 @@
                     $.each(data.result, function (i, item) {
                         item.createTime = f_FormatDateTime(item.createTime);
                     });
-                    new Vue({
+                    vueContent=new Vue({
                         el: '#table_member_content',
                         data: {
                             items: data.result
+                        },
+                        methods:{
+                            add:function () {
+                                var content=$("#textarea_apply").val();
+                                $.ajax({
+                                    url:'/home/apply/add',
+                                    data:{applyId:applyId,content:content},
+                                    type:'post',
+                                    dataType:'json',
+                                    success:function (data) {
+                                        layer.alert(data.msg);
+                                        if(data.code===200){
+                                            $("#textarea_apply").val("");
+                                            vueContent.items.push({title:content,createTime:f_GetCurrentTime()});
+                                        }
+                                    }
+                                });
+                            }
                         }
                     });
                 }

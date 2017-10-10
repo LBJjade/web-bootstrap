@@ -1,9 +1,14 @@
 package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
+import com.becheer.donation.model.ProjectProgress;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.model.extension.progress.ProgressExtension;
+import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;
+import com.becheer.donation.service.IProgressService;
+import com.becheer.donation.service.IProjectProgressService;
 import com.becheer.donation.service.IProjectService;
 import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageInfo;
@@ -14,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /*
 * ProjectController
@@ -29,14 +35,31 @@ public class HomeProjectController extends BaseController {
     @Resource
     IProjectService projectService;
 
+    @Resource
+    IProgressService progressService;
+
+    @Resource
+    IProjectProgressService projectProgressService;
+
     @GetMapping("")
     public String View(HttpServletRequest request){
         return this.render("home/project");
     }
 
-    @GetMapping("/{projectId}")
-    public String Detail(HttpServletRequest request){
-        return this.render("home/project_detail");
+    @GetMapping("/{contractProjectId}")
+    public String GetProjectDetail(HttpServletRequest request,@PathVariable long contractProjectId){
+        try {
+            MemberProjectDetailExtension memberProjectDetailExtension=projectService.GetMemberProjectDetail(contractProjectId);
+            if (memberProjectDetailExtension==null){
+                return render_404();
+            }else{
+                request.setAttribute("project",memberProjectDetailExtension);
+                return render("home/project_detail");
+            }
+        }catch(Exception ex){
+            LOGGER.error("GetProjectDetail", ex);
+            return render_500();
+        }
     }
 
     @PostMapping("/list")
@@ -52,6 +75,37 @@ public class HomeProjectController extends BaseController {
             MemberSessionExtension currentMember=GetCurrentUser(request);
             PageInfo<MemberProjectExtension> result=projectService.GetProjectList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.PROJECT_GET_LIST_SUCCESS,result);
+        }catch(Exception ex){
+            LOGGER.error("GetProjectType", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
+
+    @PostMapping("/progress")
+    @ResponseBody
+    public ResponseDto GetAllprogress(HttpServletRequest request, @RequestParam long contractProjectId){
+        try {
+            List<ProgressExtension> result=progressService.GetAllProgress(contractProjectId,"dnt_contract_project");
+            return new ResponseDto(200, Message.MEMBER_PROJECT_GET_PROGRESS_SUCCESS,result);
+        }catch(Exception ex){
+            LOGGER.error("GetAllprogress", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/projectProgress")
+    @ResponseBody
+    public ResponseDto GetProjectProgress(HttpServletRequest request, @RequestParam long projectId, @RequestParam int pageSize, @RequestParam int pageNum){
+        if (pageSize<1||pageSize>50){
+            pageSize=5;
+        }
+        if (pageNum<1){
+            pageNum=1;
+        }
+        try {
+            PageInfo<ProjectProgress> result=projectProgressService.GetProjectProgress(projectId,pageSize,pageNum);
+            return new ResponseDto(200,Message.PROJECT_PROGRESS_GET_SUCCESS,result);
         }catch(Exception ex){
             LOGGER.error("GetProjectType", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);

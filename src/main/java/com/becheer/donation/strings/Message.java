@@ -104,8 +104,17 @@ public class Message {
     public static final String MEMBER_GET_CONTRACT_SUCCESS="获取合同成功";
 
     /**
+     * 项目
+     */
+    public static final String MEMBER_PROJECT_GET_PROGRESS_SUCCESS="获取参与记录成功";
+
+    /**
      * 捐赠意向明细页
      */
     public static final String MEMBER_INTENTION_PROGRESS_SUCCESS="获取捐赠申请进度成功";
+
+    public static final String MEMBER_INTENTION_PROGRESS_ADD_SUCCESS="提交成功";
+
+    public static final String MEMBER_INTENTION_PROGRESS_ADD_FAILED="提交失败";
 
 }

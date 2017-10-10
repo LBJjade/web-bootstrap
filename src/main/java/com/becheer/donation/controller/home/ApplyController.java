@@ -82,12 +82,29 @@ public class ApplyController extends BaseController {
 
     @PostMapping("/progress")
     @ResponseBody
-    public ResponseDto GetAllprogress(org.apache.catalina.servlet4preview.http.HttpServletRequest request, @RequestParam long applyId){
+    public ResponseDto GetAllprogress(HttpServletRequest request, @RequestParam long applyId){
         try {
             List<ProgressExtension> result=progressService.GetAllProgress(applyId,"dnt_intention");
             return new ResponseDto(200, Message.MEMBER_INTENTION_PROGRESS_SUCCESS,result);
         }catch(Exception ex){
             LOGGER.error("GetAllprogress", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/add")
+    @ResponseBody
+    public ResponseDto AddProgress(HttpServletRequest request,@RequestParam String content,@RequestParam long applyId){
+        try {
+            MemberSessionExtension currentMember=GetCurrentUser(request);
+            long result=progressService.AddProgress(content,content,"dnt_intention",applyId,currentMember.getMemberId(),1);
+            if (result>0){
+                return new ResponseDto(200,Message.MEMBER_INTENTION_PROGRESS_ADD_SUCCESS);
+            }else{
+                return new ResponseDto(400,Message.MEMBER_INTENTION_PROGRESS_ADD_FAILED);
+            }
+        }catch(Exception ex){
+            LOGGER.error("AddProgress", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

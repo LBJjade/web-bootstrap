@@ -9,6 +9,8 @@
     <title>project_detail</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
     <style type="text/css">
 
@@ -98,22 +100,17 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="div_tab_info">
                         <table id="table_content_info">
-                            <tr><td>合同金额</td><td>80000</td></tr>
-                            <tr><td>合同状态</td><td>正在进行</td></tr>
-                            <tr><td>待捐赠金额</td><td>20000</td></tr>
-                            <tr><td>合同周期</td><td>2017-08-07 ~ 2017-12-06</td></tr>
-                            <tr><td>下次捐赠日期</td><td>2017-08-20</td></tr>
+                            <tr><td>项目名称</td><td><th:block th:text="${project.getProjectName()}"></th:block></td></tr>
+                            <tr><td>合同名称</td><td><th:block th:text="${project.getContractName()}"></th:block></td></tr>
+                            <tr><td>合同金额</td><td><th:block th:text="${project.getContractAmount()>0?project.getContractAmount()/100:0}"></th:block></td></tr>
+                            <tr><td>合同状态</td><td><th:block th:text="${project.getStatus()}"></th:block></td></tr>
+                            <tr><td>待捐赠金额</td><td><th:block th:text="${project.getContractAmount()-project.getDonatedAmount()}"></th:block></td></tr>
+                            <tr><td>合同周期</td><td><th:block th:text="${project.getBeginTime()+' ~ '+project.getEndTime()}"></th:block></td></tr>
                         </table>
                         <hr/>
                         <span style="margin-left: 20px">我的参与记录</span>
                         <table id="table_personal_info">
-                            <tr><td>2017-10-26</td><td>批资</td></tr>
-                            <tr><td>2017-10-21</td><td>基金会确认善款到账</td></tr>
-                            <tr><td>2017-10-20</td><td>支付善款5000.00</td></tr>
-                            <tr><td>2017-10-18</td><td>捐赠合同签订</td></tr>
-                            <tr><td>2017-10-17</td><td>接受捐赠合同</td></tr>
-                            <tr><td>2017-10-10</td><td>基金会审批通过</td></tr>
-                            <tr><td>2017-10-08</td><td>提交捐赠申请</td></tr>
+                            <tr v-for="item in items"><td>{{item.createTime}}</td><td>{{item.title}}</td></tr>
                         </table>
                         <hr/>
                         <span style="margin-left: 20px">文档附件</span>
@@ -122,51 +119,46 @@
                         </table>
                     </div>
                     <div class="tab-pane" id="div_tab_detail">
-                        <p style="margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            从2011到今年，我们在全国22个省区已经建成了3800多所春苗营养厨房，190万贫困地区的孩子吃上了香喷喷的营养餐。”采访中，彭翔提到春苗营养计划，自豪之情溢于言表。
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            2008年中国公益元年以来，中国慈善事业虽然得到了长足的发展，但在中国改革中起到的作用还很有限，她清醒地认识到：“中国还是大政府小社会，公益组织还不完全独立，对于社会发展，公益虽然起着温和的改良者的角色，但这个角色承担的还不到位。”
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            彭翔也特别提到，由于跨界不足和专业人才的缺乏，公益似乎走到了一个瓶颈。她表示，如何可持续发展是她目前面临的最大困惑和挑战。在她看来，公益机构应该具备自我造血能力，而不能仅靠不断地筹款和募捐来生存。她说，“公益要发展，一定要做增量，而不是只知道在现有的盘子里抢资源。”
-                        </p>
-                        <p class="f_center" style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: center; white-space: normal; background-color: rgb(255, 255, 255);">
-                            <img alt="安利基金会秘书长彭翔：公益要做增量" src="http://img4.cache.netease.com/gongyi/2015/12/17/20151217124936a11d8.jpg"/><br/>
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            <strong>“公益人的特色就是充满阳光”</strong>
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            善达网：是什么机缘让你进入了公益行业？是自己主动选择，还是机缘巧合？那时的你对慈善和公益是怎样的一种认识？
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            彭&nbsp; 翔：来安利公益基金会之前，我一直在环保机构工作。更早以前，我是在当时的国内贸易部（现在商务部前身），之后又在一些企业的CSR部门做管理。
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            说到做公益，有一个特别巧合的机缘。1999年的时候，我国北方的很多地方沙尘暴特别严重。当时我就想，能不能做一张“中华绿色版图”，把沙漠化地区、森林覆盖区等都标注在这张地图上，直观地告诉大家绿化及环保的重要性？但当时，我不太知道公益是什么，只是觉得沙尘暴那么厉害，总要做点什么。
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            因为个人做事不太容易，需要与合适的机构或组织进行合作。找了一段时间后，就开始与中华环境保护基金会合作，做中华绿色版图工程，这也是首张反映我国生态现状的环保教育地图。这也开启了我投身公益的历程，直到现在。
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            善达网：现在回头来看，当时的公益环境是怎样的？
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            彭&nbsp; 翔：个人感受比较深的是，从1999年到2005年，公益尤其是环保理念在企业、公众心目中的地位提升发展特别快。
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            1999年，刚启动中华绿色版图工程项目，去找资助企业谈的时候，大家基本上不太明白你想做什么，也就很难支持到你。那段时间项目运作很困难。
-                        </p>
-                        <p style="margin-top: 32px; margin-bottom: 0px; padding: 0px; font-size: 18px; text-indent: 2em; font-stretch: normal; line-height: 32px; font-family: &quot;Microsoft Yahei&quot;; color: rgb(64, 64, 64); text-align: justify; white-space: normal; background-color: rgb(255, 255, 255);">
-                            2003年后，不知道是哪个节点“出了问题”，公众的环保意识突然就有了很大的提升。很多老百姓开始关注环保，一些企业也开始倡导企业社会责任。这种情况下，中华绿色版图工程项目就开始得到更多公众和企业的支持和参与。项目很顺利地就做起来了。
-                        </p>
-                        <p>
-                            <br/>
-                        </p>
+                        <th:block th:utext="${project.getContent()}"></th:block>
                     </div>
                     <div class="tab-pane" id="div_tab_public">
-                        00001111
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="wrapper wrapper-content">
+                                    <div class="row animated fadeInRight">
+                                        <div class="col-sm-12">
+                                            <div class="ibox float-e-margins">
+                                                <div class="" id="ibox-content">
+                                                    <div id="vertical-timeline"
+                                                         class="vertical-container light-timeline">
+
+                                                        <div class="vertical-timeline-block" v-for="item in items">
+                                                            <div :class="'vertical-timeline-icon '+item.backgroundClass">
+                                                                <i :class="'fa '+item.iconClass"></i>
+                                                            </div>
+                                                            <div class="vertical-timeline-content">
+                                                                <h2>{{item.title}}</h2>
+                                                                <div v-html="item.content">
+                                                                </div>
+                                                                <!--<a href="#" class="btn btn-sm btn-primary"> 更多信息</a>-->
+                                                                <span class="vertical-date">
+                                                                 <br/>
+                                                                <small>{{item.createTime}}</small>
+                                                            </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div style="width: 100%;text-align: center">
+                                                    <button class="btn btn-primary btn_show_more" onclick="f_GetMoreProgress()">加载更多</button>
+                                                    <p id="p_no_data" style="line-height: 200px;display: none">暂无数据</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -176,5 +168,115 @@
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var contractProjectId=/*[[${project.getId()}]]*/;
+    var projectId=/*[[${project.getProjectId()}]]*/;
+
+    var pageSize=10;
+    var pageNum=1;
+    var totalPage=0;
+    var vueProgress;
+
+    $(document).ready(function () {
+        f_GetProgress();
+        f_GetProjectProgress();
+    });
+
+    function f_GetProgress() {
+        $.ajax({
+            url:'/home/project/progress',
+            data:{contractProjectId:contractProjectId},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    $.each(data.result, function (i, item) {
+                        item.createTime = f_FormatDateTime(item.createTime);
+                    });
+                    vueContent=new Vue({
+                        el: '#table_personal_info',
+                        data: {
+                            items: data.result
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //获取更多按钮点击事件
+    function f_GetMoreProgress() {
+        if(pageNum>=totalPage){
+            layer.alert("没有更多数据了")
+        }
+        pageNum++;
+        f_GetProjectProgress();
+    }
+
+    //获取项目进展
+    function f_GetProjectProgress() {
+        $.ajax({
+            url:'/home/project/projectProgress',
+            type:'post',
+            data:{projectId:projectId,pageSize:pageSize,pageNum:pageNum},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    totalPage=data.result.pages;
+                    if (data.result.list.length===0){
+                        $(".btn_show_more").hide();
+                        $("#p_no_data").show();
+                    }
+                    f_GetClass(data);
+                }
+            }
+        });
+    }
+
+    //获取时间轴图标样式
+    function f_GetClass(data) {
+        $.each(data.result.list, function (i, item) {
+            item.createTime = f_FormatDateTime(item.createTime);
+            switch (item.type) {
+                case 1:
+                    item["backgroundClass"] = "lazur-bg";
+                    item["iconClass"] = "fa-thumbs-o-up";
+                    break;
+                case 2:
+                    item["backgroundClass"] = "navy-bg";
+                    item["iconClass"] = "fa-leaf";
+                    break;
+                case 3:
+                    item["backgroundClass"] = "red-bg";
+                    item["iconClass"] = "fa-heart";
+                    break;
+                case 4:
+                    item["backgroundClass"] = "yellow-bg";
+                    item["iconClass"] = "fa-file-o";
+                    break;
+                default:
+                    item["backgroundClass"] = "blue-bg";
+                    item["iconClass"] = "fa-table";
+                    break;
+            }
+        });
+        if (vueProgress == undefined) {
+            vueProgress = new Vue({
+                el: '#vertical-timeline',
+                data: {
+                    items: data.result.list
+                }
+            });
+        }else{
+            var currentNum=pageSize*(pageNum-1);
+            for (var i = 0; i<data.result.list.length; i++) {
+                Vue.set(vueProgress.items, currentNum+i, data.result.list[i]);
+            }
+            vueProgress.items.splice(currentNum+data.result.list.length);
+        }
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

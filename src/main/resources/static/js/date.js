@@ -13,3 +13,7 @@ function f_FormatDateTime(inputTime) {
     second = second < 10 ? ('0' + second) : second;
     return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
 };
+
+function f_GetCurrentTime() {
+    return f_FormatDateTime(new Date())
+}

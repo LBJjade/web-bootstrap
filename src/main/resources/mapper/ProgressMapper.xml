@@ -28,4 +28,40 @@
             enable_=1
         ORDER BY create_time
     </select>
+
+    <insert id="InsertProgress" parameterType="com.becheer.donation.model.Progress" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO dnt_progress(
+        id_,
+        ref_table,
+        ref_record_id,
+        title,
+        content,
+        remark_,
+        enable_,
+        create_time,
+        create_by,
+        update_time,
+        update_by,
+        type,
+        module,
+        record_status,
+        create_member_id
+        )VALUES (
+        #{id,jdbcType=BIGINT},
+        #{refTable,jdbcType=VARCHAR},
+        #{refRecordId,jdbcType=BIGINT},
+        #{title,jdbcType=VARCHAR},
+        #{content,jdbcType=VARCHAR},
+        #{remark,jdbcType=VARCHAR},
+        #{enable,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createBy,jdbcType=BIGINT},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{updateBy,jdbcType=BIGINT},
+        #{type,jdbcType=INTEGER},
+        #{module,jdbcType=VARCHAR},
+        #{recordStatus,jdbcType=INTEGER},
+        #{createMemberId,jdbcType=BIGINT}
+        )
+    </insert>
 </mapper>

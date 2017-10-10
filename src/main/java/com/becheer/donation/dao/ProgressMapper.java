@@ -1,5 +1,6 @@
 package com.becheer.donation.dao;
 
+import com.becheer.donation.model.Progress;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 
 import java.util.List;
@@ -11,4 +12,6 @@ import java.util.List;
 */
 public interface ProgressMapper {
     List<ProgressExtension>SelectAllProgress(long refRecordId,String refTable);
+
+    long InsertProgress(Progress progress);
 }
