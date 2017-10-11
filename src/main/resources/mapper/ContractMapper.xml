@@ -10,11 +10,14 @@
         <result column="enable_" jdbcType="INTEGER" property="enable" />
     </resultMap>
 
-    <resultMap id="MemberContractDetailResultMap" type="com.becheer.donation.model.extension.contract.MemberContractExtension">
+    <resultMap id="MemberContractDetailResultMap" type="com.becheer.donation.model.extension.contract.MemberContractDetailExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
-        <result column="donator_sign_time" jdbcType="TIMESTAMP" property="signTime" />
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
+        <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="donator_sign_time" jdbcType="TIMESTAMP" property="signTime" />
         <result column="enable_" jdbcType="INTEGER" property="enable" />
     </resultMap>
 
@@ -29,7 +32,7 @@
         WHERE member_id=#{memberId,jdbcType=BIGINT}
     </select>
 
-    <select id="SelectContractDetail" parameterType="java.lang.Long" resultMap="MemberContractDetailExtension">
+    <select id="SelectContractDetail" parameterType="java.lang.Long" resultMap="MemberContractDetailResultMap">
         SELECT
             id_,
             contract_name,

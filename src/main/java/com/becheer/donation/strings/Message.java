@@ -104,6 +104,12 @@ public class Message {
     public static final String MEMBER_GET_CONTRACT_SUCCESS="获取合同成功";
 
     /**
+     * 捐赠计划
+     */
+    public static final String MEMBER_GET_PAYMENT_PLAN_SUCCESS="获取捐赠计划成功";
+
+
+    /**
      * 项目
      */
     public static final String MEMBER_PROJECT_GET_PROGRESS_SUCCESS="获取参与记录成功";

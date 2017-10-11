@@ -47,17 +47,17 @@
                 <hr/>
             </div>
             <table class="table_member_content">
-                <tr><td>合同名称</td><td>孤寡老人助困基金项目合同</td></tr>
-                <tr><td>合同金额</td><td>50000</td></tr>
-                <tr><td>已捐金额</td><td>20000</td></tr>
-                <tr><td>合同周期</td><td>2017-07-20~2017-10-20</td></tr>
-                <tr><td>合同状态</td><td>正在进行</td></tr>
+                <tr><td>合同名称</td><td><th:block th:text="${contract.getContractName()}"></th:block></td></tr>
+                <tr><td>合同金额</td><td><th:block th:text="${contract.getContractAmount()}"></th:block></td></tr>
+                <tr><td>已捐金额</td><td><th:block th:text="${contract.getDonatedAmount()>0?contract.getDonatedAmount()/100:0}"></th:block></td></tr>
+                <tr><td>合同周期</td><td><th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block></td></tr>
+                <tr><td>合同状态</td><td><th:block th:text="${contract.getStatus()}"></th:block></td></tr>
             </table>
             <div class="div_member_title">
                 <p>合同捐赠详情</p>
                 <hr/>
             </div>
-            <table class="table_member_content">
+            <table class="table_member_content" ID="table_donate_plan">
                 <thead>
                 <tr>
                     <td>账单名称</td>
@@ -68,31 +68,14 @@
                     <td>操作</td>
                 </tr>
                 </thead>
-                <tr>
-                    <td>助学基金四期付款</td>
-                    <td>100000</td>
-                    <td>2017-11-20</td>
-                    <td></td>
-                    <td>尚未捐赠</td>
-                    <td><a href="#">捐赠</a> </td>
+                <tr v-for="item in items">
+                    <td>{{item.title}}</td>
+                    <td>{{item.amount>0?item.amount/100:0}}</td>
+                    <td>{{item.deadLine}}</td>
+                    <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
+                    <td>{{item.statusText}}</td>
+                    <td><a href="#">{{item.status==0?"捐赠":"账单"}}</a> </td>
                 </tr>
-                <tr>
-                    <td>助学基金四期付款</td>
-                    <td>125000</td>
-                    <td>2017-12-20</td>
-                    <td>2017-10-11</td>
-                    <td>尚未捐赠</td>
-                    <td><a href="#">捐赠</a> </td>
-                </tr>
-                <tr>
-                    <td>助学基金四期付款</td>
-                    <td>125000</td>
-                    <td>2017-12-20</td>
-                    <td>2017-10-20</td>
-                    <td>尚未捐赠</td>
-                    <td><a href="#">账单</a> </td>
-                </tr>
-
             </table>
         </div>
     </div>
@@ -100,5 +83,33 @@
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var contractId=/*[[${contract.getId()}]]*/;
+
+    $(document).ready(function () {
+        f_GetDonatePlan();
+    })
+
+    function f_GetDonatePlan() {
+        $.ajax({
+            url:'/home/contract/payment',
+            data:{contractId:contractId},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    new Vue({
+                        el: '#table_donate_plan',
+                        data: {
+                            items: data.result
+                        }
+                    });
+                }
+            }
+        });
+    }
+    /*]]>*/
+</script>
 </body>
 </html>

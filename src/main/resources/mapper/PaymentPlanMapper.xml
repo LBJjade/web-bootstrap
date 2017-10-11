@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.PaymentPlanMapper">
+
+    <resultMap id="MemberPaymentPlanListMapper" type="com.becheer.donation.model.extension.payment.PaymentPlanExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="payment_date" jdbcType="TIMESTAMP" property="paymentDate" />
+        <result column="amount" jdbcType="BIGINT" property="amount" />
+        <result column="received_amount" jdbcType="BIGINT" property="receivedAmount" />
+        <result column="dead_line" jdbcType="TIMESTAMP" property="deadLine" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+
+    <select id="SelectPaymentPlanByContractId" parameterType="java.lang.Long" resultMap="MemberPaymentPlanListMapper">
+        SELECT
+            id_,
+            title,
+            payment_date,
+            amount,
+            received_amount,
+            deadline,
+            enable_,
+            status
+        FROM
+            dnt_payment_plan
+        WHERE
+            enable_=1
+            AND ref_table='dnt_contract'
+            AND ref_record_id=#{contractId,jdbcType=BIGINT}
+    </select>
+</mapper>

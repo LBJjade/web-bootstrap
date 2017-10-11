@@ -5,8 +5,10 @@ import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.service.IContractService;
+import com.becheer.donation.service.IPaymentPlanService;
 import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /*
 * HomeContractController
@@ -30,6 +33,9 @@ public class HomeContractController extends BaseController {
 
     @Resource
     IContractService contractService;
+
+    @Resource
+    IPaymentPlanService paymentPlanService;
 
     @GetMapping("")
     public String View(HttpServletRequest request){
@@ -60,15 +66,26 @@ public class HomeContractController extends BaseController {
         try{
             MemberContractDetailExtension memberContractDetailExtension=contractService.GetMemberContractDetail(contractId);
             if (memberContractDetailExtension==null){
-                render_404();
+                return render_404();
             }else{
-                render_404();
+                request.setAttribute("contract",memberContractDetailExtension);
+                return render("home/contract_detail");
             }
         }catch(Exception ex){
             LOGGER.error("GetContract", ex);
             return render_500();
         }
+    }
 
-        return this.render("home/contract_detail");
+    @PostMapping("/payment")
+    @ResponseBody
+    public ResponseDto GetPaymentPlan(HttpServletRequest request, @RequestParam long contractId){
+        try {
+            List<PaymentPlanExtension> result=paymentPlanService.GetPaymentPlan(contractId);
+            return new ResponseDto(200, Message.MEMBER_GET_PAYMENT_PLAN_SUCCESS,result);
+        }catch(Exception ex){
+            LOGGER.error("GetContract", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
     }
 }

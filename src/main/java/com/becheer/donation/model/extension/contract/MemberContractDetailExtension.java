@@ -1,5 +1,7 @@
 package com.becheer.donation.model.extension.contract;
 
+import com.becheer.donation.utils.DateUtils;
+
 import java.util.Date;
 
 /*
@@ -59,16 +61,16 @@ public class MemberContractDetailExtension {
         this.donatedAmount = donatedAmount;
     }
 
-    public Date getBeginTime() {
-        return beginTime;
+    public String getBeginTime() {
+        return DateUtils.dateFormat(beginTime,"yyyy-MM-dd");
     }
 
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        return DateUtils.dateFormat(endTime,"yyyy-MM-dd");
     }
 
     public void setEndTime(Date endTime) {
