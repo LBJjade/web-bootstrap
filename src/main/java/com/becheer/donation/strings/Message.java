@@ -123,4 +123,10 @@ public class Message {
 
     public static final String MEMBER_INTENTION_PROGRESS_ADD_FAILED="提交失败";
 
+    /**
+     * 申诉
+     */
+
+
+
 }

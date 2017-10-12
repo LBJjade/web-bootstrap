@@ -115,49 +115,15 @@
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
         <div class="col-sm-10">
-            <div class="div_message_title">
-                <div><h4><span class="glyphicon glyphicon-chevron-down"></span>受捐人资金使用申诉<span>2017-06-30 15:08:21</span></h4></div>
-            </div>
-            <div class="div_message_content">
-                <p>申诉项目:中医名家卢汝昌义诊基金项目</p>
-                <p>申诉合同:中医名家卢汝昌义诊基金项目捐赠合同</p>
-                <p>申诉类型:合同履约申诉<a href="appeal.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
-            </div>
-
-            <div class="div_message_title">
-                <div><h4><span class="glyphicon glyphicon-chevron-down"></span>受捐人资金使用申诉<span>2017-06-30 15:08:21</span></h4></div>
-            </div>
-            <div class="div_message_content">
-                <p>申诉项目:中医名家卢汝昌义诊基金项目</p>
-                <p>申诉合同:中医名家卢汝昌义诊基金项目捐赠合同</p>
-                <p>申诉类型:合同履约申诉<a href="appeal.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
-            </div>
-
-            <div class="div_message_title">
-                <div><h4><span class="glyphicon glyphicon-chevron-down"></span>受捐人资金使用申诉<span>2017-06-30 15:08:21</span></h4></div>
-            </div>
-            <div class="div_message_content">
-                <p>申诉项目:中医名家卢汝昌义诊基金项目</p>
-                <p>申诉合同:中医名家卢汝昌义诊基金项目捐赠合同</p>
-                <p>申诉类型:合同履约申诉<a href="appeal.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
-            </div>
-
-            <div class="div_message_title">
-                <div><h4><span class="glyphicon glyphicon-chevron-down"></span>受捐人资金使用申诉<span>2017-06-30 15:08:21</span></h4></div>
-            </div>
-            <div class="div_message_content">
-                <p>申诉项目:中医名家卢汝昌义诊基金项目</p>
-                <p>申诉合同:中医名家卢汝昌义诊基金项目捐赠合同</p>
-                <p>申诉类型:合同履约申诉<a href="appeal.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
-            </div>
-
-            <div class="div_message_title">
-                <div><h4><span class="glyphicon glyphicon-chevron-down"></span>受捐人资金使用申诉<span>2017-06-30 15:08:21</span></h4></div>
-            </div>
-            <div class="div_message_content">
-                <p>申诉项目:中医名家卢汝昌义诊基金项目</p>
-                <p>申诉合同:中医名家卢汝昌义诊基金项目捐赠合同</p>
-                <p>申诉类型:合同履约申诉<a href="appeal.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
+            <div v-for="item in items" id="div_appeal_item">
+                <div class="div_message_title">
+                    <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.受捐人资金使用申诉}}<span>{{item.createTime}}</span></h4></div>
+                </div>
+                <div class="div_message_content">
+                    <p>申诉项目:{{item.projectName}}</p>
+                    <p>申诉合同:{{item.contractName}}</p>
+                    <p>申诉类型:{{item.appealMethod}}<a href="appeal.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
+                </div>
             </div>
         </div>
     </div>
@@ -166,20 +132,60 @@
 <div th:replace="themes/default/footer::footer"></div>
 
 <!--全局JS-->
-<script src="../content/js/jquery-2.1.1.min.js"></script>
-<script src="../content/js/bootstrap.min.js"></script>
+<script th:src="@{/js/date.js}"></script>
+<script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript">
-    //    $("body").on("click",".div_message_title", function() {
-    //        if ($(this).next().css("display")==="none"){
-    //            $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-up");
-    //            $(this).next().show();
-    //
-    //        }else{
-    //
-    //            $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-down");
-    //            $(this).next().hide();
-    //        }
-    //    });
+    /*<![CDATA[*/
+    var pageSize=6;
+    var pageNum=1;
+    var pageCount;
+    var vueContent;
+
+    $(document).ready(function () {
+        f_GetAppeal();
+    })
+
+
+    function f_GetAppeal() {
+        $.ajax({
+            url:'/home/appeal/list',
+            data:{pageNum:pageNum,pageSize:pageSize},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    pageCount=data.result.pages;
+                    pageNum=data.result.pageNum;
+                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+                    f_InitPagination($("#div_page"));
+                    if (vueContent==undefined) {
+                        vueContent=new Vue({
+                            el: '#div_appeal_item',
+                            data: {
+                                items: data.result.list
+                            }
+                        });
+//                        if (data.result.list.length===0){
+//                            $(".p_no_data").show();
+//                        }
+                    }else{
+                        for (var i = 0; i<data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0,0);
+                    }
+                }
+            }
+        });
+    }
+
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum=newPage;
+        f_GetAppeal();
+    }
+    /*]]>*/
 </script>
 </body>
 </html>

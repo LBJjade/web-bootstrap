@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.AppealMapper">
+
+    <resultMap id="MemberAppealResultMap" type="com.becheer.donation.model.extension.appeal.MemberAppealExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="appeal_title" jdbcType="VARCHAR" property="appealTitle" />
+        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="appeal_method" jdbcType="VARCHAR" property="appealMethod" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+
+    </resultMap>
+
+    <select id="SelectAppealByMemberId" parameterType="java.lang.Long" resultMap="MemberAppealResultMap">
+        SELECT
+            a.id_,
+            a.appeal_title,
+            p.project_name,
+            c.contract_name,
+            a.appeal_method,
+            a.create_time,
+            a.status
+        FROM dnt_appeal a
+        LEFT JOIN dnt_project p on a.project_id=p.id_
+        LEFT JOIN dnt_contract c on a.contract_id=c.id_
+        WHERE a.enable_ = 1 AND a.member_id =#{memberId,jdbcType=BIGINT}
+        ORDER BY create_time DESC
+    </select>
+</mapper>
