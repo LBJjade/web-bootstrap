@@ -37,11 +37,12 @@
 
         #div_project {
             width: 580px;
-            height: 390px;
+            height: 300px;
             float: left;
         }
 
         #div_project_info {
+            border:1px;
             float: right;
             width: 300px;
             height: 370px;
@@ -50,7 +51,7 @@
 
         #div_project img {
             width: 560px;
-            height: 370px;
+            height: 300px;
             margin: 10px;
         }
 
@@ -59,6 +60,11 @@
             width: 900px;
             clear: both;
             /*border-left: 1px #ddd solid;*/
+        }
+
+        #div_tab_detail{
+            font-size: 14pt;
+            color: rgb(101, 101, 101);
         }
 
         #div_tab_public {
@@ -77,10 +83,58 @@
             float: left;
         }
 
+        .info_fs{
+            color: #1E1E1E;
+            font-size:20px;
+            margin: 22px;
+        }
+
+        .info{
+            margin:2px;
+            display:block;
+            color: #656565;
+            line-height: 25px;
+            font-size:15px;
+        }
+
+        .info_ma{
+            margin: 5px;
+        }
+
+        .Content{
+            color: #00a0e9;
+        }
+
         .recommend_item{
             height: 40px;
-            margin-top: 5px;
-            margin-left: 5px;
+            padding-bottom: 45px;
+            padding-top: 7px;
+            padding-left: 10px;
+            padding-right: 10px;
+            line-height: 40px;
+            border-bottom: 1px solid #E4E4E4;
+        }
+
+        .recommend_item:hover{
+            background-color:#EFF8F8;
+        }
+
+        .recommend_item_word{
+            padding-left: 45px;
+        }
+
+        .recommend_item_info{
+            padding-left: 10px;
+            display: inline-block;
+            *display: inline;*zoom: 1;
+            width: 140px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            overflow: hidden;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
     </style>
@@ -99,27 +153,28 @@
                 </ul>
             </div>
             <div id="div_project">
-                <img th:src='${config.getImageRoot()+"project/900x600/"+project.getThumbImg()}'/>
+                <img  th:src='${config.getImageRoot()+"project/900x600/"+project.getThumbImg()}'/>
             </div>
             <div id="div_project_info">
                 <div class="div_title">
                     <h2 class="h2_title">公益详情</h2>
                 </div>
-                <p>
+                <p class="info_fs">
                     <th:block th:text="${project.getProjectName()}"/>
                 </p>
-                <p>项目时间:
-                    <th:block
-                            th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
-                </p>
-                <p>目标金额:
-                    <th:block th:text="${project.getProjectTargetAmount()}"/>
-                </p>
-                <p>已募集金额:
-                    <th:block th:text="${project.getAcceptedAmount()}"/>
-                </p>
-                <p>已参与人数:0人</p>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#div_donate">我要捐赠</button>
+                <div class="info_ma">
+                    <p class="info">项目时间:
+                        <th:block th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
+                    </p>
+                    <p class="info">目标金额:
+                        <span style="color:#d9534f"><th:block th:text="${project.getProjectTargetAmount()}"/></span>
+                    </p>
+                    <p class="info">已募集金额:
+                        <span style="color:#d9534f"><th:block th:text="${project.getAcceptedAmount()}"/></span>
+                    </p>
+                    <p class="info">已参与人数:0人</p>
+                </div>
+                <button class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#div_donate">我要捐赠</button>
             </div>
             <div id="div_project_content" style="min-height: 600px">
                 <ul class="nav nav-tabs">
@@ -127,7 +182,7 @@
                     <li><a href="#" data-target="#div_tab_public" data-toggle="tab">善款公开</a></li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="div_tab_detail">
+                    <div class="tab-pane active Content" id="div_tab_detail">
                         <th:block th:utext="${project.getContent()}"/>
                     </div>
                     <div class="tab-pane" id="div_tab_public">
@@ -145,14 +200,14 @@
                                                             <div :class="'vertical-timeline-icon '+item.backgroundClass">
                                                                 <i :class="'fa '+item.iconClass"></i>
                                                             </div>
-                                                            <div class="vertical-timeline-content">
+                                                            <div class="vertical-timeline-content" style="color: #656565;">
                                                                 <h2>{{item.title}}</h2>
                                                                 <div v-html="item.content">
                                                                 </div>
                                                                 <!--<a href="#" class="btn btn-sm btn-primary"> 更多信息</a>-->
                                                                 <span class="vertical-date">
                                                                  <br/>
-                                                                <small>{{item.createTime}}</small>
+                                                                <small class="text-primary">{{item.createTime}}</small>
                                                             </span>
                                                             </div>
                                                         </div>
@@ -176,11 +231,12 @@
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <ul v-for="item in items">
-                        <li><img :src="imgUrl+'avator/'+item.avator" /></li>
-                        <li>{{item.memberName}}</li>
-                        <li>捐赠本项目{{item.amount/1000}}元</li>
-                    </ul>
+                    <div class="recommend_item" >
+                        <ul v-for="item in items">
+                            <li><img :src="imgUrl+'avator/'+item.avator" /></li>
+                            <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount/1000}}元</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -190,7 +246,7 @@
                     <div class="recommend_item"  v-for="item in items">
                         <ul>
                             <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img" /></li>
-                            <li><a href="project.html" target="_blank">{{item.projectName}}</a></li>
+                            <li class="recommend_item_word"><a href="project.html" target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
                 </div>

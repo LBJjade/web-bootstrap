@@ -72,6 +72,39 @@
             margin-left: 5px;
         }
 
+        .recommend_item{
+            height: 40px;
+            padding-bottom: 45px;
+            padding-top: 7px;
+            padding-left: 10px;
+            padding-right: 10px;
+            line-height: 40px;
+            border-bottom: 1px solid #E4E4E4;
+        }
+
+        .recommend_item:hover{
+            background-color:#EFF8F8;
+        }
+
+        .recommend_item_info{
+            padding-left: 10px;
+            display: inline-block;
+            *display: inline;*zoom: 1;
+            width: 140px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            overflow: hidden;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .recommend_item_info{
+            height: auto;
+            white-space: normal;
+        }
+
     </style>
 
 </head>
@@ -149,21 +182,22 @@
             <div class="left_item" style="text-align: center" id="div_page">
             </div>
         </div>
-        <div class="col-sm-3" style="padding-left: 5px; height: 400px;margin-top: 10px">
-            <div class="right_panel" id="div_recent">
+        <div class="col-sm-3" style="padding-left:5px;height:400px;margin-top:10px">
+            <div class="right_panel" id="div_recent" style="height:500px">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <ul v-for="item in items">
-                        <li><img :src="imgUrl+'avator/'+item.avator" /></li>
-                        <li>{{item.memberName}}</li>
-                        <li>捐赠{{item.projectName==null?item.projectTypeName:item.projectName}}{{item.amount/1000}}元</li>
-                    </ul>
+                    <div >
+                        <ul class="recommend_item"  v-for="item in items">
+                            <li><img :src="imgUrl+'avator/'+item.avator" /></li>
+                            <li class="recommend_item_info">{{item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount/1000}}元</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="right_panel" id="div_project">
+            <div class="right_panel" id="div_project" style="height:500px">
                 <div class="div_title">
-                    <h2 class="h2_title">项目推荐</h2>
+                    <h2 class="h2_title" >项目推荐</h2>
                     <div class="recommend_item"  v-for="item in items">
                         <ul>
                             <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img" /></li>
