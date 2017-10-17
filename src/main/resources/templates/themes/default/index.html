@@ -163,7 +163,7 @@
             color: #969696;
         }
 
-        .donate_button{
+        .donate_button {
             border-radius: 5px;
             font-size: 16px;
             width: 100px;
@@ -173,9 +173,10 @@
             border: none;
             margin-top: 20px;
         }
-         /*去掉输入框中的加减符号*/
+
+        /*去掉输入框中的加减符号*/
         input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button{
+        input::-webkit-inner-spin-button {
             -webkit-appearance: none !important;
             margin: 0;
         }
@@ -216,12 +217,12 @@
                 <ul id="ul_total">
                     <li>
                         <p>爱心总人数</p>
-                        <input type="number" :value="model.totalDonator"  readonly="true"/>
+                        <input type="number" :value="model.totalDonator" readonly="true"/>
                         <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>善款总额</p>
-                        <input type="number" :value="model.totalAmout"  readonly="true"/>
+                        <input type="number" :value="model.totalAmout" readonly="true"/>
                         <p style="display: inline;">元</p>
                     </li>
                     <li>
@@ -231,7 +232,7 @@
                     </li>
                     <li>
                         <p>受益群体</p>
-                        <input type="number" :value="model.totalGroup"  readonly="true"/>
+                        <input type="number" :value="model.totalGroup" readonly="true"/>
                         <p style="display: inline;">个</p>
                     </li>
                     <div align="center" style="position: relative;">
@@ -249,9 +250,9 @@
             <div v-for="item in items">
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
-                   <a :href="'project/'+item.projectId" ><img :alt="item.projectName"
+                    <a :href="'project/'+item.projectId"><img :alt="item.projectName"
                                                               :src="imgUrl+'project/240x160/'+item.img"
-                                                                    style="float:left;"/></a>
+                                                              style="float:left;"/></a>
                     <span class="projectName"><i class="fa fa-angle-right" aria-hidden="true"
                                                  style="font-size: 30px;color: #999999;margin-right: 10px"></i><a
                             class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a> </span>
