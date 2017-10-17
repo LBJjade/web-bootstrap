@@ -7,6 +7,7 @@ package com.becheer.donation.controller.home;
 */
 
 import com.becheer.donation.controller.BaseController;
+import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.Intention;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.intention.IntentionExtension;
@@ -38,11 +39,13 @@ public class ApplyController extends BaseController {
     @Resource
     private IProgressService progressService;
 
+    @Access(authorities="member")
     @GetMapping(value = "")
     public String index(HttpServletRequest request) {
         return this.render("home/apply");
     }
 
+    @Access(authorities="member")
     @GetMapping(value = "/{applyId}")
     public String GetApplyDetail(HttpServletRequest request,@PathVariable long applyId) {
 
@@ -82,12 +85,12 @@ public class ApplyController extends BaseController {
 
     @PostMapping("/progress")
     @ResponseBody
-    public ResponseDto GetAllprogress(HttpServletRequest request, @RequestParam long applyId){
+    public ResponseDto GetAllProgress(HttpServletRequest request, @RequestParam long applyId){
         try {
             List<ProgressExtension> result=progressService.GetAllProgress(applyId,"dnt_intention");
             return new ResponseDto(200, Message.MEMBER_INTENTION_PROGRESS_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetAllprogress", ex);
+            LOGGER.error("GetAllProgress", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

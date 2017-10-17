@@ -1,6 +1,7 @@
 package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
+import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.ProjectProgress;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
@@ -41,11 +42,13 @@ public class HomeProjectController extends BaseController {
     @Resource
     IProjectProgressService projectProgressService;
 
+    @Access(authorities="member")
     @GetMapping("")
     public String View(HttpServletRequest request){
         return this.render("home/project");
     }
 
+    @Access(authorities="member")
     @GetMapping("/{contractProjectId}")
     public String GetProjectDetail(HttpServletRequest request,@PathVariable long contractProjectId){
         try {
@@ -107,7 +110,7 @@ public class HomeProjectController extends BaseController {
             PageInfo<ProjectProgress> result=projectProgressService.GetProjectProgress(projectId,pageSize,pageNum);
             return new ResponseDto(200,Message.PROJECT_PROGRESS_GET_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectType", ex);
+            LOGGER.error("GetProjectProgress", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

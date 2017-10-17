@@ -1,6 +1,7 @@
 package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
+import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
@@ -37,6 +38,7 @@ public class HomeContractController extends BaseController {
     @Resource
     IPaymentPlanService paymentPlanService;
 
+    @Access(authorities="member")
     @GetMapping("")
     public String View(HttpServletRequest request){
         return this.render("/home/contract");
@@ -61,6 +63,7 @@ public class HomeContractController extends BaseController {
         }
     }
 
+    @Access(authorities="member")
     @GetMapping(value = "/{contractId}")
     public String GetContractDetail(HttpServletRequest request,@PathVariable long contractId) {
         try{

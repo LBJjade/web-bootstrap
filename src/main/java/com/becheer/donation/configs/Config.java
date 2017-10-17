@@ -9,6 +9,8 @@ import java.util.Properties;
 public class Config {
     private static Properties properties = TaleUtils.getPropFromFile("src/main/resources/application.properties");
 
+    private static Config instance;
+
     public String imageRoot;
     public String docRoot;
 
@@ -26,6 +28,9 @@ public class Config {
     }
 
     public static Config getConfig(){
-        return new Config();
+        if (instance==null){
+            instance=new Config();
+        }
+        return instance;
     }
 }

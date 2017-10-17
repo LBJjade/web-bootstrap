@@ -8,6 +8,7 @@ package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.controller.ProjectController;
+import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.message.MessageExtension;
@@ -32,6 +33,7 @@ public class MessageController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
+    @Access(authorities="member")
     @GetMapping(value = "")
     public String index(javax.servlet.http.HttpServletRequest request) {
         return this.render("home/message");

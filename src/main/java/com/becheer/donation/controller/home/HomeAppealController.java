@@ -1,6 +1,7 @@
 package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
+import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
@@ -39,6 +40,7 @@ public class HomeAppealController extends BaseController {
     @Resource
     IProgressService progressService;
 
+    @Access(authorities="member")
     @GetMapping("")
     public String View(HttpServletRequest request){
         return this.render("/home/appeal");
@@ -63,6 +65,7 @@ public class HomeAppealController extends BaseController {
         }
     }
 
+    @Access(authorities="member")
     @GetMapping(value = "/{appealId}")
     public String GetAppealDetail(HttpServletRequest request,@PathVariable long appealId) {
         try{
