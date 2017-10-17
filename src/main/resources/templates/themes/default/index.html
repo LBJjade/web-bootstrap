@@ -29,8 +29,9 @@
         }
 
         .div_project {
-            height: 160px;
-            margin-top: 5px;
+            height: 145px;
+            margin-top: 15px;
+            margin-bottom: 30px;
         }
 
         .hr_10 {
@@ -44,7 +45,7 @@
         }
 
         #div_recent {
-            height: 400px;
+            height: 402px;
         }
 
         #div_recent img {
@@ -54,7 +55,7 @@
         }
 
         #div_project {
-            height: 350px;
+            height: 349px;
         }
 
         #div_project img {
@@ -74,6 +75,7 @@
             padding-left: 10px;
             padding-right: 10px;
             line-height: 40px;
+            margin-bottom: 0px;
             border-bottom: 1px solid #E4E4E4;
         }
 
@@ -101,19 +103,16 @@
             overflow: hidden;
             -ms-text-overflow: ellipsis;
             text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .recommend_item_info {
             height: auto;
             white-space: normal;
         }
 
         #ul_total input {
-            border: none;
+            border: 1px solid;
             width: 130px;
             font-size: 24px;
-            color: red;
+            color: #ffa701;
+            text-align: center;
         }
 
         #ul_total p {
@@ -163,6 +162,23 @@
             margin-left: 255px;
             color: #969696;
         }
+
+        .donate_button{
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100px;
+            height: 35px;
+            background-color: #e41620;
+            color: #FFFFFF;
+            border: none;
+            margin-top: 20px;
+        }
+         /*去掉输入框中的加减符号*/
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button{
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
     </style>
 
 </head>
@@ -200,12 +216,12 @@
                 <ul id="ul_total">
                     <li>
                         <p>爱心总人数</p>
-                        <input type="number" :value="model.totalDonator" readonly="true"/>
+                        <input type="number" :value="model.totalDonator"  readonly="true"/>
                         <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>善款总额</p>
-                        <input type="number" :value="model.totalAmout" readonly="true"/>
+                        <input type="number" :value="model.totalAmout"  readonly="true"/>
                         <p style="display: inline;">元</p>
                     </li>
                     <li>
@@ -215,11 +231,11 @@
                     </li>
                     <li>
                         <p>受益群体</p>
-                        <input type="number" :value="model.totalGroup" readonly="true"/>
+                        <input type="number" :value="model.totalGroup"  readonly="true"/>
                         <p style="display: inline;">个</p>
                     </li>
                     <div align="center" style="position: relative;">
-                        <button type="button" class="btn btn-primary" data-toggle="model" data-target="#div_qr_donate"
+                        <button type="button" class="donate_button" data-toggle="model" data-target="#div_qr_donate"
                                 data-dismiss="model">
                             我要捐赠
                         </button>
@@ -233,9 +249,9 @@
             <div v-for="item in items">
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
-                    <a :href="'project/'+item.projectId"><img :alt="item.projectName"
+                   <a :href="'project/'+item.projectId" ><img :alt="item.projectName"
                                                               :src="imgUrl+'project/240x160/'+item.img"
-                                                              style="float: left;width: 210px;"/></a>
+                                                                    style="float:left;"/></a>
                     <span class="projectName"><i class="fa fa-angle-right" aria-hidden="true"
                                                  style="font-size: 30px;color: #999999;margin-right: 10px"></i><a
                             class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a> </span>
@@ -254,7 +270,7 @@
             </div>
         </div>
         <div class="col-sm-3" style="padding-left:5px;height:400px;margin-top:10px">
-            <div class="right_panel" id="div_recent" style="height:500px">
+            <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
                     <div>

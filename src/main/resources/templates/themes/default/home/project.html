@@ -2,45 +2,83 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
 
     <title>project</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
-        #div_menu a{
+        #div_menu a {
             display: block;
             margin: 10px;
         }
-        #div_menu span{
+
+        #div_menu span {
             float: left;
             font-size: 20px;
         }
-        #div_menu ul{
+
+        #div_menu ul {
             margin-left: 30px;
             display: none;
         }
-        #div_menu_name p{
+
+        #div_menu_name p {
             margin-left: 15px;
             line-height: 40px;
             font-size: 18px;
             color: #fff;
         }
-        #div_project_list{
+
+        #div_project_list {
             min-height: 700px;
         }
 
-        .div_project_detail{
+        .div_project_detail {
             width: 302px;
-            height: 300px;
+            height: 325px;
             float: left;
             margin-left: 25px;
             margin-top: 25px;
             margin-bottom: 20px;
-            border: 1px solid #ccc;
+            border: 1px solid #dfdcdc;
         }
+
+        .div_project_detail:hover {
+            -webkit-box-shadow: #999 0px 0px 8px;
+            -moz-box-shadow: #999 0px 0px 8px;
+            box-shadow: #999 0px 0px 8px;
+        }
+
+        .info_button {
+            font-size: 14px;
+            background-color: #fcfcfc;
+            border: 1px solid #f0f0f0;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+            float: right;
+            margin-right: 9px;
+            margin-top: -9px;
+        }
+
+        .projectName {
+            height: 23px;
+            margin-top: 8px;
+            margin-left: 9px;
+            font-size: 16px;
+            color: #454647;
+            font-weight: normal;
+        }
+
+        #div_project_list a{
+            color:#000000;
+        }
+
+
     </style>
 </head>
 <body>
@@ -52,8 +90,9 @@
             <div id="div_navbar" style="margin-top: 10px">
                 <ul>
                     <li><a href="#">首页</a></li>
-                    <li>><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">个人中心</a></li>
+                    <li>><i class="fa fa-angle-right" aria-hidden="true"
+                            style="font-size: 20px;color: #999999; "></i></li>
+                    <li class="active"><a style="color: #000000" href="#">个人中心</a></li>
                 </ul>
             </div>
         </div>
@@ -69,13 +108,23 @@
             </div>
             <div id="div_project_list">
                 <div v-for="item in items" class="div_project_detail">
-                    <img :src="imgUrl+'project/900x600/'+item.thumbImg" height="200" width="300"/>
-                    <p>{{item.projectName}}</p>
-                    <p><span>目标金额:{{item.projectTargetAmount!=0?item.projectTargetAmount/100:0}}</span><span>已筹:{{item.acceptedAmount!=0?item.acceptedAmount/100:0}}</span></p>
-                    <p>我捐赠的金额:{{item.donatedAmount!=0?item.donatedAmount/100:0}}<a :href="'project/'+item.id" target="_blank"><button class="btn btn-default">查看详情</button></a></p>
+                    <a :href="'project/'+item.id" target="_blank" ><img :src="imgUrl+'project/900x600/'+item.thumbImg"
+                                                                       height="200" width="300" alt=""/></a>
+                    <p class="projectName">{{item.projectName}}</p>
+                    <p style="margin:0px 0px 0px 9px;"><a style="color: #afafaf;">目标金额 : </a><span
+                            style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount!=0?item.projectTargetAmount/100:0}}</span><a  style="color: #afafaf;"
+                            >&nbsp;元</a><span style=" display: block"><a  style="color: #afafaf;">已筹:</a>
+                        <span
+                            style="color: #ff5a43;font-size: 16px;font-weight:bold;">{{item.acceptedAmount!=0?item.acceptedAmount/100:0}}
+                        </span>
+                        <a  style="color: #ff5a43;">&nbsp;元</a></span></p>
+                    <p style="margin:0px 0px 0px 9px;"><a  style="color: #afafaf;">我捐赠的金额 : </a><span
+                            style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount!=0?item.donatedAmount/100:0}}</span><a  style="color: #afafaf;"
+                            >&nbsp;元</a>
+                        <button class="info_button" :href="'project/'+item.id" target="_blank">查看详情</button></p>
                 </div>
             </div>
-            <div  style="text-align: center; width: 100%;" id="div_page">
+            <div style="text-align: center; width: 100%;" id="div_page">
             </div>
         </div>
     </div>
@@ -86,8 +135,8 @@
 <script th:src="@{/js/date.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
-    var pageSize=6;
-    var pageNum=1;
+    var pageSize = 6;
+    var pageNum = 1;
     var pageCount;
     var vueContent;
 
@@ -98,36 +147,36 @@
 
     function f_GetProject() {
         $.ajax({
-            url:'/home/project/list',
-            data:{pageNum:pageNum,pageSize:pageSize},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
+            url: '/home/project/list',
+            data: {pageNum: pageNum, pageSize: pageSize},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     $.each(data.result.list, function (i, item) {
                         item.createTime = f_FormatDateTime(item.createTime);
                     });
-                    pageCount=data.result.pages;
-                    pageNum=data.result.pageNum;
-                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
                     f_InitPagination($("#div_page"));
-                    if (vueContent==undefined) {
-                        vueContent=new Vue({
+                    if (vueContent == undefined) {
+                        vueContent = new Vue({
                             el: '#div_project_list',
                             data: {
                                 items: data.result.list,
                                 imgUrl: imgRoot
                             }
                         });
-                        if (data.result.list.length===0){
+                        if (data.result.list.length === 0) {
                             $(".p_no_data").show();
                         }
-                    }else{
-                        for (var i = 0; i<data.result.list.length; i++) {
+                    } else {
+                        for (var i = 0; i < data.result.list.length; i++) {
                             Vue.set(vueContent.items, i, data.result.list[i]);
                         }
                         vueContent.items.splice(data.result.list.length);
-                        scrollTo(0,0);
+                        scrollTo(0, 0);
                     }
                 }
             }
@@ -136,9 +185,10 @@
 
     //翻页回调函数
     function f_PageCallBack(newPage) {
-        pageNum=newPage;
+        pageNum = newPage;
         f_GetProject();
     }
+
     /*]]>*/
 </script>
 </body>
