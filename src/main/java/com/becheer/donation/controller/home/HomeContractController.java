@@ -47,6 +47,10 @@ public class HomeContractController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseDto GetContract(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         if (pageSize<1||pageSize>50){
             pageSize=5;
         }
@@ -54,7 +58,6 @@ public class HomeContractController extends BaseController {
             pageNum=1;
         }
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
             PageInfo<MemberContractExtension> result=contractService.GetContractList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS,result);
         }catch(Exception ex){
@@ -83,6 +86,10 @@ public class HomeContractController extends BaseController {
     @PostMapping("/payment")
     @ResponseBody
     public ResponseDto GetPaymentPlan(HttpServletRequest request, @RequestParam long contractId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         try {
             List<PaymentPlanExtension> result=paymentPlanService.GetPaymentPlan(contractId);
             return new ResponseDto(200, Message.MEMBER_GET_PAYMENT_PLAN_SUCCESS,result);

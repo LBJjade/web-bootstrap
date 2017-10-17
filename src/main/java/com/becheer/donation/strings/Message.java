@@ -15,7 +15,7 @@ public class Message {
      */
     public static final String SERVER_ERROR="服务器错误";
     public static final String PARAMETER_ERROR="参数错误";
-
+    public static final String UNAUTHORIZED="授权失败";
     /**
      * 注册
      */

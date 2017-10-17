@@ -68,6 +68,10 @@ public class HomeProjectController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         if (pageSize<1||pageSize>50){
             pageSize=5;
         }
@@ -75,7 +79,6 @@ public class HomeProjectController extends BaseController {
             pageNum=1;
         }
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
             PageInfo<MemberProjectExtension> result=projectService.GetProjectList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.PROJECT_GET_LIST_SUCCESS,result);
         }catch(Exception ex){
@@ -88,6 +91,10 @@ public class HomeProjectController extends BaseController {
     @PostMapping("/progress")
     @ResponseBody
     public ResponseDto GetAllprogress(HttpServletRequest request, @RequestParam long contractProjectId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         try {
             List<ProgressExtension> result=progressService.GetAllProgress(contractProjectId,"dnt_contract_project");
             return new ResponseDto(200, Message.MEMBER_PROJECT_GET_PROGRESS_SUCCESS,result);
@@ -100,6 +107,10 @@ public class HomeProjectController extends BaseController {
     @PostMapping("/projectProgress")
     @ResponseBody
     public ResponseDto GetProjectProgress(HttpServletRequest request, @RequestParam long projectId, @RequestParam int pageSize, @RequestParam int pageNum){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         if (pageSize<1||pageSize>50){
             pageSize=5;
         }

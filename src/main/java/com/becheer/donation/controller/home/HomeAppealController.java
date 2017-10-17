@@ -49,6 +49,10 @@ public class HomeAppealController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseDto GetAppealList(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         if (pageSize<1||pageSize>50){
             pageSize=5;
         }
@@ -56,7 +60,6 @@ public class HomeAppealController extends BaseController {
             pageNum=1;
         }
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
             PageInfo<MemberAppealExtension> result=appealService.GetMemberAppeal(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS,result);
         }catch(Exception ex){
@@ -86,6 +89,10 @@ public class HomeAppealController extends BaseController {
     @PostMapping("/progress")
     @ResponseBody
     public ResponseDto GetAllProgress(HttpServletRequest request, @RequestParam long appealId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         try {
             List<ProgressExtension> result=progressService.GetAllProgress(appealId,"dnt_appeal");
             return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_SUCCESS,result);

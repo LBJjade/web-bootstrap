@@ -48,9 +48,7 @@ public class ApplyController extends BaseController {
     @Access(authorities="member")
     @GetMapping(value = "/{applyId}")
     public String GetApplyDetail(HttpServletRequest request,@PathVariable long applyId) {
-
         try{
-            long tempId=Long.valueOf(applyId);
             IntentionExtension result = intentionService.GetIntention(applyId);
             if (result==null) {
                 return render_404();
@@ -67,6 +65,10 @@ public class ApplyController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseDto GetList(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         if (pageSize<1||pageSize>50){
             pageSize=5;
         }
@@ -74,7 +76,6 @@ public class ApplyController extends BaseController {
             pageNum=1;
         }
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
             PageInfo<Intention> result=intentionService.GetIntentionList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.INTENTION_GET_SUCCESS,result);
         }catch(Exception ex){
@@ -86,6 +87,10 @@ public class ApplyController extends BaseController {
     @PostMapping("/progress")
     @ResponseBody
     public ResponseDto GetAllProgress(HttpServletRequest request, @RequestParam long applyId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         try {
             List<ProgressExtension> result=progressService.GetAllProgress(applyId,"dnt_intention");
             return new ResponseDto(200, Message.MEMBER_INTENTION_PROGRESS_SUCCESS,result);
@@ -98,8 +103,11 @@ public class ApplyController extends BaseController {
     @PostMapping("/add")
     @ResponseBody
     public ResponseDto AddProgress(HttpServletRequest request,@RequestParam String content,@RequestParam long applyId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
             long result=progressService.AddProgress(content,content,"dnt_intention",applyId,currentMember.getMemberId(),1);
             if (result>0){
                 return new ResponseDto(200,Message.MEMBER_INTENTION_PROGRESS_ADD_SUCCESS);
