@@ -1,12 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="footer">
+    <style type="text/css">
+        #div_bottom a{
+            color:#fff;
+        }
 
+        .bottom_items{
+            border-bottom: 1px dashed #999999
+        }
+
+        .bottom_items span{
+            margin-right: 30px;
+        }
+    </style>
     <body>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-12" style="padding: 0px">
                     <div id="div_bottom">
-                        Copyright  ©2017  广东省世纪爱心慈善基金会  All Rights reserved.  粤ICP备14004079号-3  Technical support：300.CN
+                        <div class="container">
+                            <div class="row bottom_items"  >
+                            <span><a th:href="@{~/index}">首页</a></span>
+                            <span><a th:href="@{~/about_us.html}">关于我们</a></span>
+                            <span><a th:href="@{~/publicity}">信息公开</a></span>
+                            <span><a th:href="@{~/project}">慈善项目</a></span>
+                            </div>
+                        </div>
+                        <span>Copyright  ©2017  广东省世纪爱心慈善基金会  All Rights reserved. <a href="http://www.miitbeian.gov.cn"> 粤ICP备14004079号-3</a>  Technical support：300.CN</span>
                     </div>
                 </div>
             </div>
