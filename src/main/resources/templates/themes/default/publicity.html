@@ -23,17 +23,19 @@
             border-bottom: 3px #eee solid;
         }
 
-        #div_menu a{
+        #div_menu a {
             display: block;
             margin: 5px;
             color: #1E1E1E;
         }
-        #div_menu span{
+
+        #div_menu span {
             float: left;
             font-size: 20px;
         }
-        #div_menu ul{
-            margin-left:28px;
+
+        #div_menu ul {
+            margin-left: 28px;
         }
 
         #div_menu_name {
@@ -63,47 +65,47 @@
             font-size: 14px;
         }
 
-        .nav_items:hover{
-            background-color:#EFF8F8;
+        .nav_items:hover {
+            background-color: #EFF8F8;
         }
 
-        .nav_icon{
-            margin-left:10px;
-            padding-left:1px;
-            padding-right:1px;
+        .nav_icon {
+            margin-left: 10px;
+            padding-left: 1px;
+            padding-right: 1px;
             padding-bottom: 8px;
-            border:1px solid #00a0ea;
+            border: 1px solid #00a0ea;
             margin-bottom: 10px;
         }
 
-        .components{
-            position:absolute;
-            top:60px;
-            left:99px;
-            z-index:1;
-            width:350px;
-            height:52px;
-            border-top:1px solid #00a0ea;
-            border-left:1px solid #00a0ea;
-            border-right:1px solid #00a0ea;
-            border-bottom:1px solid #00a0ea;
-            padding-top:13px;
+        .components {
+            position: absolute;
+            top: 60px;
+            left: 99px;
+            z-index: 1;
+            width: 350px;
+            height: 52px;
+            border-top: 1px solid #00a0ea;
+            border-left: 1px solid #00a0ea;
+            border-right: 1px solid #00a0ea;
+            border-bottom: 1px solid #00a0ea;
+            padding-top: 13px;
         }
 
-        .iconsp{
-            margin-left:10px;
-            margin-right:8px;
-            width:74px;
-            color:#c8c8c8;
+        .iconsp {
+            margin-left: 10px;
+            margin-right: 8px;
+            width: 74px;
+            color: #c8c8c8;
         }
 
-        .icona{
-            margin-left:8px;
-            margin-right:8px;
+        .icona {
+            margin-left: 8px;
+            margin-right: 8px;
         }
 
-        .icona:hover{
-            text-decoration:underline;
+        .icona:hover {
+            text-decoration: underline;
         }
 
     </style>
@@ -121,13 +123,13 @@
             </div>
 
             <div id="div_menu" class="right_panel">
-                <div class="nav_items"  v-for="item in items">
+                <div class="nav_items" v-for="item in items">
                     <ul>
                         <li><a v-on:click="f_getArticle(item.id) " target="_blank">{{item.articleTypeName}}</a></li>
                     </ul>
                 </div>
             </div>
-            <div th:replace="themes/default/sectiona::sectiona"></div>
+            <div th:replace="themes/default/details::details"></div>
             <div th:replace="themes/default/section::section"></div>
 
         </div>
@@ -136,23 +138,26 @@
                 <ul>
                     <li><a href="#">首页</a></li>
                     <li>><a href="#">&gt;</a></li>
-                    <li class="active nav_icon "><a href="#">信息公开 <div class="glyphicon glyphicon-chevron-down icon1" ></div><div class="glyphicon glyphicon-chevron-up icon2" style="display:none"></div></a></li>
+                    <li class="active nav_icon "><a href="#">信息公开
+                        <div class="glyphicon glyphicon-chevron-down icon1"></div>
+                        <div class="glyphicon glyphicon-chevron-up icon2" style="display:none"></div>
+                    </a></li>
                     <li>><a href="#">&gt;</a></li>
                     <li class="active"><a href="#">年度报告</a></li>
                 </ul>
             </div>
-            <div class="components"  style="display:none">
+            <div class="components" style="display:none">
                 <span class="iconsp">
                     <span class="font"><i class="iconfont"></i>信息公开</span>
                 </span>
                 <a class="icona" href="#">
-                        <span class="font"><i class="iconfont"></i>慈善项目</span>
+                    <span class="font"><i class="iconfont"></i>慈善项目</span>
                 </a>
                 <a class="icona" href="#">
-                        <span class="font"><i class="iconfont"></i>我们在行动</span>
+                    <span class="font"><i class="iconfont"></i>我们在行动</span>
                 </a>
                 <a class="icona" href="#">
-                        <span class="font"><i class="iconfont"></i>活动纪实</span>
+                    <span class="font"><i class="iconfont"></i>活动纪实</span>
                 </a>
             </div>
             <br/>
@@ -168,9 +173,9 @@
                     </thead>
                     <tbody>
                     <tr v-for="item in items">
-                        <td style="text-align:center;line-height: 51px;" >{{item.title}}</td>
-                        <td style="text-align:center;line-height: 51px;" >{{item.createTime}}</td>
-                        <td style="text-align:center;line-height: 51px;" >
+                        <td style="text-align:center;line-height: 51px;">{{item.title}}</td>
+                        <td style="text-align:center;line-height: 51px;">{{item.createTime}}</td>
+                        <td style="text-align:center;line-height: 51px;">
                             <a :href="docUrl+item.attachmentUrl" target="_blank">
                                 <button class="btn btn-primary">查看</button>
                             </a>
@@ -261,29 +266,29 @@
     }
 
     /*]]>*/
-    $(".nav_icon").mouseover(function(){
-        $(".nav_icon").css("z-index","2")
+    $(".nav_icon").mouseover(function () {
+        $(".nav_icon").css("z-index", "2")
         $(".components").show();
         $(".icon1").hide();
         $(".icon2").show();
-        $(".nav_icon").css("border-bottom-style","none");
-    }).mouseout(function(){
+        $(".nav_icon").css("border-bottom-style", "none");
+    }).mouseout(function () {
         $(".components").hide();
         $(".icon2").hide();
         $(".icon1").show();
-        $(".nav_icon").css("border-bottom","1px solid #00a0ea");
+        $(".nav_icon").css("border-bottom", "1px solid #00a0ea");
     })
 
-    $(".components").mouseover(function(){
+    $(".components").mouseover(function () {
         $(".components").show();
         $(".icon1").hide();
         $(".icon2").show();
-        $(".nav_icon").css("border-bottom-style","none");
-    }).mouseout(function(){
+        $(".nav_icon").css("border-bottom-style", "none");
+    }).mouseout(function () {
         $(".components").hide();
         $(".icon2").hide();
         $(".icon1").show();
-        $(".nav_icon").css("border-bottom","1px solid #00a0ea");
+        $(".nav_icon").css("border-bottom", "1px solid #00a0ea");
     })
 
 </script>
