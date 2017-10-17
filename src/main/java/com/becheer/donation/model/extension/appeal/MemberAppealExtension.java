@@ -6,6 +6,8 @@ package com.becheer.donation.model.extension.appeal;
 * Date : 2017-10-11
 */
 
+import com.becheer.donation.utils.DateUtils;
+
 import java.util.Date;
 
 public class MemberAppealExtension {
@@ -63,8 +65,8 @@ public class MemberAppealExtension {
         this.appealMethod = appealMethod;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTime() {
+        return DateUtils.dateFormat(createTime);
     }
 
     public void setCreateTime(Date createTime) {

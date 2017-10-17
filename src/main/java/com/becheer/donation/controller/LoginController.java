@@ -14,7 +14,7 @@ import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.RegExUtil;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

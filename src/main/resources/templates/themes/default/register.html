@@ -108,7 +108,7 @@
                 <tr>
                     <td>手机号码</td>
                     <td>
-                        <input type="number" id="ipt_mobile"/>
+                        <input type="text" id="ipt_mobile"/>
                         <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">发送验证码</button>
                     </td>
                 </tr>
@@ -230,22 +230,19 @@
     $(".btn_send").click(function () {
         var mobile = $("#ipt_mobile").val();
         $.ajax({
-            url:'/Sms/SendSms',
+            url:'/register/SendSms',
             type:'post',
             data:{mobile:mobile,tid:"1"},
             dataType:'json',
             success:function (data) {
                 if(data.code===200){
                     layer.alert("验证码发送成功");
-                }else if (data.code===401){
-                    layer.alert("您本天的短信次数已用尽");
                 }else{
-                    layer.alert("验证码发送失败");
+                    layer.alert(data.msg);
                 }
             }
         })
     });
-
 
     $(".btn_checkSms").click(function () {
         var smsCode=$(".input_code").val();
@@ -263,7 +260,7 @@
                 }else if (data.code==402){
                     layer.alert("验证码已过期，请重新获取");
                 }else if(data.code==403){
-                    layer.alert("验证码错误")
+                    layer.alert("验证码错误");
                 }else{
                     layer.alert("验证码错误");
                 }

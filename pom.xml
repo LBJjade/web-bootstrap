@@ -6,7 +6,7 @@
     <groupId>com.becheer.donation</groupId>
     <artifactId>donation</artifactId>
     <!-- now -->
-    <version>3.2.0-SNAPSHOT</version>
+    <version>1.0</version>
     <!-- version的时间节点-->
     <!-- Tale -->
     <!--<version>0.0.1-SNAPSHOT</version>-->
@@ -14,7 +14,7 @@
     <!--<version>1.0.1-SNAPSHOT</version>-->
     <!-- docker -->
     <!--<version>2.0.1-SNAPSHOT</version>-->
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <name>donation</name>
     <description>donation</description>

@@ -2,6 +2,7 @@ package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.Message;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,10 @@ public class MemberController extends BaseController {
     @PostMapping("/info")
     @ResponseBody
     public ResponseDto Submit(HttpServletRequest request, @RequestParam long memberId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         return memberService.GetMemberById(memberId);
     }
 }

@@ -9,7 +9,17 @@
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
         <result column="appeal_method" jdbcType="VARCHAR" property="appealMethod" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    </resultMap>
 
+    <resultMap id="MemberAppealDetailResultMap" type="com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="appeal_title" jdbcType="VARCHAR" property="title" />
+        <result column="appeal_content" jdbcType="VARCHAR" property="content" />
+        <result column="appeal_method" jdbcType="VARCHAR" property="method" />
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="status" jdbcType="INTEGER" property="status" />
     </resultMap>
 
     <select id="SelectAppealByMemberId" parameterType="java.lang.Long" resultMap="MemberAppealResultMap">
@@ -27,4 +37,23 @@
         WHERE a.enable_ = 1 AND a.member_id =#{memberId,jdbcType=BIGINT}
         ORDER BY create_time DESC
     </select>
+
+    <select id="SelectAppealDetail" resultMap="MemberAppealDetailResultMap">
+        SELECT
+            a.id_,
+            a.appeal_title,
+            p.project_name,
+            c.contract_name,
+            a.appeal_method,
+            a.appeal_content,
+            a.`status`,
+            a.create_time
+        FROM dnt_appeal a
+        LEFT JOIN dnt_project p on p.id_=a.project_id
+        LEFT JOIN dnt_contract c on c.id_=a.contract_id
+        WHERE a.enable_ = 1
+        AND a.id_= #{param1}
+        AND a.member_id= #{param2}
+    </select>
+
 </mapper>

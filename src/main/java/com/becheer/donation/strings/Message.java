@@ -15,10 +15,17 @@ public class Message {
      */
     public static final String SERVER_ERROR="服务器错误";
     public static final String PARAMETER_ERROR="参数错误";
+    public static final String UNAUTHORIZED="授权失败";
+
+    /*
+     *验证
+     */
+    public static final String VALIDATION_MOBILE_FAILED="手机号格式错误";
 
     /**
      * 注册
      */
+    public static final String REGISTER_MOBILE_EXIST="该手机号已被使用";
     public static final String REGISTER_SMS_SEND_ERROR="短信发送失败，请重试";
     public static final String REGISTER_SMS_SEND_SUCCESS="短信发送成功";
     public static final String REGISTER_SMS_INDIVIDUAL_TEMPLATE="短信模板错误";
@@ -126,7 +133,7 @@ public class Message {
     /**
      * 申诉
      */
-
+    public static final String MEMBER_APPEAL_PROGRESS_SUCCESS="获取申诉进展成功";
 
 
 }

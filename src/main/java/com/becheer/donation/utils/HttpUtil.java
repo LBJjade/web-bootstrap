@@ -22,7 +22,9 @@ public class HttpUtil {
             return null;
         }
         JSONObject sessionObject=(JSONObject)session.getAttribute(ConstString.MEMBER_SESSION_CODE);
-
+        if (sessionObject==null){
+            return null;
+        }
         String a=sessionObject.get("mobile").toString();
         MemberSessionExtension result=new MemberSessionExtension();
         result.setMemberId(sessionObject.getIntValue("memberId"));

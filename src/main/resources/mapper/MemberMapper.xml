@@ -35,10 +35,9 @@
         <result column="remark_" jdbcType="VARCHAR" property="remark" />
     </resultMap>
 
-    <insert id="insertMember" parameterType="com.becheer.donation.model.Member" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insertMember" parameterType="com.becheer.donation.model.Member">
         INSERT INTO dnt_member
         (
-        id_,
         mobile,
         create_time,
         role,
@@ -47,7 +46,6 @@
         )
         VALUES
         (
-        #{id,jdbcType=BIGINT},
         #{mobile,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP},
         #{role,jdbcType=INTEGER},
@@ -63,7 +61,7 @@
 
     <select id="SelectMemberById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT * FROM dnt_member
-        where id_=#{memberId,jdbcType=BIGINT}
+        WHERE id_=#{memberId,jdbcType=BIGINT}
     </select>
 
 </mapper>

@@ -7,15 +7,14 @@ package com.becheer.donation.controller.home;
 */
 
 import com.becheer.donation.controller.BaseController;
-import com.becheer.donation.controller.ProjectController;
+import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.message.MessageExtension;
 import com.becheer.donation.service.IMessageService;
-import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageInfo;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,6 +31,7 @@ public class MessageController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
+    @Access(authorities="member")
     @GetMapping(value = "")
     public String index(javax.servlet.http.HttpServletRequest request) {
         return this.render("home/message");
@@ -40,6 +40,10 @@ public class MessageController extends BaseController {
     @PostMapping("/list")
     @ResponseBody
     public ResponseDto GetMessage(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         if (pageSize<1||pageSize>50){
             pageSize=5;
         }
@@ -47,7 +51,6 @@ public class MessageController extends BaseController {
             pageNum=1;
         }
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
             PageInfo<MessageExtension> result=messageService.GetMessageList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.MESSAGE_GET_SUCCESS,result);
         }catch(Exception ex){

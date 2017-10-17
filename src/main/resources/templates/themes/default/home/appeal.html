@@ -10,59 +10,6 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
-        #div_login{
-            width: 350px;
-            height: 80px;
-            float: right;
-            padding: 20px 10px 10px 10px ;
-        }
-        #div_login_l{
-            width: 270px;
-            height: 70px;
-            border-right: 1px #eee solid;
-            float: left;
-        }
-        #div_login_r{
-            width: 60px;
-            height: 70px;
-            float: left;
-        }
-
-        #div_menu{
-            width: 200px;
-            height: 600px;
-            border-left: 1px #eee solid;
-            border-right: 1px #eee solid;
-            border-top: 2px #eee solid;
-            border-bottom: 3px #eee solid;
-        }
-        #div_menu a{
-            display: block;
-            margin: 10px;
-        }
-
-        #div_menu span{
-            float: left;
-            font-size: 20px;
-        }
-        #div_menu ul{
-            margin-left: 30px;
-            /*display: none;*/
-        }
-        #div_menu_name{
-            width: 200px;
-            height: 40px;
-            height: 40px;
-            background-color: #00a0ea;
-            margin-top: 15px;
-        }
-        #div_menu_name p{
-            margin-left: 15px;
-            line-height: 40px;
-            font-size: 18px;
-            color: #fff;
-        }
-
         .div_message_title{
             padding: 15px;
             height: 50px;
@@ -93,6 +40,12 @@
             float: right;
         }
 
+        .p_no_data{
+            line-height: 100px;
+            text-align: center;
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -114,16 +67,19 @@
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
-        <div class="col-sm-10">
-            <div v-for="item in items" id="div_appeal_item">
+        <div class="col-sm-10"  id="div_appeal_item">
+            <div v-for="item in items">
                 <div class="div_message_title">
-                    <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.受捐人资金使用申诉}}<span>{{item.createTime}}</span></h4></div>
+                    <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.appealTitle}}<span>{{item.createTime}}</span></h4></div>
                 </div>
                 <div class="div_message_content">
                     <p>申诉项目:{{item.projectName}}</p>
                     <p>申诉合同:{{item.contractName}}</p>
-                    <p>申诉类型:{{item.appealMethod}}<a href="appeal.html" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
+                    <p>申诉类型:{{item.appealMethod}}<a :href="'appeal/'+item.id" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
                 </div>
+            </div>
+            <p class="p_no_data">暂无消息</p>
+            <div  style="text-align: center; width: 100%;" id="div_page">
             </div>
         </div>
     </div>
@@ -136,7 +92,7 @@
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
-    var pageSize=6;
+    var pageSize=5;
     var pageNum=1;
     var pageCount;
     var vueContent;
@@ -165,9 +121,9 @@
                                 items: data.result.list
                             }
                         });
-//                        if (data.result.list.length===0){
-//                            $(".p_no_data").show();
-//                        }
+                        if (data.result.list.length===0){
+                            $(".p_no_data").show();
+                        }
                     }else{
                         for (var i = 0; i<data.result.list.length; i++) {
                             Vue.set(vueContent.items, i, data.result.list[i]);

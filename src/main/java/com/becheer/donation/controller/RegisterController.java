@@ -1,13 +1,18 @@
 package com.becheer.donation.controller;
 
+import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberRegisterExtension;
 import com.becheer.donation.service.IMemberService;
+import com.becheer.donation.service.ISmsService;
 import com.becheer.donation.strings.ConstString;
+import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.RegExUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.annotation.Resources;
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -22,6 +27,9 @@ public class RegisterController extends BaseController {
 
     @Resource
     private IMemberService memberService;
+
+    @Resource
+    private ISmsService smsService;
 
     /**
      *注册页面
@@ -52,5 +60,21 @@ public class RegisterController extends BaseController {
             request.getSession().removeAttribute(ConstString.REGISTER_SMS_SESSION);
         }
         return result;
+    }
+
+    /**
+     * 发送短信
+     */
+    @PostMapping(value = "/SendSms")
+    @ResponseBody
+    public ResponseDto SendRegisterSms(HttpServletRequest request, @RequestParam String mobile) {
+        if (!RegExUtil.checkMobile(mobile)){
+            return new ResponseDto(400,Message.VALIDATION_MOBILE_FAILED);
+        }
+        Member member=memberService.GetMemberByMobile(mobile);
+        if (member!=null){
+            return new ResponseDto(401,Message.REGISTER_MOBILE_EXIST);
+        }
+        return smsService.SendSms(mobile,1);
     }
 }

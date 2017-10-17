@@ -6,6 +6,8 @@ package com.becheer.donation.model.extension.message;
 * Date : 2017-09-27
 */
 
+import com.becheer.donation.utils.DateUtils;
+
 import java.util.Date;
 
 public class MessageExtension {
@@ -51,8 +53,8 @@ public class MessageExtension {
         this.content = content;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreateTime() {
+        return DateUtils.dateFormat(createTime);
     }
 
     public void setCreateTime(Date createTime) {

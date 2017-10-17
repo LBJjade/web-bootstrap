@@ -53,7 +53,7 @@ public class SmsServiceImpl implements ISmsService {
         sms.setMobile(mobile);
         sms.setCode(smsCode);
         sms.setText(smsTemplateExtension.getContent().replace("{{code}}", smsCode));
-        sms.setId(UUID.GetInt64UUID());
+//        sms.setId(UUID.GetInt64UUID());
         SmsResponse sendResult = SmsUtil.SendSms(sms.getMobile(), sms.getText());
         if (sendResult == null || !sendResult.getStatus().equals("10")) {
             return new ResponseDto(501, Message.REGISTER_SMS_SEND_ERROR);

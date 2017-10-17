@@ -1,6 +1,8 @@
 package com.becheer.donation.controller;
 
+import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.HttpUtil;
 import com.becheer.donation.utils.TaleUtils;
 import com.becheer.donation.utils.MapCache;
@@ -33,6 +35,10 @@ public abstract class BaseController {
     public BaseController keywords(HttpServletRequest request, String keywords) {
         request.setAttribute("keywords", keywords);
         return this;
+    }
+
+    public ResponseDto MemberAuthFailed(){
+        return new ResponseDto(403, Message.UNAUTHORIZED);
     }
 
     /**
