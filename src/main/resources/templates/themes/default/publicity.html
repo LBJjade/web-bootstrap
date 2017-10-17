@@ -2,50 +2,110 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
 
     <title>信息公开</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
-    <link rel="stylesheet" th:href="@{/plugin/timeline/css.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/plugin/timeline/css.css}"/>
 
     <style type="text/css">
-        #div_menu{
-            width: 300px;
-            height: 600px;
+        #div_menu {
+            width: 200px;
+            height: auto;
             margin-bottom: 20px;
             border-left: 1px #eee solid;
             border-right: 1px #eee solid;
             border-top: 2px #eee solid;
             border-bottom: 3px #eee solid;
         }
+
         #div_menu a{
             display: block;
-            margin: 10px;
+            margin: 5px;
+            color: #1E1E1E;
         }
         #div_menu span{
             float: left;
             font-size: 20px;
         }
         #div_menu ul{
-            margin-left: 30px;
-            display: none;
+            margin-left:28px;
         }
-        #div_menu_name{
-            width: 300px;
+
+        #div_menu_name {
+            width: 200px;
             height: 40px;
             height: 40px;
             background-color: #00a0ea;
             margin-top: 30px;
         }
-        #div_menu_name p{
+
+        #div_menu_name p {
             margin-left: 15px;
             line-height: 40px;
             font-size: 18px;
             color: #fff;
         }
+
+        .nav_items {
+            height: 40px;
+            padding-bottom: 30px;
+            padding-top: 2px;
+            padding-left: 10px;
+            padding-right: 10px;
+            line-height: 30px;
+            border-bottom: 1px solid #E4E4E4;
+            color: #1E1E1E;
+            font-size: 14px;
+        }
+
+        .nav_items:hover{
+            background-color:#EFF8F8;
+        }
+
+        .nav_icon{
+            margin-left:10px;
+            padding-left:1px;
+            padding-right:1px;
+            padding-bottom: 8px;
+            border:1px solid #00a0ea;
+            margin-bottom: 10px;
+        }
+
+        .components{
+            position:absolute;
+            top:60px;
+            left:99px;
+            z-index:1;
+            width:350px;
+            height:52px;
+            border-top:1px solid #00a0ea;
+            border-left:1px solid #00a0ea;
+            border-right:1px solid #00a0ea;
+            border-bottom:1px solid #00a0ea;
+            padding-top:13px;
+        }
+
+        .iconsp{
+            margin-left:10px;
+            margin-right:8px;
+            width:74px;
+            color:#c8c8c8;
+        }
+
+        .icona{
+            margin-left:8px;
+            margin-right:8px;
+        }
+
+        .icona:hover{
+            text-decoration:underline;
+        }
+
     </style>
 </head>
 <body>
@@ -54,28 +114,50 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-2">
 
             <div id="div_menu_name">
                 <p>信息公开</p>
             </div>
 
-            <div id="div_menu">
-                <a class="glyphicon glyphicon-plus" v-on:click="f_getArticle(item.id)" v-for="item in items">{{item.articleTypeName}}</a>
+            <div id="div_menu" class="right_panel">
+                <div class="nav_items"  v-for="item in items">
+                    <ul>
+                        <li><a v-on:click="f_getArticle(item.id) " target="_blank">{{item.articleTypeName}}</a></li>
+                    </ul>
+                </div>
             </div>
+            <div th:replace="themes/default/sectiona::sectiona"></div>
+            <div th:replace="themes/default/section::section"></div>
+
         </div>
-        <div class="col-sm-9">
+        <div class="col-sm-10" style="">
             <div id="div_navbar">
                 <ul>
                     <li><a href="#">首页</a></li>
                     <li>><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">信息公开</a></li>
+                    <li class="active nav_icon "><a href="#">信息公开 <div class="glyphicon glyphicon-chevron-down icon1" ></div><div class="glyphicon glyphicon-chevron-up icon2" style="display:none"></div></a></li>
                     <li>><a href="#">&gt;</a></li>
                     <li class="active"><a href="#">年度报告</a></li>
                 </ul>
             </div>
+            <div class="components"  style="display:none">
+                <span class="iconsp">
+                    <span class="font"><i class="iconfont"></i>信息公开</span>
+                </span>
+                <a class="icona" href="#">
+                        <span class="font"><i class="iconfont"></i>慈善项目</span>
+                </a>
+                <a class="icona" href="#">
+                        <span class="font"><i class="iconfont"></i>我们在行动</span>
+                </a>
+                <a class="icona" href="#">
+                        <span class="font"><i class="iconfont"></i>活动纪实</span>
+                </a>
+            </div>
             <br/>
-            <div id="div_content">
+            <div id="div_content" style="margin-top: 10px;padding-left: 30px;min-height:750px;">
+                <div style="width:20px;"></div>
                 <table class="table table-bordered">
                     <thead>
                     <tr>
@@ -86,14 +168,18 @@
                     </thead>
                     <tbody>
                     <tr v-for="item in items">
-                        <td>{{item.title}}</td>
-                        <td>{{item.createTime}}</td>
-                        <td>
-                            <a :href="docUrl+item.attachmentUrl" target="_blank"><button class="btn btn-primary">查看</button></a>
+                        <td style="text-align:center;line-height: 51px;" >{{item.title}}</td>
+                        <td style="text-align:center;line-height: 51px;" >{{item.createTime}}</td>
+                        <td style="text-align:center;line-height: 51px;" >
+                            <a :href="docUrl+item.attachmentUrl" target="_blank">
+                                <button class="btn btn-primary">查看</button>
+                            </a>
                             <!--<button class="btn btn-primary">下载</button>-->
                         </td>
                     </tr>
-                    <tr class="tr_hide"><td colspan="4" class="text-center">暂无数据</td></tr>
+                    <tr class="tr_hide">
+                        <td colspan="4" class="text-center">暂无数据</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -117,8 +203,8 @@
 <script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var pageSize=10;
-    var pageNum=1;
+    var pageSize = 10;
+    var pageNum = 1;
     var vueContent;
 
     $(document).ready(function () {
@@ -126,12 +212,12 @@
     });
 
     //获取文章分类
-    function f_getArticleType(){
+    function f_getArticleType() {
         $.ajax({
-            url:'/publicity/type',
-            type:'post',
-            success:function (data) {
-                if(data.code===200) {
+            url: '/publicity/type',
+            type: 'post',
+            success: function (data) {
+                if (data.code === 200) {
                     new Vue({
                         el: "#div_menu",
                         data: {
@@ -159,21 +245,47 @@
                             el: "#div_content",
                             data: {
                                 items: data.result.list,
-                                docUrl:docRoot
+                                docUrl: docRoot
                             }
                         });
                     } else {
-                        for (var i = 0; i<data.result.list.length; i++) {
+                        for (var i = 0; i < data.result.list.length; i++) {
                             Vue.set(vueContent.items, i, data.result.list[i]);
                         }
                         vueContent.items.splice(data.result.list.length);
                     }
-                    data.result.list.length===0?$(".tr_hide").show():$(".tr_hide").hide();
+                    data.result.list.length === 0 ? $(".tr_hide").show() : $(".tr_hide").hide();
                 }
             }
         })
     }
+
     /*]]>*/
+    $(".nav_icon").mouseover(function(){
+        $(".nav_icon").css("z-index","2")
+        $(".components").show();
+        $(".icon1").hide();
+        $(".icon2").show();
+        $(".nav_icon").css("border-bottom-style","none");
+    }).mouseout(function(){
+        $(".components").hide();
+        $(".icon2").hide();
+        $(".icon1").show();
+        $(".nav_icon").css("border-bottom","1px solid #00a0ea");
+    })
+
+    $(".components").mouseover(function(){
+        $(".components").show();
+        $(".icon1").hide();
+        $(".icon2").show();
+        $(".nav_icon").css("border-bottom-style","none");
+    }).mouseout(function(){
+        $(".components").hide();
+        $(".icon2").hide();
+        $(".icon1").show();
+        $(".nav_icon").css("border-bottom","1px solid #00a0ea");
+    })
+
 </script>
 </body>
 </html>
