@@ -1,77 +1,168 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
 
     <title>index</title>
 
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
-
+    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
-        *{
+        * {
             font-family: 微软雅黑;
         }
-        #div_total{
+
+        #div_total {
             height: 400px;
             margin-top: 10px;
             border: 1px #e9e9e9 solid;
         }
 
-        #ul_total{
+        #ul_total {
             list-style: none;
         }
 
-        .left_item{
+        .left_item {
             width: 900px;
         }
 
-        .div_project{
+        .div_project {
             height: 160px;
             margin-top: 5px;
         }
 
-        .hr_10{
+        .hr_10 {
             margin-top: 10px;
             margin-bottom: 10px;
         }
 
-        .right_panel{
+        .right_panel {
             margin-top: 10px;
             border: 1px #e9e9e9 solid;
         }
 
-        #div_recent{
+        #div_recent {
             height: 400px;
         }
 
-        #div_recent img{
+        #div_recent img {
             height: 40px;
             width: 40px;
             float: left;
         }
 
-        #div_project{
-            height: 305px;
+        #div_project {
+            height: 350px;
         }
 
-        #div_project img{
+        #div_project img {
             height: 40px;
             width: 40px;
             float: left;
         }
 
-        #div_question{
+        #div_question {
             height: 200px;
         }
 
-        .recommend_item{
+        .recommend_item {
             height: 40px;
-            margin-top: 5px;
-            margin-left: 5px;
+            padding-bottom: 45px;
+            padding-top: 7px;
+            padding-left: 10px;
+            padding-right: 10px;
+            line-height: 40px;
+            border-bottom: 1px solid #E4E4E4;
         }
 
+        .recommend_item a {
+            color: #000000;
+        }
+
+        .recommend_item:hover {
+            background-color: #EFF8F8;
+        }
+
+        .recommend_item_word {
+            padding-left: 45px;
+        }
+
+        .recommend_item_info {
+            padding-left: 10px;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            width: 140px;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            overflow: hidden;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .recommend_item_info {
+            height: auto;
+            white-space: normal;
+        }
+
+        #ul_total input {
+            border: none;
+            width: 130px;
+            font-size: 24px;
+            color: red;
+        }
+
+        #ul_total p {
+            font-size: 15px;
+        }
+
+        #ul_total li {
+            padding-top: 10px;
+            padding-left: 30px;
+        }
+
+        #div_question p {
+            margin-left: 15px;
+            margin-top: 10px;
+        }
+
+        .item_time {
+            float: right;
+            color: #969696;
+            font-size: 12px;
+        }
+
+        .projectName {
+            margin-left: 15px;
+        }
+
+        .item_projectName {
+            color: #000000;
+        }
+
+        .info_button {
+            font-size: 12px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+        }
+
+        .item_summary {
+            padding-top: 8px;
+            padding-bottom: 10px;
+            margin-left: 255px;
+            color: #969696;
+        }
     </style>
 
 </head>
@@ -80,7 +171,7 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-9"  style="height: 400px">
+        <div class="col-sm-9" style="height: 400px">
             <div id="div_banner">
                 <div id="div_prev">
                     <img th:src="@{/plugin/banner/image/l.png}"/>
@@ -90,7 +181,8 @@
                 </div>
                 <ul id="ul_img">
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
-                        <a href="project.html" target="_blank"><img :alt="item.projectName" :src="imgUrl+'project/900x600/'+item.img"/></a>
+                        <a href="project.html" target="_blank"><img :alt="item.projectName"
+                                                                    :src="imgUrl+'project/900x600/'+item.img"/></a>
                     </li>
                 </ul>
                 <div id="div_banner_title">
@@ -106,28 +198,32 @@
                     <h2 class="h2_title">爱心动态</h2>
                 </div>
                 <ul id="ul_total">
-                    <span></span>
                     <li>
                         <p>爱心总人数</p>
-                        <input type="number" :value="model.totalDonator" />人次
+                        <input type="number" :value="model.totalDonator" readonly="true"/>
+                        <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>善款总额</p>
-                        <input type="number" :value="model.totalAmout" />元
+                        <input type="number" :value="model.totalAmout" readonly="true"/>
+                        <p style="display: inline;">元</p>
                     </li>
                     <li>
                         <p>受益人数</p>
-                        <input type="number" :value="model.totalAcceptor" />人次
+                        <input type="number" :value="model.totalAcceptor" readonly="true"/>
+                        <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>受益群体</p>
-                        <input type="number" :value="model.totalGroup" />个
+                        <input type="number" :value="model.totalGroup" readonly="true"/>
+                        <p style="display: inline;">个</p>
                     </li>
-                    <li align="center" style="position: relative;top: 120px;">
-                        <button type="button" class="btn btn-primary" data-toggle="model" data-target="#div_qr_donate"  data-dismiss="model">
+                    <div align="center" style="position: relative;">
+                        <button type="button" class="btn btn-primary" data-toggle="model" data-target="#div_qr_donate"
+                                data-dismiss="model">
                             我要捐赠
                         </button>
-                    </li>
+                    </div>
                 </ul>
             </div>
         </div>
@@ -137,11 +233,19 @@
             <div v-for="item in items">
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
-                    <img :alt="item.projectName" :src="imgUrl+'project/240x160/'+item.img" style="float: left"/>
-                    <a>{{item.projectName}}</a>
-                    <a>发布时间:{{item.createTime}}</a>
-                    <p><span>摘要:</span>{{item.summary}}</p>
-                    <a :href="'project/'+item.projectId" target="_blank"><button class="btn btn-primary">查看详情</button></a>
+                    <a :href="'project/'+item.projectId"><img :alt="item.projectName"
+                                                              :src="imgUrl+'project/240x160/'+item.img"
+                                                              style="float: left;width: 210px;"/></a>
+                    <span class="projectName"><i class="fa fa-angle-right" aria-hidden="true"
+                                                 style="font-size: 30px;color: #999999;margin-right: 10px"></i><a
+                            class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a> </span>
+                    <span class="item_time"><i class="fa fa-clock-o" aria-hidden="true"
+                                               style="margin-right: 5px;font-size: 15px"></i><span
+                            style="color:#c8c8c8;margin-right: 10px;">发布时间 :</span>{{item.createTime}}</span>
+                    <p class="item_summary"><span>摘要 : </span><span style=" color:#666666">{{item.summary}}</span></p>
+                    <a style="float: right;" :href="'project/'+item.projectId" target="_blank">
+                        <button class=" info_button">查看详情</button>
+                    </a>
                 </div>
             </div>
 
@@ -149,25 +253,28 @@
             <div class="left_item" style="text-align: center" id="div_page">
             </div>
         </div>
-        <div class="col-sm-3" style="padding-left: 5px; height: 400px;margin-top: 10px">
-            <div class="right_panel" id="div_recent">
+        <div class="col-sm-3" style="padding-left:5px;height:400px;margin-top:10px">
+            <div class="right_panel" id="div_recent" style="height:500px">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <ul v-for="item in items">
-                        <li><img :src="imgUrl+'avator/'+item.avator" /></li>
-                        <li>{{item.memberName}}</li>
-                        <li>捐赠{{item.projectName==null?item.projectTypeName:item.projectName}}{{item.amount/1000}}元</li>
-                    </ul>
+                    <div>
+                        <ul class="recommend_item" v-for="item in items">
+                            <li><img :src="imgUrl+'avator/'+item.avator"/></li>
+                            <li class="recommend_item_info">{{item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount/1000}}元
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             <div class="right_panel" id="div_project">
                 <div class="div_title">
                     <h2 class="h2_title">项目推荐</h2>
-                    <div class="recommend_item"  v-for="item in items">
+                    <div class="recommend_item" v-for="item in items">
                         <ul>
-                            <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img" /></li>
-                            <li><a href="project.html" target="_blank">{{item.projectName}}</a></li>
+                            <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img"/></li>
+                            <li class="recommend_item_word"><a href="project.html"
+                                                               target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -176,7 +283,8 @@
             <div class="right_panel" id="div_question">
                 <div class="div_title">
                     <h2 class="h2_title">常见问题</h2>
-                    <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank"><p>{{index+1}}.{{item.title}}</p></a>
+                    <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank"><p>
+                        {{index+1}}.{{item.title}}</p></a>
                 </div>
             </div>
 
@@ -186,7 +294,8 @@
 
 <div th:replace="themes/default/footer::footer"></div>
 <!--直接捐赠弹出层-->
-<div class="model fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true">
+<div class="model fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
+     aria-hidden="true">
     <div class="model-dialog" style="margin-top:100px">
         <div class="model-content" style="width: 450px">
             <div class="model-header">
@@ -204,7 +313,7 @@
                     <option value="0">请选择项目类别</option>
                     <option v-for="item in items" :value="item.id">{{item.name}}</option>
                 </select>
-                <br />
+                <br/>
                 请选择项目:
                 <select id="sel_project">
                     <option value="0">请先选择项目类别</option>
@@ -227,8 +336,8 @@
 <!--##IMPORTANT 此处加上th:inline是为了在JS中使用模板引擎-->
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var pageSize=8;
-    var pageNum=1;
+    var pageSize = 8;
+    var pageNum = 1;
     var pageCount;
     var vueContent;
     var vueProject;
@@ -243,38 +352,38 @@
         f_GetProjectType();
     });
 
-    function f_OnPageChange(newPage){
-        pageNum=newPage;
+    function f_OnPageChange(newPage) {
+        pageNum = newPage;
         f_GetArticle();
     }
 
     //获取首页文章，默认按照创建时间倒序排列
     function f_GetArticle() {
         $.ajax({
-            url:'/index/project',
-            data:{pageNum:pageNum,pageSize:pageSize},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
-                    pageCount=data.result.pages;
-                    pageNum=data.result.pageNum;
-                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+            url: '/index/project',
+            data: {pageNum: pageNum, pageSize: pageSize},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
                     f_InitPagination($("#div_page"));
-                    if (vueContent==undefined) {
-                        vueContent=new Vue({
+                    if (vueContent == undefined) {
+                        vueContent = new Vue({
                             el: '#div_project_list',
                             data: {
                                 items: data.result.list,
                                 imgUrl: imgRoot
                             }
                         });
-                    }else{
-                        for (var i = 0; i<data.result.list.length; i++) {
+                    } else {
+                        for (var i = 0; i < data.result.list.length; i++) {
                             Vue.set(vueContent.items, i, data.result.list[i]);
                         }
                         vueContent.items.splice(data.result.list.length);
-                        scrollTo(0,0);
+                        scrollTo(0, 0);
                     }
                 }
             }
@@ -282,20 +391,20 @@
     }
 
     //获取Banner广告
-    function f_getBanner(){
+    function f_getBanner() {
         $.ajax({
-            url:'/block/project',
-            data:{blockId:1},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
+            url: '/block/project',
+            data: {blockId: 1},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
                 //绑定Banner
-                if (data.code===200){
+                if (data.code === 200) {
                     new Vue({
-                        el:'#ul_img',
-                        data:{
-                            items:data.result,
-                            imgUrl:imgRoot
+                        el: '#ul_img',
+                        data: {
+                            items: data.result,
+                            imgUrl: imgRoot
                         }
                     });
                 }
@@ -306,18 +415,18 @@
     }
 
     //获取常见问题
-    function f_getQuestion(){
+    function f_getQuestion() {
         $.ajax({
-            url:'/block/article',
-            type:'post',
-            data:{blockId:3},
-            dataType:'json',
-            success:function (data) {
-                if (data.code===200){
+            url: '/block/article',
+            type: 'post',
+            data: {blockId: 3},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     new Vue({
-                        el:'#div_question',
-                        data:{
-                            items:data.result,
+                        el: '#div_question',
+                        data: {
+                            items: data.result,
                         }
                     });
                 }
@@ -328,17 +437,17 @@
     //获取推荐项目
     function f_getRecommend() {
         $.ajax({
-            url:'/block/project',
-            type:'post',
-            data:{blockId:2},
-            dataType:'json',
-            success:function (data) {
-                if (data.code===200){
+            url: '/block/project',
+            type: 'post',
+            data: {blockId: 2},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     new Vue({
-                        el:'#div_project',
-                        data:{
-                            items:data.result,
-                            imgUrl:imgRoot
+                        el: '#div_project',
+                        data: {
+                            items: data.result,
+                            imgUrl: imgRoot
                         }
                     });
                 }
@@ -349,17 +458,17 @@
     //获取最近捐赠
     function f_GetRecentDonate() {
         $.ajax({
-            url:'/donate/recent',
-            type:'post',
-            data:{num:7},
-            dataType:'json',
-            success:function (data) {
-                if (data.code===200){
+            url: '/donate/recent',
+            type: 'post',
+            data: {num: 7},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     new Vue({
-                        el:"#div_recent",
-                        data:{
-                            items:data.result,
-                            imgUrl:imgRoot
+                        el: "#div_recent",
+                        data: {
+                            items: data.result,
+                            imgUrl: imgRoot
                         }
                     });
                 }
@@ -370,15 +479,15 @@
     //获取所有项目类型
     function f_GetProjectType() {
         $.ajax({
-            url:'/project/type',
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if (data.code===200){
+            url: '/project/type',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     new Vue({
-                        el:"#sel_project_type",
-                        data:{
-                            items:data.result
+                        el: "#sel_project_type",
+                        data: {
+                            items: data.result
                         }
                     });
                 }
@@ -388,24 +497,24 @@
 
     //获取所有项目
     function f_GetProject() {
-        var tid=$("#sel_project_type").val();
-        if(tid!=="0"){
+        var tid = $("#sel_project_type").val();
+        if (tid !== "0") {
             $.ajax({
-                url:'/project/all',
-                data:{tid:tid},
-                type:'post',
-                dataType:'json',
-                success:function (data) {
-                    if (data.code===200){
-                        if (vueProject==undefined) {
+                url: '/project/all',
+                data: {tid: tid},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 200) {
+                        if (vueProject == undefined) {
                             vueProject = new Vue({
                                 el: "#sel_project",
                                 data: {
                                     items: data.result
                                 }
                             });
-                        }else{
-                            for (var i = 0; i<data.result.length; i++) {
+                        } else {
+                            for (var i = 0; i < data.result.length; i++) {
                                 Vue.set(vueProject.items, i, data.result[i]);
                             }
                             vueProject.items.splice(data.result.length);
@@ -419,18 +528,19 @@
 
     function f_GetDonationInfo() {
         new Vue({
-            el:"#ul_total",
-            data:{
-                model:{totalDonator:627361,totalAmout:68263.87,totalAcceptor:1736,totalGroup:20}
+            el: "#ul_total",
+            data: {
+                model: {totalDonator: 627361, totalAmout: 68263.87, totalAcceptor: 1736, totalGroup: 20}
             }
         });
     }
 
     //翻页回调函数
     function f_PageCallBack(newPage) {
-        pageNum=newPage;
+        pageNum = newPage;
         f_GetArticle();
     }
+
     /*]]>*/
 </script>
 </body>
