@@ -126,7 +126,7 @@ public class Message {
     /**
      * 申诉
      */
-
+    public static final String MEMBER_APPEAL_PROGRESS_SUCCESS="获取申诉进展成功";
 
 
 }

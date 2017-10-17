@@ -15,7 +15,7 @@ import com.becheer.donation.service.IMessageService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageInfo;
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

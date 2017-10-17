@@ -7,8 +7,8 @@ package com.becheer.donation.service.impl;
 */
 
 import com.becheer.donation.dao.AppealMapper;
+import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
-import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.service.IAppealService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,5 +29,10 @@ public class AppealServiceImpl implements IAppealService {
         List<MemberAppealExtension> data=appealMapper.SelectAppealByMemberId(memberId);
         PageInfo<MemberAppealExtension> pageInfo=new PageInfo<MemberAppealExtension>(data);
         return pageInfo;
+    }
+
+    @Override
+    public MemberAppealDetailExtension GetMemberAppealDetail(long appealId,long memberId) {
+        return appealMapper.SelectAppealDetail(appealId,memberId);
     }
 }
