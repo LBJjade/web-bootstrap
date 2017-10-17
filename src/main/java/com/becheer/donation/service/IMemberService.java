@@ -15,4 +15,6 @@ public interface IMemberService {
     ResponseDto Login(String mobile,String pwd);
 
     ResponseDto GetMemberById(long memberId);
+
+    Member GetMemberByMobile(String mobile);
 }

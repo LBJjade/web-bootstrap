@@ -52,9 +52,8 @@
         where id_ = #{id,jdbcType=BIGINT}
     </update>
 
-    <insert id="insertSms" parameterType="com.becheer.donation.model.Sms" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insertSms" parameterType="com.becheer.donation.model.Sms">
         INSERT INTO dnt_sms (
-        id_,
         sms_template_id,
         mobile,
         code,
@@ -65,7 +64,6 @@
         create_time
         )
         VALUES (
-        #{id,jdbcType=BIGINT},
         #{smsTemplateId,jdbcType=BIGINT},
         #{mobile,jdbcType=VARCHAR},
         #{code,jdbcType=VARCHAR},
