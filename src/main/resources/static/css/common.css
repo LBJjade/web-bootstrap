@@ -1,6 +1,7 @@
 *{
     margin: 0px;
     padding: 0px;
+    font-family: 微软雅黑;
 }
 
 a:visited,a:focus,a:hover{
@@ -134,10 +135,14 @@ a:visited,a:focus,a:hover{
 
 .div_member_title{
     width: 100%;
-    padding-top: 20px;
+    padding-top: 25px;
     padding-left: 10px;
+    font-size: 16px;
 }
 
 .div_member_title hr{
-    margin: 5px 0px 5px 0px;
+    margin: 5px 0px 15px 0px;
+}
+.active a{
+    color:#666666;
 }
