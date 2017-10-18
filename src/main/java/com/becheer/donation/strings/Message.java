@@ -94,6 +94,10 @@ public class Message {
 
     public static final String MEMBER_ROLE_ERROR="未知的角色";
 
+    public static final String MEMBER_UPDATE_SUCCESS="保存成功";
+
+    public static final String MEMBER_UPDATE_ERROR="保存失败";
+
 
     /**
      * 我的消息页面

@@ -66,7 +66,7 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p>我的信息</p>
+                <p style="line-height: 40px"><span style="line-height: 40px">我的信息</span><a href="home/edit" id="a_edit" style="display: none;"><button class="btn btn-info" style="float: right">编辑</button></a></p>
                 <hr/>
             </div>
             <div class="div_content" id="div_member">
@@ -85,7 +85,13 @@
                         <tr><td>生日</td><td>{{member.birthday}}</td></tr>
                         <tr><td>曾参与的公益项目</td><td>{{member.project}}</td></tr>
                         <tr><td>个人说明</td><td>{{member.summary}}</td></tr>
-                        <tr><td>认证状态</td><td v-if="member.validation===0">未认证</td><td v-if="member.validation===1">已认证</td></tr>
+                        <tr>
+                            <td>认证状态</td>
+                            <td v-if="member.validation===1">未认证</td>
+                            <td v-if="member.validation===2">审核中</td>
+                            <td v-if="member.validation===3">已认证</td>
+                            <td v-if="member.validation===4">已驳回</td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -110,6 +116,9 @@
             dataType:'json',
             success:function (data) {
                 if (data.code===200){
+                    if (data.result.validation===1||data.result.validation===4){
+                        $("#a_edit").show();
+                    }
                     new Vue({
                         el:"#div_member",
                         data:{

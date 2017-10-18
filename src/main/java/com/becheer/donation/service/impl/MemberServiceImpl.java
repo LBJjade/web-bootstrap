@@ -79,6 +79,7 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setSummary(member.getSummary());
         memberInfoExtension.setValidation(member.getValidation());
         memberInfoExtension.setAvator(member.getAvatorImg());
+        memberInfoExtension.setBirthday(member.getBirthday());
         if (member.getRole()==0){
             //个人
             memberInfoExtension.setMobile(member.getMobile());
@@ -99,5 +100,54 @@ public class MemberServiceImpl implements IMemberService {
     @Override
     public Member GetMemberByMobile(String mobile) {
         return memberMapper.SelectMemberByMobile(mobile);
+    }
+
+    @Override
+    public MemberInfoExtension GetMemberExtensionById(long memberId) {
+        Member member = memberMapper.SelectMemberById(memberId);
+        if (member==null){
+            return null;
+        }
+        MemberInfoExtension memberInfoExtension=new MemberInfoExtension();
+        memberInfoExtension.setId(member.getId());
+        memberInfoExtension.setName(member.getMemberName());
+        memberInfoExtension.setRole(member.getRole());
+        memberInfoExtension.setProject(member.getProject());
+        memberInfoExtension.setSummary(member.getSummary());
+        memberInfoExtension.setValidation(member.getValidation());
+        memberInfoExtension.setAvator(member.getAvatorImg());
+        memberInfoExtension.setBirthday(member.getBirthday());
+        if (member.getRole()==0){
+            //个人
+            memberInfoExtension.setMobile(member.getMobile());
+            memberInfoExtension.setIdCard(member.getIdCard());
+            memberInfoExtension.setSex(member.getSex());
+            memberInfoExtension.setBirthday(member.getBirthday());
+        }else if (member.getRole()==1){
+            //公司
+            memberInfoExtension.setOrganizationType(member.getOrganizationType());
+            memberInfoExtension.setOrganizationCode(member.getOrganizationCode());
+            memberInfoExtension.setLicense(member.getLicense());
+        }
+        return memberInfoExtension;
+    }
+
+    @Override
+    public ResponseDto UpdateMemberInfo(MemberInfoExtension memberInfoExtension) {
+        Member member = new Member();
+        member.setId(memberInfoExtension.getId());
+        member.setMemberName(memberInfoExtension.getName());
+        member.setSex(memberInfoExtension.getSex());
+        member.setBirthday(memberInfoExtension.getBirthday());
+        member.setProject(memberInfoExtension.getProject());
+        member.setIdCard(memberInfoExtension.getIdCard());
+        member.setSummary(memberInfoExtension.getSummary());
+        member.setValidation(memberInfoExtension.getValidation());
+        int result = memberMapper.UpdateMember(member);
+        if (result>0){
+            return new ResponseDto(200,Message.MEMBER_UPDATE_SUCCESS);
+        }else{
+            return new ResponseDto(500,Message.MEMBER_UPDATE_ERROR);
+        }
     }
 }

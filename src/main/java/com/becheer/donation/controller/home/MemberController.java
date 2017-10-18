@@ -1,7 +1,9 @@
 package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
+import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.Message;
@@ -34,5 +36,17 @@ public class MemberController extends BaseController {
             return MemberAuthFailed();
         }
         return memberService.GetMemberById(memberId);
+    }
+
+    @PostMapping("/submit")
+    @ResponseBody
+    public ResponseDto UpdateMember(HttpServletRequest request, MemberInfoExtension memberInfoExtension){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        memberInfoExtension.setValidation(2);
+        memberInfoExtension.setId(currentMember.getMemberId());
+        return memberService.UpdateMemberInfo(memberInfoExtension);
     }
 }

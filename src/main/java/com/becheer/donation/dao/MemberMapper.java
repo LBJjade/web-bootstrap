@@ -16,4 +16,6 @@ public interface MemberMapper {
     Member SelectMemberByMobile(String mobile);
 
     Member SelectMemberById(Long memberId);
+
+    int UpdateMember(Member member);
 }
