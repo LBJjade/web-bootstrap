@@ -1,6 +1,8 @@
 package com.becheer.donation;
 
 import com.becheer.donation.exception.TipException;
+import com.becheer.donation.model.Member;
+import com.becheer.donation.service.IMemberService;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -19,6 +21,17 @@ import javax.annotation.Resource;
 @SpringBootTest
 @Transactional(rollbackFor = TipException.class)
 public class TranscationTest {
+
+
+    @Resource
+    private IMemberService memberService;
+
+
+    @org.junit.Test
+    @Ignore
+    public void test() {
+        memberService.SubmitRegister("13922342050", "123456", 1);
+    }
 
 //    @Resource
 //    private IUserService userService;
