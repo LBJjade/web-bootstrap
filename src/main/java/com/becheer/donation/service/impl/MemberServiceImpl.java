@@ -34,7 +34,6 @@ public class MemberServiceImpl implements IMemberService {
         member.setRole(role);
         member.setPassword(pwd);
         member.setEnable(1);
-        member.setCreateTime(new Date());
         member.setPassword(HashUtil.GetPassword(pwd));
 //        member.setId(UUID.GetInt64UUID());
         int result = memberMapper.insertMember(member);

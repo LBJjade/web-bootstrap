@@ -10,17 +10,29 @@ import java.util.Properties;
 * Date : 2017-09-30
 */
 public class SmsConfig {
-    private static Properties properties = TaleUtils.getPropFromFile("src/main/resources/application.properties");
+//    private static Properties properties = TaleUtils.getPropFromFile("classpath*:/application.properties");
+
+//    public static String getApiUrl() {
+//        return properties.getProperty("sms.apiUrl");
+//    }
+//
+//    public static String getUserName() {
+//        return properties.getProperty("sms.userName");
+//    }
+//
+//    public static String getPassWord() {
+//        return properties.getProperty("sms.passWord");
+//    }
 
     public static String getApiUrl() {
-        return properties.getProperty("sms.apiUrl");
+        return "http://www.17int.cn/xxsmsweb/smsapi/send.json";
     }
 
     public static String getUserName() {
-        return properties.getProperty("sms.userName");
+        return "s11050003";
     }
 
     public static String getPassWord() {
-        return properties.getProperty("sms.passWord");
+        return "qwer1234";
     }
 }

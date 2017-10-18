@@ -43,12 +43,12 @@
         role,
         enable_,
         password,
-        validation,
+        validation
         )
         VALUES
         (
         #{mobile,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},
+        now(),
         #{role,jdbcType=INTEGER},
         #{enable,jdbcType=INTEGER},
         #{password,jdbcType=VARCHAR},

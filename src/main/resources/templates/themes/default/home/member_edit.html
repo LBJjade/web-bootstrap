@@ -107,7 +107,7 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr><td>生日</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${#dates.format(member.getBirthday(),'yyyy-MM-dd')}"/></td></tr>
+                        <tr><td>生日</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/></td></tr>
                         <tr><td>曾参与的公益项目</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getProject()}"/></textarea></td></tr>
                         <tr><td>个人说明</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getSummary()}"/></textarea></td></tr>
                     </table>

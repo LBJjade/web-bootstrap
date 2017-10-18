@@ -7,7 +7,7 @@ import java.util.Properties;
 
 @Component
 public class Config {
-    private static Properties properties = TaleUtils.getPropFromFile("src/main/resources/application.properties");
+//    private static Properties properties = TaleUtils.getPropFromFile("classpath*:/application.properties");
 
     private static Config instance;
 
@@ -23,8 +23,10 @@ public class Config {
     }
 
     public Config(){
-        this.imageRoot=properties.getProperty("resource.imageRoot");
-        this.docRoot=properties.getProperty("resource.docRoot");
+        this.imageRoot="https://donation.becheer.com/image/";
+        this.docRoot="https://donation.becheer.com/attach/";
+//        this.imageRoot=properties.getProperty("resource.imageRoot");
+//        this.docRoot=properties.getProperty("resource.docRoot");
     }
 
     public static Config getConfig(){
