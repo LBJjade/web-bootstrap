@@ -8,6 +8,7 @@ package com.becheer.donation.service;
 
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.member.MemberInfoExtension;
 
 public interface IMemberService {
     ResponseDto SubmitRegister(String mobile,String pwd,int role);
@@ -17,4 +18,8 @@ public interface IMemberService {
     ResponseDto GetMemberById(long memberId);
 
     Member GetMemberByMobile(String mobile);
+
+    MemberInfoExtension GetMemberExtensionById(long memberId);
+
+    ResponseDto UpdateMemberInfo(MemberInfoExtension memberInfoExtensions);
 }

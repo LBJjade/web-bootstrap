@@ -6,9 +6,14 @@ package com.becheer.donation.model.extension.member;
 * Date : 2017-09-27
 */
 
+import com.becheer.donation.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class MemberInfoExtension {
+public class MemberInfoExtension implements Serializable {
     private long id;
 
     private String name;
@@ -21,6 +26,8 @@ public class MemberInfoExtension {
 
     private int sex;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date birthday;
 
     private String project;
