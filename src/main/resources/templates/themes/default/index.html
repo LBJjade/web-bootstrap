@@ -129,6 +129,20 @@
             margin-top: 10px;
         }
 
+        #other {
+            margin: 2px;
+            padding: 2px;
+            margin-top: 20px;
+            border: 2px #d0c4c4 solid;
+        }
+
+        #tx_yuan {
+            outline: none;
+            border: none;
+            text-align: right;
+            width: 150px
+        }
+
         .item_time {
             float: right;
             color: #969696;
@@ -180,6 +194,30 @@
             -webkit-appearance: none !important;
             margin: 0;
         }
+
+        .donate {
+            margin: 2px;
+            padding: 2px;
+            border: 2px #d0c4c4 solid;
+        }
+
+        .button {
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100px;
+            height: 35px;
+            background-color: #e41620;
+            color: #FFFFFF;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .money {
+            line-height: 45px;
+
+        }
+
+
     </style>
 
 </head>
@@ -319,33 +357,117 @@
                 <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
-                <h6 class="model-title" style="width: 100%;text-align: center;">
+                <h4 class="model-title" style="width: 100%;text-align: center;">
+                    向基金会捐赠
+                </h4>
+            </div>
+
+            <div class="model-body" style="text-align: center">
+                <div style="float:left;margin-top: 10px;margin-left: 80px;">请选择项目类别：
+                    <select id="sel_project_type" onchange="f_GetProject()">
+                        <option value="0">请选择项目类别</option>
+                        <option v-for="item in items" :value="item.id">{{item.name}}</option>
+                    </select>
+                </div>
+                <div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">
+                    请&nbsp;&nbsp;选&nbsp;&nbsp;择&nbsp;&nbsp;项&nbsp;&nbsp;目:&nbsp;
+                    <select id="sel_project" style="width: 124px;">
+                        <option value="0">请选择项目类别</option>
+                        <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
+                    </select>
+                </div>
+                <div style="clear: both;">
+                    <label for="name" style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
+                    <div style="margin-bottom:10px;">
+                        <span id="third" class="donate money">&yen;300</span>
+                        <span id="five" class="donate money">&yen;500</span>
+                        <span id="eight" class="donate money">&yen;800</span>
+                        <span id="ten" class="donate money">&yen;1000</span>
+                        <span id="fif" class="donate money">&yen;1500</span>
+                        <br/>
+                        <span id="tw" class="donate money">&yen;2000</span>
+                        <span id="other"><span>其他：</span><input type="text" id="tx_yuan"
+                                                                style="outline:none;border:none;border-color:#e41620;text-align: right;width: 148px"
+                                                                value="元"/></span>
+                    </div>
+                </div>
+
+                <div>
+                    <form action="">
+                        <button class="donateSubmit button" data-toggle="model" data-target="#div_cf_donate"
+                                data-dismiss="model">确认捐赠
+                        </button>
+                        <button class="button" data-toggle="model" data-target="#div_de_donate"
+                                data-dismiss="model">大额捐赠
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--确认捐赠弹出层-->
+<div class="model fade" id="div_cf_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
+     aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: 450px">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" style="width: 100%;text-align: center;">
                     扫描二维码,向基金会捐赠
-                </h6>
+                </h4>
             </div>
 
             <div class="model-body" style="text-align: center">
-                请选择项目类别：
-                <select id="sel_project_type" onchange="f_GetProject()">
-                    <option value="0">请选择项目类别</option>
-                    <option v-for="item in items" :value="item.id">{{item.name}}</option>
-                </select>
-                <br/>
-                请选择项目:
-                <select id="sel_project">
-                    <option value="0">请先选择项目类别</option>
-                    <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
-                </select>
-            </div>
 
-            <div class="model-body" style="text-align: center">
-                <img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>
-            <div class="model-footer" style="text-align: center">
-                支持微信,支付宝扫码捐赠
+                <div class="model-body" style="text-align: center">
+                    <img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>
+                <div class="model-footer" style="text-align: center">
+                    支持微信,支付宝扫码捐赠
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
+<!--大额捐赠弹出层-->
+<div class="model fade" id="div_de_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
+     aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: 450px">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" style="width: 100%;text-align: center;">
+                    请输入您的联系方式
+                </h4>
+            </div>
+
+            <div class="model-body" style="text-align: center">
+
+                <div style="margin-bottom: 10px;">姓名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                        type="text"/></div>
+                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"/></div>
+                <div style="width:100%;margin-top:20px;">捐赠金额：
+                    <span id="da" style=" margin:2px;padding:2px;border:2px #d0c4c4 solid "><input type="text"
+                                                                                                   id="tx_yuan"
+                                                                                                   value="元"/></span>
+                </div>
+                <div style="margin-top:10px;clear: both;">
+                    <button class="dedonateSubmit button">确认捐赠</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--全局JS-->
 <script th:src="@{/plugin/banner/js.js}"></script>
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
@@ -551,6 +673,68 @@
             }
         });
     }
+
+
+    //边框变色
+    function becamered(a) {
+        var b = a;
+        $("#" + b).css("border", "2px #e41620 solid");
+    }
+
+    function becamewhite(a, b, c, d, e, f) {
+        var x = a;
+        var y = b;
+        var z = c;
+        var w = d;
+        var v = e;
+        var u = f;
+        $("#" + x).css("border", "2px #d0c4c4 solid");
+        $("#" + y).css("border", "2px #d0c4c4 solid");
+        $("#" + z).css("border", "2px #d0c4c4 solid");
+        $("#" + w).css("border", "2px #d0c4c4 solid");
+        $("#" + v).css("border", "2px #d0c4c4 solid");
+        $("#" + f).css("border", "2px #d0c4c4 solid");
+    }
+
+    $("#third").click(function () {
+        becamered("third");
+        becamewhite("five", "ten", "other", "eight", "tw", "fif");
+    })
+
+    $("#five").click(function () {
+        becamered("five");
+        becamewhite("third", "ten", "other", "eight", "tw", "fif");
+    })
+
+    $("#ten").click(function () {
+        becamered("ten");
+        becamewhite("five", "third", "other", "eight", "tw", "fif");
+    })
+
+    $("#other").click(function () {
+        becamered("other");
+        becamewhite("five", "ten", "third", "eight", "tw", "fif");
+    })
+
+    $("#eight").click(function () {
+        becamered("eight");
+        becamewhite("five", "ten", "third", "other", "tw", "fif");
+    })
+
+    $("#tw").click(function () {
+        becamered("tw");
+        becamewhite("five", "ten", "third", "other", "eight", "fif");
+    })
+
+    $("#fif").click(function () {
+        becamered("fif");
+        becamewhite("five", "ten", "third", "other", "eight", "tw");
+    })
+
+    $("#da").click(function () {
+        becamered("da");
+    })
+
 
     //翻页回调函数
     function f_PageCallBack(newPage) {
