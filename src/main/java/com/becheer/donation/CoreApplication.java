@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 @MapperScan("com.becheer.donation.dao")
 @SpringBootApplication
 @EnableTransactionManagement
-public class CoreApplication extends SpringBootServletInitializer {
+public class CoreApplication { //  extends SpringBootServletInitializer {
     @Bean(initMethod = "init", destroyMethod = "close")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
@@ -40,11 +40,11 @@ public class CoreApplication extends SpringBootServletInitializer {
     public PlatformTransactionManager transactionManager() {
         return new DataSourceTransactionManager(dataSource());
     }
-    // 我们需要类似于web.xml的配置方式来启动spring上下文，在Application类的同级添加一个SpringBootStartApplication类
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(CoreApplication.class);
-    }
+    // // 我们需要类似于web.xml的配置方式来启动spring上下文，在Application类的同级添加一个SpringBootStartApplication类
+    // @Override
+    // protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+    //     return application.sources(CoreApplication.class);
+    // }
 
     public static void main(String[] args) {
         SpringApplication.run(CoreApplication.class, args);
