@@ -11,15 +11,14 @@ import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.service.IMemberService;
+import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.HashUtil;
-import com.becheer.donation.utils.UUID;
-import com.sun.org.apache.bcel.internal.generic.NEW;
+import com.becheer.donation.utils.RedisUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
-
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -144,6 +143,7 @@ public class MemberServiceImpl implements IMemberService {
         member.setValidation(memberInfoExtension.getValidation());
         int result = memberMapper.UpdateMember(member);
         if (result>0){
+            RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY+":"+ConstString.TABLE_MEMBER+":"+member.getId());
             return new ResponseDto(200,Message.MEMBER_UPDATE_SUCCESS);
         }else{
             return new ResponseDto(500,Message.MEMBER_UPDATE_ERROR);

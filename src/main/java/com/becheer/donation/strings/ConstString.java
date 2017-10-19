@@ -16,4 +16,13 @@ public class ConstString {
 
     //登录Session
     public static final String MEMBER_SESSION_CODE="member";
+
+    //后台Redis键前缀
+    public static final String REDIS_BACKEDN_KEY="iBase4J";
+
+    /**
+     * 表名
+     */
+    //会员表
+    public static final String TABLE_MEMBER="dntMember";
 }
