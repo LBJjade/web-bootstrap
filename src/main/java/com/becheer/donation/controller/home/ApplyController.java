@@ -42,12 +42,14 @@ public class ApplyController extends BaseController {
     @Access(authorities="member")
     @GetMapping(value = "")
     public String index(HttpServletRequest request) {
+        request.setAttribute("config", fileConfig);
         return this.render("home/apply");
     }
 
     @Access(authorities="member")
     @GetMapping(value = "/{applyId}")
     public String GetApplyDetail(HttpServletRequest request,@PathVariable long applyId) {
+        request.setAttribute("config", fileConfig);
         try{
             IntentionExtension result = intentionService.GetIntention(applyId);
             if (result==null) {

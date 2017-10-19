@@ -36,6 +36,7 @@ public class RegisterController extends BaseController {
      */
     @GetMapping(value = "")
     public String View(HttpServletRequest request) {
+        request.setAttribute("config", fileConfig);
         return this.render("register");
     }
 

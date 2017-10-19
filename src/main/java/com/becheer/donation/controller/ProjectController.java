@@ -41,6 +41,7 @@ public class ProjectController extends BaseController {
 
     @GetMapping("")
     public String View(HttpServletRequest request){
+        request.setAttribute("config", fileConfig);
         return this.render("project");
     }
 
@@ -112,6 +113,7 @@ public class ProjectController extends BaseController {
 
     @GetMapping("/{pid}")
     public String View_Detail(HttpServletRequest request,@PathVariable String pid){
+        request.setAttribute("config", fileConfig);
         try{
             long tempId=Long.valueOf(pid);
             ProjectDetailExtension result=projectService.GetProjectDetail(tempId);

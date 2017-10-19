@@ -1,7 +1,9 @@
 package com.becheer.donation.controller;
 
+import com.becheer.donation.configs.FileConfig;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.service.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +25,9 @@ public class IndexController extends BaseController {
      * @return
      */
     @GetMapping(value = "")
-    public String index(HttpServletRequest request) {
+    public String index(HttpServletRequest request)
+    {
+        request.setAttribute("config", fileConfig);
         return this.render("index");
     }
 

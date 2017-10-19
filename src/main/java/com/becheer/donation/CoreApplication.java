@@ -1,6 +1,9 @@
 package com.becheer.donation;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.becheer.donation.configs.FileConfig;
+import com.becheer.donation.configs.RedisConfig;
+import com.becheer.donation.configs.SmsConfig;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -48,5 +51,17 @@ public class CoreApplication { //  extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(CoreApplication.class, args);
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "file.resource")
+    public FileConfig fileConfig(){
+        return new FileConfig();
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "sms")
+    public SmsConfig smsConfig(){
+        return new SmsConfig();
     }
 }

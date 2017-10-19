@@ -28,12 +28,14 @@ public class HomeController extends BaseController {
     @Access(authorities="member")
     @GetMapping(value = "")
     public String index(HttpServletRequest request) {
+        request.setAttribute("config", fileConfig);
         return this.render("home/index");
     }
 
     @Access(authorities="member")
     @GetMapping(value = "/edit")
     public String MemberEdit(HttpServletRequest request) {
+        request.setAttribute("config", fileConfig);
         MemberSessionExtension currentMember=GetCurrentUser(request);
         MemberInfoExtension member=memberService.GetMemberExtensionById(currentMember.getMemberId());
         request.setAttribute("member",member);

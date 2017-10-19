@@ -1,6 +1,7 @@
 package com.becheer.donation.configs;
 
-import com.becheer.donation.utils.TaleUtils;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
@@ -9,30 +10,38 @@ import java.util.Properties;
 * Creator : xiaokepu
 * Date : 2017-09-30
 */
+
+@Component
+@ConfigurationProperties(prefix="sms")
 public class SmsConfig {
-//    private static Properties properties = TaleUtils.getPropFromFile("classpath*:/application.properties");
 
-//    public static String getApiUrl() {
-//        return properties.getProperty("sms.apiUrl");
-//    }
-//
-//    public static String getUserName() {
-//        return properties.getProperty("sms.userName");
-//    }
-//
-//    public static String getPassWord() {
-//        return properties.getProperty("sms.passWord");
-//    }
+    private String apiUrl;
 
-    public static String getApiUrl() {
-        return "http://www.17int.cn/xxsmsweb/smsapi/send.json";
+    private String userName;
+
+    private String passWord;
+
+    public String getApiUrl() {
+        return apiUrl;
     }
 
-    public static String getUserName() {
-        return "s11050003";
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
     }
 
-    public static String getPassWord() {
-        return "qwer1234";
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 }

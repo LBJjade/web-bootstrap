@@ -1,11 +1,11 @@
 package com.becheer.donation.controller;
 
+import com.becheer.donation.configs.FileConfig;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.HttpUtil;
-import com.becheer.donation.utils.TaleUtils;
-import com.becheer.donation.utils.MapCache;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,7 +16,7 @@ public abstract class BaseController {
 
     public static String THEME = "themes/default";
 
-    protected MapCache cache = MapCache.single();
+    public @Autowired FileConfig fileConfig;
 
     /**
      * 主页的页面主题
@@ -29,11 +29,6 @@ public abstract class BaseController {
 
     public BaseController title(HttpServletRequest request, String title) {
         request.setAttribute("title", title);
-        return this;
-    }
-
-    public BaseController keywords(HttpServletRequest request, String keywords) {
-        request.setAttribute("keywords", keywords);
         return this;
     }
 

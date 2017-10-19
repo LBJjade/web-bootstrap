@@ -34,6 +34,7 @@ public class MessageController extends BaseController {
     @Access(authorities="member")
     @GetMapping(value = "")
     public String index(javax.servlet.http.HttpServletRequest request) {
+        request.setAttribute("config", fileConfig);
         return this.render("home/message");
     }
 

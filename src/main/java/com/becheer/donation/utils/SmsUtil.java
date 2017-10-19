@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.xml.transform.Result;
 
@@ -29,9 +30,10 @@ import javax.xml.transform.Result;
 
 public class SmsUtil {
 
+    private static SmsConfig smsConfig;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(SmsUtil.class);
 
-    public static String requestUrl = SmsConfig.getApiUrl();
     public static String encoding = "UTF-8";
 
     /**
@@ -39,14 +41,14 @@ public class SmsUtil {
      * @param mobile
      * @param content
      */
-    public static SmsResponse SendSms(String mobile, String content) {
+    public static SmsResponse SendSms(String mobile, String content,SmsConfig smsConfig) {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         LOGGER.error("开始发送短信");
         try {
-            HttpPost httppost = new HttpPost(requestUrl);
+            HttpPost httppost = new HttpPost(smsConfig.getApiUrl());
             SmsContent smsDetail = new SmsContent();
-            smsDetail.setAccount(SmsConfig.getUserName());
-            smsDetail.setPassword(HashUtil.MD5(SmsConfig.getPassWord()).toUpperCase());
+            smsDetail.setAccount(smsConfig.getUserName());
+            smsDetail.setPassword(HashUtil.MD5(smsConfig.getPassWord()).toUpperCase());
             smsDetail.setMobile(mobile);
             smsDetail.setContent(content);
             smsDetail.setExtNo("");

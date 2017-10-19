@@ -29,6 +29,7 @@ public class PublicyController extends BaseController{
 
     @GetMapping(value="")
     public String View(HttpServletRequest request){
+        request.setAttribute("config", fileConfig);
         return this.render("publicity");
     }
 

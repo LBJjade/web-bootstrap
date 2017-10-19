@@ -43,6 +43,7 @@ public class HomeAppealController extends BaseController {
     @Access(authorities="member")
     @GetMapping("")
     public String View(HttpServletRequest request){
+        request.setAttribute("config", fileConfig);
         return this.render("/home/appeal");
     }
 
@@ -71,6 +72,7 @@ public class HomeAppealController extends BaseController {
     @Access(authorities="member")
     @GetMapping(value = "/{appealId}")
     public String GetAppealDetail(HttpServletRequest request,@PathVariable long appealId) {
+        request.setAttribute("config", fileConfig);
         try{
             MemberSessionExtension currentMember=GetCurrentUser(request);
             MemberAppealDetailExtension  memberAppealDetailExtension=appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());

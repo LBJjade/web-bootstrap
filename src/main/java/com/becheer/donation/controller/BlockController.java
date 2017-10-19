@@ -25,7 +25,6 @@ public class BlockController extends BaseController {
     @Resource
     private IBlockService blockService;
 
-
     @PostMapping(value = "/project")
     @ResponseBody
     public ResponseDto GetProject(HttpServletRequest request, @RequestParam long blockId) {

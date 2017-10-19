@@ -6,6 +6,7 @@ package com.becheer.donation.service.impl;
 * Date : 2017-09-12
 */
 
+import com.becheer.donation.configs.SmsConfig;
 import com.becheer.donation.dao.SmsMapper;
 import com.becheer.donation.model.Sms;
 import com.becheer.donation.model.base.ResponseDto;
@@ -16,6 +17,7 @@ import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.SmsUtil;
 import com.becheer.donation.utils.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +27,11 @@ import java.util.Date;
 public class SmsServiceImpl implements ISmsService {
     @Resource
     private SmsMapper smsMapper;
+
+    @Autowired
+    SmsConfig smsConfig;
+
+
 
     //发送短信
     @Override
@@ -54,7 +61,7 @@ public class SmsServiceImpl implements ISmsService {
         sms.setCode(smsCode);
         sms.setText(smsTemplateExtension.getContent().replace("{{code}}", smsCode));
 //        sms.setId(UUID.GetInt64UUID());
-        SmsResponse sendResult = SmsUtil.SendSms(sms.getMobile(), sms.getText());
+        SmsResponse sendResult = SmsUtil.SendSms(sms.getMobile(), sms.getText(),smsConfig);
         if (sendResult == null || !sendResult.getStatus().equals("10")) {
             return new ResponseDto(501, Message.REGISTER_SMS_SEND_ERROR);
         }

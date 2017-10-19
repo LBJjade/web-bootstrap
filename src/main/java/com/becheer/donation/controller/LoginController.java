@@ -29,6 +29,7 @@ public class LoginController extends BaseController {
 
     @GetMapping("")
     public String View(HttpServletRequest request){
+        request.setAttribute("config", fileConfig);
         return this.render("login");
     }
 

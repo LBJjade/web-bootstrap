@@ -41,6 +41,7 @@ public class HomeContractController extends BaseController {
     @Access(authorities="member")
     @GetMapping("")
     public String View(HttpServletRequest request){
+        request.setAttribute("config", fileConfig);
         return this.render("/home/contract");
     }
 
@@ -69,6 +70,7 @@ public class HomeContractController extends BaseController {
     @Access(authorities="member")
     @GetMapping(value = "/{contractId}")
     public String GetContractDetail(HttpServletRequest request,@PathVariable long contractId) {
+        request.setAttribute("config", fileConfig);
         try{
             MemberContractDetailExtension memberContractDetailExtension=contractService.GetMemberContractDetail(contractId);
             if (memberContractDetailExtension==null){

@@ -39,7 +39,6 @@ public class SmsController extends BaseController {
     @ResponseBody
     public ResponseDto CheckSms(HttpServletRequest request,@RequestParam String mobile,@RequestParam String code,int registerType){
         ResponseDto result = smsService.CheckLoginCode(mobile,code);
-
         if (result.getCode()==200){
             MemberRegisterExtension memberRegisterExtension=new MemberRegisterExtension();
             memberRegisterExtension.setMobile(mobile);

@@ -6,9 +6,10 @@ package com.becheer.donation.interceptor;
 * Date : 2017-10-17
 */
 
-import com.becheer.donation.configs.Config;
+import com.becheer.donation.configs.FileConfig;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -21,7 +22,6 @@ import static com.becheer.donation.utils.HttpUtil.GetCurrentUser;
 
 // 自定义一个权限拦截器, 继承HandlerInterceptorAdapter类
 public class MemberInterceptor extends HandlerInterceptorAdapter {
-
     // 在调用方法之前执行拦截
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -44,10 +44,5 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
             }
         }
         return false;
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        httpServletRequest.setAttribute("config", Config.getConfig());
     }
 }

@@ -45,12 +45,14 @@ public class HomeProjectController extends BaseController {
     @Access(authorities="member")
     @GetMapping("")
     public String View(HttpServletRequest request){
+        request.setAttribute("config", fileConfig);
         return this.render("home/project");
     }
 
     @Access(authorities="member")
     @GetMapping("/{contractProjectId}")
     public String GetProjectDetail(HttpServletRequest request,@PathVariable long contractProjectId){
+        request.setAttribute("config", fileConfig);
         try {
             MemberProjectDetailExtension memberProjectDetailExtension=projectService.GetMemberProjectDetail(contractProjectId);
             if (memberProjectDetailExtension==null){
