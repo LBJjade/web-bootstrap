@@ -25,6 +25,8 @@ public class Message {
     /**
      * 注册
      */
+    public static final String REGISTER_REGISTER_SUCCESS="注册成功";
+
     public static final String REGISTER_MOBILE_EXIST="该手机号已被使用";
     public static final String REGISTER_SMS_SEND_ERROR="短信发送失败，请重试";
     public static final String REGISTER_SMS_SEND_SUCCESS="短信发送成功";

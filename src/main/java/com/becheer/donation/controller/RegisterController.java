@@ -1,8 +1,10 @@
 package com.becheer.donation.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberRegisterExtension;
+import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.service.ISmsService;
 import com.becheer.donation.strings.ConstString;
@@ -47,18 +49,27 @@ public class RegisterController extends BaseController {
     @PostMapping(value = "/submit")
     @ResponseBody
     public ResponseDto SendSms(HttpServletRequest request,  @RequestParam String pwd) {
-        MemberRegisterExtension memberRegisterExtension =(MemberRegisterExtension)request.getSession().getAttribute(ConstString.REGISTER_SMS_SESSION);
-        if (memberRegisterExtension==null){
-            return new ResponseDto(401,"Bad Request");
+        MemberRegisterExtension memberRegisterExtension = (MemberRegisterExtension) request.getSession().getAttribute(ConstString.REGISTER_SMS_SESSION);
+        if (memberRegisterExtension == null) {
+            return new ResponseDto(401, "Bad Request");
         }
-        if (pwd==null||pwd.trim().length()<8){
-            return new ResponseDto(402,"error pwd");
+        if (pwd == null || pwd.trim().length() < 8) {
+            return new ResponseDto(402, "error pwd");
         }
-        pwd=pwd.trim();
-        ResponseDto result = memberService.SubmitRegister(memberRegisterExtension.getMobile(),pwd,memberRegisterExtension.getRole());
-        if (result.getCode()==200){
+        pwd = pwd.trim();
+        ResponseDto result = memberService.SubmitRegister(memberRegisterExtension.getMobile(), pwd, memberRegisterExtension.getRole());
+        if (result.getCode() == 200) {
             //注册成功，删除Session
             request.getSession().removeAttribute(ConstString.REGISTER_SMS_SESSION);
+            //用户Session
+            MemberSessionExtension memberSessionExtension = new MemberSessionExtension();
+            Member member = (Member) result.getResult();
+            memberSessionExtension.setMemberId(member.getId());
+            memberSessionExtension.setMemberName(member.getMemberName() == null ? "" : member.getMemberName());
+            memberSessionExtension.setMobile(member.getMobile());
+            memberSessionExtension.setRole(member.getRole());
+            memberSessionExtension.setValidation(member.getValidation());
+            request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
         }
         return result;
     }

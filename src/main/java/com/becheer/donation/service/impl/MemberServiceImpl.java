@@ -36,10 +36,11 @@ public class MemberServiceImpl implements IMemberService {
         member.setPassword(HashUtil.GetPassword(pwd));
 //        member.setId(UUID.GetInt64UUID());
         int result = memberMapper.insertMember(member);
-        if (result==1){
-            return new ResponseDto(200,"注册成功");
+        if (result>0){
+            member=memberMapper.SelectMemberByMobile(mobile);
+            return new ResponseDto(200,Message.REGISTER_REGISTER_SUCCESS,member);
         }else{
-            return new ResponseDto(400,"注册失败，请重试");
+            return new ResponseDto(400,Message.SERVER_ERROR);
         }
     }
 
