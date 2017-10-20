@@ -85,4 +85,27 @@
         WHERE i.id_=#{intentionId,jdbcType=BIGINT}
     </select>
 
+    <insert id="InsertIntention" parameterType="com.becheer.donation.model.Intention">
+        INSERT INTO dnt_intention
+        (
+          project_id,
+          project_type_id,
+          member_id,
+          intention_amount,
+          contact_phone,
+          enable_,
+          create_time
+        )
+        VALUES
+        (
+          #{projectId,jdbcType=BIGINT},
+          #{projectTypeId,jdbcType=BIGINT},
+          #{memberId,jdbcType=BIGINT},
+          #{intentionAmount,jdbcType=BIGINT},
+          #{contactPhone,jdbcType=BIGINT},
+          #{enable,jdbcType=BIGINT},
+          #{createTime,jdbcType=BIGINT}
+        )
+    </insert>
+
 </mapper>

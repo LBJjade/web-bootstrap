@@ -112,7 +112,7 @@
             width: 215px;
             font-size: 24px;
             color: #ffa701;
-            text-align: center;
+            text-align: right;
         }
 
         #ul_total p {
@@ -136,7 +136,7 @@
             border: 2px #d0c4c4 solid;
         }
 
-        #tx_yuan {
+        .ipt_money {
             outline: none;
             border: none;
             text-align: right;
@@ -377,7 +377,7 @@
                     </select>
                 </div>
                 <div style="clear: both;">
-                    <label for="name" style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
+                    <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
                     <div style="margin-bottom:10px;">
                         <span id="third" class="donate money">&yen;300</span>
                         <span id="five" class="donate money">&yen;500</span>
@@ -386,7 +386,7 @@
                         <span id="fif" class="donate money">&yen;1500</span>
                         <br/>
                         <span id="tw" class="donate money">&yen;2000</span>
-                        <span id="other"><span>其他：</span><input type="text" id="tx_yuan"
+                        <span id="other"><span>其他：</span><input type="text" class="ipt_money"
                                                                 style="outline:none;border:none;border-color:#e41620;text-align: right;width: 148px"
                                                                 value="元"/></span>
                     </div>
@@ -451,17 +451,12 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-
-                <div style="margin-bottom: 10px;">姓名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-                        type="text"/></div>
-                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"/></div>
-                <div style="width:100%;margin-top:20px;">捐赠金额：
-                    <span id="da" style=" margin:2px;padding:2px;border:2px #d0c4c4 solid "><input type="text"
-                                                                                                   id="tx_yuan"
-                                                                                                   value="元"/></span>
+                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="ipt_dnt_mobile" /></div>
+                <div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;
+                    <input type="number" id="ipt_dnt_amount" />
                 </div>
                 <div style="margin-top:10px;clear: both;">
-                    <button class="dedonateSubmit button">确认捐赠</button>
+                    <button class="btn_submit button">确认捐赠</button>
                 </div>
             </div>
         </div>
@@ -489,6 +484,27 @@
         f_GetRecentDonate();
         f_GetDonationInfo();
         f_GetProjectType();
+        if (memberInfo!=null) {
+            $("#ipt_dnt_mobile").val(memberInfo.mobile);
+        }
+    });
+
+    $(".btn_submit").click(function(){
+        var projectTypeId=$("#sel_project_type").val();
+        var projectId=$("#sel_project").val();
+        var amount=$("#ipt_dnt_amount").val();
+        var mobile=$("#ipt_dnt_mobile").val();
+        $.ajax({
+            url: '/apply/submit',
+            data: {projectId:projectId,projectTypeId:projectTypeId,memberId:memberInfo.memberId,intentionAmount:amount,contactPhone:mobile},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                layer.alert(data.msg)
+                if (data.code === 200) {
+                }
+            }
+        });
     });
 
     function f_OnPageChange(newPage) {
@@ -663,13 +679,13 @@
             });
         }
     }
-
+    
 
     function f_GetDonationInfo() {
         new Vue({
             el: "#ul_total",
             data: {
-                model: {totalDonator: 627361, totalAmout: 68263000000.87, totalAcceptor: 1736, totalGroup: 20}
+                model: {totalDonator: 627361, totalAmout: 10000.50, totalAcceptor: 1736, totalGroup: 20}
             }
         });
     }

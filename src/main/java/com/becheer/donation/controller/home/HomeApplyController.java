@@ -1,7 +1,7 @@
 package com.becheer.donation.controller.home;
 
 /*
-* ApplyController
+* HomeApplyController
 * Creator : xiaokepu
 * Date : 2017-09-28
 */
@@ -29,9 +29,9 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/home/apply")
-public class ApplyController extends BaseController {
+public class HomeApplyController extends BaseController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplyController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HomeApplyController.class);
 
     @Resource
     private IIntentionService intentionService;

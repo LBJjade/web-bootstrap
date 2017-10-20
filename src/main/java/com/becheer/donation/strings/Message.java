@@ -108,6 +108,7 @@ public class Message {
      * 捐赠意向
      */
     public static final String INTENTION_GET_SUCCESS="获取捐赠意向成功";
+    public static final String INTENTION_ADD_SUCCESS="提交成功";
 
     /**
      * 合同

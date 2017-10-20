@@ -18,4 +18,6 @@ public interface IntentionMapper {
     List<Intention> SelectByCondition(IntentionCondition condition);
 
     IntentionExtension SelectIntentionById (long intentionId);
+
+    int InsertIntention(Intention intention);
 }

@@ -2,10 +2,12 @@ package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.IntentionMapper;
 import com.becheer.donation.model.Intention;
+import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.condition.IntentionCondition;
 import com.becheer.donation.model.extension.intention.IntentionExtension;
 import com.becheer.donation.model.extension.message.MessageExtension;
 import com.becheer.donation.service.IIntentionService;
+import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -38,5 +40,15 @@ public class IntentionServiceImpl implements IIntentionService {
     @Override
     public IntentionExtension GetIntention(long intentionId) {
         return intentionMapper.SelectIntentionById(intentionId);
+    }
+
+    @Override
+    public ResponseDto AddIntention(Intention intention) {
+        int result=intentionMapper.InsertIntention(intention);
+        if (result>0){
+            return new ResponseDto(200, Message.INTENTION_ADD_SUCCESS);
+        }else{
+            return new ResponseDto(500,Message.SERVER_ERROR);
+        }
     }
 }
