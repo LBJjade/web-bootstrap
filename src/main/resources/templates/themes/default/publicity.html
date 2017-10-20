@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
 
     <meta charset="UTF-8"/>
@@ -41,7 +41,6 @@
         #div_menu_name {
             width: 200px;
             height: 40px;
-            height: 40px;
             background-color: #00a0ea;
             margin-top: 30px;
         }
@@ -71,11 +70,11 @@
 
         .nav_icon {
             margin-left: 10px;
-            padding-left: 1px;
-            padding-right: 1px;
-            padding-bottom: 8px;
-            border: 1px solid #00a0ea;
-            margin-bottom: 10px;
+            /*padding-left: 1px;*/
+            /*padding-right: 1px;*/
+            /*padding-bottom: 8px;*/
+            /*border: 1px solid #00a0ea;*/
+            /*margin-bottom: 10px;*/
         }
 
         .components {
@@ -125,9 +124,10 @@
             <div id="div_menu" class="right_panel">
                 <div class="nav_items" v-for="item in items">
                     <ul>
-                        <li><a v-on:click="f_getArticle(item.id) " target="_blank">{{item.articleTypeName}}</a></li>
+                        <li><a  v-on:click="f_getArticle(item) " target="_blank">{{item.articleTypeName}}</a></li>
                     </ul>
                 </div>
+
             </div>
             <div th:replace="themes/default/details::details"></div>
             <div th:replace="themes/default/section::section"></div>
@@ -139,11 +139,12 @@
                     <li><a href="#">首页</a></li>
                     <li>><a href="#">&gt;</a></li>
                     <li class="active nav_icon "><a href="#">信息公开
-                        <div class="glyphicon glyphicon-chevron-down icon1"></div>
-                        <div class="glyphicon glyphicon-chevron-up icon2" style="display:none"></div>
+                        <!--<div class="glyphicon glyphicon-chevron-down icon1"></div>-->
+                        <!--<div class="glyphicon glyphicon-chevron-up icon2" style="display:none"></div>-->
                     </a></li>
                     <li>><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">年度报告</a></li>
+                    <li class="active" >
+                        <a  id="nav_last_icon" href="#"></a></li>
                 </ul>
             </div>
             <div class="components" style="display:none">
@@ -239,6 +240,7 @@
 
     //获取文章
     function f_getArticle(tid) {
+
         $.ajax({
             url: '/publicity/article',
             type: 'post',
@@ -265,31 +267,39 @@
         })
     }
 
-    /*]]>*/
-    $(".nav_icon").mouseover(function () {
-        $(".nav_icon").css("z-index", "2")
-        $(".components").show();
-        $(".icon1").hide();
-        $(".icon2").show();
-        $(".nav_icon").css("border-bottom-style", "none");
-    }).mouseout(function () {
-        $(".components").hide();
-        $(".icon2").hide();
-        $(".icon1").show();
-        $(".nav_icon").css("border-bottom", "1px solid #00a0ea");
-    })
+//    $(function() {
+//        //append(),在父级最后追加一个子元素
+//        $("").click(function () {
+//            $("#nav_last_icon").append("<p style='color:black'>{{articleTypeName}}</p>");
+//        })
+//    })
 
-    $(".components").mouseover(function () {
-        $(".components").show();
-        $(".icon1").hide();
-        $(".icon2").show();
-        $(".nav_icon").css("border-bottom-style", "none");
-    }).mouseout(function () {
-        $(".components").hide();
-        $(".icon2").hide();
-        $(".icon1").show();
-        $(".nav_icon").css("border-bottom", "1px solid #00a0ea");
-    })
+
+    /*]]>*/
+//    $(".nav_icon").mouseover(function () {
+//        $(".nav_icon").css("z-index", "2")
+//        $(".components").show();
+//        $(".icon1").hide();
+//        $(".icon2").show();
+//        $(".nav_icon").css("border-bottom-style", "none");
+//    }).mouseout(function () {
+//        $(".components").hide();
+//        $(".icon2").hide();
+//        $(".icon1").show();
+//        $(".nav_icon").css("border-bottom", "1px solid #00a0ea");
+//    })
+//
+//    $(".components").mouseover(function () {
+//        $(".components").show();
+//        $(".icon1").hide();
+//        $(".icon2").show();
+//        $(".nav_icon").css("border-bottom-style", "none");
+//    }).mouseout(function () {
+//        $(".components").hide();
+//        $(".icon2").hide();
+//        $(".icon1").show();
+//        $(".nav_icon").css("border-bottom", "1px solid #00a0ea");
+//    })
 
 </script>
 </body>

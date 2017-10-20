@@ -23,8 +23,7 @@
 
         .div_message_content{
             padding: 15px;
-            margin-left: 15px;
-            margin-right: 15px;
+            margin-left: 25px;
             border: 1px solid #dbdbdb;
             border-top: none;
             display: none;
@@ -71,12 +70,12 @@
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
-        <div class="col-sm-10" id="message_item" style="min-height: 600px;">
+        <div class="col-sm-10" id="message_item">
             <div class="div_member_title">
                 <p>我的消息</p>
                 <hr/>
             </div>
-
+            <div style="min-height: 450px;">
             <div v-for="item in items">
                 <div class="div_message_title">
                     <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}}<span>2017-06-30 15:08:21</span></h4></div>
@@ -85,8 +84,10 @@
                     {{item.content}}
                 </div>
             </div>
+
             <p class="p_no_data">暂无消息</p>
-            <div  style="text-align: center; width: 100%;" id="div_page">
+            </div>
+            <div  id="div_page">
             </div>
         </div>
     </div>

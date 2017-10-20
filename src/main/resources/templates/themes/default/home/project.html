@@ -32,9 +32,9 @@
             color: #fff;
         }
 
-        #div_project_list {
-            min-height: 700px;
-        }
+        /*#div_project_list {*/
+            /*min-height: 600px;*/
+        /*}*/
 
         .div_project_detail {
             width: 302px;
@@ -98,11 +98,12 @@
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-10" >
             <div class="div_member_title">
                 <p>我参与的项目</p>
                 <hr/>
             </div>
+            <div style="min-height: 450px;">
             <div id="div_project_list">
                 <div v-for="item in items" class="div_project_detail">
                     <a :href="'project/'+item.id" target="_blank" ><img :src="imgUrl+'project/900x600/'+item.thumbImg"
@@ -121,7 +122,9 @@
                         <button class="info_button" :href="'project/'+item.id" target="_blank">查看详情</button></p>
                 </div>
             </div>
-            <div style="text-align: center; width: 100%;" id="div_page">
+            <p class="p_no_data">暂无消息</p>
+            </div>
+            <div  id="div_page">
             </div>
         </div>
     </div>
