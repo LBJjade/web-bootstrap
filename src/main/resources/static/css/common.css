@@ -135,7 +135,7 @@ a:visited,a:focus,a:hover{
 
 .div_member_title{
     width: 100%;
-    padding-top: 25px;
+    padding-top: 20px;
     padding-left: 10px;
     font-size: 16px;
 }
@@ -145,4 +145,15 @@ a:visited,a:focus,a:hover{
 }
 .active a{
     color:#666666;
+}
+
+.p_no_data{
+    line-height: 100px;
+    text-align: center;
+    display: none;
+}
+
+#div_page{
+    text-align: center;
+    width: 100%;
 }

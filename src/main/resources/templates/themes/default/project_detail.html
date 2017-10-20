@@ -45,8 +45,9 @@
             border:1px;
             float: right;
             width: 300px;
-            height: 370px;
+            height: 300px;
             margin-top: 10px;
+            border: 1px #e9e9e9 solid;
         }
 
         #div_project img {
@@ -56,8 +57,7 @@
         }
 
         #div_project_content {
-            margin-top: 20px;
-            width: 900px;
+            width: 100%;
             clear: both;
             /*border-left: 1px #ddd solid;*/
         }
@@ -74,7 +74,7 @@
         .right_panel {
             margin-top: 10px;
             border: 1px #e9e9e9 solid;
-            height: 400px;
+            height: 402px;
         }
 
         .right_panel img {
@@ -86,16 +86,17 @@
         .info_fs{
             color: #1E1E1E;
             font-size:20px;
-            margin: 22px;
+            font-weight: bold;
+            margin: 15px;
             text-align: center;
         }
 
         .info{
-            margin:2px;
             display:block;
             color: #656565;
             line-height: 25px;
-            font-size:15px;
+            font-size:16px;
+            margin-left: 16px;
         }
 
         .info_ma{
@@ -113,6 +114,7 @@
             padding-left: 10px;
             padding-right: 10px;
             line-height: 40px;
+            margin-bottom: 0px;
             border-bottom: 1px solid #E4E4E4;
         }
 
@@ -138,6 +140,22 @@
             white-space: nowrap;
         }
 
+        .project_block{
+            margin-bottom: 60px;
+            height: 300px;
+        }
+
+        .donate_button {
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100px;
+            height: 35px;
+            background-color: #e41620;
+            color: #FFFFFF;
+            border: none;
+            margin: 20px auto;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +171,7 @@
                     <li class="active"><a href="#">项目详情</a></li>
                 </ul>
             </div>
+            <div class="project_block">
             <div id="div_project">
                 <img  th:src='${config.getImageRoot()+"project/900x600/"+project.getThumbImg()}'/>
             </div>
@@ -164,18 +183,18 @@
                     <th:block th:text="${project.getProjectName()}"/>
                 </p>
                 <div class="info_ma">
-                    <p class="info">项目时间:
-                        <th:block th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
+                    <p class="info" style="color: #929292;font-size: 15px;">项目时间:
+                        <!--<th:block th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>-->
+                        2017/10/19 - 2020/10/19
                     </p>
-                    <p class="info">目标金额:
-                        <span style="color:#d9534f"><th:block th:text="${project.getProjectTargetAmount()}"/></span>
-                    </p>
-                    <p class="info">已募集金额:
-                        <span style="color:#d9534f"><th:block th:text="${project.getAcceptedAmount()}"/></span>
-                    </p>
-                    <p class="info">已参与人数:0人</p>
+                    <div class="center">
+                        <p class="info"> 目标金额： <span style="color:#d9534f;font-family: Arial; font-size: 25px;"><th:block th:text="${project.getProjectTargetAmount()}"/></span> 元</p>
+                            <p class="info"> 已募集金额： <span style="color:#d9534f; font-family: Arial; font-size: 25px;"><th:block th:text="${project.getAcceptedAmount()}"/></span> 元</p>
+                            <p class="info"> 已参与人数： <span  style="color:#d9534f;font-family: Arial; font-size: 25px;">0</span> 人</p>
+                    </div>
                 </div>
-                <button class="btn btn-danger btn-lg btn-block" data-toggle="modal" data-target="#div_donate">我要捐赠</button>
+                <div style="width: 100%;"><button class="donate_button" data-toggle="modal" data-target="#div_donate">我要捐赠</button></div>
+            </div>
             </div>
             <div id="div_project_content" style="min-height: 600px">
                 <ul class="nav nav-tabs">
@@ -228,16 +247,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-3" style="padding-left: 5px; height: 400px;margin-top: 10px">
+        <div class="col-sm-3" style="padding-left: 20px; height: 400px;margin-top: 10px">
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <div class="recommend_item" >
-                        <ul v-for="item in items">
+
+                        <ul v-for="item in items" class="recommend_item" >
+                            <!--<div class="recommend_item" >-->
                             <li><img :src="imgUrl+'avator/'+item.avator" /></li>
                             <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount/1000}}元</li>
+                            <!--</div>-->
                         </ul>
-                    </div>
                 </div>
             </div>
 

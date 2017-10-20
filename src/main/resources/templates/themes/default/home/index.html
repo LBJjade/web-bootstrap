@@ -2,18 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
 
     <title>index</title>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
-        .div_content{
+        .div_content {
             width: 970px;
-            height: 600px;
+            min-height: 500px;
             border: 1px #dbdbdb solid;
             margin-left: 25px;
             padding-top: 30px;
@@ -21,7 +21,7 @@
             text-align: center;
         }
 
-        #div_avator{
+        #div_avator {
             width: 250px;
             height: 300px;
             border-right: 1px #dbdbdb dashed;
@@ -29,19 +29,20 @@
             float: left;
         }
 
-        #div_content_info{
+        #div_content_info {
             width: 700px;
             float: left;
             padding-top: 20px;
         }
 
-        .table_content_info{
+        .table_content_info {
             width: 70%;
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
         }
-        .table_content_info td{
+
+        .table_content_info td {
             border-bottom: 1px #dbdbdb dashed;
         }
     </style>
@@ -68,7 +69,10 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p style="line-height: 40px"><span style="line-height: 40px">我的信息</span><a href="home/edit" id="a_edit" style="display: none;"><button class="btn btn-info" style="float: right">编辑</button></a></p>
+                <p style="line-height: 40px;margin: -5px;"><span style="line-height: 40px">我的信息</span><a
+                        href="home/edit" id="a_edit" style="display: none;">
+                    <button class="btn btn-info" style="float: right">编辑</button>
+                </a></p>
                 <hr/>
             </div>
             <div class="div_content" id="div_member">
@@ -80,13 +84,36 @@
                 </div>
                 <div id="div_content_info">
                     <table class="table_content_info">
-                        <tr><td>真实姓名</td><td>{{member.name}}</td></tr>
-                        <tr><td>手机号码</td><td>{{member.mobile}}</td></tr>
-                        <tr><td>身份证号</td><td>{{member.idCard}}</td></tr>
-                        <tr><td>性别</td><td v-if="member.sex===0">保密</td><td v-if="member.sex===1">男</td><td v-if="member.sex===2">女</td></tr>
-                        <tr><td>生日</td><td>{{member.birthday}}</td></tr>
-                        <tr><td>曾参与的公益项目</td><td>{{member.project}}</td></tr>
-                        <tr><td>个人说明</td><td>{{member.summary}}</td></tr>
+                        <tr>
+                            <td>真实姓名</td>
+                            <td>{{member.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>手机号码</td>
+                            <td>{{member.mobile}}</td>
+                        </tr>
+                        <tr>
+                            <td>身份证号</td>
+                            <td>{{member.idCard}}</td>
+                        </tr>
+                        <tr>
+                            <td>性别</td>
+                            <td v-if="member.sex===0">保密</td>
+                            <td v-if="member.sex===1">男</td>
+                            <td v-if="member.sex===2">女</td>
+                        </tr>
+                        <tr>
+                            <td>生日</td>
+                            <td>{{member.birthday}}</td>
+                        </tr>
+                        <tr>
+                            <td>曾参与的公益项目</td>
+                            <td>{{member.project}}</td>
+                        </tr>
+                        <tr>
+                            <td>个人说明</td>
+                            <td>{{member.summary}}</td>
+                        </tr>
                         <tr>
                             <td>认证状态</td>
                             <td v-if="member.validation===1">未认证</td>
@@ -109,31 +136,33 @@
     $(document).ready(function () {
         f_GetmemberInfo();
     });
+
     //获取会员信息
-    function f_GetmemberInfo(){
+    function f_GetmemberInfo() {
         $.ajax({
-            url:'/home/member/info',
-            data:{memberId:memberInfo.memberId},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if (data.code===200){
-                    if (data.result.validation===1||data.result.validation===4){
+            url: '/home/member/info',
+            data: {memberId: memberInfo.memberId},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    if (data.result.validation === 1 || data.result.validation === 4) {
                         $("#a_edit").show();
                     }
                     new Vue({
-                        el:"#div_member",
-                        data:{
-                            member:data.result,
-                            imgRoot:imgRoot
+                        el: "#div_member",
+                        data: {
+                            member: data.result,
+                            imgRoot: imgRoot
                         }
                     });
-                }else{
+                } else {
                     layer.alert(data.msg);
                 }
             }
         });
     }
+
     /*]]>*/
 </script>
 </body>
