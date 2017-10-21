@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
     <meta charset="UTF-8"/>
@@ -41,6 +41,7 @@
         #div_menu_name {
             width: 200px;
             height: 40px;
+            height: 40px;
             background-color: #00a0ea;
             margin-top: 30px;
         }
@@ -70,11 +71,11 @@
 
         .nav_icon {
             margin-left: 10px;
-            /*padding-left: 1px;*/
-            /*padding-right: 1px;*/
-            /*padding-bottom: 8px;*/
+            padding-left: 1px;
+            padding-right: 1px;
+            padding-bottom: 8px;
             /*border: 1px solid #00a0ea;*/
-            /*margin-bottom: 10px;*/
+            margin-bottom: 10px;
         }
 
         .components {
@@ -124,10 +125,9 @@
             <div id="div_menu" class="right_panel">
                 <div class="nav_items" v-for="item in items">
                     <ul>
-                        <li><a  v-on:click="f_getArticle(item) " target="_blank">{{item.articleTypeName}}</a></li>
+                        <li><a v-on:click="f_getArticle(item) " target="_blank">{{item.articleTypeName}}</a></li>
                     </ul>
                 </div>
-
             </div>
             <div th:replace="themes/default/details::details"></div>
             <div th:replace="themes/default/section::section"></div>
@@ -143,8 +143,7 @@
                         <!--<div class="glyphicon glyphicon-chevron-up icon2" style="display:none"></div>-->
                     </a></li>
                     <li>><a href="#">&gt;</a></li>
-                    <li class="active" >
-                        <a  id="nav_last_icon" href="#"></a></li>
+                    <li class="active"><a href="#" id="a_title"></a></li>
                 </ul>
             </div>
             <div class="components" style="display:none">
@@ -231,7 +230,7 @@
                         }
                     });
                     if (data.result != null) {
-                        f_getArticle(data.result[0].id);
+                        f_getArticle(data.result[0]);
                     }
                 }
             }
@@ -239,14 +238,14 @@
     }
 
     //获取文章
-    function f_getArticle(tid) {
-
+    function f_getArticle(tItem) {
         $.ajax({
             url: '/publicity/article',
             type: 'post',
-            data: {pageSize: pageSize, pageNum: pageNum, tid: tid},
+            data: {pageSize: pageSize, pageNum: pageNum, tid: tItem.id},
             success: function (data) {
                 if (data.code === 200) {
+                    $("#a_title").html(tItem.articleTypeName)
                     if (vueContent === undefined) {
                         vueContent = new Vue({
                             el: "#div_content",
@@ -267,15 +266,7 @@
         })
     }
 
-//    $(function() {
-//        //append(),在父级最后追加一个子元素
-//        $("").click(function () {
-//            $("#nav_last_icon").append("<p style='color:black'>{{articleTypeName}}</p>");
-//        })
-//    })
-
-
-    /*]]>*/
+//    /*]]>*/
 //    $(".nav_icon").mouseover(function () {
 //        $(".nav_icon").css("z-index", "2")
 //        $(".components").show();
