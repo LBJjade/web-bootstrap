@@ -51,6 +51,8 @@ public class Message {
 
     public static final String LOGIN_MOBILE_ERROR="手机号格式错误";
 
+    public static final String LOGINOUT_SUCCESS="注销成功";
+
     /*
      *信息公开
      */

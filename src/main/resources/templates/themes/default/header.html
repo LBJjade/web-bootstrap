@@ -34,18 +34,18 @@
             <ul class="ul_login" id="ul_login">
                 <li>您好,欢迎您!</li>
                 <li></li>
-                <li><a href="login">登录</a></li>
+                <li><a th:href="@{/login}">登录</a></li>
                 <li>|</li>
-                <li><a href="register">注册</a></li>
+                <li><a th:href="@{/register}">注册</a></li>
             </ul>
             <ul class="ul_login" id="ul_logined" style="display: none">
                 <li></li>
                 <li></li>
-                <li><a href="login.html">消息(0)</a></li>
+                <li><a th:href="@{/home/message}">消息(0)</a></li>
                 <li>|</li>
-                <li><a href="home">个人中心</a></li>
+                <li><a th:href="@{/home}">个人中心</a></li>
                 <li>|</li>
-                <li><a href="register">退出</a></li>
+                <li><a href="javascript:f_logout()">退出</a></li>
             </ul>
         </div>
     </div>
@@ -80,7 +80,24 @@
     if (memberInfo!=null){
         $("#ul_login").hide();
         $("#ul_logined").show();
-        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！")
+        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+    }
+
+    function f_logout() {
+        if (memberInfo != null) {
+            $.ajax({
+                url: '/login/logout',
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if(data.code===200){
+                        window.location.href="/";
+                    }else{
+                        layer.alert(data.msg);
+                    }
+                }
+            });
+        }
     }
     /*]]>*/
 </script>
