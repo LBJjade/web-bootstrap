@@ -142,5 +142,10 @@ public class Message {
      */
     public static final String MEMBER_APPEAL_PROGRESS_SUCCESS="获取申诉进展成功";
 
+    /**
+     * 微信支付
+     */
+    public static final String WXPAY_SUCCESS="提交微信支付成功";
+
 
 }
