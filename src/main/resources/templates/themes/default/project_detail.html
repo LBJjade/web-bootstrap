@@ -153,8 +153,26 @@
             background-color: #e41620;
             color: #FFFFFF;
             border: none;
-            margin: 20px auto;
+            margin: 15px auto;
             display: block;
+        }
+
+        .info_name{
+            width: 80px;
+            display: inline-block;
+            text-align: left;
+        }
+
+        .info_number{
+            color:#d9534f;
+            font-family: Arial;
+            font-size: 25px;
+            display: inline-block;
+            width: 135px;
+            text-align: right;
+            border: 1px solid;
+            padding: 2px 2px;
+            vertical-align: -2px;
         }
     </style>
 </head>
@@ -183,14 +201,14 @@
                     <th:block th:text="${project.getProjectName()}"/>
                 </p>
                 <div class="info_ma">
-                    <p class="info" style="color: #929292;font-size: 15px;">项目时间:
+                    <p class="info" style="color: #929292;font-size: 15px;">项目时间 :
                         <!--<th:block th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>-->
-                        2017/10/19 - 2020/10/19
+                        2017-10-19 ～ 2020-10-19
                     </p>
                     <div class="center">
-                        <p class="info"> 目标金额： <span style="color:#d9534f;font-family: Arial; font-size: 25px;"><th:block th:text="${project.getProjectTargetAmount()}"/></span> 元</p>
-                            <p class="info"> 已募集金额： <span style="color:#d9534f; font-family: Arial; font-size: 25px;"><th:block th:text="${project.getAcceptedAmount()}"/></span> 元</p>
-                            <p class="info"> 已参与人数： <span  style="color:#d9534f;font-family: Arial; font-size: 25px;">0</span> 人</p>
+                        <p class="info"> <span class="info_name">目&nbsp;标&nbsp;金&nbsp;额</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getProjectTargetAmount()}"/></span>&nbsp;元</p>
+                            <p class="info"> <span class="info_name">已募集金额</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getAcceptedAmount()}"/></span>&nbsp;元</p>
+                        <p class="info"> <span class="info_name">已参与人数</span>：&nbsp;<span class="info_number"> 0</span>&nbsp;人</p>
                     </div>
                 </div>
                 <div style="width: 100%;"><button class="donate_button" data-toggle="modal" data-target="#div_donate">我要捐赠</button></div>
