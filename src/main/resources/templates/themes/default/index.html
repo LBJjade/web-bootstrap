@@ -112,7 +112,7 @@
             width: 215px;
             font-size: 24px;
             color: #ffa701;
-            text-align: right;
+            text-align: center;
         }
 
         #ul_total p {
@@ -133,10 +133,9 @@
             margin: 2px;
             padding: 2px;
             margin-top: 20px;
-            border: 2px #d0c4c4 solid;
         }
 
-        .ipt_money {
+        .tx_yuan {
             outline: none;
             border: none;
             text-align: right;
@@ -213,8 +212,18 @@
         }
 
         .money {
+            margin: 2px;
+            padding: 2px;
             line-height: 45px;
 
+        }
+
+        .money_1{
+            border: 2px #d0c4c4 solid;
+        }
+
+        .money_2{
+            border: 2px #e41620 solid;
         }
 
 
@@ -376,17 +385,17 @@
                         <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
                     </select>
                 </div>
-                <div style="clear: both;">
-                    <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
+                <div id="span_money" style="clear: both;">
+                    <label  style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
                     <div style="margin-bottom:10px;">
-                        <span id="third" class="donate money">&yen;300</span>
-                        <span id="five" class="donate money">&yen;500</span>
-                        <span id="eight" class="donate money">&yen;800</span>
-                        <span id="ten" class="donate money">&yen;1000</span>
-                        <span id="fif" class="donate money">&yen;1500</span>
+                        <span id="third" class="money span_donation money_1">&yen;300</span>
+                        <span id="five" class="money span_donation money_1">&yen;500</span>
+                        <span id="eight" class="money span_donation money_1">&yen;800</span>
+                        <span id="ten" class="money span_donation money_1">&yen;1000</span>
+                        <span id="fif" class="money span_donation money_1">&yen;1500</span>
                         <br/>
-                        <span id="tw" class="donate money">&yen;2000</span>
-                        <span id="other"><span>其他：</span><input type="text" class="ipt_money"
+                        <span id="tw" class="money span_donation money_1">&yen;2000</span>
+                        <span id="other" class="span_donation money_1"><span>其他：</span><input type="text" class="tx_yuan"
                                                                 style="outline:none;border:none;border-color:#e41620;text-align: right;width: 148px"
                                                                 value="元"/></span>
                     </div>
@@ -451,12 +460,17 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="ipt_dnt_mobile" /></div>
-                <div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;
-                    <input type="number" id="ipt_dnt_amount" />
+
+                <div style="margin-bottom: 10px;">姓名：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                        type="text"/></div>
+                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"/></div>
+                <div style="width:100%;margin-top:20px;">捐赠金额：
+                    <span id="da" class="money_1" style=" margin:2px;padding:2px; "><input type="text"
+                                                                                                   class="tx_yuan"
+                                                                                                   value="元"/></span>
                 </div>
                 <div style="margin-top:10px;clear: both;">
-                    <button class="btn_submit button">确认捐赠</button>
+                    <button class="dedonateSubmit button">确认捐赠</button>
                 </div>
             </div>
         </div>
@@ -484,27 +498,6 @@
         f_GetRecentDonate();
         f_GetDonationInfo();
         f_GetProjectType();
-        if (memberInfo!=null) {
-            $("#ipt_dnt_mobile").val(memberInfo.mobile);
-        }
-    });
-
-    $(".btn_submit").click(function(){
-        var projectTypeId=$("#sel_project_type").val();
-        var projectId=$("#sel_project").val();
-        var amount=$("#ipt_dnt_amount").val();
-        var mobile=$("#ipt_dnt_mobile").val();
-        $.ajax({
-            url: '/apply/submit',
-            data: {projectId:projectId,projectTypeId:projectTypeId,memberId:memberInfo.memberId,intentionAmount:amount,contactPhone:mobile},
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                layer.alert(data.msg)
-                if (data.code === 200) {
-                }
-            }
-        });
     });
 
     function f_OnPageChange(newPage) {
@@ -679,77 +672,32 @@
             });
         }
     }
-    
+
 
     function f_GetDonationInfo() {
         new Vue({
             el: "#ul_total",
             data: {
-                model: {totalDonator: 627361, totalAmout: 10000.50, totalAcceptor: 1736, totalGroup: 20}
+                model: {totalDonator: 627361, totalAmout: 68263000000.87, totalAcceptor: 1736, totalGroup: 20}
             }
         });
     }
 
 
-    //边框变色
-    function becamered(a) {
-        var b = a;
-        $("#" + b).css("border", "2px #e41620 solid");
-    }
 
-    function becamewhite(a, b, c, d, e, f) {
-        var x = a;
-        var y = b;
-        var z = c;
-        var w = d;
-        var v = e;
-        var u = f;
-        $("#" + x).css("border", "2px #d0c4c4 solid");
-        $("#" + y).css("border", "2px #d0c4c4 solid");
-        $("#" + z).css("border", "2px #d0c4c4 solid");
-        $("#" + w).css("border", "2px #d0c4c4 solid");
-        $("#" + v).css("border", "2px #d0c4c4 solid");
-        $("#" + f).css("border", "2px #d0c4c4 solid");
-    }
 
-    $("#third").click(function () {
-        becamered("third");
-        becamewhite("five", "ten", "other", "eight", "tw", "fif");
+//边框变色
+    $(".span_donation").click(function(){
+        $(".money_2").removeClass("money_2");
+        $(this).addClass("money_2");
     })
 
-    $("#five").click(function () {
-        becamered("five");
-        becamewhite("third", "ten", "other", "eight", "tw", "fif");
-    })
-
-    $("#ten").click(function () {
-        becamered("ten");
-        becamewhite("five", "third", "other", "eight", "tw", "fif");
-    })
-
-    $("#other").click(function () {
-        becamered("other");
-        becamewhite("five", "ten", "third", "eight", "tw", "fif");
-    })
-
-    $("#eight").click(function () {
-        becamered("eight");
-        becamewhite("five", "ten", "third", "other", "tw", "fif");
-    })
-
-    $("#tw").click(function () {
-        becamered("tw");
-        becamewhite("five", "ten", "third", "other", "eight", "fif");
-    })
-
-    $("#fif").click(function () {
-        becamered("fif");
-        becamewhite("five", "ten", "third", "other", "eight", "tw");
-    })
 
     $("#da").click(function () {
-        becamered("da");
+        $(this).removeClass("money_1");
+        $(this).addClass("money_2");
     })
+
 
 
     //翻页回调函数
