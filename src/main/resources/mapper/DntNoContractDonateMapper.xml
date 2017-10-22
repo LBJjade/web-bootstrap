@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.DntNoContractDonateMapper">
+
+    <resultMap id="BaseResultMap" type="com.becheer.donation.model.DntNoContractDonate">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="project_type_id" jdbcType="BIGINT" property="projectTypeId"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="no_contract_donate_no" jdbcType="VARCHR" property="noContractDonateNo"/>
+        <result column="member_id" jdbcType="BIGINT" property="memberId"/>
+        <result column="amount" jdbcType="BIGINT" property="amount"/>
+        <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount"/>
+        <result column="allocate_amount" jdbcType="BIGINT" property="allocateAmount"/>
+        <result column="remark_" jdbcType="VARCHAR" property="remark"/>
+        <result column="enable_" jdbcType="INT" property="enable"/>
+        <result column="create_time" jdbcType="DATETIME" property="createTime"/>
+        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+        <result column="update_time" jdbcType="DATETIME" property="updateTime"/>
+        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="appropriation_contract_id" jdbcType="BIGINT" property="appropriationContractId"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.becheer.donation.model.DntNoContractDonate">
+        INSERT INTO dnt_no_contract_donate
+        (
+            project_type_id,
+            project_id,
+            no_contract_donate_no,
+            member_id,
+            amount,
+            donated_amount,
+            allocate_amount,
+            remark_,
+            enable_,
+            create_time,
+            create_by,
+            update_time,
+            update_by,
+            ip
+        )
+        VALUES
+        (
+	        #{project_type_id, jdbcType=INTEGER},
+	        #{project_id, jdbcType=INTEGER},
+	        #{no_contract_donate_no, jdbcType=VARCHAR},
+	        #{member_id, jdbcType=INTEGER},
+	        #{amount, jdbcType=INTEGER},
+	        #{donated_amount, jdbcType=INTEGER},
+	        #{allocate_amount, jdbcType=INTEGER},
+	        #{remark_, jdbcType=VARCHAR},
+	        1,
+            now,
+	        1,
+	        #{ip, jdbcType=VARCHAR},
+        )
+    </insert>
+
+    <update id="update" parameterType="com.becheer.donation.model.DntNoContractDonate">
+        UPDATE dnt_member
+        SET
+            project_type_id = #{project_type_id, jdbcType=INTEGER},
+            project_id = #{project_id, jdbcType=INTEGER},
+            no_contract_donate_no = #{no_contract_donate_no, jdbcType=VARCHAR},
+            member_id = #{member_id, jdbcType=INTEGER},
+            amount = #{amount, jdbcType=INTEGER},
+            donated_amount = #{donated_amount, jdbcType=INTEGER},
+            allocate_amount = #{allocate_amount, jdbcType=INTEGER},
+            remark_ = #{remark_, jdbcType=VARCHAR},
+            update_time = now(),
+            update_by= 1,
+        WHERE id_ = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>
