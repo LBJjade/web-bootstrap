@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.DntPaymentPlanMapper">
+
+    <resultMap id="BaseResultMap" type="com.becheer.donation.model.DntPaymentPlan">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="ref_table" jdbcType="VARCHAR" property="refTable"/>
+        <result column="ref_record_id" jdbcType="BIGINT" property="refRecordId"/>
+        <result column="payment_date" jdbcType="BIGINT" property="paymentDate"/>
+        <result column="amount" jdbcType="BIGINT" property="amount"/>
+        <result column="received_amount" jdbcType="BIGINT" property="receivedAmount"/>
+        <result column="deadline" jdbcType="BIGINT" property="deadline"/>
+        <result column="remark_" jdbcType="VARCHAR" property="remark"/>
+        <result column="enable_" jdbcType="BIGINT" property="enable"/>
+        <result column="create_time" jdbcType="DATETIME" property="createTime"/>
+        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+        <result column="update_time" jdbcType="DATETIME" property="updateTime"/>
+        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="payment_method_id" jdbcType="BIGINT" property="paymentMethodId"/>
+        <result column="paylog_ref_table" jdbcType="VARCHAR" property="paylogRefTable"/>
+        <result column="paylog_ref_record_id" jdbcType="BIGINT" property="paylogRefRecordId"/>
+        <result column="status," jdbcType="BIGINT" property="status"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.becheer.donation.model.DntPaymentPlan">
+        INSERT INTO dnt_no_contract_donate
+        (
+            title,
+            ref_table,
+            ref_record_id,
+            payment_date,
+            amount,
+            received_amount,
+            deadline,
+            remark_,
+            enable_,
+            create_time,
+            create_by,
+            payment_method_id,
+            paylog_ref_table,
+            paylog_ref_record_id,
+            status,
+        )
+        VALUES
+        (
+            #{title, jdbcType=INTEGER},
+            #{ref_table, jdbcType=VARCHAR},
+            #{ref_record_id, jdbcType=INTEGER},
+            #{payment_date, jdbcType=DATETIME},
+            #{amount, jdbcType=INTEGER},
+            #{received_amount, jdbcType=INTEGER},
+            #{deadline, jdbcType=DATETIME},
+            #{remark_, jdbcType=VARCHAR},
+            #{enable_, jdbcType=INTEGER},
+            now(),
+            1,
+            #{payment_method_id, jdbcType=INTEGER},
+            #{paylog_ref_table, jdbcType=VARCHAR},
+            #{paylog_ref_record_id, jdbcType=INTEGER},
+            #{status, jdbcType=INTEGER},
+        )
+    </insert>
+
+    <update id="update" parameterType="com.becheer.donation.model.DntPaymentPlan">
+        UPDATE dnt_member
+        SET
+            title = #{title, jdbcType=INTEGER},
+            ref_table = #{ref_table, jdbcType=VARCHAR},
+            ref_record_id = #{ref_record_id, jdbcType=INTEGER},
+            payment_date = #{payment_date, jdbcType=DATETIME},
+            amount = #{amount, jdbcType=INTEGER},
+            received_amount = #{received_amount, jdbcType=INTEGER},
+            deadline = #{deadline, jdbcType=DATETIME},
+            remark_ = #{remark_, jdbcType=VARCHAR},
+            enable_ = #{enable_, jdbcType=INTEGER},
+            #{update_time, jdbcType=DATETIME},
+            update_by = #{update_by, jdbcType=INTEGER},
+            payment_method_id = #{payment_method_id, jdbcType=INTEGER},
+            paylog_ref_table = #{paylog_ref_table, jdbcType=VARCHAR},
+            paylog_ref_record_id = #{paylog_ref_record_id, jdbcType=INTEGER},
+            status = #{status, jdbcType=INTEGER},
+        WHERE id_ = #{id,jdbcType=BIGINT}
+    </update>
+
+</mapper>
