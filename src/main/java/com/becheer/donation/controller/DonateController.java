@@ -2,8 +2,14 @@ package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
+import com.becheer.donation.model.extension.donate.Donate;
+import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
+import com.becheer.donation.service.IDonateService;
 import com.becheer.donation.service.INoContractDonateService;
 import com.becheer.donation.strings.Message;
+import com.google.common.base.Strings;
+import com.google.common.primitives.Ints;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +26,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/donate")
 public class DonateController extends BaseController {
+
+    @Resource
+    private IDonateService donateService;
 
     @Resource
     private INoContractDonateService noContractDonateService;
@@ -54,8 +63,36 @@ public class DonateController extends BaseController {
 
     @ResponseBody
     @PostMapping("/dontate")
-    public Object donate(@RequestBody Map<String, String> params) {
-        return null;
+    public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                MemberAuthFailed();
+            }
+            long memberId = currentMember.getMemberId();
+            donate.setMemberId(memberId);
+
+            Integer projectTypeId = donate.getProjectTypeId();
+            Integer projectId = donate.getProjectId();
+            Integer amount = donate.getAmount();
+
+            if (projectTypeId == null) {
+                return new ResponseDto(400, Message.DONATE_PROJECT_TYPE_ID_IS_EMPTY);
+            }
+
+            if (projectId == null) {
+                return new ResponseDto(400, Message.DONATE_PROJECT_ID_BAD_REQUEST);
+            }
+
+            if (amount == null) {
+                return new ResponseDto(400, Message.DONATE_AMOUNT_IS_EMPTY);
+            }
+
+            WxPayPrepayExtension wxPayPrepayExtension = donateService.donate(donate);
+            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, wxPayPrepayExtension);
+        } catch (Exception ex) {
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
     }
 
 
