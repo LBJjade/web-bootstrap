@@ -9,4 +9,8 @@ public class GenerateUtil {
     public static String genPaymentPlanTitle(String title) {
         return title;
     }
+
+    public static String genOrderNo() {
+        return UUID.getRandomNumber(16);
+    }
 }

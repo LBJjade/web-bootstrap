@@ -7,6 +7,7 @@ import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import com.becheer.donation.service.IDntNoContractDonateService;
 import com.becheer.donation.service.IDntPaymentPlanService;
 import com.becheer.donation.service.IDonateService;
+import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.utils.GenerateUtil;
 import com.becheer.donation.utils.UUID;
 import org.slf4j.Logger;
@@ -27,6 +28,9 @@ public class DonateServiceImpl implements IDonateService {
     @Resource
     private IDntPaymentPlanService paymentPlanService;
 
+    @Resource
+    private IWxPayService payService;
+
 
     public WxPayPrepayExtension donate(Donate donate) {
         return donate(donate, null);
@@ -38,7 +42,7 @@ public class DonateServiceImpl implements IDonateService {
         long memberId = donate.getMemberId();
         Integer amount = donate.getAmount();
 
-        // TODO 1.写入直接捐赠表 dnt_no_contract_donate
+        // 1.写入直接捐赠表 dnt_no_contract_donate
         DntNoContractDonate dntNoContractDonate = new DntNoContractDonate();
 
         // Integer projectTypeId;          // projectTypeId bigint null comment '项目类型标识【,.$(projectTypeName)@(dntProjectType)】',
@@ -67,9 +71,10 @@ public class DonateServiceImpl implements IDonateService {
         dntNoContractDonate.setIp(ip);
         dntNoContractDonate.setCreateTime(new Date());
 
+        // TODO 增加容错处理
         noContractDonateService.insert(dntNoContractDonate);
 
-        // TODO 2.写入付款计划表 dnt_payment_plan
+        // 2.写入付款计划表 dnt_payment_plan
         DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
         String title = "TODO: 支付计划标题要做成自动生成的" + UUID.getRandomNumber(3);
         dntPaymentPlan.setTitle(GenerateUtil.genPaymentPlanTitle(title));
@@ -95,9 +100,10 @@ public class DonateServiceImpl implements IDonateService {
         // paylog_ref_table varchar(50) null comment '付款方式流水记录表【,.%{paylog_weixin:微信支付,paylog_offline:线下支付}】',
         // paylog_ref_record_id bigint null comment '付款方式流水记录标识【,.!】',
 
+        // TODO 增加容错处理
         paymentPlanService.insert(dntPaymentPlan);
 
-        return null;
+        return payService.pay(GenerateUtil.genOrderNo(), dntPaymentPlan.getId().toString(), amount);
     }
 }
 

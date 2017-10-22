@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class DntPaymentPlan {
 
+    private Integer id;     // 付款计划标识
     private String title;     //标题
     private String refTable; //捐款类型
     private Integer refRecordId ; //捐款合同
@@ -21,6 +22,14 @@ public class DntPaymentPlan {
     private String paylogRefTable ; //付款方式流水记录表
     private Integer paylogRefRecordId ; //付款方式流水记录标识
     private Integer status ; //状态 0未捐赠 1已捐赠'
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

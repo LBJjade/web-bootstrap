@@ -1,5 +1,6 @@
 package com.becheer.core.support.pay;
 
+import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.becheer.core.util.HttpUtil;
@@ -76,6 +77,16 @@ public class WxPay {
 	 */
 	public static enum TradeType {
 		JSAPI, NATIVE, APP, WAP, MICROPAY
+	}
+
+	public static Map<String, String> unifiedOrder(String outTradeNo, String productId, String totalFee) {
+		Map<String, String> map = new HashMap<>();
+		map.put("out_trade_no", outTradeNo);
+		map.put("product_id", productId);
+		map.put("total_fee", totalFee);
+
+		String prepayXML = unifiedOrder(map);
+		return WxPayHelper.xmlToMap(prepayXML);
 	}
 
 	/**
