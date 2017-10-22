@@ -130,8 +130,13 @@ public class IntentionCondition {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andMemberIdEqualTo(long value) {
+        public Criteria addMemberIdEqualTo(long value) {
             addCriterion("i.member_id =", value, "project_id");
+            return (Criteria) this;
+        }
+
+        public Criteria addEnable(int value) {
+            addCriterion("i.enable_ =", value, "enable_");
             return (Criteria) this;
         }
     }

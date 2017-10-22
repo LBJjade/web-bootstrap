@@ -66,7 +66,7 @@ public class HomeApplyController extends BaseController {
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseDto GetList(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
+    public ResponseDto GetApplyList(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
         MemberSessionExtension currentMember=GetCurrentUser(request);
         if (currentMember==null){
             return MemberAuthFailed();
@@ -81,7 +81,7 @@ public class HomeApplyController extends BaseController {
             PageInfo<Intention> result=intentionService.GetIntentionList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.INTENTION_GET_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectType", ex);
+            LOGGER.error("GetApplyList", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

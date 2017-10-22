@@ -20,10 +20,11 @@ public class IntentionExtension {
 
     private Date createTime;
 
-    //-1已作废 0已提交 1 审核中 2 确认合同中 3已驳回 4已完成
     private int enable;
 
-    private String status;
+    private int status;
+
+    private String statusText;
 
     private String remark;
 
@@ -75,27 +76,31 @@ public class IntentionExtension {
         this.enable = enable;
     }
 
-    public String getStatus() {
-        switch (enable) {
-            case -1:
-                return "已作废";
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getStatusText() {
+        switch (status) {
             case 0:
-                return "已提交";
+                return "未审批";
             case 1:
-                return "审核中";
+                return "已审批";
             case 2:
-                return "确认合同中";
-            case 3:
                 return "已驳回";
-            case 4:
+            case 3:
                 return "已完成";
             default:
                 return "";
         }
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 
     public String getRemark() {
