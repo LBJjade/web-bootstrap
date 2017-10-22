@@ -1,13 +1,14 @@
 package com.becheer.donation.service.impl;
 
 import com.becheer.donation.model.DntNoContractDonate;
+import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.extension.donate.Donate;
 import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import com.becheer.donation.service.IDntNoContractDonateService;
+import com.becheer.donation.service.IDntPaymentPlanService;
 import com.becheer.donation.service.IDonateService;
 import com.becheer.donation.utils.GenerateUtil;
-import com.becheer.donation.utils.IPUtil;
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+import com.becheer.donation.utils.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,10 @@ public class DonateServiceImpl implements IDonateService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DonateServiceImpl.class);
 
     @Resource
-    private IDntNoContractDonateService service;
+    private IDntNoContractDonateService noContractDonateService;
+
+    @Resource
+    private IDntPaymentPlanService paymentPlanService;
 
 
     public WxPayPrepayExtension donate(Donate donate) {
@@ -63,11 +67,35 @@ public class DonateServiceImpl implements IDonateService {
         dntNoContractDonate.setIp(ip);
         dntNoContractDonate.setCreateTime(new Date());
 
-        service.insert(dntNoContractDonate);
+        noContractDonateService.insert(dntNoContractDonate);
 
         // TODO 2.写入付款计划表 dnt_payment_plan
+        DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
+        String title = "TODO: 支付计划标题要做成自动生成的" + UUID.getRandomNumber(3);
+        dntPaymentPlan.setTitle(GenerateUtil.genPaymentPlanTitle(title));
+        dntPaymentPlan.setRefTable("dnt_no_contract_donate");
+        dntPaymentPlan.setRefRecordId(dntNoContractDonate.getId());
+        dntPaymentPlan.setPaymentDate(null);
+        dntPaymentPlan.setAmount(dntNoContractDonate.getAmount());
+        dntPaymentPlan.setEnable(1);
+        dntPaymentPlan.setPaylogRefTable("payment_weixin");
+        dntPaymentPlan.setStatus(0);
 
+        // !!! 以下这些字段没有录入数据
+        // payment_date datetime null comment '付款日期【,.!】',
+        // received_amount bigint default '0' null comment '已收金额【,.!】',
+        // deadline datetime null comment '截止日期【,.!】',
+        // remark_ varchar(1000) null comment '备注【,.】',
+        // enable_ int null comment '状态',
+        // create_time datetime null comment '创建时间',
+        // create_by bigint null comment '创建人',
+        // update_time datetime null comment '修改时间',
+        // update_by bigint null comment '修改人',
+        // payment_method_id bigint null comment '付款方式标识【,.!】',
+        // paylog_ref_table varchar(50) null comment '付款方式流水记录表【,.%{paylog_weixin:微信支付,paylog_offline:线下支付}】',
+        // paylog_ref_record_id bigint null comment '付款方式流水记录标识【,.!】',
 
+        paymentPlanService.insert(dntPaymentPlan);
 
         return null;
     }

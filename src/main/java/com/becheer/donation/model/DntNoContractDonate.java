@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class DntNoContractDonate {
 
+    private Integer id;          // id_ 直接捐赠标识
     private Integer projectTypeId;          // projectTypeId bigint null comment '项目类型标识【,.$(projectTypeName)@(dntProjectType)】',
     private Integer projectId;             // projectId bigint null comment '项目标识【,.!】',
     private String noContractDonateNo;        // noContractDonateNo varchar(20) null comment '直接捐赠编号【,.!】',
@@ -21,6 +22,14 @@ public class DntNoContractDonate {
     private Integer updateBy;        // updateBy bigint null comment '修改人',
     private String ip;        // ip varchar(64) null comment 'ip',
     private Integer appropriationContractId;        // appropriationContractId bigint null comment '批资资金用途标识【,.*$(contractName)@(dntAppropriationContract)】'
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getProjectTypeId() {
         return projectTypeId;

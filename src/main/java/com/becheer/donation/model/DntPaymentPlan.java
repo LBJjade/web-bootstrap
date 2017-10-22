@@ -6,7 +6,7 @@ public class DntPaymentPlan {
 
     private String title;     //标题
     private String refTable; //捐款类型
-    private Integer refRecord_id ; //捐款合同
+    private Integer refRecordId ; //捐款合同
     private Date paymentDate ; //付款日期
     private Integer amount ; //应付金额
     private Integer receivedAmount ; //已收金额
@@ -17,7 +17,7 @@ public class DntPaymentPlan {
     private Integer createBy ; //创建人
     private Date updateTime ; //修改时间
     private Integer updateBy ; //修改人
-    private Integer paymentMethod_id ; //付款方式标识
+    private Integer paymentMethodId ; //付款方式标识
     private String paylogRefTable ; //付款方式流水记录表
     private Integer paylogRefRecordId ; //付款方式流水记录标识
     private Integer status ; //状态 0未捐赠 1已捐赠'
@@ -38,12 +38,12 @@ public class DntPaymentPlan {
         this.refTable = refTable;
     }
 
-    public Integer getRefRecord_id() {
-        return refRecord_id;
+    public Integer getRefRecordId() {
+        return refRecordId;
     }
 
-    public void setRefRecord_id(Integer refRecord_id) {
-        this.refRecord_id = refRecord_id;
+    public void setRefRecordId(Integer refRecordId) {
+        this.refRecordId = refRecordId;
     }
 
     public Date getPaymentDate() {
@@ -126,12 +126,12 @@ public class DntPaymentPlan {
         this.updateBy = updateBy;
     }
 
-    public Integer getPaymentMethod_id() {
-        return paymentMethod_id;
+    public Integer getPaymentMethodId() {
+        return paymentMethodId;
     }
 
-    public void setPaymentMethod_id(Integer paymentMethod_id) {
-        this.paymentMethod_id = paymentMethod_id;
+    public void setPaymentMethodId(Integer paymentMethodId) {
+        this.paymentMethodId = paymentMethodId;
     }
 
     public String getPaylogRefTable() {
