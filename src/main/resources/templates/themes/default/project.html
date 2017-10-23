@@ -107,6 +107,19 @@
             background-color: #EFF8F8;
         }
 
+        .info_button {
+            font-size: 12px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+            float: right;
+        }
 
     </style>
 </head>
@@ -162,7 +175,7 @@
                         <span style="color:#666666;">{{item.summary}}</span>
                         <br/>
                         <a :href="'project/'+item.projectId">
-                            <button class="btn btn-primary" style="float: right">查看详情</button>
+                            <button class="info_button">查看详情</button>
                         </a>
                     </div>
                 </div>
