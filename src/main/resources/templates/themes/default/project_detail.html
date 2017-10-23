@@ -202,8 +202,7 @@
                 </p>
                 <div class="info_ma">
                     <p class="info" style="color: #929292;font-size: 15px;">项目时间 :
-                        <!--<th:block th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>-->
-                        2017-10-19 ～ 2020-10-19
+                        <th:block th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
                     </p>
                     <div class="center">
                         <p class="info"> <span class="info_name">目&nbsp;标&nbsp;金&nbsp;额</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getProjectTargetAmount()}"/></span>&nbsp;元</p>
