@@ -8,6 +8,7 @@ import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import com.becheer.donation.service.IDonateService;
 import com.becheer.donation.service.INoContractDonateService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.IPUtil;
 import com.google.common.base.Strings;
 import com.google.common.primitives.Ints;
 import org.springframework.stereotype.Controller;
@@ -62,33 +63,40 @@ public class DonateController extends BaseController {
     }
 
     @ResponseBody
-    @PostMapping("/dontate")
-    public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
+    @PostMapping("/donate")
+    // public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
+    public Object donate(HttpServletRequest request, @RequestParam int projectTypeId, @RequestParam int projectId, @RequestParam int amount) {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
             if (currentMember == null) {
                 MemberAuthFailed();
             }
             long memberId = currentMember.getMemberId();
+
+            Donate donate = new Donate();
             donate.setMemberId(memberId);
+            donate.setProjectTypeId(projectTypeId);
+            donate.setProjectId(projectId);
+            donate.setAmount(amount);
 
-            Integer projectTypeId = donate.getProjectTypeId();
-            Integer projectId = donate.getProjectId();
-            Integer amount = donate.getAmount();
+//            Integer projectTypeId = donate.getProjectTypeId();
+//            Integer projectId = donate.getProjectId();
+//            Integer amount = donate.getAmount();
 
-            if (projectTypeId == null) {
-                return new ResponseDto(400, Message.DONATE_PROJECT_TYPE_ID_IS_EMPTY);
-            }
+//            if (projectTypeId == null) {
+//                return new ResponseDto(400, Message.DONATE_PROJECT_TYPE_ID_IS_EMPTY);
+//            }
+//
+//            if (projectId == null) {
+//                return new ResponseDto(400, Message.DONATE_PROJECT_ID_BAD_REQUEST);
+//            }
+//
+//            if (amount == null) {
+//                return new ResponseDto(400, Message.DONATE_AMOUNT_IS_EMPTY);
+//            }
 
-            if (projectId == null) {
-                return new ResponseDto(400, Message.DONATE_PROJECT_ID_BAD_REQUEST);
-            }
-
-            if (amount == null) {
-                return new ResponseDto(400, Message.DONATE_AMOUNT_IS_EMPTY);
-            }
-
-            WxPayPrepayExtension wxPayPrepayExtension = donateService.donate(donate);
+            String ip = IPUtil.getRealIp();
+            WxPayPrepayExtension wxPayPrepayExtension = donateService.donate(donate, ip);
             return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, wxPayPrepayExtension);
         } catch (Exception ex) {
             return new ResponseDto(500, Message.SERVER_ERROR);

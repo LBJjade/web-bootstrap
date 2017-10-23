@@ -10,5 +10,5 @@ public interface IDonateService {
     /**
      * 根据主键id获取项目
      */
-    public WxPayPrepayExtension donate(Donate donate);
+    public WxPayPrepayExtension donate(Donate donate, String ip);
 }

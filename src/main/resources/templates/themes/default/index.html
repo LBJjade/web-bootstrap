@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit"/>
 
     <title>广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" href="static/image/favicon.jpg">
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
 
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -396,16 +396,18 @@
                         <span id="fif" class="money span_donation money_1">&yen;1500</span>
                         <br/>
                         <span id="tw" class="money span_donation money_1">&yen;2000</span>
-                        <span id="other" class="span_donation money_1"><span>其他：</span><input type="text"
-                                                                                              class="tx_yuan"
-                                                                                              style="outline:none;border:none;border-color:#e41620;text-align: right;width: 148px"
-                                                                                              value="元"/></span>
+                        <span id="other" class="span_donation money_1"><span>其他：</span>
+                            <input type="text" class="tx_yuan"
+                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 148px"
+                                   value="元"/></span>
                     </div>
                 </div>
 
                 <div>
                     <form action="">
+
                         <button class="donateSubmit button" data-toggle="model" data-target="#div_cf_donate"
+                                onclick="f_Donate();"
                                 data-dismiss="model">确认捐赠
                         </button>
                         <button class="button" data-toggle="model" data-target="#div_de_donate"
@@ -437,7 +439,8 @@
             <div class="model-body" style="text-align: center">
 
                 <div class="model-body" style="text-align: center">
-                    <img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>
+                    <img th:src="@{prepay.qrCodeImage}" height="200" width="200"/></div>
+                <!--<img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>-->
                 <div class="model-footer" style="text-align: center">
                     支持微信,支付宝扫码捐赠
                 </div>
@@ -703,6 +706,45 @@
     function f_PageCallBack(newPage) {
         pageNum = newPage;
         f_GetArticle();
+    }
+
+    function f_Donate() {
+        if (memberInfo === null) {
+            var msg = "没有登录";
+            layer.alert(msg, function () {
+                window.location.href = "/login";
+            });
+            setTimeout(function () {
+                window.location.href = "/login";
+            }, 3000);
+        } else {
+            var projectTypeId = $("#sel_project_type").val();
+            var projectId = $("#sel_project").val();
+            // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
+            // amount = math.eval(amount * 100);
+            var amount = 1000;
+            $.ajax({
+                url: '/donate/donate',
+                type: 'post',
+                data: {
+                    projectTypeId: projectTypeId,
+                    projectId: projectId,
+                    amount: amount
+                },
+                dataType: 'json',
+                success:
+                    function (data) {
+                        if (data.code === 200) {
+                            new Vue({
+                                el: '#div_cf_donate',
+                                data: {
+                                    prepay: data.result
+                                }
+                            });
+                        }
+                    }
+            });
+        }
     }
 
     /*]]>*/

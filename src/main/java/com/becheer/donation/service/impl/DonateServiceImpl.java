@@ -31,11 +31,6 @@ public class DonateServiceImpl implements IDonateService {
     @Resource
     private IWxPayService payService;
 
-
-    public WxPayPrepayExtension donate(Donate donate) {
-        return donate(donate, null);
-    }
-
     public WxPayPrepayExtension donate(Donate donate, String ip) {
         Integer projectTypeId = donate.getProjectTypeId();
         Integer projectId = donate.getProjectId();
