@@ -102,6 +102,10 @@
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
+    $(document).ready(function () {
+        $("#ipt_mobile").focus();
+    })
+
     $(".btn_login").click(function () {
         var mobile=$("#ipt_mobile").val();
         var pwd=$("#ipt_pwd").val();
@@ -113,12 +117,7 @@
             dataType:'json',
             success:function (data) {
                 if (data.code===407){
-                    layer.alert(data.msg,function () {
-                        window.location.href = "/home";
-                    });
-                    setTimeout(function(){
-                        window.location.href = "/home";
-                    },3000);
+                    window.location.href = "/home";
                 }else{
                     layer.alert(data.msg);
                 }
