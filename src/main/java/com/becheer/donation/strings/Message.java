@@ -144,5 +144,15 @@ public class Message {
      */
     public static final String MEMBER_APPEAL_PROGRESS_SUCCESS="获取申诉进展成功";
 
+    /**
+     * 微信支付
+     */
+    public static final String WXPAY_SUCCESS="提交微信支付成功";
 
+
+    public static final String DONATE_PROJECT_TYPE_ID_IS_EMPTY = "请选择项目类别";
+    public static final String DONATE_AMOUNT_IS_EMPTY = "请选择捐赠金额";
+    public static final String DONATE_PROJECT_TYPE_ID_BAD_REQUEST = "无效的请求(项目类型)";
+    public static final String DONATE_AMOUNT_BAD_REQUEST = "无效的请求(捐赠金额)";
+    public static final String DONATE_PROJECT_ID_BAD_REQUEST = "无效的请求(项目)";
 }
