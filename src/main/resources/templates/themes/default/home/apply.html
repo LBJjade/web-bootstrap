@@ -31,6 +31,18 @@
             line-height: 34px;
             text-align: center;
         }
+
+        .info_button {
+            font-size: 14px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+        }
     </style>
 </head>
 <body>
@@ -82,7 +94,7 @@
                             <td class="text-center">{{item.statusText}}</td>
                             <td class="text-center">
                                 <a :href="'/home/apply/'+item.id" target="_blank">
-                                    <button class="btn btn-info btn_primary">查看</button>
+                                    <button class="info_button">查看</button>
                                 </a>
                             </td>
                         </tr>
