@@ -43,7 +43,8 @@
         role,
         enable_,
         password,
-        validation
+        validation,
+        avator_img
         )
         VALUES
         (
@@ -52,7 +53,8 @@
         #{role,jdbcType=INTEGER},
         #{enable,jdbcType=INTEGER},
         #{password,jdbcType=VARCHAR},
-        1
+        1,
+        'default.jpg'
         )
     </insert>
 
