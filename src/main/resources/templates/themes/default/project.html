@@ -124,7 +124,7 @@
             <div id="div_menu" class="right_panel">
                 <div class=" nav_item" v-for="item in items">
                     <ul>
-                        <li><a v-on:click="f_SetProjectType(item.id)" target="_blank">{{item.name}}</a></li>
+                        <li><a v-on:click="f_SetProjectType(item)" target="_blank">{{item.name}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -136,8 +136,12 @@
             <div id="div_navbar">
                 <ul>
                     <li><a href="#">首页</a></li>
-                    <li>><a href="#">&gt;</a></li>
+                    <li>><i class="fa fa-angle-right" aria-hidden="true"
+                            style="font-size: 20px;color: #999999; "></i></li>
                     <li class="active"><a href="#">慈善项目</a></li>
+                    <li>><i class="fa fa-angle-right" aria-hidden="true"
+                            style="font-size: 20px;color: #999999; "></i></li>
+                    <li class="active"><a href="#" id="b_title"></a></li>
                 </ul>
             </div>
             <br/>
@@ -204,26 +208,27 @@
                         }
                     });
                     if (data.result != null) {
-                        f_SetProjectType(data.result[0].id);
+                        f_SetProjectType(data.result[0]);
                     }
                 }
             }
         });
     }
 
-    function f_SetProjectType(tid) {
-        typeId = tid;
-        f_GetProject(tid);
+    function f_SetProjectType(item) {
+        typeId = item.id;
+        f_GetProject(item);
     }
 
-    function f_GetProject() {
+    function f_GetProject(tItem) {
         $.ajax({
             url: '/project/list',
             type: 'post',
-            data: {pageSize: pageSize, pageNum: pageNum, tid: typeId},
+            data: {pageSize: pageSize, pageNum: pageNum, tid:tItem.id},
             dataType: 'json',
             success: function (data) {
                 if (data.code === 200) {
+                    $("#b_title").html(tItem.name);
                     pageCount = data.result.pages;
                     pageNum = data.result.pageNum;
                     $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);

@@ -115,11 +115,11 @@
                         <span
                             style="color: #ff5a43;font-size: 16px;font-weight:bold;">{{item.acceptedAmount!=0?item.acceptedAmount/100:0}}
                         </span>
-                        <a  style="color: #ff5a43;">&nbsp;元</a></span></p>
+                        <a  style="color:#afafaf ">&nbsp;元</a></span></p>
                     <p style="margin:0px 0px 0px 9px;"><a  style="color: #afafaf;">我捐赠的金额 : </a><span
                             style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount!=0?item.donatedAmount/100:0}}</span><a  style="color: #afafaf;"
                             >&nbsp;元</a>
-                        <button class="info_button" :href="'project/'+item.id" target="_blank">查看详情</button></p>
+                        <a :href="'project/'+item.id" target="_blank"><button class="info_button" >查看详情</button></a></p>
                 </div>
             </div>
             <p class="p_no_data">暂无消息</p>
