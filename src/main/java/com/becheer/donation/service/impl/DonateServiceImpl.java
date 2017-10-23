@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class DonateServiceImpl implements IDonateService {
@@ -31,7 +32,7 @@ public class DonateServiceImpl implements IDonateService {
     @Resource
     private IWxPayService payService;
 
-    public WxPayPrepayExtension donate(Donate donate, String ip) {
+    public Map<String, String> donate(Donate donate, String ip) {
         Integer projectTypeId = donate.getProjectTypeId();
         Integer projectId = donate.getProjectId();
         long memberId = donate.getMemberId();

@@ -25,7 +25,7 @@
 
     <insert id="insert" parameterType="com.becheer.donation.model.DntPaymentPlan"
             useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO dnt_no_contract_donate
+        INSERT INTO dnt_payment_plan
         (
             title,
             ref_table,
@@ -41,7 +41,7 @@
             payment_method_id,
             paylog_ref_table,
             paylog_ref_record_id,
-            status,
+            status
         )
         VALUES
         (
@@ -64,7 +64,7 @@
     </insert>
 
     <update id="update" parameterType="com.becheer.donation.model.DntPaymentPlan">
-        UPDATE dnt_member
+        UPDATE dnt_payment_plan
         SET
             title = #{title, jdbcType=INTEGER},
             ref_table = #{refTable, jdbcType=VARCHAR},

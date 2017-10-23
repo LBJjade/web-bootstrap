@@ -1,5 +1,6 @@
 package com.becheer.donation.controller;
 
+import com.becheer.core.support.pay.WxPayHelper;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
 import com.becheer.donation.model.extension.donate.Donate;
@@ -96,7 +97,22 @@ public class DonateController extends BaseController {
 //            }
 
             String ip = IPUtil.getRealIp();
-            WxPayPrepayExtension wxPayPrepayExtension = donateService.donate(donate, ip);
+            Map<String, String> map = donateService.donate(donate, ip);
+            String returnCode = map.get("return_code");
+            String resultCode = map.get("result_code");
+            String qrCodeURL = null;
+            if (WxPayHelper.codeIsOK(returnCode) && WxPayHelper.codeIsOK(resultCode)) {
+                // responsedTradeType = wxPayResponse.get("trade_type");
+                // preparedId = wxPayResponse.get("prepared_id");
+                qrCodeURL = map.get("code_url");
+            }
+
+            if (qrCodeURL != null) {
+                String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QrcodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
+                modelMap.put("qrCodeImageBase64", qrCodeImageBase64);
+            }
+
+
             return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, wxPayPrepayExtension);
         } catch (Exception ex) {
             return new ResponseDto(500, Message.SERVER_ERROR);

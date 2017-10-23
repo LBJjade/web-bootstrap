@@ -21,13 +21,14 @@ public class WxPayServiceImpl implements IWxPayService {
     private static final Logger LOGGER = LoggerFactory.getLogger(WxPayServiceImpl.class);
 
     @Override
-    public WxPayPrepayExtension pay(String outTradeNo, String productId, long totalFee) {
+    public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
 
 
         Map<String, String> map = WxPay.unifiedOrder(outTradeNo, productId, String.valueOf(totalFee));
 
         // TODO: 使用Map还是实体类，各有好处，使用Map，调用该接口的人需要了解微信支付的接口文档，使用实体类直接看实体类属性字段
-        return null;
+
+        return map;
 
     }
 

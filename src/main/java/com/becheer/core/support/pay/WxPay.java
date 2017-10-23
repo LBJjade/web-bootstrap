@@ -80,10 +80,35 @@ public class WxPay {
 	}
 
 	public static Map<String, String> unifiedOrder(String outTradeNo, String productId, String totalFee) {
-		Map<String, String> map = new HashMap<>();
-		map.put("out_trade_no", outTradeNo);
-		map.put("product_id", productId);
-		map.put("total_fee", totalFee);
+		String body = "广东省世纪爱心慈善基金会";
+		String detail = "";
+		String attach = "";
+		String appId = "wxc82ba7dbbe892628";
+		String appSecret = "2E26416f4392b6fa8755d08a41150b01";
+		String mchId = "1448460302";
+		String spBillCreateIP = "116.23.155.174";
+		String notifyURL= "http://donation.becheer.com";
+		String tradeType = "NATIVE";
+		String deviceInfo = "WEB";
+		String subAppId = "";
+		String subMchId = "";
+
+//		Map<String, String> map = new HashMap<>();
+//		map.put("out_trade_no", outTradeNo);
+//		map.put("product_id", productId);
+//		map.put("total_fee", totalFee);
+//
+//		map.put("body", body);
+//		map.put("appid", appId);
+//		map.put("mch_id", mchId);
+//		map.put("spbill_create_ip", spBillCreateIP);
+//		map.put("notify_url", notifyURL);
+//		map.put("trade_type", tradeType);
+//		map.put("device_info", deviceInfo);
+
+
+		Map<String, String> map = WxPayHelper.buildUnifiedOrderParasMap(appId, subAppId, mchId, subMchId, deviceInfo, body, detail, attach,
+				outTradeNo, totalFee, spBillCreateIP, notifyURL, tradeType, appSecret, productId);
 
 		String prepayXML = unifiedOrder(map);
 		return WxPayHelper.xmlToMap(prepayXML);
