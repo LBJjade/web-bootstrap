@@ -1,6 +1,8 @@
 package com.becheer.donation.controller;
 
 import com.becheer.core.support.pay.WxPayHelper;
+import com.becheer.core.util.ImageUtil;
+import com.becheer.core.util.QRCodeUtil;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
 import com.becheer.donation.model.extension.donate.Donate;
@@ -108,12 +110,12 @@ public class DonateController extends BaseController {
             }
 
             if (qrCodeURL != null) {
-                String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QrcodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
-                modelMap.put("qrCodeImageBase64", qrCodeImageBase64);
+                String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
+                map.put("qrCodeImageBase64", qrCodeImageBase64);
             }
 
 
-            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, wxPayPrepayExtension);
+            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, map);
         } catch (Exception ex) {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }

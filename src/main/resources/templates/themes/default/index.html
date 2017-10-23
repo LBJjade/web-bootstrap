@@ -439,7 +439,7 @@
             <div class="model-body" style="text-align: center">
 
                 <div class="model-body" style="text-align: center">
-                    <img th:src="@{prepay.qrCodeImage}" height="200" width="200"/></div>
+                    <img id="qrCodeImageId" :src="prepay.qrCodeImageBase64" height="200" width="200"/></div>
                 <!--<img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>-->
                 <div class="model-footer" style="text-align: center">
                     支持微信,支付宝扫码捐赠
@@ -722,7 +722,7 @@
             var projectId = $("#sel_project").val();
             // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
             // amount = math.eval(amount * 100);
-            var amount = 1000;
+            var amount = 10;
             $.ajax({
                 url: '/donate/donate',
                 type: 'post',
@@ -739,6 +739,9 @@
                                 el: '#div_cf_donate',
                                 data: {
                                     prepay: data.result
+
+
+                                    // $("#qrCodeImageId").attr("src", prepay.
                                 }
                             });
                         }
