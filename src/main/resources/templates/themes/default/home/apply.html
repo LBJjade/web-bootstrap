@@ -30,7 +30,7 @@
 
         #table_content td {
             line-height: 33px;
-            text-align: center;
+            /*text-align: center;*/
         }
     </style>
 </head>
@@ -64,24 +64,24 @@
                     <table class="table table-bordered" id="table_content">
                         <thead>
                         <tr>
-                            <th>项目类别</th>
-                            <th>项目名称</th>
-                            <th>捐赠金额</th>
-                            <th>申请时间</th>
-                            <th>备注</th>
-                            <th>状态</th>
-                            <th>操作</th>
+                            <th class="text-center">项目类别</th>
+                            <th class="text-center">项目名称</th>
+                            <th class="text-center">捐赠金额</th>
+                            <th class="text-center">申请时间</th>
+                            <th class="text-center">备注</th>
+                            <th class="text-center">状态</th>
+                            <th class="text-center">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in items">
-                            <td>{{item.projectTypeName}}</td>
-                            <td>{{item.projectName}}</td>
-                            <td>{{item.intentionAmount/100}}</td>
-                            <td>{{item.createTime}}</td>
-                            <td>{{item.remark}}</td>
-                            <td>{{item.enable}}</td>
-                            <td>
+                            <td class="text-left">{{item.projectTypeName}}</td>
+                            <td class="text-left">{{item.projectName}}</td>
+                            <td class="text-right">{{item.intentionAmount|format}}</td>
+                            <td class="text-center">{{item.createTime}}</td>
+                            <td class="text-left">{{item.remark}}</td>
+                            <td class="text-center">{{item.statusText}}</td>
+                            <td class="text-center">
                                 <a :href="'/home/apply/'+item.id" target="_blank">
                                     <button class="btn btn-info btn_primary">查看</button>
                                 </a>
@@ -136,6 +136,15 @@
                             el: '#table_content',
                             data: {
                                 items: data.result.list
+                            },
+                            filters:{
+                                format:function(value){
+                                    if (value===0){
+                                        return "0.00"
+                                    }else{
+                                        return (value/100).toFixed(2);
+                                    }
+                                }
                             }
                         });
                         if (data.result.list.length === 0) {

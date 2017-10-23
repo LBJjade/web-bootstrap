@@ -10,6 +10,7 @@
         <result column="enable_" jdbcType="INTEGER" property="enable" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="remark_" jdbcType="VARCHAR" property="remark" />
+        <result column="status" jdbcType="INTEGER" property="status" />
     </resultMap>
 
     <sql id="Example_Where_Clause">
@@ -50,7 +51,8 @@
         i.intention_amount,
         i.enable_,
         i.create_time,
-        i.remark_
+        i.remark_,
+        i.status
         FROM dnt_intention i
         LEFT JOIN dnt_project p on p.id_= i.project_id
         LEFT JOIN dnt_project_type t on t.id_=i.project_type_id
@@ -78,11 +80,12 @@
         i.intention_amount,
         i.enable_,
         i.create_time,
-        i.remark_
+        i.remark_,
+        i.status
         FROM dnt_intention i
         LEFT JOIN dnt_project p on p.id_= i.project_id
         LEFT JOIN dnt_project_type t on t.id_=i.project_type_id
-        WHERE i.id_=#{intentionId,jdbcType=BIGINT}
+        WHERE i.id_=#{intentionId,jdbcType=BIGINT} AND i.enable_ = 1
     </select>
 
     <insert id="InsertIntention" parameterType="com.becheer.donation.model.Intention">
@@ -94,7 +97,8 @@
           intention_amount,
           contact_phone,
           enable_,
-          create_time
+          create_time,
+          status
         )
         VALUES
         (
@@ -104,7 +108,8 @@
           #{intentionAmount,jdbcType=BIGINT},
           #{contactPhone,jdbcType=BIGINT},
           #{enable,jdbcType=BIGINT},
-          #{createTime,jdbcType=BIGINT}
+          now(),
+          #{status,jdbcType=INTEGER}
         )
     </insert>
 

@@ -67,4 +67,16 @@ public class LoginController extends BaseController {
         return result;
     }
 
+    @PostMapping("/logout")
+    @ResponseBody
+    public ResponseDto Logout(HttpServletRequest request){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }else{
+            request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
+            return new ResponseDto(200,Message.LOGINOUT_SUCCESS);
+        }
+    }
+
 }

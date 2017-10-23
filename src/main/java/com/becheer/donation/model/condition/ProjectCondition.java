@@ -134,6 +134,11 @@ public class ProjectCondition {
             addCriterion("project_type_id =",value,"project_type_id");
             return (Criteria) this;
         }
+
+        public Criteria addStatus(int value){
+            addCriterion("status =",value,"status");
+            return (Criteria) this;
+        }
     }
 
     /**

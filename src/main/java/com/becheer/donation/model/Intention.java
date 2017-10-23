@@ -35,7 +35,7 @@ public class Intention {
 
     private String remark;
 
-    private String record_status;
+    private int status;
 
     public long getId() {
         return id;
@@ -141,11 +141,11 @@ public class Intention {
         this.remark = remark;
     }
 
-    public String getRecord_status() {
-        return record_status;
+    public int getStatus() {
+        return status;
     }
 
-    public void setRecord_status(String record_status) {
-        this.record_status = record_status;
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
