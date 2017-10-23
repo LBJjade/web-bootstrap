@@ -13,14 +13,14 @@
         <result column="deadline" jdbcType="BIGINT" property="deadline"/>
         <result column="remark_" jdbcType="VARCHAR" property="remark"/>
         <result column="enable_" jdbcType="BIGINT" property="enable"/>
-        <result column="create_time" jdbcType="DATETIME" property="createTime"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="create_by" jdbcType="BIGINT" property="createBy"/>
-        <result column="update_time" jdbcType="DATETIME" property="updateTime"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
         <result column="payment_method_id" jdbcType="BIGINT" property="paymentMethodId"/>
         <result column="paylog_ref_table" jdbcType="VARCHAR" property="paylogRefTable"/>
         <result column="paylog_ref_record_id" jdbcType="BIGINT" property="paylogRefRecordId"/>
-        <result column="status," jdbcType="BIGINT" property="status"/>
+        <result column="status" jdbcType="BIGINT" property="status"/>
     </resultMap>
 
     <insert id="insert" parameterType="com.becheer.donation.model.DntPaymentPlan">
@@ -47,10 +47,10 @@
             #{title, jdbcType=INTEGER},
             #{ref_table, jdbcType=VARCHAR},
             #{ref_record_id, jdbcType=INTEGER},
-            #{payment_date, jdbcType=DATETIME},
+            #{payment_date, jdbcType=DATE},
             #{amount, jdbcType=INTEGER},
             #{received_amount, jdbcType=INTEGER},
-            #{deadline, jdbcType=DATETIME},
+            #{deadline, jdbcType=DATE},
             #{remark_, jdbcType=VARCHAR},
             #{enable_, jdbcType=INTEGER},
             now(),
@@ -68,13 +68,13 @@
             title = #{title, jdbcType=INTEGER},
             ref_table = #{ref_table, jdbcType=VARCHAR},
             ref_record_id = #{ref_record_id, jdbcType=INTEGER},
-            payment_date = #{payment_date, jdbcType=DATETIME},
+            payment_date = #{payment_date, jdbcType=DATE},
             amount = #{amount, jdbcType=INTEGER},
             received_amount = #{received_amount, jdbcType=INTEGER},
-            deadline = #{deadline, jdbcType=DATETIME},
+            deadline = #{deadline, jdbcType=DATE},
             remark_ = #{remark_, jdbcType=VARCHAR},
             enable_ = #{enable_, jdbcType=INTEGER},
-            #{update_time, jdbcType=DATETIME},
+            #{update_time, jdbcType=DATE},
             update_by = #{update_by, jdbcType=INTEGER},
             payment_method_id = #{payment_method_id, jdbcType=INTEGER},
             paylog_ref_table = #{paylog_ref_table, jdbcType=VARCHAR},

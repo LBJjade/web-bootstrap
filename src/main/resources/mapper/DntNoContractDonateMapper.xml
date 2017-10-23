@@ -6,16 +6,16 @@
         <id column="id_" jdbcType="BIGINT" property="id"/>
         <result column="project_type_id" jdbcType="BIGINT" property="projectTypeId"/>
         <result column="project_id" jdbcType="BIGINT" property="projectId"/>
-        <result column="no_contract_donate_no" jdbcType="VARCHR" property="noContractDonateNo"/>
+        <result column="no_contract_donate_no" jdbcType="VARCHAR" property="noContractDonateNo"/>
         <result column="member_id" jdbcType="BIGINT" property="memberId"/>
         <result column="amount" jdbcType="BIGINT" property="amount"/>
         <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount"/>
         <result column="allocate_amount" jdbcType="BIGINT" property="allocateAmount"/>
         <result column="remark_" jdbcType="VARCHAR" property="remark"/>
-        <result column="enable_" jdbcType="INT" property="enable"/>
-        <result column="create_time" jdbcType="DATETIME" property="createTime"/>
+        <result column="enable_" jdbcType="BIGINT" property="enable"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
         <result column="create_by" jdbcType="BIGINT" property="createBy"/>
-        <result column="update_time" jdbcType="DATETIME" property="updateTime"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
         <result column="ip" jdbcType="VARCHAR" property="ip"/>
         <result column="appropriation_contract_id" jdbcType="BIGINT" property="appropriationContractId"/>
