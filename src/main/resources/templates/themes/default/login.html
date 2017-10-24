@@ -25,19 +25,29 @@
         }
         .table_member_content{
             width: 60%;
-            margin-left: 20%;
+            margin-left: 24%;
             text-align: center;
             line-height: 50px;
         }
         .table_member_content input{
             line-height: 28px;
+            margin-top: 11px;
+            margin-right: 60px;
         }
-        .table_member_content td{
+        .table_member_content tr{
             border-bottom: 1px #ccc dashed;
         }
 
         .input_text{
             width: 234px;
+        }
+
+        .error{
+            color:red;
+            display: none;
+            margin-top: -16px;
+            margin-right: 173px;
+            margin-bottom: -10px;
         }
     </style>
 </head>
@@ -60,33 +70,35 @@
             <table class="table_member_content">
                 <tr>
                     <td>手机号码</td>
-                    <td>
-                        <input type="text" class="input_text" id="ipt_mobile" />
+                    <td style="margin-right: 250px;display: block;">
+                        <input type="text" class="input_text ipt_mobile" id="ipt_mobile" placeholder="请输入11位手机号码" />
+                        <div class="mobile_error error">手机号码格式不正确</div>
                     </td>
                 </tr>
                 <tr>
                     <td>登录密码</td>
-                    <td>
-                        <input type="password" class="input_text" id="ipt_pwd" />
+                    <td style="margin-right: 250px;display: block;">
+                        <input type="password" class="input_text ipt_pwd" id="ipt_pwd" placeholder="请输入8位密码"/>
+                        <div class="pw_error error"  style="margin-right: 210px;">密码不能为空</div>
+                        <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于8位</div>
                     </td>
                 </tr>
                 <tr>
                     <td style="border-bottom: none">验证码</td>
-                    <td style="border-bottom: none">
-                        <input type="text" class="input_text" id="ipt_code" />
-                    </td>
-                </tr>
-                <tr style="line-height: 15px;">
-                    <td colspan="2" style="text-align: center;font-size: 12px; border-bottom: none">请输入下图中的字符</td>
-                </tr>
-                <tr style="line-height: 15px;">
-                    <td colspan="2" style="padding-bottom: 10px">
+                    <td style="border-bottom: none;margin-right: 158px;display: block;">
+                        <input type="text" class="input_text ipt_code" id="ipt_code" placeholder="请输入验证码"/>
                         <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
+                        <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
                     </td>
                 </tr>
+                <!--<tr style="line-height: 15px;">-->
+                    <!--<td colspan="2" style="padding-bottom: 10px">-->
+                        <!--<img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>-->
+                    <!--</td>-->
+                <!--</tr>-->
                 <tr>
                     <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
-                        <button class="btn btn-info btn_login" style="width: 80px;padding-left: 4px">登录</button>
+                        <button class="btn btn-info btn_login" style="margin-right: 200px;width: 80px;padding-left: 4px">登录</button>
                     </td>
                 </tr>
             </table>
@@ -102,6 +114,10 @@
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
+    $(document).ready(function () {
+        $("#ipt_mobile").focus();
+    })
+
     $(".btn_login").click(function () {
         var mobile=$("#ipt_mobile").val();
         var pwd=$("#ipt_pwd").val();
@@ -113,12 +129,7 @@
             dataType:'json',
             success:function (data) {
                 if (data.code===407){
-                    layer.alert(data.msg,function () {
-                        window.location.href = "/home";
-                    });
-                    setTimeout(function(){
-                        window.location.href = "/home";
-                    },3000);
+                    window.location.href = "/home";
                 }else{
                     layer.alert(data.msg);
                 }
@@ -134,7 +145,45 @@
     function f_redirect(){
         window.location.href="member.html";
     }
+
+
+
+    //手机号码
+    $(".ipt_mobile").blur(function(){
+        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        if(!mobile.test($(".ipt_mobile").val())){
+            $(".mobile_error").show();
+        }else{
+            $(".mobile_error").hide();
+        }
+    })
+
+    //密码
+    $(".ipt_pwd").blur(function(){
+        if($(".ipt_pwd").val() == ""){
+            $(".pw_error_0").hide();
+            $(".pw_error").show();
+        }else{
+            $(".pw_error").hide();
+            if($(".ipt_pwd").val().length < 8){
+                $(".pw_error_0").show();
+            }else{
+                $(".pw_error_0").hide();
+            }
+        }
+    })
+
+    //验证码
+    $(".ipt_code").blur(function(){
+        if($(".ipt_code").val() == ""){
+            $(".code_error").show();
+        }else{
+            $(".code_error").hide();
+        }
+    })
+
     /*]]>*/
+
 </script>
 </body>
 </html>
