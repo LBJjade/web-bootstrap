@@ -50,7 +50,7 @@
             </div>
             <table class="table_member_content">
                 <tr><td>合同名称</td><td><th:block th:text="${contract.getContractName()}"></th:block></td></tr>
-                <tr><td>合同金额</td><td><th:block th:text="${contract.getContractAmount()}"></th:block></td></tr>
+                <tr><td>合同金额</td><td><th:block th:text="${contract.getContractAmount()>0?contract.getContractAmount()/100:0}"></th:block></td></tr>
                 <tr><td>已捐金额</td><td><th:block th:text="${contract.getDonatedAmount()>0?contract.getDonatedAmount()/100:0}"></th:block></td></tr>
                 <tr><td>合同周期</td><td><th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block></td></tr>
                 <tr><td>合同状态</td><td><th:block th:text="${contract.getStatus()}"></th:block></td></tr>

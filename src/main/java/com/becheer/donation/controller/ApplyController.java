@@ -34,6 +34,9 @@ public class ApplyController extends BaseController{
         if (currentMember==null){
             return MemberAuthFailed();
         }
+        intention.setEnable(1);
+        intention.setStatus(0);
+        intention.setIntentionAmount(intention.getIntentionAmount()*100);
         return intentionService.AddIntention(intention);
     }
 }

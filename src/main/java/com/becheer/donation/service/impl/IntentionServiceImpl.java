@@ -30,7 +30,7 @@ public class IntentionServiceImpl implements IIntentionService {
     public PageInfo<Intention> GetIntentionList(long memberId, int pageNum, int pageSize) {
         IntentionCondition condition=new IntentionCondition();
         condition.setOrderByClause("create_time desc");
-        condition.createCriteria().andMemberIdEqualTo(memberId);
+        condition.createCriteria().addMemberIdEqualTo(memberId).addEnable(1);
         PageHelper.startPage(pageNum,pageSize);
         List<Intention> data=intentionMapper.SelectByCondition(condition);
         PageInfo<Intention> pageInfo = new PageInfo<Intention>(data);

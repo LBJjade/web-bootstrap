@@ -6,6 +6,11 @@ package com.becheer.donation.model.extension.article;
 * Date :  2017-09-06
 */
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class ListArticleExtension {
 
     //文章ID
@@ -18,7 +23,9 @@ public class ListArticleExtension {
     private String summary;
 
     //创建时间
-    private String createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    private Date createTime;
 
     //图片路径
     private String img;
@@ -53,11 +60,11 @@ public class ListArticleExtension {
         this.summary = summary;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 

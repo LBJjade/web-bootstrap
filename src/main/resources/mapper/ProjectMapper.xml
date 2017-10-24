@@ -19,7 +19,7 @@
     <id column="id_" jdbcType="BIGINT" property="projectId" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="summary" jdbcType="VARCHAR" property="summary" />
-    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="thumb_img" jdbcType="VARCHAR" property="img" />
   </resultMap>
@@ -114,7 +114,7 @@
       id_,
       project_name,
       thumb_img
-    FROM dnt_project WHERE enable_ = 1 AND project_type_id= #{param1} AND  id_ != #{param2} LIMIT #{param3}
+    FROM dnt_project WHERE enable_ = 1 AND status = 3 AND project_type_id= #{param1} AND  id_ != #{param2} LIMIT #{param3}
   </select>
   
   <select id="SelectProjectDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
@@ -131,14 +131,14 @@
       thumb_img
     FROM
       dnt_project
-    WHERE id_=#{projectId,jdbcType=BIGINT} AND enable_ = 1
+    WHERE id_=#{projectId,jdbcType=BIGINT} AND enable_ = 1 AND status =3
   </select>
 
   <select id="SelectProjectByTypeId" parameterType="java.lang.Long" resultMap="ListProjectResultMap">
     SELECT
       id_,
       project_name
-    FROM dnt_project WHERE enable_ = 1 AND project_type_id = #{projectTypeId,jdbcType=BIGINT}
+    FROM dnt_project WHERE enable_ = 1 AND status = 3 AND project_type_id = #{projectTypeId,jdbcType=BIGINT}
   </select>
   
   <select id="SelectProjectByMemberId" parameterType="java.lang.Long" resultMap="MemberProjectResultMap">

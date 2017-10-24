@@ -6,6 +6,11 @@ package com.becheer.donation.model.extension.project;
 * Date : 2017-09-06
 */
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 public class ListProjectExtension {
 
     //项目ID
@@ -18,7 +23,9 @@ public class ListProjectExtension {
     private String projectName;
 
     //创建日期
-    private String createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    private Date createTime;
 
     //项目简介
     private String summary;
@@ -53,11 +60,11 @@ public class ListProjectExtension {
         this.projectName = projectName;
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
 

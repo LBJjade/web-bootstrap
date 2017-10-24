@@ -41,6 +41,19 @@
             float: right;
         }
 
+        .info_button {
+            font-size: 12px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+            float: right;
+        }
     </style>
 </head>
 <body>
@@ -77,7 +90,7 @@
                     <p>合同名称:{{item.contractName}}</p>
                     <p>签订日期:{{item.signTime}}</p>
                     <p>合同金额:{{item.contractAmount>0?item.contractAmount/100:0}}</p>
-                    <p>合同状态:{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="btn btn-info" style="float: right">查看详情</button></a></p>
+                    <p>合同状态:{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a></p>
                 </div>
             </div>
             <p class="p_no_data">暂无消息</p>

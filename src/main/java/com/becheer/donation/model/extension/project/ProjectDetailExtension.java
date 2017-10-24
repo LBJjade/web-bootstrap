@@ -6,6 +6,10 @@ package com.becheer.donation.model.extension.project;
 * Date : 2017-09-25
 */
 
+import com.becheer.donation.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class ProjectDetailExtension {
@@ -15,8 +19,12 @@ public class ProjectDetailExtension {
 
     private String projectName;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date startTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date endTime;
 
     private int longTerm;
@@ -53,16 +61,16 @@ public class ProjectDetailExtension {
         this.projectName = projectName;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public String getStartTime() {
+        return DateUtils.dateFormat(startTime,"yyyy-MM-dd");
     }
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        return DateUtils.dateFormat( endTime,"yyyy-MM-dd");
     }
 
     public void setEndTime(Date endTime) {

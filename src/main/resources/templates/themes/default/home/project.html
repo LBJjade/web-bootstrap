@@ -52,13 +52,17 @@
         }
 
         .info_button {
-            font-size: 14px;
+            font-size: 12px;
+            text-align: center;
             background-color: #fcfcfc;
-            border: 1px solid #f0f0f0;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
             color: #00a0e9;
             min-width: 86px;
             height: 30px;
-            float: right;
+            float:right;
             margin-right: 9px;
             margin-top: -9px;
         }
@@ -110,16 +114,19 @@
                                                                        height="200" width="300" alt=""/></a>
                     <p class="projectName">{{item.projectName}}</p>
                     <p style="margin:0px 0px 0px 9px;"><a style="color: #afafaf;">目标金额 : </a><span
-                            style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount!=0?item.projectTargetAmount/100:0}}</span><a  style="color: #afafaf;"
+                            style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount|format}}</span><a  style="color: #afafaf;"
                             >&nbsp;元</a><span style=" display: block"><a  style="color: #afafaf;">已筹:</a>
                         <span
-                            style="color: #ff5a43;font-size: 16px;font-weight:bold;">{{item.acceptedAmount!=0?item.acceptedAmount/100:0}}
+                            style="color: #ff5a43;font-size: 16px;font-weight:bold;">{{item.acceptedAmount|format}}
                         </span>
-                        <a  style="color: #ff5a43;">&nbsp;元</a></span></p>
+                        <a  style="color: #afafaf;">&nbsp;元</a></span></p>
                     <p style="margin:0px 0px 0px 9px;"><a  style="color: #afafaf;">我捐赠的金额 : </a><span
-                            style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount!=0?item.donatedAmount/100:0}}</span><a  style="color: #afafaf;"
+                            style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount|format}}</span><a  style="color: #afafaf;"
                             >&nbsp;元</a>
-                        <button class="info_button" :href="'project/'+item.id" target="_blank">查看详情</button></p>
+                        <a :href="'project/'+item.id" target="_blank">
+                            <button class="info_button" >查看详情</button>
+                        </a>
+                    </p>
                 </div>
             </div>
             <p class="p_no_data">暂无消息</p>
@@ -166,6 +173,15 @@
                             data: {
                                 items: data.result.list,
                                 imgUrl: imgRoot
+                            },
+                            filters:{
+                                format:function(value){
+                                    if (value===0){
+                                        return "0.00"
+                                    }else{
+                                        return (value/100).toFixed(2);
+                                    }
+                                }
                             }
                         });
                         if (data.result.list.length === 0) {

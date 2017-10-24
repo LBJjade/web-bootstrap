@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
 
-    <title>index</title>
+    <title>广东省世纪爱心慈善基金会</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -42,6 +42,19 @@
             line-height: 50px;
         }
 
+        .info_button {
+            font-size: 14px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+        }
+
         .table_content_info td {
             border-bottom: 1px #dbdbdb dashed;
         }
@@ -69,9 +82,9 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p style="line-height: 40px;margin: -5px;"><span style="line-height: 40px">我的信息</span><a
+                <p style="line-height: 30px;margin: -5px;"><span style="line-height: 40px">我的信息</span><a
                         href="home/edit" id="a_edit" style="display: none;">
-                    <button class="btn btn-info" style="float: right">编辑</button>
+                    <button class=" info_button" style="float: right">编辑</button>
                 </a></p>
                 <hr/>
             </div>
@@ -80,7 +93,7 @@
                     <img :src="imgRoot+'avator/'+member.avator" height="200" width="200"/>
                     <br/>
                     <br/>
-                    <button class="btn btn-info">更换头像</button>
+                    <button class="info_button">更换头像</button>
                 </div>
                 <div id="div_content_info">
                     <table class="table_content_info">
