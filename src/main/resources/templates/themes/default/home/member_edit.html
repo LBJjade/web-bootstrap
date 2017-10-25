@@ -75,7 +75,7 @@
             </div>
             <div id="div_content">
                 <div id="div_avator">
-                    <img th:src="@{/image/avator/default.jpg}" height="200" width="200"/>
+                    <img th:src="${config.getAvatorRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
                     <br/>
                     <br/>
                     <button class="btn btn-info">更换头像</button>

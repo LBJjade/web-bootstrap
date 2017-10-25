@@ -148,27 +148,33 @@
         <div class="col-sm-10">
             <div id="div_navbar">
                 <ul>
-                    <li><a href="#">首页</a></li>
-                    <li>><i class="fa fa-angle-right" aria-hidden="true"
-                            style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a href="#">慈善项目</a></li>
-                    <li>><i class="fa fa-angle-right" aria-hidden="true"
-                            style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a href="#" id="b_title"></a></li>
+                    <li>
+                        <a href="#">首页</a>
+                    </li>
+                    <li>>
+                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                    </li>
+                    <li class="active">
+                        <a href="#">慈善项目</a>
+                    </li>
+                    <li>>
+                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                    </li>
+                    <li class="active">
+                        <a href="#" id="b_title"></a>
+                    </li>
                 </ul>
             </div>
             <br/>
             <div id="div_content" style="min-height: 800px">
                 <div v-for="item in items" class="div_project_item">
-                    <img class="div_project_item_img" :alt="item.projectName"
-                         :src="imgUrl+'project/240x160/'+item.img"/>
+                    <img class="div_project_item_img" :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"/>
                     <div class="div_project_item_content">
                         <div class="project_name">
                             <span>>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{{item.projectName}}</span>
                             <span style="float: right ;color: #c8c8c8;">{{item.createTime}}</span>
                             <span style="color: #c8c8c8;float: right">
-                                <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间 :&nbsp;</span>
-
+                            <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间 :&nbsp;</span>
                         </div>
                         <br/>
                         <span style="color:#969696;">摘要:</span>
