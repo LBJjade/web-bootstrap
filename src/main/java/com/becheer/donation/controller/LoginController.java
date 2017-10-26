@@ -13,12 +13,16 @@ import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.GenerateUtil;
 import com.becheer.donation.utils.RegExUtil;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/login")
@@ -35,7 +39,7 @@ public class LoginController extends BaseController {
 
     @PostMapping("/submit")
     @ResponseBody
-    public ResponseDto Submit(HttpServletRequest request, @RequestParam String code,@RequestParam String mobile,@RequestParam String pwd){
+    public ResponseDto Submit(HttpServletRequest request, HttpServletResponse response, @RequestParam String code, @RequestParam String mobile, @RequestParam String pwd, @RequestParam boolean autoLogin){
         if (code==null||code.length()==0){
             return new ResponseDto(400,Message.LOGIN_CODE_NULL);
         }
@@ -63,20 +67,49 @@ public class LoginController extends BaseController {
             memberSessionExtension.setValidation(result.getResult().getValidation());
 
             request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
+            //自动登录，设置cookie
+            if (autoLogin){
+                Cookie cookie = new Cookie("member", memberSessionExtension.getMemberId()+"|"+GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
+                cookie.setMaxAge(2592000); //设置cookie的过期时间是10s
+                response.addCookie(cookie);
+            }
         }
         return result;
     }
 
     @PostMapping("/logout")
     @ResponseBody
-    public ResponseDto Logout(HttpServletRequest request){
+    public ResponseDto Logout(HttpServletRequest request,HttpServletResponse response){
         MemberSessionExtension currentMember=GetCurrentUser(request);
         if (currentMember==null){
             return MemberAuthFailed();
         }else{
             request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
+            Cookie cookie = new Cookie("member", null);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
             return new ResponseDto(200,Message.LOGINOUT_SUCCESS);
         }
+    }
+
+    @PostMapping("/autoLogin")
+    @ResponseBody
+    public ResponseDto AutoLogin(HttpServletRequest request,@RequestParam long memberId,@RequestParam String cookie){
+        String vaildCookie=GenerateUtil.genLoginCookie(memberId);
+        if (vaildCookie.equals(cookie)){
+            Member member=memberService.GetMember(memberId);
+            if (member!=null){
+                MemberSessionExtension memberSessionExtension=new MemberSessionExtension();
+                memberSessionExtension.setMemberId(member.getId());
+                memberSessionExtension.setMemberName(member.getMemberName()==null?"":member.getMemberName());
+                memberSessionExtension.setMobile(member.getMobile());
+                memberSessionExtension.setRole(member.getRole());
+                memberSessionExtension.setValidation(member.getValidation());
+                request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
+                return new ResponseDto(200,Message.LOGIN_SUCCESS,memberSessionExtension);
+            }
+        }
+        return new ResponseDto(500,Message.LOGIN_COOKIE_FAILED);
     }
 
 }

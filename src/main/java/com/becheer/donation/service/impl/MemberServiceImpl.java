@@ -152,4 +152,9 @@ public class MemberServiceImpl implements IMemberService {
             return new ResponseDto(500,Message.MEMBER_UPDATE_ERROR);
         }
     }
+
+    @Override
+    public Member GetMember(long memberId) {
+        return memberMapper.SelectMemberById(memberId);
+    }
 }

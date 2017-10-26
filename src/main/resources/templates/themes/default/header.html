@@ -83,6 +83,36 @@
         $("#ul_login").hide();
         $("#ul_logined").show();
         $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+    }else{
+        var userCookie=getCookie("member");
+        if(userCookie!=null){
+            $.ajax({
+                url: '/login/autoLogin',
+                type: 'post',
+                data:{memberId:userCookie.split('|')[0],cookie:userCookie.split('|')[1]},
+                dataType: 'json',
+                success: function (data) {
+                    if(data.code===200){
+                        memberInfo=data.result;
+                        $("#ul_login").hide();
+                        $("#ul_logined").show();
+                        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+                        window.location.href="/";
+                    }
+                }
+            });
+        }
+    }
+
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)){
+            return unescape(arr[2]);
+        }
+        else{
+            return null;
+        }
     }
 
     function f_logout() {
