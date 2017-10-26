@@ -39,6 +39,10 @@ public class HomeController extends BaseController {
         MemberSessionExtension currentMember=GetCurrentUser(request);
         MemberInfoExtension member=memberService.GetMemberExtensionById(currentMember.getMemberId());
         request.setAttribute("member",member);
-        return this.render("home/member_edit");
+        if (member.getRole()==1) {
+            return this.render("home/member_edit");
+        }else{
+            return this.render("home/company_edit");
+        }
     }
 }

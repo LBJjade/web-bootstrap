@@ -264,22 +264,22 @@
                 <ul id="ul_total">
                     <li>
                         <p>爱心总人数</p>
-                        <input type="number" :value="model.totalDonator" readonly="true"/>
+                        <input type="number" :value="model.receivedAmount" readonly="true"/>
                         <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>善款总额</p>
-                        <input type="number" :value="model.totalAmout" readonly="true"/>
+                        <input type="number" :value="model.donateTime" readonly="true"/>
                         <p style="display: inline;">元</p>
                     </li>
                     <li>
                         <p>受益人数</p>
-                        <input type="number" :value="model.totalAcceptor" readonly="true"/>
+                        <input type="number" :value="model.benefitAmount" readonly="true"/>
                         <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>受益群体</p>
-                        <input type="number" :value="model.totalGroup" readonly="true"/>
+                        <input type="number" :value="model.benefitGroup" readonly="true"/>
                         <p style="display: inline;">个</p>
                     </li>
                     <div align="center" style="position: relative;">
@@ -678,14 +678,22 @@
 
 
     function f_GetDonationInfo() {
-        new Vue({
-            el: "#ul_total",
-            data: {
-                model: {totalDonator: 627361, totalAmout: 68263000000.87, totalAcceptor: 1736, totalGroup: 20}
+        $.ajax({
+            url: '/index/report',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    new Vue({
+                        el: "#ul_total",
+                        data: {
+                            model: data.result
+                        }
+                    });
+                }
             }
         });
     }
-
 
     //边框变色
     $(".span_donation").click(function () {

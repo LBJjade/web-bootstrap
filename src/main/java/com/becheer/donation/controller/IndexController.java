@@ -2,7 +2,11 @@ package com.becheer.donation.controller;
 
 import com.becheer.donation.configs.FileConfig;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.report.IndexReport;
 import com.becheer.donation.service.*;
+import com.becheer.donation.strings.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping({"/index",""})
 public class IndexController extends BaseController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
+
     @Resource
     private IProjectService projectService;
+
+    @Resource IReportDonateService reportDonateService;
 
     /**
      * 首页
@@ -45,4 +53,20 @@ public class IndexController extends BaseController {
         }
         return ResponseDto.GetResponse(200,"success",projectService.GetProjectList(pageNum,pageSize));
     }
+
+    /**
+     * 获取捐赠统计
+     */
+    @PostMapping(value = "/report")
+    @ResponseBody
+    public ResponseDto GetReport(HttpServletRequest request) {
+        try {
+            IndexReport result=reportDonateService.GetIndexReport();
+            return ResponseDto.GetResponse(200,"success",result);
+        }catch(Exception ex){
+            LOGGER.error("GetReport", ex);
+            return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
+        }
+    }
+
 }
