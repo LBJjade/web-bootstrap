@@ -71,11 +71,13 @@ public class DonateController extends BaseController {
     public Object donate(HttpServletRequest request, @RequestParam int projectTypeId, @RequestParam int projectId, @RequestParam int amount) {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
-            if (currentMember == null) {
-                MemberAuthFailed();
+//            if (currentMember == null) {
+//                MemberAuthFailed();
+//            }
+            Long memberId = null; // currentMember.getMemberId();
+            if (currentMember != null) {
+                memberId = currentMember.getMemberId();
             }
-            long memberId = currentMember.getMemberId();
-
             Donate donate = new Donate();
             donate.setMemberId(memberId);
             donate.setProjectTypeId(projectTypeId);

@@ -35,7 +35,7 @@ public class DonateServiceImpl implements IDonateService {
     public Map<String, String> donate(Donate donate, String ip) {
         Integer projectTypeId = donate.getProjectTypeId();
         Integer projectId = donate.getProjectId();
-        long memberId = donate.getMemberId();
+        Long memberId = donate.getMemberId();
         Integer amount = donate.getAmount();
 
         // 1.写入直接捐赠表 dnt_no_contract_donate
