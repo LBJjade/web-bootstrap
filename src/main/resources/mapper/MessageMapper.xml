@@ -3,11 +3,11 @@
 <mapper namespace="com.becheer.donation.dao.MessageMapper">
 
     <resultMap id="ListResultMap" type="com.becheer.donation.model.extension.message.MessageExtension">
-        <id column="id_" jdbcType="BIGINT" property="id" />
-        <result column="message_type" jdbcType="VARCHAR" property="type" />
-        <result column="title" jdbcType="VARCHAR" property="title" />
-        <result column="content" jdbcType="VARCHAR" property="content" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="message_type" jdbcType="VARCHAR" property="type"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
 
 
@@ -29,7 +29,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -41,12 +42,13 @@
         </where>
     </sql>
 
-    <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.MessageCondition" resultMap="ListResultMap">
+    <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.MessageCondition"
+            resultMap="ListResultMap">
         select
         *
         from dnt_message
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
             order by ${orderByClause}
@@ -60,5 +62,34 @@
             </if>
         </if>
     </select>
+
+    <select id="GetMessagesNum"  resultType="int">
+        select
+        count(*)
+        from dnt_message
+        where  status =0;
+    </select>
+
+    <select id="GetMemberMessagesNum" parameterType="long" resultType="int">
+        select
+        count(*)
+        from dnt_message
+        where member_id = #{member_id}
+        and status =0;
+    </select>
+
+    <select id="GetStatus" parameterType="int" resultType="int">
+        select
+        status
+        from dnt_message
+        where id_ = #{id}
+    </select>
+
+    <update id="ChangeStatus" parameterType="int">
+         update
+         dnt_message
+         set status = 1
+         where id_ = #{id}
+    </update>
 
 </mapper>

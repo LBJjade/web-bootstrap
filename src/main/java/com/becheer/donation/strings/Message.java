@@ -144,5 +144,28 @@ public class Message {
      */
     public static final String MEMBER_APPEAL_PROGRESS_SUCCESS="获取申诉进展成功";
 
+    /**
+     * 未读消息数
+     */
+    public static final String MESSAGE_NUMBER_GET_SUCCESS="获取消息数成功";
+    public static final String MESSAGE_NUMBER_GET_FAILED="获取消息数失败";
 
+    /**
+     * 改变状态
+     */
+    public static final String CHANGE_STATUS_SUCCESS="状态修改成功";
+    public static final String CHANGE_STATUS_FAILED="状态修改失败";
+
+    /**
+     * 得到状态
+     */
+    public static final String GET_STATUS_SUCCESS="状态获取成功";
+    public static final String GET_STATUS_FAILED="状态获取失败";
+
+    /**
+     * 获取用户消息数
+     */
+    public static final String GET_MEMBERMESSAGES_SUCCESS="状态获取成功";
+    public static final String GET_MEMBERMESSAGES_FAILED="状态获取失败";
 }
+

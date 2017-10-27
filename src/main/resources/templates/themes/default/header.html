@@ -41,7 +41,7 @@
             <ul class="ul_login" id="ul_logined" style="display: none">
                 <li></li>
                 <li></li>
-                <li><a th:href="@{/home/message}">消息(0)</a></li>
+                <li ><a id="message" th:href="@{/home/message}"></a></li>
                 <li>|</li>
                 <li><a th:href="@{/home}">个人中心</a></li>
                 <li>|</li>
@@ -76,7 +76,6 @@
     var imgRoot= /*[[${config.getImageRoot()}]]*/;
     var docRoot= /*[[${config.getDocRoot()}]]*/;
     var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
-
     if (memberInfo!=null){
         $("#ul_login").hide();
         $("#ul_logined").show();
@@ -99,6 +98,38 @@
             });
         }
     }
+
+    $(document).ready(function(){
+//        f_getnum();
+       f_getmembernum();
+    })
+
+
+    function f_getnum() {
+            $.ajax({
+                url: '/home/message/num',
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    $("#message").html("消息("+data.result+")");
+                }
+            });
+    }
+
+
+    function  f_getmembernum(member_id) {
+        $.ajax({
+            url: '/home/message/number',
+            type: 'post',
+            dataType: 'json',
+            data:{member_id:member_id},
+            success: function (data) {
+                $("#message").html("消息("+data.result+")");
+            }
+        });
+    }
+
+
     /*]]>*/
 </script>
 </body>

@@ -20,8 +20,11 @@ import java.util.List;
 @Service
 public class MessageServiceImpl implements IMessageService {
 
+
+
     @Resource
     private MessageMapper messageMapper;
+
 
     @Override
     public PageInfo<MessageExtension> GetMessageList(long memberId, int pageNum, int pageSize) {
@@ -32,5 +35,25 @@ public class MessageServiceImpl implements IMessageService {
         List<MessageExtension> data=messageMapper.SelectByCondition(condition);
         PageInfo<MessageExtension> pageInfo = new PageInfo<MessageExtension>(data);
         return pageInfo;
+    }
+
+    @Override
+    public int GetMessagesNum() {
+       return messageMapper.GetMessagesNum();
+    }
+
+    @Override
+    public int GetMemberMessagesNum(long member_id) {
+        return messageMapper.GetMemberMessagesNum(member_id);
+    }
+
+    @Override
+    public void ChangeStatus(int id) {
+        messageMapper.ChangeStatus(id);
+    }
+
+    @Override
+    public int GetStatus(int id) {
+        return messageMapper.GetStatus(id);
     }
 }

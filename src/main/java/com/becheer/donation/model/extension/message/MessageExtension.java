@@ -21,13 +21,21 @@ public class MessageExtension {
 
     private Date createTime;
 
+    private int status;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
     public String getType() {
         return type;
@@ -60,4 +68,6 @@ public class MessageExtension {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+
 }

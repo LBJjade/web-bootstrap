@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
-    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.css?v=4.7.0}" rel="stylesheet"/>
     <style type="text/css">
 
         .div_message_title{
@@ -48,6 +48,7 @@
             display: none;
         }
 
+
     </style>
 </head>
 <body>
@@ -76,9 +77,14 @@
                 <hr/>
             </div>
             <div style="min-height: 450px;">
-            <div v-for="item in items">
-                <div class="div_message_title">
-                    <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}}<span>2017-06-30 15:08:21</span></h4></div>
+            <div class="div_message"  v-for="item in items">
+                <div  class="div_message_title "   v-if="item.status === 0">
+                    <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="close" class="fa fa-envelope"></i><h4 style="font-weight: 900;"><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}}<span style="font-weight: normal;">2017-06-30 15:08:21</span></h4></div>
+                    <input  class="getid" type="hidden" :value="item.id"/>
+                </div>
+                <div  class="div_message_title"  v-else="item.status === 1">
+                    <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="open" class="fa fa-envelope-open-o"></i><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}} <span>2017-06-30 15:08:21</span></h4></div>
+                    <input  class="getid" type="hidden" :value="item.id"/>
                 </div>
                 <div class="div_message_content">
                     {{item.content}}
@@ -102,21 +108,41 @@
     var pageNum=1;
     var pageCount;
     var vueContent;
-
     $(document).ready(function () {
         f_GetMessage();
     })
 
     $("body").on("click",".div_message_title", function() {
+        var id=$(this).find(".getid").val();
         if ($(this).next().css("display")==="none"){
             $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-up");
             $(this).next().show();
+            if($(this).children().find("i").hasClass("fa-envelope")){
+                f_getStatus(id);
+            }
+            $(this).find("i").remove("class","fa fa-envelope");
+            $(this).find("h4").removeAttr("style");
+            $(this).find("i").attr("class","fa fa-envelope-open-o");
 
         }else{
             $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-down");
             $(this).next().hide();
         }
+
     });
+//点击改变状态
+    function f_changestatus(id) {
+            $.ajax({
+                url: '/home/message/status',
+                data: {id: id},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+//                    f_getnum();
+                    f_getmembernum();
+                }
+            });
+    }
 
 
     function f_GetMessage() {
@@ -154,6 +180,44 @@
                 }
             }
         });
+
+    }
+
+//    function f_getnum( ) {
+//        $.ajax({
+//            url: '/home/message/num',
+//            type: 'post',
+//            dataType: 'json',
+//            success: function (data) {
+//                $("#message").html("消息("+data.result+")");
+//            }
+//        });
+//    }
+
+    function  f_getmembernum(member_id) {
+        $.ajax({
+            url: '/home/message/number',
+            type: 'post',
+            dataType: 'json',
+            data:{member_id:member_id},
+            success: function (data) {
+                $("#message").html("消息("+data.result+")");
+            }
+        });
+    }
+    function f_getStatus(id){
+            $.ajax({
+                url: '/home/message/getStatus',
+                data: {id: id},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.result === 0) {
+                        f_changestatus(id);
+                    }
+                }
+            })
+
     }
 
     //翻页回调函数

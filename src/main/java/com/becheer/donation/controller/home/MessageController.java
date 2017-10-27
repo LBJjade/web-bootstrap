@@ -59,4 +59,51 @@ public class MessageController extends BaseController {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
+
+    @PostMapping("/num")
+    @ResponseBody
+    public ResponseDto GetMessagesNum(){
+        try {
+            int result =  messageService.GetMessagesNum();
+            return new ResponseDto(200, Message.MESSAGE_NUMBER_GET_SUCCESS,result);
+        }catch(Exception ex){
+            return new ResponseDto(500, Message.MESSAGE_NUMBER_GET_FAILED);
+        }
+
+    }
+
+
+    @PostMapping("/status")
+    @ResponseBody
+    public ResponseDto ChangeStatus(@RequestParam int id){
+        try {
+            messageService.ChangeStatus(id);
+            return new ResponseDto(200, Message.CHANGE_STATUS_SUCCESS);
+        }catch(Exception ex){
+            return new ResponseDto(500, Message.CHANGE_STATUS_FAILED);
+        }
+    }
+
+    @PostMapping("/getStatus")
+    @ResponseBody
+    public ResponseDto GetStatus(@RequestParam int id){
+        try {
+            int result = messageService.GetStatus(id);
+            return new ResponseDto(200, Message.GET_STATUS_SUCCESS,result);
+        }catch(Exception ex){
+            return new ResponseDto(500, Message.GET_STATUS_FAILED);
+        }
+    }
+
+    @PostMapping("/number")
+    @ResponseBody
+    public ResponseDto GetMemberMessagesNum(HttpServletRequest request){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        try {
+            int result = messageService.GetMemberMessagesNum(currentMember.memberId);
+            return new ResponseDto(200, Message.GET_MEMBERMESSAGES_SUCCESS,result);
+        }catch(Exception ex){
+            return new ResponseDto(500, Message.GET_MEMBERMESSAGES_FAILED);
+        }
+    }
 }
