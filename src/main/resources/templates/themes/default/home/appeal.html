@@ -86,7 +86,7 @@
                 <hr/>
             </div>
             <div style="min-height: 450px;">
-            <div v-for="item in items">
+            <div v-for="item in items" v-cloak>
                 <div class="div_message_title">
                     <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.appealTitle}}<span>{{item.createTime}}</span></h4></div>
                 </div>

@@ -157,3 +157,7 @@ a:visited,a:focus,a:hover{
     text-align: center;
     width: 100%;
 }
+
+[v-cloak] {
+    display: none;
+}

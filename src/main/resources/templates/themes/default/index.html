@@ -243,7 +243,7 @@
                 <div id="div_next">
                     <img th:src="@{/plugin/banner/image/r.png}"/>
                 </div>
-                <ul id="ul_img">
+                <ul id="ul_img" v-cloak>
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
                         <a :href="'project/'+item.projectId" target="_blank">
                             <img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fixed,h_600,w_900'"/></a>
@@ -294,7 +294,7 @@
     </div>
     <div class="row">
         <div class="col-sm-9" id="div_project_list" style="min-height: 1000px">
-            <div v-for="item in items">
+            <div v-for="item in items"  v-cloak>
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
                     <a :href="'project/'+item.projectId"  target="_blank">
@@ -322,7 +322,7 @@
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <div>
+                    <div  v-cloak>
                         <ul class="recommend_item" v-for="item in items">
                             <li><img :src="avatorRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
                             <li class="recommend_item_info">{{item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount/1000}}元
@@ -335,7 +335,7 @@
             <div class="right_panel" id="div_project">
                 <div class="div_title">
                     <h2 class="h2_title">项目推荐</h2>
-                    <div class="recommend_item" v-for="item in items">
+                    <div class="recommend_item" v-for="item in items"  v-cloak>
                         <ul>
                             <li><img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/></li>
                             <li class="recommend_item_word"> <a :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a></li>
@@ -347,7 +347,7 @@
             <div class="right_panel" id="div_question">
                 <div class="div_title">
                     <h2 class="h2_title">常见问题</h2>
-                    <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank"><p>
+                    <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank" v-cloak><p>
                         {{index+1}}.{{item.title}}</p></a>
                 </div>
             </div>

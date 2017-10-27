@@ -231,7 +231,7 @@
                                                     <div id="vertical-timeline"
                                                          class="vertical-container light-timeline">
 
-                                                        <div class="vertical-timeline-block" v-for="item in items">
+                                                        <div class="vertical-timeline-block" v-for="item in items" v-cloak>
                                                             <div :class="'vertical-timeline-icon '+item.backgroundClass">
                                                                 <i :class="'fa '+item.iconClass"></i>
                                                             </div>
@@ -267,7 +267,7 @@
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
 
-                        <ul v-for="item in items" class="recommend_item" >
+                        <ul v-for="item in items" class="recommend_item" v-cloak>
                             <!--<div class="recommend_item" >-->
                             <li><img :src="avatorRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" /></li>
                             <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount/1000}}元</li>
@@ -279,7 +279,7 @@
             <div class="right_panel" id="div_relative">
                 <div class="div_title">
                     <h2 class="h2_title">相关项目</h2>
-                    <div class="recommend_item"  v-for="item in items">
+                    <div class="recommend_item"  v-for="item in items" v-cloak>
                         <ul>
                             <li><img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'" /></li>
                             <li class="recommend_item_word"><a href="project.html" target="_blank">{{item.projectName}}</a></li>
@@ -368,7 +368,7 @@
     /*<![CDATA[*/
     var projectId=/*[[${project.getId()}]]*/;
     var projectTypeId=/*[[${project.getProjectTypeId()}]]*/;
-    var pageSize=2;
+    var pageSize=4;
     var pageNum=1;
     var totalPage=0;
     var vueProgress;

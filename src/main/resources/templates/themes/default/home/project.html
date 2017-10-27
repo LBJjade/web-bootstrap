@@ -109,7 +109,7 @@
             </div>
             <div style="min-height: 450px;">
             <div id="div_project_list">
-                <div v-for="item in items" class="div_project_detail">
+                <div v-for="item in items" class="div_project_detail" v-cloak>
                     <a :href="'project/'+item.id" target="_blank" >
                         <img :src="projectImgRoot+item.thumbImg+'?x-oss-process=image/resize,m_fill,h_200,w_300'"/>
                     </a>

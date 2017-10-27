@@ -134,7 +134,7 @@
                 <p>慈善项目</p>
             </div>
 
-            <div id="div_menu" class="right_panel">
+            <div id="div_menu" class="right_panel"  v-cloak>
                 <div class=" nav_item" v-for="item in items">
                     <ul>
                         <li><a v-on:click="f_SetProjectType(item)" target="_blank">{{item.name}}</a></li>
@@ -167,7 +167,7 @@
             </div>
             <br/>
             <div id="div_content" style="min-height: 800px">
-                <div v-for="item in items" class="div_project_item">
+                <div v-for="item in items" class="div_project_item"  v-cloak>
                     <img class="div_project_item_img" :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"/>
                     <div class="div_project_item_content">
                         <div class="project_name">
@@ -185,9 +185,6 @@
                         </a>
                     </div>
                 </div>
-            </div>
-            <div style="width: 100%;text-align: center" id="div_page">
-
             </div>
         </div>
     </div>

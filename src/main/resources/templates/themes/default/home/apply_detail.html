@@ -67,7 +67,10 @@
                 <hr/>
             </div>
             <table class="table_member_content" id="table_member_content">
-                <tr v-for="item in items"><td>{{item.createTime}}</td><td>{{item.title}}</td></tr>
+                <tr v-for="item in items" v-cloak>
+                    <td>{{item.createTime}}</td>
+                    <td>{{item.title}}</td>
+                </tr>
                 <tr>
                     <td colspan="2">
                         <textarea id="textarea_apply" class="form-control"></textarea>
