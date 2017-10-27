@@ -328,7 +328,7 @@
                 <div id="div_next">
                     <img th:src="@{/plugin/banner/image/r.png}"/>
                 </div>
-                <ul id="ul_img">
+                <ul id="ul_img" v-cloak>
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
                         <a href="project.html" target="_blank"><img :alt="item.projectName"
                                                                     :src="imgUrl+'project/900x600/'+item.img"/></a>
@@ -379,7 +379,7 @@
     </div>
     <div class="row">
         <div class="col-sm-9" id="div_project_list" style="min-height: 1000px">
-            <div v-for="item in items">
+            <div v-for="item in items" v-cloak>
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
                     <a :href="'project/'+item.projectId"><img :alt="item.projectName"
@@ -432,7 +432,7 @@
             <div class="right_panel" id="div_question">
                 <div class="div_title">
                     <h2 class="h2_title">常见问题</h2>
-                    <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank"><p>
+                    <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank" v-cloak><p>
                         {{index+1}}.{{item.title}}</p></a>
                 </div>
             </div>
