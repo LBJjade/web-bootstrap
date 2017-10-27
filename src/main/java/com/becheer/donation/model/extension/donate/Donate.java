@@ -3,7 +3,7 @@ package com.becheer.donation.model.extension.donate;
 public class Donate {
     private Integer projectTypeId;
     private Integer projectId;
-    private long memberId;
+    private Long memberId;
     private Integer amount;
 
     public Integer getProjectTypeId() {
@@ -22,11 +22,11 @@ public class Donate {
         this.projectId = projectId;
     }
 
-    public long getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(long memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 
