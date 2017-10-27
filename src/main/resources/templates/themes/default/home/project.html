@@ -109,20 +109,25 @@
             </div>
             <div style="min-height: 450px;">
             <div id="div_project_list">
-                <div v-for="item in items" class="div_project_detail">
-                    <a :href="'project/'+item.id" target="_blank" ><img :src="imgUrl+'project/900x600/'+item.thumbImg"
-                                                                       height="200" width="300" alt=""/></a>
+                <div v-for="item in items" class="div_project_detail" v-cloak>
+                    <a :href="'project/'+item.id" target="_blank" >
+                        <img :src="projectImgRoot+item.thumbImg+'?x-oss-process=image/resize,m_fill,h_200,w_300'"/>
+                    </a>
                     <p class="projectName">{{item.projectName}}</p>
-                    <p style="margin:0px 0px 0px 9px;"><a style="color: #afafaf;">目标金额 : </a><span
-                            style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount|format}}</span><a  style="color: #afafaf;"
-                            >&nbsp;元</a><span style=" display: block"><a  style="color: #afafaf;">已筹:</a>
-                        <span
-                            style="color: #ff5a43;font-size: 16px;font-weight:bold;">{{item.acceptedAmount|format}}
+                    <p style="margin:0px 0px 0px 9px;">
+                        <a style="color: #afafaf;">目标金额 : </a>
+                        <span style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount|format}}</span>
+                        <a style="color: #afafaf;">&nbsp;元</a>
+                        <span style=" display: block">
+                            <a  style="color: #afafaf;">已筹:</a>
+                        <span style="color: #ff5a43;font-size: 16px;font-weight:bold;">
+                            {{item.acceptedAmount|format}}
                         </span>
                         <a  style="color: #afafaf;">&nbsp;元</a></span></p>
-                    <p style="margin:0px 0px 0px 9px;"><a  style="color: #afafaf;">我捐赠的金额 : </a><span
-                            style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount|format}}</span><a  style="color: #afafaf;"
-                            >&nbsp;元</a>
+                    <p style="margin:0px 0px 0px 9px;">
+                        <a  style="color: #afafaf;">我捐赠的金额 : </a>
+                        <span style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount|format}}</span>
+                        <a  style="color: #afafaf;">&nbsp;元</a>
                         <a :href="'project/'+item.id" target="_blank">
                             <button class="info_button" >查看详情</button>
                         </a>

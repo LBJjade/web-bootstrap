@@ -19,6 +19,8 @@ public interface IMemberService {
 
     Member GetMemberByMobile(String mobile);
 
+    Member GetMember(long memberId);
+
     MemberInfoExtension GetMemberExtensionById(long memberId);
 
     ResponseDto UpdateMemberInfo(MemberInfoExtension memberInfoExtensions);

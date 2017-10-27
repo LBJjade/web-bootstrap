@@ -78,8 +78,6 @@
         }
 
         .right_panel img {
-            height: 40px;
-            width: 40px;
             float: left;
         }
 
@@ -191,14 +189,14 @@
             </div>
             <div class="project_block">
             <div id="div_project">
-                <img  th:src='${config.getImageRoot()+"project/900x600/"+project.getThumbImg()}'/>
+                <img th:src='${config.getProjectImgRoot()+project.getThumbImg()+"?x-oss-process=image/resize,m_fill,h_300,w_560"}'/>
             </div>
             <div id="div_project_info">
                 <div class="div_title">
                     <h2 class="h2_title">公益详情</h2>
                 </div>
                 <p class="info_fs">
-                    <th:block th:text="${project.getProjectName()}"/>
+                    <th:block th:text="${project.getProjectName()}"/>P
                 </p>
                 <div class="info_ma">
                     <p class="info" style="font-size: 15px;"><span class="info_name">项 目 时 间</span>：
@@ -233,7 +231,7 @@
                                                     <div id="vertical-timeline"
                                                          class="vertical-container light-timeline">
 
-                                                        <div class="vertical-timeline-block" v-for="item in items">
+                                                        <div class="vertical-timeline-block" v-for="item in items" v-cloak>
                                                             <div :class="'vertical-timeline-icon '+item.backgroundClass">
                                                                 <i :class="'fa '+item.iconClass"></i>
                                                             </div>
@@ -269,9 +267,9 @@
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
 
-                        <ul v-for="item in items" class="recommend_item" >
+                        <ul v-for="item in items" class="recommend_item" v-cloak>
                             <!--<div class="recommend_item" >-->
-                            <li><img :src="imgUrl+'avator/'+item.avator" /></li>
+                            <li><img :src="avatorRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" /></li>
                             <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount/1000}}元</li>
                             <!--</div>-->
                         </ul>
@@ -281,9 +279,9 @@
             <div class="right_panel" id="div_relative">
                 <div class="div_title">
                     <h2 class="h2_title">相关项目</h2>
-                    <div class="recommend_item"  v-for="item in items">
+                    <div class="recommend_item"  v-for="item in items" v-cloak>
                         <ul>
-                            <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img" /></li>
+                            <li><img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'" /></li>
                             <li class="recommend_item_word"><a href="project.html" target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
@@ -370,7 +368,7 @@
     /*<![CDATA[*/
     var projectId=/*[[${project.getId()}]]*/;
     var projectTypeId=/*[[${project.getProjectTypeId()}]]*/;
-    var pageSize=2;
+    var pageSize=4;
     var pageNum=1;
     var totalPage=0;
     var vueProgress;

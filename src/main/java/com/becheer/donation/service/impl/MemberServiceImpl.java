@@ -79,13 +79,13 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setValidation(member.getValidation());
         memberInfoExtension.setAvator(member.getAvatorImg());
         memberInfoExtension.setBirthday(member.getBirthday());
-        if (member.getRole()==0){
+        memberInfoExtension.setMobile(member.getMobile());
+        if (member.getRole()==1){
             //个人
-            memberInfoExtension.setMobile(member.getMobile());
             memberInfoExtension.setIdCard(member.getIdCard());
             memberInfoExtension.setSex(member.getSex());
             memberInfoExtension.setBirthday(member.getBirthday());
-        }else if (member.getRole()==1){
+        }else if (member.getRole()==2){
             //公司
             memberInfoExtension.setOrganizationType(member.getOrganizationType());
             memberInfoExtension.setOrganizationCode(member.getOrganizationCode());
@@ -116,13 +116,13 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setValidation(member.getValidation());
         memberInfoExtension.setAvator(member.getAvatorImg());
         memberInfoExtension.setBirthday(member.getBirthday());
-        if (member.getRole()==0){
+        if (member.getRole()==1){
             //个人
             memberInfoExtension.setMobile(member.getMobile());
             memberInfoExtension.setIdCard(member.getIdCard());
             memberInfoExtension.setSex(member.getSex());
             memberInfoExtension.setBirthday(member.getBirthday());
-        }else if (member.getRole()==1){
+        }else if (member.getRole()==2){
             //公司
             memberInfoExtension.setOrganizationType(member.getOrganizationType());
             memberInfoExtension.setOrganizationCode(member.getOrganizationCode());
@@ -142,6 +142,8 @@ public class MemberServiceImpl implements IMemberService {
         member.setIdCard(memberInfoExtension.getIdCard());
         member.setSummary(memberInfoExtension.getSummary());
         member.setValidation(memberInfoExtension.getValidation());
+        member.setOrganizationCode(memberInfoExtension.getOrganizationCode());
+        member.setOrganizationType(memberInfoExtension.getOrganizationType());
         int result = memberMapper.UpdateMember(member);
         if (result>0){
             RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY+":"+ConstString.TABLE_MEMBER+":"+member.getId());
@@ -149,5 +151,10 @@ public class MemberServiceImpl implements IMemberService {
         }else{
             return new ResponseDto(500,Message.MEMBER_UPDATE_ERROR);
         }
+    }
+
+    @Override
+    public Member GetMember(long memberId) {
+        return memberMapper.SelectMemberById(memberId);
     }
 }

@@ -111,7 +111,7 @@
                         </table>
                         <hr/>
                         <span style="margin-left: 20px">我的参与记录</span>
-                        <table id="table_personal_info">
+                        <table id="table_personal_info" v-cloak>
                             <tr v-for="item in items"><td style="border-bottom: none">{{item.createTime}}</td><td style="border-bottom: none">{{item.title}}</td></tr>
                         </table>
                         <hr/>
@@ -134,7 +134,7 @@
                                                     <div id="vertical-timeline"
                                                          class="vertical-container light-timeline">
 
-                                                        <div class="vertical-timeline-block" v-for="item in items">
+                                                        <div class="vertical-timeline-block" v-for="item in items" v-cloak>
                                                             <div :class="'vertical-timeline-icon '+item.backgroundClass">
                                                                 <i :class="'fa '+item.iconClass"></i>
                                                             </div>

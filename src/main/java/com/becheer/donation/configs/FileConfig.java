@@ -11,6 +11,10 @@ public class FileConfig {
 
     public String docRoot;
 
+    public String projectImgRoot;
+
+    public String avatorRoot;
+
     public String getImageRoot() {
         return imageRoot;
     }
@@ -25,5 +29,21 @@ public class FileConfig {
 
     public void setDocRoot(String docRoot) {
         this.docRoot = docRoot;
+    }
+
+    public String getProjectImgRoot() {
+        return projectImgRoot;
+    }
+
+    public void setProjectImgRoot(String projectImgRoot) {
+        this.projectImgRoot = projectImgRoot;
+    }
+
+    public String getAvatorRoot() {
+        return avatorRoot;
+    }
+
+    public void setAvatorRoot(String avatorRoot) {
+        this.avatorRoot = avatorRoot;
     }
 }

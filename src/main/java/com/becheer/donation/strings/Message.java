@@ -53,6 +53,8 @@ public class Message {
 
     public static final String LOGINOUT_SUCCESS="注销成功";
 
+    public static final String LOGIN_COOKIE_FAILED="登录失败";
+
     /*
      *信息公开
      */

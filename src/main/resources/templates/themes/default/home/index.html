@@ -90,32 +90,45 @@
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img :src="imgRoot+'avator/'+member.avator" height="200" width="200"/>
+                    <img :src="avatorRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
                     <br/>
                     <br/>
                     <button class="info_button">更换头像</button>
                 </div>
                 <div id="div_content_info">
-                    <table class="table_content_info">
+                    <table class="table_content_info" v-cloak>
                         <tr>
-                            <td>真实姓名</td>
+                            <td v-if="member.role===1">真实姓名</td>
+                            <td v-if="member.role===2">公司名称</td>
                             <td>{{member.name}}</td>
                         </tr>
                         <tr>
                             <td>手机号码</td>
                             <td>{{member.mobile}}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="member.role===1">
                             <td>身份证号</td>
                             <td>{{member.idCard}}</td>
                         </tr>
-                        <tr>
+                        <tr v-if="member.role===2">
+                            <td>组织机构代码</td>
+                            <td>{{member.organizationCode}}</td>
+                        </tr>
+                        <tr v-if="member.role===2">
+                            <td>公司性质</td>
+                            <td>{{member.organizationType}}</td>
+                        </tr>
+                        <tr v-if="member.role===2">
+                            <td>营业执照</td>
+                            <td><a href="#">点击查看</a></td>
+                        </tr>
+                        <tr v-if="member.role===1">
                             <td>性别</td>
                             <td v-if="member.sex===0">保密</td>
                             <td v-if="member.sex===1">男</td>
                             <td v-if="member.sex===2">女</td>
                         </tr>
-                        <tr>
+                        <tr v-if="member.role===1">
                             <td>生日</td>
                             <td>{{member.birthday}}</td>
                         </tr>
@@ -123,8 +136,9 @@
                             <td>曾参与的公益项目</td>
                             <td>{{member.project}}</td>
                         </tr>
-                        <tr>
-                            <td>个人说明</td>
+                        <tr v-if="member.role===1">
+                            <td v-if="member.role===1">个人说明</td>
+                            <td v-if="member.role===2">公司简介</td>
                             <td>{{member.summary}}</td>
                         </tr>
                         <tr>

@@ -70,7 +70,7 @@
                     <td>操作</td>
                 </tr>
                 </thead>
-                <tr v-for="item in items">
+                <tr v-for="item in items" v-cloak>
                     <td>{{item.title}}</td>
                     <td>{{item.amount>0?item.amount/100:0}}</td>
                     <td>{{item.deadLine}}</td>

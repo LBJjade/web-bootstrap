@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
 
-    <title>index</title>
+    <title>信息编辑</title>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
@@ -70,7 +70,7 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p>编辑个人信息</p>
+                <p>编辑信息</p>
                 <hr />
             </div>
             <div id="div_content">
@@ -80,41 +80,35 @@
                     <br/>
                     <button class="btn btn-info">更换头像</button>
                 </div>
+
                 <div id="div_content_info">
                     <table id="table_content_info">
-                        <tr><td>手机号码</td><td><input type="text" readonly="readonly" id="ipt_mobile" th:value="${member.getMobile()}"/></td></tr>
-                        <tr><td>真实姓名</td><td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td></tr>
-                        <tr><td>身份证号</td><td><input type="text" id="ipt_id_card" th:value="${member.getIdCard()}"/></td></tr>
-                        <tr><td style="border: none">身份证</td>
-                            <td style="border: none">
-                                <span>正面</span><span style="margin-left: 95px">背面</span>
-                            </td>
-                        </tr>
-                        <tr><td></td>
-                            <td>
-                                <img th:src="@{/image/id_card.png}" height="120" width="120" style="margin-bottom: 10px"/>
-                                <img th:src="@{/image/id_card.png}" height="120" width="120" style="margin-bottom: 10px"/>
-                            </td>
-                        </tr>
+                        <tr><td>公司名称</td><td><input  type="text" id="ipt_name" th:value="${member.getName()}"/></td></tr>
+                        <tr><td>组织机构代码</td><td><input type="text" id="ipt_code" th:value="${member.getOrganizationCode()}"/></td></tr>
                         <tr>
-                            <td>性别</td>
+                            <td>公司属性</td>
                             <td>
-                                <select class ="form-control" id="ipt_sex">
+                                <select id="ipt_type" class ="form-control" >
                                     <option value="0">请选择</option>
-                                    <option value="1" th:selected="${member.getSex()==1}">男</option>
-                                    <option value="2" th:selected="${member.getSex()==2}">女</option>
-                                    <option value="3" th:selected="${member.getSex()==3}">保密</option>
+                                    <option value="国有企业" th:selected='${member.getOrganizationType()=="国有企业"}'>国有企业</option>
+                                    <option value="民营企业" th:selected='${member.getOrganizationType()=="民营企业"}'>民营企业</option>
+                                    <option value="合资企业" th:selected='${member.getOrganizationType()=="合资企业"}'>合资企业</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr><td>生日</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/></td></tr>
+                        <tr>
+                            <td>营业执照</td>
+                            <td>
+                                <img th:src="@{/image/id_card.png}" height="120" width="120" style="margin-bottom: 10px"/>
+                            </td>
+                        </tr>
                         <tr><td>曾参与的公益项目</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getProject()}"/></textarea></td></tr>
-                        <tr><td>个人说明</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getSummary()}"/></textarea></td></tr>
+                        <tr><td>公司简介</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getSummary()}"/></textarea></td></tr>
                     </table>
                     <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
                 </div>
             </div>
-        </div>
+    </div>
     </div>
 </div>
 <div th:replace="themes/default/footer::footer"></div>
@@ -128,17 +122,14 @@
     });
 
     $(".btn_save").click(function () {
-        var memberName=$("#ipt_name").val();
-        var mobile=$("#ipt_mobile").val();
-        var idCard=$("#ipt_id_card").val();
-        var sex=$("#ipt_sex").val();
-        var birthday=$("#ipt_birthday").val();
+        var companyName=$("#ipt_name").val();
+        var organizationCode=$("#ipt_code").val();
+        var organizationType=$("#ipt_type").val();
         var project=$("#ipt_project").val();
         var summary=$("#ipt_summary").val();
-
         $.ajax({
             url:'/home/member/submit',
-            data:{name:memberName,mobile:mobile,idCard:idCard,sex:sex,birthday:birthday,project:project,summary:summary},
+            data:{name:companyName,organizationCode:organizationCode,organizationType:organizationType,project:project,summary:summary},
             type:'post',
             dataType:'json',
             success:function (data) {

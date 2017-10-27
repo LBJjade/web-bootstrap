@@ -13,4 +13,14 @@ public class GenerateUtil {
     public static String genOrderNo() {
         return UUID.getRandomNumber(16);
     }
+
+    public static String genLoginCookie(long userId){
+        String result=null;
+        result=HashUtil.SHA256(String.valueOf(userId));
+        result="bc_member_cookie"+result;
+        StringBuffer stringBuffer=new StringBuffer(result);
+        result=stringBuffer.reverse().toString();
+        result=HashUtil.MD5(result);
+        return result;
+    }
 }

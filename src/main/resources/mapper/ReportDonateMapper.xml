@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.ReportDonateMapper">
+
+    <resultMap id="IndexReportResultMap" type="com.becheer.donation.model.report.IndexReport">
+        <result column="received_amount" jdbcType="BIGINT" property="receivedAmount" />
+        <result column="donate_time" jdbcType="BIGINT" property="donateTime" />
+        <result column="benefit_amount" jdbcType="BIGINT" property="benefitAmount" />
+        <result column="benefit_group" jdbcType="BIGINT" property="benefitGroup" />
+    </resultMap>
+
+    <select id="SelectIndexReport" resultMap="IndexReportResultMap">
+        SELECT
+            SUM(received_amount)  AS received_amount,
+            COUNT(1) AS donate_time,
+            (SELECT SUM(number)FROM dnt_acceptor WHERE received_amount>0) AS benefit_amount,
+            (SELECT SUM(1)FROM dnt_acceptor WHERE role=2 AND received_amount>0) AS benefit_group
+        FROM dnt_payment_plan WHERE `status`=1;
+    </select>
+
+</mapper>

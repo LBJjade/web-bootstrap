@@ -77,6 +77,8 @@
           birthday=#{birthday,jdbcType=TIMESTAMP},
           project=#{project,jdbcType=VARCHAR},
           summary=#{summary,jdbcType=VARCHAR},
+          organization_type=#{organizationType,jdbcType=VARCHAR},
+          organization_code=#{organizationCode,jdbcType=VARCHAR},
           update_time = now(),
           validation=#{validation,jdbcType=INTEGER}
         WHERE id_ = #{id,jdbcType=BIGINT}
