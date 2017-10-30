@@ -6,12 +6,14 @@ import com.becheer.core.support.pay.WxPayQueryOrderResult;
 import com.becheer.core.support.pay.WxPayReturnToWeixin;
 import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import com.becheer.donation.service.IWxPayService;
+import com.becheer.pay.service.IPayWxUnifiedOrderService;
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,16 +22,23 @@ public class WxPayServiceImpl implements IWxPayService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WxPayServiceImpl.class);
 
+    @Resource
+    private IPayWxUnifiedOrderService payWxUnifiedOrderService;
+
     @Override
     public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
 
+        Map<String, String> params = WxPayHelper.buildUnifiedOrderParasMap(outTradeNo, productId, String.valueOf(totalFee));
+        // 保存构造好的参数
+        payWxUnifiedOrderService.insert(params);
 
-        Map<String, String> map = WxPay.unifiedOrder(outTradeNo, productId, String.valueOf(totalFee));
 
-        // TODO: 使用Map还是实体类，各有好处，使用Map，调用该接口的人需要了解微信支付的接口文档，使用实体类直接看实体类属性字段
+        String prepayXML = WxPay.unifiedOrder(params);
+        Map<String, String> prepayMap = WxPayHelper.xmlToMap(prepayXML);
+        // 保存微信支付反馈的信息
+        payWxUnifiedOrderService.update(prepayMap);
 
-        return map;
-
+        return prepayMap;
     }
 
     @Override

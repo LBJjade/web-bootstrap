@@ -1,6 +1,8 @@
 package com.becheer.core.support.pay;
 
 import com.baomidou.mybatisplus.toolkit.IdWorker;
+import com.becheer.donation.configs.WxPayConfig;
+import com.becheer.donation.service.SpringContextUtil;
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.lang3.StringUtils;
 import com.becheer.core.util.HashUtil;
@@ -29,7 +31,7 @@ public class WxPayHelper {
      * @param total_fee
      * @param spbill_create_ip
      * @param auth_code
-     * @param wxPayApiSecret        微信支付API密钥(https://pay.weixin.qq.com/index.php/core/cert/api_cert)
+     * @param wxPayApiSecret   微信支付API密钥(https://pay.weixin.qq.com/index.php/core/cert/api_cert)
      * @return
      */
     public static Map<String, String> buildParasMap(String appid, String sub_appid, String mch_id, String sub_mch_id,
@@ -80,6 +82,40 @@ public class WxPayHelper {
         return buildSignAfterParasMap(params, wxPayApiSecret);
     }
 
+
+    public static Map<String, String> buildUnifiedOrderParasMap(String out_trade_no, String product_id, String total_fee) {
+        Map<String, String> params = new HashMap<String, String>();
+        WxPayConfig config = (WxPayConfig) SpringContextUtil.getBean("wxPayConfig");
+        String appid = config.getAppId();
+        String mch_id = config.getMchId();
+        String device_info = config.getDeviceInfo();
+        String body = "广东省世纪爱心慈善基金会";
+        String detail = "";
+        String attach = "";
+        String spbill_create_ip = config.getSpBillCreateIP();
+        String notify_url = config.getNotifyURL();
+        String trade_type = config.getTradeType();
+        String wxPayApiSecret = config.getApiSecret();
+
+
+        params.put("appid", appid);
+        params.put("mch_id", mch_id);
+        params.put("device_info", device_info);
+        params.put("body", body);
+        params.put("detail", detail);
+        params.put("attach", attach);
+        params.put("fee_type", "CNY");
+        params.put("out_trade_no", out_trade_no);
+
+        params.put("total_fee", total_fee);
+        params.put("spbill_create_ip", spbill_create_ip);
+        params.put("notify_url", notify_url);
+        params.put("trade_type", trade_type);
+        params.put("product_id", product_id);
+
+        return buildSignAfterParasMap(params, wxPayApiSecret);
+    }
+
     /**
      * 构建统一下单参数
      *
@@ -94,11 +130,11 @@ public class WxPayHelper {
      * @param out_trade_no     订单号
      * @param total_fee        支付总额
      * @param spbill_create_ip 终端IP
-     * @param wxPayApiSecret        AppSecret
+     * @param wxPayApiSecret   AppSecret
      * @param notify_url       回调页面地址
      * @param trade_type       交易类型
      * @param product_id       扫码支付必传
-     * @return          签名后准备提交带微信支付接口的参数列表
+     * @return 签名后准备提交带微信支付接口的参数列表
      */
     public static Map<String, String> buildUnifiedOrderParasMap(String appid, String sub_appid, String mch_id,
                                                                 String sub_mch_id, String device_info, String body, String detail, String attach, String out_trade_no,
@@ -212,7 +248,7 @@ public class WxPayHelper {
     /**
      * 生成签名
      *
-     * @param params    参数
+     * @param params         参数
      * @param wxPayApiSecret 支付密钥
      */
     public static String createSign(Map<String, String> params, String wxPayApiSecret) {
@@ -226,7 +262,7 @@ public class WxPayHelper {
     /**
      * 支付异步通知时校验sign
      *
-     * @param params    参数
+     * @param params         参数
      * @param wxPayApiSecret 支付密钥
      * @return {boolean}
      */

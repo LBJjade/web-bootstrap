@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 @Service
 public class PayWxUnifiedOrderServiceImpl implements IPayWxUnifiedOrderService {
@@ -21,9 +22,20 @@ public class PayWxUnifiedOrderServiceImpl implements IPayWxUnifiedOrderService {
     private PayWxUnifiedOrderMapper mapper;
 
     @Override
+    public int insert(Map<String, String> map) {
+
+        return mapper.insert(map);
+    }
+
+    @Override
     public int insert(PayWxUnifiedOrder model) {
 
         return mapper.insert(model);
+    }
+
+    @Override
+    public int update(Map<String, String> map) {
+        return mapper.update(map);
     }
 
     @Override
