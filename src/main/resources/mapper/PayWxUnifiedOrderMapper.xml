@@ -136,4 +136,33 @@
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 
+    <select id="getWxUnifiedOrderByOutTradeNo" parameterType="java.lang.String" resultMap="PayWxUnifiedOrder">
+        SELECT
+            appid,
+	        mch_id,
+            device_info,
+            nonce_str,
+            sign,
+            sign_type,
+            body,
+            detail,
+            attach,
+            out_trade_no,
+            fee_type,
+            total_fee,
+            spbill_create_ip,
+            time_start,
+            time_expire,
+            goods_tag,
+            notify_url,
+            trade_type,
+            product_id,
+            limit_pay,
+            openid,
+            scene_info,
+            return_code,
+            return_msg
+        FROM pay_wx_unified_order
+        WHERE out_trade_no = #{param1}
+    </select>
 </mapper>
