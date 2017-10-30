@@ -108,8 +108,8 @@
                             </td>
                         </tr>
                         <tr><td>生日</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/></td></tr>
-                        <tr><td>曾参与的公益项目</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getProject()}"/></textarea></td></tr>
-                        <tr><td>个人说明</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getSummary()}"/></textarea></td></tr>
+                        <tr><td>曾参与的公益项目</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
+                        <tr><td>个人说明</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
                     </table>
                     <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
                 </div>
@@ -121,11 +121,17 @@
 <!--全局JS-->
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/laydate/laydate.js}"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
     laydate.render({
         elem: '#ipt_birthday',
         value:$("#ipt_birthday").val()
     });
+
+    var memberProject= /*[[${member.getProject()}]]*/;
+    var memberSummary= /*[[${member.getSummary()}]]*/;
+    $("#ipt_project").val(memberProject);
+    $("#ipt_summary").val(memberSummary);
 
     $(".btn_save").click(function () {
         var memberName=$("#ipt_name").val();
@@ -155,6 +161,7 @@
             }
         });
     });
+    /*]]>*/
 </script>
 </body>
 </html>
