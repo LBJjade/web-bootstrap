@@ -50,8 +50,6 @@
         }
 
         #div_recent img {
-            height: 40px;
-            width: 40px;
             float: left;
         }
 
@@ -330,8 +328,8 @@
                 </div>
                 <ul id="ul_img" v-cloak>
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
-                        <a href="project.html" target="_blank"><img :alt="item.projectName"
-                                                                    :src="imgUrl+'project/900x600/'+item.img"/></a>
+                        <a :href="'project/'+item.projectId" target="_blank">
+                            <img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fixed,h_600,w_900'"/></a>
                     </li>
                 </ul>
                 <div id="div_banner_title">
@@ -349,22 +347,22 @@
                 <ul id="ul_total">
                     <li>
                         <p>爱心总人数</p>
-                        <input type="number" :value="model.totalDonator" readonly="true"/>
+                        <input type="number" :value="model.donateTime" readonly="true"/>
                         <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>善款总额</p>
-                        <input type="number" :value="model.totalAmout" readonly="true"/>
+                        <input type="number" :value="model.receivedAmount" readonly="true"/>
                         <p style="display: inline;">元</p>
                     </li>
                     <li>
                         <p>受益人数</p>
-                        <input type="number" :value="model.totalAcceptor" readonly="true"/>
+                        <input type="number" :value="model.benefitAmount" readonly="true"/>
                         <p style="display: inline;">人次</p>
                     </li>
                     <li>
                         <p>受益群体</p>
-                        <input type="number" :value="model.totalGroup" readonly="true"/>
+                        <input type="number" :value="model.benefitGroup" readonly="true"/>
                         <p style="display: inline;">个</p>
                     </li>
                     <div align="center" style="position: relative;">
@@ -379,18 +377,19 @@
     </div>
     <div class="row">
         <div class="col-sm-9" id="div_project_list" style="min-height: 1000px">
-            <div v-for="item in items" v-cloak>
+            <div v-for="item in items"  v-cloak>
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
-                    <a :href="'project/'+item.projectId"><img :alt="item.projectName"
-                                                              :src="imgUrl+'project/240x160/'+item.img"
-                                                              style="float:left;"/></a>
-                    <span class="projectName"><i class="fa fa-angle-right" aria-hidden="true"
-                                                 style="font-size: 30px;color: #999999;margin-right: 10px"></i><a
-                            class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a> </span>
-                    <span class="item_time"><i class="fa fa-clock-o" aria-hidden="true"
-                                               style="margin-right: 5px;font-size: 15px"></i><span
-                            style="color:#c8c8c8;margin-right: 10px;">发布时间 :</span>{{item.createTime}}</span>
+                    <a :href="'project/'+item.projectId"  target="_blank">
+                        <img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'" style="float:left;"/>
+                    </a>
+                    <span class="projectName">
+                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 30px;color: #999999;margin-right: 10px"/>
+                        <a class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a>
+                    </span>
+                    <span class="item_time">
+                        <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>
+                        <span style="color:#c8c8c8;margin-right: 10px;">发布时间 :</span>{{item.createTime}}</span>
                     <p class="item_summary"><span>摘要 : </span><span style=" color:#666666">{{item.summary}}</span></p>
                     <a style="float: right;" :href="'project/'+item.projectId" target="_blank">
                         <button class=" info_button">查看详情</button>
@@ -406,9 +405,9 @@
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <div>
+                    <div  v-cloak>
                         <ul class="recommend_item" v-for="item in items">
-                            <li><img :src="imgUrl+'avator/'+item.avator"/></li>
+                            <li><img :src="avatorRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
                             <li class="recommend_item_info">{{item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount/1000}}元
                             </li>
                         </ul>
@@ -419,11 +418,10 @@
             <div class="right_panel" id="div_project">
                 <div class="div_title">
                     <h2 class="h2_title">项目推荐</h2>
-                    <div class="recommend_item" v-for="item in items">
+                    <div class="recommend_item" v-for="item in items"  v-cloak>
                         <ul>
-                            <li><img :alt="item.projectName" :src="imgUrl+'project/90x60/'+item.img"/></li>
-                            <li class="recommend_item_word"><a href="project.html"
-                                                               target="_blank">{{item.projectName}}</a></li>
+                            <li><img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/></li>
+                            <li class="recommend_item_word"> <a :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -467,8 +465,8 @@
                 <div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">
                     请&nbsp;&nbsp;选&nbsp;&nbsp;择&nbsp;&nbsp;项&nbsp;&nbsp;目:&nbsp;
                     <select id="sel_project" style="width: 124px;">
-                        <option value="0">请选择项目</option>
-                        <option  v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
+                        <option value="0">请选择项目类别</option>
+                        <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
                     </select>
                 </div>
                 <div id="span_money" style="clear: both;">
@@ -867,10 +865,19 @@
 
 
     function f_GetDonationInfo() {
-        new Vue({
-            el: "#ul_total",
-            data: {
-                model: {totalDonator: 627361, totalAmout: 10000.50, totalAcceptor: 1736, totalGroup: 20}
+        $.ajax({
+            url: '/index/report',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    new Vue({
+                        el: "#ul_total",
+                        data: {
+                            model: data.result
+                        }
+                    });
+                }
             }
         });
     }

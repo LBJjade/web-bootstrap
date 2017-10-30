@@ -189,7 +189,7 @@
             </div>
             <div class="project_block">
             <div id="div_project">
-                <img th:src='${project.getThumbImg()+"?x-oss-process=image/resize,m_fill,h_300,w_560"}'/>
+                <img th:src='${config.getProjectImgRoot()+project.getThumbImg()+"?x-oss-process=image/resize,m_fill,h_300,w_560"}'/>
             </div>
             <div id="div_project_info">
                 <div class="div_title">
