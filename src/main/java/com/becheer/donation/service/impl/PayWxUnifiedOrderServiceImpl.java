@@ -1,11 +1,8 @@
-package com.becheer.pay.service.impl;
+package com.becheer.donation.service.impl;
 
-import com.becheer.donation.dao.DntNoContractDonateMapper;
-import com.becheer.donation.model.DntNoContractDonate;
-import com.becheer.donation.service.IDntNoContractDonateService;
-import com.becheer.pay.dao.PayWxUnifiedOrderMapper;
-import com.becheer.pay.model.PayWxUnifiedOrder;
-import com.becheer.pay.service.IPayWxUnifiedOrderService;
+import com.becheer.donation.dao.PayWxUnifiedOrderMapper;
+import com.becheer.donation.model.PayWxUnifiedOrder;
+import com.becheer.donation.service.IPayWxUnifiedOrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

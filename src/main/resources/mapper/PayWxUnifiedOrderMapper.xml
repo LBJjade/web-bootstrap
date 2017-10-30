@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.becheer.pay.dao.PayWxUnifiedOrderMapper">
+<mapper namespace="com.becheer.donation.dao.PayWxUnifiedOrderMapper">
 
-    <resultMap id="BaseResultMap" type="com.becheer.pay.model.PayWxUnifiedOrder">
-        <id column="id_" jdbcType="BIGINT" property="id"/>
-
+    <resultMap id="BaseResultMap" type="com.becheer.donation.model.PayWxUnifiedOrder">
         <result column="appid" jdbcType="VARCHAR" property="appid"/>
         <result column="mch_id" jdbcType="VARCHAR" property="mchId"/>
         <result column="device_info" jdbcType="VARCHAR" property="deviceInfo"/>
@@ -29,6 +27,10 @@
         <result column="scene_info" jdbcType="VARCHAR" property="sceneInfo"/>
         <result column="return_code" jdbcType="VARCHAR" property="returnCode"/>
         <result column="return_msg" jdbcType="VARCHAR" property="returnMsg"/>
+        <result column="err_code" jdbcType="VARCHAR" property="errCode"/>
+        <result column="err_code_des" jdbcType="VARCHAR" property="errCodeDes"/>
+        <result column="prepay_id" jdbcType="VARCHAR" property="prepayId"/>
+        <result column="code_url" jdbcType="VARCHAR" property="codeUrl"/>
         <result column="remark_" jdbcType="VARCHAR" property="remark"/>
         <result column="enable_" jdbcType="BIGINT" property="enable"/>
         <result column="create_time" jdbcType="DATE" property="createTime"/>
@@ -37,8 +39,7 @@
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.becheer.pay.model.PayWxUnifiedOrder"
-            useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="com.becheer.donation.model.PayWxUnifiedOrder">
         INSERT INTO pay_wx_unified_order
         (
 	        appid,
@@ -65,7 +66,10 @@
             scene_info,
             return_code,
             return_msg,
-            remark_,
+            err_code,
+            err_code_des,
+            prepay_id,
+            code_url,
             enable_,
             create_time,
             create_by
@@ -96,73 +100,57 @@
             #{scene_info, jdbcType=VARCHAR},
             #{return_code, jdbcType=VARCHAR},
             #{return_msg, jdbcType=VARCHAR},
-            #{remark_, jdbcType=VARCHAR},
+            #{err_code, jdbcType=VARCHAR},
+            #{err_code_desc, jdbcType=VARCHAR},
+            #{prepay_id, jdbcType=VARCHAR},
+            #{code_url, jdbcType=VARCHAR},
 	        1,
             now(),
 	        1
         )
     </insert>
 
-    <update id="update" parameterType="com.becheer.pay.model.PayWxUnifiedOrder">
+    <update id="update" parameterType="com.becheer.donation.model.PayWxUnifiedOrder">
         UPDATE pay_wx_unified_order
         SET
-            appid = #{appid, jdbcType=VARCHAR},
-	        mch_id = #{mchId, jdbcType=VARCHAR},
-            device_info = #{deviceInfo, jdbcType=VARCHAR},
-            nonce_str = #{nonceStr, jdbcType=VARCHAR},
-            sign = #{sign, jdbcType=VARCHAR},
-            sign_type = #{signType, jdbcType=VARCHAR},
-            body = #{body, jdbcType=VARCHAR},
-            detail = #{detail, jdbcType=VARCHAR},
-            attach = #{attach, jdbcType=VARCHAR},
-            out_trade_no = #{outTradeNo, jdbcType=VARCHAR},
-            fee_type = #{feeType, jdbcType=VARCHAR},
-            total_fee = #{totalFee, jdbcType=BIGINT},
-            spbill_create_ip = #{spbillCreateIp, jdbcType=VARCHAR},
-            time_start = #{timeStart, jdbcType=VARCHAR},
-            time_expire = #{timeExpire, jdbcType=VARCHAR},
-            goods_tag = #{goodsTag, jdbcType=VARCHAR},
-            notify_url = #{notifyUrl, jdbcType=VARCHAR},
-            trade_type = #{tradeType, jdbcType=VARCHAR},
-            product_id = #{productId, jdbcType=VARCHAR},
-            limit_pay = #{limitPay, jdbcType=VARCHAR},
-            openid = #{openid, jdbcType=VARCHAR},
-            scene_info = #{scene_info, jdbcType=VARCHAR},
             return_code  = #{return_code, jdbcType=VARCHAR},
             return_msg = #{return_msg, jdbcType=VARCHAR},
-            remark_ = #{remark, jdbcType=VARCHAR},
+            err_code = #{err_code, jdbcType=VARCHAR},
+            err_code_des = #{err_code_desc, jdbcType=VARCHAR},
+            prepay_id = #{prepay_id, jdbcType=VARCHAR},
+            code_url= #{code_url, jdbcType=VARCHAR},
             update_time = now(),
             update_by= 1
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 
-    <select id="getWxUnifiedOrderByOutTradeNo" parameterType="java.lang.String" resultMap="PayWxUnifiedOrder">
-        SELECT
-            appid,
-	        mch_id,
-            device_info,
-            nonce_str,
-            sign,
-            sign_type,
-            body,
-            detail,
-            attach,
-            out_trade_no,
-            fee_type,
-            total_fee,
-            spbill_create_ip,
-            time_start,
-            time_expire,
-            goods_tag,
-            notify_url,
-            trade_type,
-            product_id,
-            limit_pay,
-            openid,
-            scene_info,
-            return_code,
-            return_msg
-        FROM pay_wx_unified_order
-        WHERE out_trade_no = #{param1}
-    </select>
+    <!--<select id="getWxUnifiedOrderByOutTradeNo" parameterType="java.lang.String" resultMap="com.becheer.donation.model.PayWxUnifiedOrder">-->
+    <!--SELECT-->
+    <!--appid,-->
+    <!--mch_id,-->
+    <!--device_info,-->
+    <!--nonce_str,-->
+    <!--sign,-->
+    <!--sign_type,-->
+    <!--body,-->
+    <!--detail,-->
+    <!--attach,-->
+    <!--out_trade_no,-->
+    <!--fee_type,-->
+    <!--total_fee,-->
+    <!--spbill_create_ip,-->
+    <!--time_start,-->
+    <!--time_expire,-->
+    <!--goods_tag,-->
+    <!--notify_url,-->
+    <!--trade_type,-->
+    <!--product_id,-->
+    <!--limit_pay,-->
+    <!--openid,-->
+    <!--scene_info,-->
+    <!--return_code,-->
+    <!--return_msg-->
+    <!--FROM pay_wx_unified_order-->
+    <!--WHERE out_trade_no = #{param1}-->
+    <!--</select>-->
 </mapper>

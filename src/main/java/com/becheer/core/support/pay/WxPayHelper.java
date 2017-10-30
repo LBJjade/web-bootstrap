@@ -263,6 +263,19 @@ public class WxPayHelper {
      * 支付异步通知时校验sign
      *
      * @param params         参数
+     * @return {boolean}
+     */
+    public static boolean verifyNotify(Map<String, String> params) {
+        WxPayConfig config = (WxPayConfig) SpringContextUtil.getBean("wxPayConfig");
+        String wxPayApiSecret = config.getApiSecret();
+        String sign = params.get("sign");
+        String localSign = WxPayHelper.createSign(params, wxPayApiSecret);
+        return sign.equals(localSign);
+    }
+    /**
+     * 支付异步通知时校验sign
+     *
+     * @param params         参数
      * @param wxPayApiSecret 支付密钥
      * @return {boolean}
      */

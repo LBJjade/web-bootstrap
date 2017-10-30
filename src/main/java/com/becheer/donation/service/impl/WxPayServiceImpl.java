@@ -4,17 +4,15 @@ import com.becheer.core.support.pay.WxPay;
 import com.becheer.core.support.pay.WxPayHelper;
 import com.becheer.core.support.pay.WxPayQueryOrderResult;
 import com.becheer.core.support.pay.WxPayReturnToWeixin;
-import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import com.becheer.donation.service.IWxPayService;
-import com.becheer.pay.service.IPayWxUnifiedOrderService;
+import com.becheer.donation.service.IPayWxUnifiedOrderService;
 import com.google.common.base.Strings;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 @Service
@@ -30,13 +28,25 @@ public class WxPayServiceImpl implements IWxPayService {
 
         Map<String, String> params = WxPayHelper.buildUnifiedOrderParasMap(outTradeNo, productId, String.valueOf(totalFee));
         // 保存构造好的参数
-        payWxUnifiedOrderService.insert(params);
-
+        // 不要在这里保存，跟微信支付反馈的信息一起保存
+        // payWxUnifiedOrderService.insert(params);
 
         String prepayXML = WxPay.unifiedOrder(params);
         Map<String, String> prepayMap = WxPayHelper.xmlToMap(prepayXML);
-        // 保存微信支付反馈的信息
-        payWxUnifiedOrderService.update(prepayMap);
+        if (WxPayHelper.verifyNotify(prepayMap)) {
+            // 保存微信支付反馈的信息
+            // payWxUnifiedOrderService.update(prepayMap);
+            Iterator keyIterator = prepayMap.keySet().iterator();
+            while (keyIterator.hasNext()) {
+                String key = (String) keyIterator.next();
+                if (params.containsKey(key)) {
+                    continue;
+                }
+                String value = (String) prepayMap.get(key);
+                params.put(key, value);
+            }
+            payWxUnifiedOrderService.insert(params);
+        }
 
         return prepayMap;
     }

@@ -1,11 +1,11 @@
-package com.becheer.pay.dao;
+package com.becheer.donation.dao;
 
 /*
 * PayWxUnifiedOrderMapper
 * Date :
 */
 
-import com.becheer.pay.model.PayWxUnifiedOrder;
+import com.becheer.donation.model.PayWxUnifiedOrder;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.becheer.pay.model;
+package com.becheer.donation.model;
 
 public class PayWxUnifiedOrder {
     private String appid; //'公众账号ID',
@@ -25,6 +25,10 @@ public class PayWxUnifiedOrder {
     private String sceneInfo; //'+场景信息',
     private String returnCode; //'返回状态码',
     private String returnMsg; //'返回信息',
+    private String errCode; //错误代码
+    private String errCodeDes; //错误代码描述
+    private String prepayId; // 预支付交易会话标识
+    private String codeUrl; //预支付交易会话标识
 
     public String getAppid() {
         return appid;
@@ -216,5 +220,37 @@ public class PayWxUnifiedOrder {
 
     public void setReturnMsg(String returnMsg) {
         this.returnMsg = returnMsg;
+    }
+
+    public String getErrCode() {
+        return errCode;
+    }
+
+    public void setErrCode(String errCode) {
+        this.errCode = errCode;
+    }
+
+    public String getErrCodeDes() {
+        return errCodeDes;
+    }
+
+    public void setErrCodeDes(String errCodeDes) {
+        this.errCodeDes = errCodeDes;
+    }
+
+    public String getPrepayId() {
+        return prepayId;
+    }
+
+    public void setPrepayId(String prepayId) {
+        this.prepayId = prepayId;
+    }
+
+    public String getCodeUrl() {
+        return codeUrl;
+    }
+
+    public void setCodeUrl(String codeUrl) {
+        this.codeUrl = codeUrl;
     }
 }

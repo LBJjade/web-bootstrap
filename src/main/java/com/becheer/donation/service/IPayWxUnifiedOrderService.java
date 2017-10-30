@@ -1,6 +1,6 @@
-package com.becheer.pay.service;
+package com.becheer.donation.service;
 
-import com.becheer.pay.model.PayWxUnifiedOrder;
+import com.becheer.donation.model.PayWxUnifiedOrder;
 
 import java.util.Map;
 
