@@ -165,7 +165,7 @@ public class Message {
     /**
      * 获取用户消息数
      */
-    public static final String GET_MEMBERMESSAGES_SUCCESS="状态获取成功";
-    public static final String GET_MEMBERMESSAGES_FAILED="状态获取失败";
+    public static final String GET_MEMBERMESSAGES_SUCCESS="消息数获取成功";
+    public static final String GET_MEMBERMESSAGES_FAILED="消息数获取失败";
 }
 

@@ -77,21 +77,23 @@
                 <hr/>
             </div>
             <div style="min-height: 450px;">
-            <div class="div_message"  v-for="item in items">
-                <div  class="div_message_title "   v-if="item.status === 0">
-                    <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="close" class="fa fa-envelope"></i><h4 style="font-weight: 900;"><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}}<span style="font-weight: normal;">2017-06-30 15:08:21</span></h4></div>
-                    <input  class="getid" type="hidden" :value="item.id"/>
+                <div class="div_message"  v-for="item in items">
+                    <div  class="div_message_title "   v-if="item.status === 0">
+                        <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="close" class="fa fa-envelope"></i><h4 style="font-weight: 900;"><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}}<span style="font-weight: normal;">2017-06-30 15:08:21</span></h4></div>
+                        <input  class="getid" type="hidden" :value="item.id"/>
+                        <input  class="status" type="hidden" :value="item.status"/>
+                    </div>
+                    <div  class="div_message_title"  v-else="item.status === 1">
+                        <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="open" class="fa fa-envelope-open-o"></i><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}} <span>2017-06-30 15:08:21</span></h4></div>
+                        <input  class="getid" type="hidden" :value="item.id"/>
+                        <input  class="status" type="hidden" :value="item.status"/>
+                    </div>
+                    <div class="div_message_content">
+                        {{item.content}}
+                    </div>
                 </div>
-                <div  class="div_message_title"  v-else="item.status === 1">
-                    <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="open" class="fa fa-envelope-open-o"></i><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}} <span>2017-06-30 15:08:21</span></h4></div>
-                    <input  class="getid" type="hidden" :value="item.id"/>
-                </div>
-                <div class="div_message_content">
-                    {{item.content}}
-                </div>
-            </div>
 
-            <p class="p_no_data">暂无消息</p>
+                <p class="p_no_data">暂无消息</p>
             </div>
             <div  id="div_page">
             </div>
@@ -108,9 +110,14 @@
     var pageNum=1;
     var pageCount;
     var vueContent;
+    var num;
+    var status=$(".div_message_title").find(".status").val();
     $(document).ready(function () {
         f_GetMessage();
-    })
+//        f_getmembernum();
+    });
+
+
 
     $("body").on("click",".div_message_title", function() {
         var id=$(this).find(".getid").val();
@@ -118,7 +125,11 @@
             $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-up");
             $(this).next().show();
             if($(this).children().find("i").hasClass("fa-envelope")){
-                f_getStatus(id);
+//                f_getStatus(id);
+                f_change(id);
+                num=$("#message").html();
+                num=num-1;
+                $("#message").html(num);
             }
             $(this).find("i").remove("class","fa fa-envelope");
             $(this).find("h4").removeAttr("style");
@@ -130,18 +141,19 @@
         }
 
     });
-//点击改变状态
+    //点击改变状态
     function f_changestatus(id) {
-            $.ajax({
-                url: '/home/message/status',
-                data: {id: id},
-                type: 'post',
-                dataType: 'json',
-                success: function (data) {
+        $.ajax({
+            url: '/home/message/status',
+            data: {id: id},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
 //                    f_getnum();
-                    f_getmembernum();
-                }
-            });
+//                    f_getmembernum();
+            }
+        });
+
     }
 
 
@@ -183,41 +195,39 @@
 
     }
 
-//    function f_getnum( ) {
+    //    function f_getnum( ) {
+    //        $.ajax({
+    //            url: '/home/message/num',
+    //            type: 'post',
+    //            dataType: 'json',
+    //            success: function (data) {
+    //                $("#message").html("消息("+data.result+")");
+    //            }
+    //        });
+    //    }
+
+
+
+
+//    function f_getStatus(id){
 //        $.ajax({
-//            url: '/home/message/num',
+//            url: '/home/message/getStatus',
+//            data: {id: id},
 //            type: 'post',
 //            dataType: 'json',
 //            success: function (data) {
-//                $("#message").html("消息("+data.result+")");
+//                if (data.result === 0) {
+//                    f_changestatus(id);
+//                }
 //            }
-//        });
+//        })
+//
 //    }
 
-    function  f_getmembernum(member_id) {
-        $.ajax({
-            url: '/home/message/number',
-            type: 'post',
-            dataType: 'json',
-            data:{member_id:member_id},
-            success: function (data) {
-                $("#message").html("消息("+data.result+")");
-            }
-        });
-    }
-    function f_getStatus(id){
-            $.ajax({
-                url: '/home/message/getStatus',
-                data: {id: id},
-                type: 'post',
-                dataType: 'json',
-                success: function (data) {
-                    if (data.result === 0) {
-                        f_changestatus(id);
-                    }
-                }
-            })
-
+    function f_change(id) {
+        if(status == 0){
+            f_changestatus(id);
+        }
     }
 
     //翻页回调函数

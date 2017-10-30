@@ -63,12 +63,12 @@
         </if>
     </select>
 
-    <select id="GetMessagesNum"  resultType="int">
-        select
-        count(*)
-        from dnt_message
-        where  status =0;
-    </select>
+    <!--<select id="GetMessagesNum"  resultType="int">-->
+        <!--select-->
+        <!--count(*)-->
+        <!--from dnt_message-->
+        <!--where  status =0;-->
+    <!--</select>-->
 
     <select id="GetMemberMessagesNum" parameterType="long" resultType="int">
         select
@@ -78,12 +78,12 @@
         and status =0;
     </select>
 
-    <select id="GetStatus" parameterType="int" resultType="int">
-        select
-        status
-        from dnt_message
-        where id_ = #{id}
-    </select>
+    <!--<select id="GetStatus" parameterType="int" resultType="int">-->
+        <!--select-->
+        <!--status-->
+        <!--from dnt_message-->
+        <!--where id_ = #{id}-->
+    <!--</select>-->
 
     <update id="ChangeStatus" parameterType="int">
          update

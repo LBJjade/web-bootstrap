@@ -41,7 +41,7 @@
             <ul class="ul_login" id="ul_logined" style="display: none">
                 <li></li>
                 <li></li>
-                <li ><a id="message" th:href="@{/home/message}"></a></li>
+                <li ><a th:href="@{/home/message}">消息(<a th:href="@{/home/message}" id="message" ></a>)</a></li>
                 <li>|</li>
                 <li><a th:href="@{/home}">个人中心</a></li>
                 <li>|</li>
@@ -76,6 +76,7 @@
     var imgRoot= /*[[${config.getImageRoot()}]]*/;
     var docRoot= /*[[${config.getDocRoot()}]]*/;
     var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
+    var number1;
     if (memberInfo!=null){
         $("#ul_login").hide();
         $("#ul_logined").show();
@@ -124,7 +125,8 @@
             dataType: 'json',
             data:{member_id:member_id},
             success: function (data) {
-                $("#message").html("消息("+data.result+")");
+//                $("#message").html("消息("+data.result+")");
+                $("#message").html(data.result);
             }
         });
     }

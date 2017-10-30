@@ -60,17 +60,17 @@ public class MessageController extends BaseController {
         }
     }
 
-    @PostMapping("/num")
-    @ResponseBody
-    public ResponseDto GetMessagesNum(){
-        try {
-            int result =  messageService.GetMessagesNum();
-            return new ResponseDto(200, Message.MESSAGE_NUMBER_GET_SUCCESS,result);
-        }catch(Exception ex){
-            return new ResponseDto(500, Message.MESSAGE_NUMBER_GET_FAILED);
-        }
-
-    }
+//    @PostMapping("/num")
+//    @ResponseBody
+//    public ResponseDto GetMessagesNum(){
+//        try {
+//            int result =  messageService.GetMessagesNum();
+//            return new ResponseDto(200, Message.MESSAGE_NUMBER_GET_SUCCESS,result);
+//        }catch(Exception ex){
+//            return new ResponseDto(500, Message.MESSAGE_NUMBER_GET_FAILED);
+//        }
+//
+//    }
 
 
     @PostMapping("/status")
@@ -84,16 +84,16 @@ public class MessageController extends BaseController {
         }
     }
 
-    @PostMapping("/getStatus")
-    @ResponseBody
-    public ResponseDto GetStatus(@RequestParam int id){
-        try {
-            int result = messageService.GetStatus(id);
-            return new ResponseDto(200, Message.GET_STATUS_SUCCESS,result);
-        }catch(Exception ex){
-            return new ResponseDto(500, Message.GET_STATUS_FAILED);
-        }
-    }
+//    @PostMapping("/getStatus")
+//    @ResponseBody
+//    public ResponseDto GetStatus(@RequestParam int id){
+//        try {
+//            int result = messageService.GetStatus(id);
+//            return new ResponseDto(200, Message.GET_STATUS_SUCCESS,result);
+//        }catch(Exception ex){
+//            return new ResponseDto(500, Message.GET_STATUS_FAILED);
+//        }
+//    }
 
     @PostMapping("/number")
     @ResponseBody

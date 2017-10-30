@@ -47,6 +47,13 @@ public class HomeAppealController extends BaseController {
         return this.render("/home/appeal");
     }
 
+    @Access(authorities="member")
+    @GetMapping("/add")
+    public String ViewDetail(HttpServletRequest request){
+        request.setAttribute("config", fileConfig);
+        return this.render("/home/launch_detail");
+    }
+
     @PostMapping("/list")
     @ResponseBody
     public ResponseDto GetAppealList(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
