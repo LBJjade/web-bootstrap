@@ -102,8 +102,8 @@
                                 <img th:src="@{/image/id_card.png}" height="120" width="120" style="margin-bottom: 10px"/>
                             </td>
                         </tr>
-                        <tr><td>曾参与的公益项目</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getProject()}"/></textarea></td></tr>
-                        <tr><td>公司简介</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"><th:block th:text="${member.getSummary()}"/></textarea></td></tr>
+                        <tr><td>曾参与的公益项目</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
+                        <tr><td>公司简介</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
                     </table>
                     <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
                 </div>
@@ -115,11 +115,17 @@
 <!--全局JS-->
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/laydate/laydate.js}"></script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
     laydate.render({
         elem: '#ipt_birthday',
         value:$("#ipt_birthday").val()
     });
+
+    var memberProject= /*[[${member.getProject()}]]*/;
+    var memberSummary= /*[[${member.getSummary()}]]*/;
+    $("#ipt_project").val(memberProject);
+    $("#ipt_summary").val(memberSummary);
 
     $(".btn_save").click(function () {
         var companyName=$("#ipt_name").val();
@@ -146,6 +152,7 @@
             }
         });
     });
+    /*]]>*/
 </script>
 </body>
 </html>

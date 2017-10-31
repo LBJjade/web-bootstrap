@@ -10,7 +10,6 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
-    <link rel="stylesheet" th:href="@{/plugin/timeline/css.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
     <style type="text/css">
@@ -124,13 +123,13 @@
             </div>
 
             <div id="div_menu" class="right_panel">
-                <div class="nav_items" v-for="item in items">
+                <div class="nav_items" v-for="item in items" v-cloak>
                     <ul>
-                        <li><a v-on:click="f_getArticle(item) " target="_blank">{{item.articleTypeName}}</a></li>
+                        <li><a v-on:click="f_setArticleType(item) " target="_blank">{{item.articleTypeName}}</a></li>
                     </ul>
                 </div>
             </div>
-            <div th:replace="themes/default/details::details"></div>
+            <!--<div th:replace="themes/default/details::details"></div>-->
             <div th:replace="themes/default/section::section"></div>
 
         </div>
@@ -164,7 +163,7 @@
                 </a>
             </div>
             <br/>
-            <div id="div_content" style="margin-top: 10px;padding-left: 30px;min-height:750px;">
+            <div id="div_content" style="margin-top: 10px;padding-left: 30px;min-height:550px;">
                 <div style="width:20px;"></div>
                 <table class="table table-bordered">
                     <thead>
@@ -191,12 +190,7 @@
                     </tbody>
                 </table>
             </div>
-            <div style="width: 100%;text-align: center">
-                <ul class="pagination" style="text-align: center">
-                    <li><a href="#">上一页</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">下一页</a></li>
-                </ul>
+            <div class="left_item" style="text-align: center" id="div_page">
             </div>
         </div>
     </div>
@@ -209,15 +203,23 @@
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script th:src="@{/plugin/vue/vue.min.js}"></script>
+<script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var pageSize = 10;
+    var pageSize = 9;
     var pageNum = 1;
+    var pageCount;
     var vueContent;
+    var typeItem;
 
     $(document).ready(function () {
         f_getArticleType();
     });
+
+    function f_setArticleType(item) {
+        typeItem=item;
+        f_getArticle();
+    }
 
     //获取文章分类
     function f_getArticleType() {
@@ -233,7 +235,8 @@
                         }
                     });
                     if (data.result != null) {
-                        f_getArticle(data.result[0]);
+                        typeItem=data.result[0];
+                        f_getArticle();
                     }
                 }
             }
@@ -241,14 +244,18 @@
     }
 
     //获取文章
-    function f_getArticle(tItem) {
+    function f_getArticle() {
         $.ajax({
             url: '/publicity/article',
             type: 'post',
-            data: {pageSize: pageSize, pageNum: pageNum, tid: tItem.id},
+            data: {pageSize: pageSize, pageNum: pageNum, tid: typeItem.id},
             success: function (data) {
                 if (data.code === 200) {
-                    $("#a_title").html(tItem.articleTypeName)
+                    $("#a_title").html(typeItem.articleTypeName);
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
+                    f_InitPagination($("#div_page"));
                     if (vueContent === undefined) {
                         vueContent = new Vue({
                             el: "#div_content",
@@ -267,6 +274,12 @@
                 }
             }
         })
+    }
+
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum = newPage;
+        f_getArticle();
     }
     /*]]>*/
 

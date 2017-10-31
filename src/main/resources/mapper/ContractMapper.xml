@@ -5,7 +5,7 @@
     <resultMap id="MemberContractResultMap" type="com.becheer.donation.model.extension.contract.MemberContractExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
-        <result column="donator_sign_time" jdbcType="TIMESTAMP" property="signTime" />
+        <result column="a_sign_time" jdbcType="TIMESTAMP" property="signTime" />
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
         <result column="enable_" jdbcType="INTEGER" property="enable" />
     </resultMap>
@@ -25,11 +25,11 @@
         SELECT
             id_,
             contract_name,
-            donator_sign_time,
+            a_sign_time,
             contract_amount,
             enable_
         FROM dnt_contract
-        WHERE member_id=#{memberId,jdbcType=BIGINT}
+        WHERE member_id=#{memberId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
     </select>
 
     <select id="SelectContractDetail" parameterType="java.lang.Long" resultMap="MemberContractDetailResultMap">
@@ -43,6 +43,6 @@
             donator_sign_time,
             enable_
         FROM dnt_contract
-        WHERE id_=#{contractId,jdbcType=BIGINT}
+        WHERE id_=#{contractId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
     </select>
 </mapper>
