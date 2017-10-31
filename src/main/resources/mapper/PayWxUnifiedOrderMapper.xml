@@ -12,7 +12,7 @@
         <result column="body" jdbcType="VARCHAR" property="body"/>
         <result column="detail" jdbcType="VARCHAR" property="detail"/>
         <result column="attach" jdbcType="VARCHAR" property="attach"/>
-        <result column="out_trade_no" jdbcType="VARCHAR" property="outTrade_no"/>
+        <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo"/>
         <result column="fee_type" jdbcType="VARCHAR" property="feeType"/>
         <result column="total_fee" jdbcType="INTEGER" property="totalFee"/>
         <result column="spbill_create_ip" jdbcType="VARCHAR" property="spbillCreateIp"/>
@@ -31,6 +31,11 @@
         <result column="err_code_des" jdbcType="VARCHAR" property="errCodeDes"/>
         <result column="prepay_id" jdbcType="VARCHAR" property="prepayId"/>
         <result column="code_url" jdbcType="VARCHAR" property="codeUrl"/>
+        <result column="notify_return_code" jdbcType="VARCHAR" property="notifyReturnCode"/>
+        <result column="notify_result" jdbcType="VARCHAR" property="notifyResultCode"/>
+        <result column="notify_err_code" jdbcType="VARCHAR" property="notifyErrCode"/>
+        <result column="notify_err_code_des" jdbcType="VARCHAR" property="notifyErrCodeDes"/>
+        <result column="notify_xml" jdbcType="VARCHAR" property="notifyXML"/>
         <result column="remark_" jdbcType="VARCHAR" property="remark"/>
         <result column="enable_" jdbcType="BIGINT" property="enable"/>
         <result column="create_time" jdbcType="DATE" property="createTime"/>
@@ -124,33 +129,51 @@
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 
-    <!--<select id="getWxUnifiedOrderByOutTradeNo" parameterType="java.lang.String" resultMap="com.becheer.donation.model.PayWxUnifiedOrder">-->
-    <!--SELECT-->
-    <!--appid,-->
-    <!--mch_id,-->
-    <!--device_info,-->
-    <!--nonce_str,-->
-    <!--sign,-->
-    <!--sign_type,-->
-    <!--body,-->
-    <!--detail,-->
-    <!--attach,-->
-    <!--out_trade_no,-->
-    <!--fee_type,-->
-    <!--total_fee,-->
-    <!--spbill_create_ip,-->
-    <!--time_start,-->
-    <!--time_expire,-->
-    <!--goods_tag,-->
-    <!--notify_url,-->
-    <!--trade_type,-->
-    <!--product_id,-->
-    <!--limit_pay,-->
-    <!--openid,-->
-    <!--scene_info,-->
-    <!--return_code,-->
-    <!--return_msg-->
-    <!--FROM pay_wx_unified_order-->
-    <!--WHERE out_trade_no = #{param1}-->
-    <!--</select>-->
+    <update id="updateNotifyXML">
+        UPDATE pay_wx_unified_order
+        SET
+            notify_return_code = #{param2},
+            notify_return_msg = #{param3},
+            notify_result_code = #{param4},
+            notify_err_code = #{param5},
+            notify_err_code_desc = #{param6},
+            notify_xml = #{param7},
+            update_time = now(),
+            update_by= 2
+        WHERE out_trade_no = #{param1}
+    </update>
+    <select id="getPayWxUnifiedOrderByOutTradeNo" resultMap="BaseResultMap">
+    SELECT
+        appid,
+        mch_id,
+        device_info,
+        nonce_str,
+        sign,
+        sign_type,
+        body,
+        detail,
+        attach,
+        out_trade_no,
+        fee_type,
+        total_fee,
+        spbill_create_ip,
+        time_start,
+        time_expire,
+        goods_tag,
+        notify_url,
+        trade_type,
+        product_id,
+        limit_pay,
+        openid,
+        scene_info,
+        return_code,
+        return_msg,
+        notify_return_code,
+        notify_result_code,
+        notify_err_code,
+        notify_err_code_desc,
+        notify_xml
+    FROM pay_wx_unified_order
+    WHERE out_trade_no = #{param1}
+    </select>
 </mapper>

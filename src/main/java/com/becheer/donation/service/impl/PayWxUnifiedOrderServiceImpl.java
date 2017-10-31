@@ -41,6 +41,11 @@ public class PayWxUnifiedOrderServiceImpl implements IPayWxUnifiedOrderService {
     }
 
     @Override
+    public int updateNotifyXML(String outTradeNo, String returnCode, String returnMsg, String resultCode, String errCode, String errCodeMsg, String notifyXML) {
+        return mapper.updateNotifyXML(outTradeNo, returnCode, returnMsg, resultCode, errCode, errCodeMsg, notifyXML);
+    }
+
+    @Override
     public PayWxUnifiedOrder getPayWxUnifiedOrderByOutTradeNo(String outTradeNo) {
         return mapper.getPayWxUnifiedOrderByOutTradeNo(outTradeNo);
     }

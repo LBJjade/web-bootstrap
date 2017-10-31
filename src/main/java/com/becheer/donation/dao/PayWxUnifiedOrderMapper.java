@@ -21,5 +21,9 @@ public interface PayWxUnifiedOrderMapper {
 
     int update(PayWxUnifiedOrder model);
 
+    int updateNotify(String outTradeNo, String notifyXML);
+
+    int updateNotifyXML(String outTradeNo, String returnCode, String returnMsg, String resultCode, String errCode, String errCodeMsg, String notifyXML);
+
     PayWxUnifiedOrder getPayWxUnifiedOrderByOutTradeNo(String outTradeNo);
 }

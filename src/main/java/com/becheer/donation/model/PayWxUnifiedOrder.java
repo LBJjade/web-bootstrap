@@ -1,6 +1,8 @@
 package com.becheer.donation.model;
 
-public class PayWxUnifiedOrder {
+import com.becheer.donation.model.base.BaseModel;
+
+public class PayWxUnifiedOrder extends BaseModel {
     private String appid; //'公众账号ID',
     private String mchId; //'商户号',
     private String deviceInfo; //'设备号',
@@ -10,7 +12,7 @@ public class PayWxUnifiedOrder {
     private String body; //'商品描述',
     private String detail; //'商品详情',
     private String attach; //'附加数据',
-    private String outTrade_no; //'商户订单号',
+    private String outTradeNo; //'商户订单号',
     private String feeType; //'标价币种',
     private Integer totalFee; //标价金额,
     private String spbillCreateIp; //'终端IP',
@@ -29,6 +31,12 @@ public class PayWxUnifiedOrder {
     private String errCodeDes; //错误代码描述
     private String prepayId; // 预支付交易会话标识
     private String codeUrl; //预支付交易会话标识
+
+    private String notifyReturnCode; //'返回状态码',
+    private String notifyReturnMsg; //'返回信息',
+    private String notifyErrCode; //错误代码
+    private String notifyErrCodeDes; //错误代码描述
+    private String notifyXML; //微信支付结果通知XML
 
     public String getAppid() {
         return appid;
@@ -102,12 +110,12 @@ public class PayWxUnifiedOrder {
         this.attach = attach;
     }
 
-    public String getOutTrade_no() {
-        return outTrade_no;
+    public String getOutTradeNo() {
+        return outTradeNo;
     }
 
-    public void setOutTrade_no(String outTrade_no) {
-        this.outTrade_no = outTrade_no;
+    public void setOutTradeNo(String outTradeNo) {
+        this.outTradeNo = outTradeNo;
     }
 
     public String getFeeType() {
@@ -252,5 +260,45 @@ public class PayWxUnifiedOrder {
 
     public void setCodeUrl(String codeUrl) {
         this.codeUrl = codeUrl;
+    }
+
+    public String getNotifyReturnCode() {
+        return notifyReturnCode;
+    }
+
+    public void setNotifyReturnCode(String notifyReturnCode) {
+        this.notifyReturnCode = notifyReturnCode;
+    }
+
+    public String getNotifyReturnMsg() {
+        return notifyReturnMsg;
+    }
+
+    public void setNotifyReturnMsg(String notifyReturnMsg) {
+        this.notifyReturnMsg = notifyReturnMsg;
+    }
+
+    public String getNotifyErrCode() {
+        return notifyErrCode;
+    }
+
+    public void setNotifyErrCode(String notifyErrCode) {
+        this.notifyErrCode = notifyErrCode;
+    }
+
+    public String getNotifyErrCodeDes() {
+        return notifyErrCodeDes;
+    }
+
+    public void setNotifyErrCodeDes(String notifyErrCodeDes) {
+        this.notifyErrCodeDes = notifyErrCodeDes;
+    }
+
+    public String getNotifyXML() {
+        return notifyXML;
+    }
+
+    public void setNotifyXML(String notifyXML) {
+        this.notifyXML = notifyXML;
     }
 }
