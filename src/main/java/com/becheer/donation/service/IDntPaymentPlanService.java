@@ -7,9 +7,15 @@ package com.becheer.donation.service;
 
 import com.becheer.donation.model.DntPaymentPlan;
 
+import java.util.Date;
+
 public interface IDntPaymentPlanService {
 
-    public int insert(DntPaymentPlan model);
+    int insert(DntPaymentPlan model);
 
-    public int update(DntPaymentPlan model);
+    int update(DntPaymentPlan model);
+
+    int updateReceived(String paylogRefTable, Integer paylogRefRecordId, Date paymentDate, Integer receivedAmount);
+
+    int updatePaylogRefRecordId(Integer id, Integer payloaRefRecordID);
 }

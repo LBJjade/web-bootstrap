@@ -10,6 +10,7 @@ import com.becheer.donation.service.IDonateService;
 import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.utils.GenerateUtil;
 import com.becheer.donation.utils.UUID;
+import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class DonateServiceImpl implements IDonateService {
     @Resource
     private IWxPayService payService;
 
-    public Map<String, String> donate(Donate donate, String ip) {
+    public Map<String, String> donate(Donate donate, String ip, String memberName) {
         Integer projectTypeId = donate.getProjectTypeId();
         Integer projectId = donate.getProjectId();
         Long memberId = donate.getMemberId();
@@ -72,14 +73,19 @@ public class DonateServiceImpl implements IDonateService {
 
         // 2.写入付款计划表 dnt_payment_plan
         DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
-        String title = "TODO: 支付计划标题要做成自动生成的" + UUID.getRandomNumber(3);
+
+
+        String title = "捐赠了" +  String.valueOf(amount / 100.00) + "元";
+        if (!Strings.isNullOrEmpty(memberName)) {
+            title = memberName + title;
+        }
         dntPaymentPlan.setTitle(GenerateUtil.genPaymentPlanTitle(title));
         dntPaymentPlan.setRefTable("dnt_no_contract_donate");
         dntPaymentPlan.setRefRecordId(dntNoContractDonate.getId());
         dntPaymentPlan.setPaymentDate(null);
         dntPaymentPlan.setAmount(dntNoContractDonate.getAmount());
         dntPaymentPlan.setEnable(1);
-        dntPaymentPlan.setPaylogRefTable("payment_weixin");
+        dntPaymentPlan.setPaylogRefTable("pay_wx_unified_order");
         dntPaymentPlan.setStatus(0);
 
         // !!! 以下这些字段没有录入数据

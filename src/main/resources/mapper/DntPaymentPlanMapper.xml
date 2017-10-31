@@ -84,4 +84,21 @@
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 
+    <update id="updatePaylogRefRecordId">
+        UPDATE dnt_payment_plan
+        SET
+        paylogRefRecordId = #{param2}
+        WHERE id_ = #{param1}
+    </update>
+
+    <update id="updateReceived">
+        UPDATE dnt_payment_plan
+        SET
+        status = 1,
+        paymentDate = #{param3},
+        receivedAmount = #{param4},
+        update_time = now(),
+        update_by = 1
+        WHERE paylogRefTable = #{param1} AND paylogRefRecordId = #{param2}
+    </update>
 </mapper>

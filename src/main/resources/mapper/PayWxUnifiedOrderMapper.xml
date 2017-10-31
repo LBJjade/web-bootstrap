@@ -3,6 +3,7 @@
 <mapper namespace="com.becheer.donation.dao.PayWxUnifiedOrderMapper">
 
     <resultMap id="BaseResultMap" type="com.becheer.donation.model.PayWxUnifiedOrder">
+        <result column="id_" jdbcType="BIGINT" property="id"/>
         <result column="appid" jdbcType="VARCHAR" property="appid"/>
         <result column="mch_id" jdbcType="VARCHAR" property="mchId"/>
         <result column="device_info" jdbcType="VARCHAR" property="deviceInfo"/>
@@ -44,7 +45,8 @@
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.becheer.donation.model.PayWxUnifiedOrder">
+    <insert id="insert" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pay_wx_unified_order
         (
 	        appid,

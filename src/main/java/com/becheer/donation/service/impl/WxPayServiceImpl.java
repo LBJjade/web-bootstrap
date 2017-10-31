@@ -6,14 +6,17 @@ import com.becheer.core.support.pay.WxPayQueryOrderResult;
 import com.becheer.core.support.pay.WxPayReturnToWeixin;
 import com.becheer.core.util.XmlUtil;
 import com.becheer.donation.model.PayWxUnifiedOrder;
+import com.becheer.donation.service.IDntPaymentPlanService;
 import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.service.IPayWxUnifiedOrderService;
+import com.becheer.donation.utils.DateUtils;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -26,6 +29,9 @@ public class WxPayServiceImpl implements IWxPayService {
     @Resource
     private IPayWxUnifiedOrderService payWxUnifiedOrderService;
 
+    @Resource
+    private IDntPaymentPlanService paymentPlanService;
+
     @Override
     public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
 
@@ -35,7 +41,8 @@ public class WxPayServiceImpl implements IWxPayService {
         // payWxUnifiedOrderService.insert(params);
 
         String prepayXML = WxPay.unifiedOrder(params);
-        Map<String, String> prepayMap = WxPayHelper.xmlToMap(prepayXML);
+        Map prepayMap = XmlUtil.parseXml2Map(prepayXML);
+        // Map<String, String> prepayMap = WxPayHelper.xmlToMap(prepayXML);
         if (WxPayHelper.verifyNotify(prepayMap)) {
             // 保存微信支付反馈的信息
             // payWxUnifiedOrderService.update(prepayMap);
@@ -45,10 +52,18 @@ public class WxPayServiceImpl implements IWxPayService {
                 if (params.containsKey(key)) {
                     continue;
                 }
-                String value = (String) prepayMap.get(key);
+                String value = (String)prepayMap.get(key);
                 params.put(key, value);
             }
             payWxUnifiedOrderService.insert(params);
+
+            String unifiedOrderId = params.get("id");
+            Integer paylogRefRecordId  = Integer.valueOf(unifiedOrderId);
+
+
+            Integer paymentPlanId= Integer.parseInt(productId);
+
+            paymentPlanService.updatePaylogRefRecordId(paymentPlanId, paylogRefRecordId);
         }
 
         return prepayMap;
@@ -156,7 +171,7 @@ public class WxPayServiceImpl implements IWxPayService {
         }
         if (unifiedOrder == null) {
             returnToWxPay.put("return_code", "FAIL");
-            returnToWxPay.put("return_msg", "商户订单号out_trade_no对应的业务数据不存在");
+            returnToWxPay.put("return_msg", "商户订单号out_trade_no=" + outTradeNo + "对应的业务数据不存在");
             return WxPayHelper.toXml(returnToWxPay);
         }
 
@@ -207,6 +222,20 @@ public class WxPayServiceImpl implements IWxPayService {
         //     logger.warn("微信支付结果通知: !!!没有return_code节点的微信支付结果通知");
         // }
         // payWxUnifiedOrderService.updateNotifyXML(outTradeNo, returnCode, returnMsg, resultCode, errCode, errCodeMsg, notifyXML);
+
+        Date paymentDate = null;
+        String timeEnd = notify.get("time_end");
+        if (!Strings.isNullOrEmpty(timeEnd)) {
+            paymentDate = DateUtils.dateFormat(timeEnd);
+        }
+
+        Integer paymentPlanId = -1;
+        String productId = notify.get("product_id");
+        if (!Strings.isNullOrEmpty(productId)) {
+            paymentPlanId = Integer.parseInt(productId);
+        }
+
+        paymentPlanService.updateReceived("pay_wx_unified_order", paymentPlanId,  paymentDate, totalFee);
 
         returnToWxPay.put("return_code", "SUCCESS");
         returnToWxPay.put("return_msg", "OK");
