@@ -532,13 +532,13 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200"/>
+                                <img id="qrCodeImageId" height="200" width="200" onerror="this.onerror=null;this.src='/image/error.jpg'"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
                                 </div>
                             </div>
-                            <div><img id="CodeImage" th:src="@{~/image/wxsm.png}" onerror="this.onerror=null;this.src='/image/error.jpg'"/></div>
+                            <div><img id="CodeImage" th:src="@{~/image/wxsm.png}" /></div>
                         </div>
                         <div class="col-sm-6">
                             <img id="qr_logo" th:src="@{~/image/sm.jpg}"  alt="hjaksfh" style="height:205px; width:265px;display: none;" />
@@ -966,7 +966,7 @@
                         }
                     }
             });
-            var timer =10;
+            var timer =60;
             function Countdown() {
                 if (timer >= 1) {
                     timer -= 1;
@@ -1033,7 +1033,7 @@
                     }
                 }
         });
-        var timer =10;
+        var timer =60;
         function Countdown() {
             if (timer >= 1) {
                 timer -= 1;
