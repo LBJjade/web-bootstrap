@@ -17,7 +17,7 @@
         <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
         <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
         <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-        <result column="donator_sign_time" jdbcType="TIMESTAMP" property="signTime" />
+        <result column="a_sign_time" jdbcType="TIMESTAMP" property="signTime" />
         <result column="enable_" jdbcType="INTEGER" property="enable" />
     </resultMap>
 
@@ -40,7 +40,7 @@
             donated_amount,
             begin_time,
             end_time,
-            donator_sign_time,
+            a_sign_time,
             enable_
         FROM dnt_contract
         WHERE id_=#{contractId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
