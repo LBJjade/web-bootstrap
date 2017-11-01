@@ -76,8 +76,6 @@
     var imgRoot= /*[[${config.getImageRoot()}]]*/;
     var docRoot= /*[[${config.getDocRoot()}]]*/;
     var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
-    var avatorRoot= /*[[${config.getAvatorRoot()}]]*/;
-    var projectImgRoot= /*[[${config.getProjectImgRoot()}]]*/;
 
     if (memberInfo!=null){
         $("#ul_login").hide();
@@ -130,6 +128,24 @@
                 }
             });
         }
+    }
+
+    $(document).ready(function(){
+//        f_getnum();
+       f_getmembernum();
+    })
+
+    function  f_getmembernum(member_id) {
+        $.ajax({
+            url: '/home/message/number',
+            type: 'post',
+            dataType: 'json',
+            data:{member_id:member_id},
+            success: function (data) {
+//                $("#message").html("消息("+data.result+")");
+                $("#message").html(data.result);
+            }
+        });
     }
     /*]]>*/
 </script>

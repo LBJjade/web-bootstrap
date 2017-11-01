@@ -2,26 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
 
     <title>message</title>
 
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
-    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link th:href="@{/css/font-awesome.css?v=4.7.0}" rel="stylesheet"/>
     <style type="text/css">
 
-        .div_message_title{
+        .div_message_title {
             padding: 15px;
             height: 50px;
-            margin:15px 0px 0px 25px;
+            margin: 15px 0px 0px 25px;
             border: 1px solid #dbdbdb;
             background-color: #fbfbfb;
         }
 
-        .div_message_content{
+        .div_message_content {
             padding: 15px;
             margin-left: 25px;
             border: 1px solid #dbdbdb;
@@ -29,7 +29,7 @@
             display: none;
         }
 
-        .div_message_title h4{
+        .div_message_title h4 {
             font-weight: 400;
             color: #666;
             font-size: 14px;
@@ -37,12 +37,12 @@
             margin: 0px;
         }
 
-        .div_message_title span{
+        .div_message_title span {
             margin-right: 10px;
             float: right;
         }
 
-        .p_no_data{
+        .p_no_data {
             line-height: 100px;
             text-align: center;
             display: none;
@@ -76,14 +76,37 @@
                 <hr/>
             </div>
             <div style="min-height: 450px;">
-            <div v-for="item in items" v-cloak>
-                <div class="div_message_title">
-                    <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}}<span>2017-06-30 15:08:21</span></h4></div>
+                <div class="div_message" v-for="item in items">
+                    <div class="div_message_title ">
+                        <div v-if="item.status === 0">
+                            <i style="color:#00a0ea;float: left;padding-right: 10px;" id="close"
+                               class="fa fa-envelope"></i>
+                            <h4 style="font-weight: 900;">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                                {{item.title}}
+                                <span style="font-weight: normal;">
+                                    2017-06-30 15:08:21
+                                </span>
+                            </h4>
+                        </div>
+                        <div v-else="item.status === 1">
+                            <i style="color:#00a0ea;float: left;padding-right: 10px;" id="open"
+                               class="fa fa-envelope-open-o"></i>
+                            <h4>
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                                {{item.title}}
+                                <span>
+                                    2017-06-30 15:08:21
+                                </span>
+                            </h4>
+                        </div>
+                        <input class="getid" type="hidden" :value="item.id"/>
+                        <input class="status" type="hidden" :value="item.status"/>
+                    </div>
+                    <div class="div_message_content">
+                        {{item.content}}
+                    </div>
                 </div>
-                <div class="div_message_content">
-                    {{item.content}}
-                </div>
-            </div>
 
             <p class="p_no_data">暂无消息</p>
             </div>
@@ -98,25 +121,57 @@
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
-    var pageSize=10;
-    var pageNum=1;
+    var pageSize = 10;
+    var pageNum = 1;
     var pageCount;
     var vueContent;
+    var num;
+    var currentItem;
+    var status = $(".div_message_title").find(".status").val();
 
     $(document).ready(function () {
         f_GetMessage();
-    })
+    });
 
-    $("body").on("click",".div_message_title", function() {
-        if ($(this).next().css("display")==="none"){
-            $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-up");
+
+    $("body").on("click", ".div_message_title", function () {
+        var id = $(this).find(".getid").val();
+        if ($(this).next().css("display") === "none") {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-up");
             $(this).next().show();
-
-        }else{
-            $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-down");
+            if ($(this).children().find("i").hasClass("fa-envelope")) {
+                f_change(id);
+                num = $("#message").html();
+                num = num - 1;
+                $("#message").html(num);
+            }
+            currentItem = $(this);
+        } else {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-down");
             $(this).next().hide();
         }
     });
+
+    //点击改变状态
+    function f_changestatus(id) {
+        $.ajax({
+            url: '/home/message/status',
+            data: {id: id},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    currentItem.find("i").removeClass("fa-envelope");
+                    currentItem.find("h4").removeAttr("style");
+                    currentItem.find("i").addClass("fa-envelope-open-o");
+                }
+                else {
+                    layer.alert("状态修改失败");
+                }
+            }
+        });
+
+    }
 
 
     function f_GetMessage() {
@@ -155,6 +210,14 @@
             }
         });
     }
+
+
+    function f_change(id) {
+        if (status == 0) {
+            f_changestatus(id);
+        }
+    }
+
 
     //翻页回调函数
     function f_PageCallBack(newPage) {
