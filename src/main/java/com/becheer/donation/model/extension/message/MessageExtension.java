@@ -11,7 +11,7 @@ import com.becheer.donation.utils.DateUtils;
 import java.util.Date;
 
 public class MessageExtension {
-    private int id;
+    private long id;
 
     private String type;
 
@@ -31,11 +31,9 @@ public class MessageExtension {
         this.status = status;
     }
 
-    public int getId() {
-        return id;
-    }
+    public long getId() { return id; }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(long id) { this.id = id; }
 
     public String getType() {
         return type;

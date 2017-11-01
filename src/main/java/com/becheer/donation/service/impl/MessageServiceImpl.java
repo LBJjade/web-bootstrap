@@ -37,21 +37,12 @@ public class MessageServiceImpl implements IMessageService {
         return pageInfo;
     }
 
-//    @Override
-//    public int GetMessagesNum() {
-//       return messageMapper.GetMessagesNum();
-//    }
-
     @Override
-    public int GetMemberMessagesNum(long member_id) {
-        return messageMapper.GetMemberMessagesNum(member_id);
+    public int GetMemberMessagesNum(long memberId) {
+        return messageMapper.GetMemberMessagesNum(memberId);
     }
 
     @Override
-    public void ChangeStatus(int id) { messageMapper.ChangeStatus(id);}
+    public void ChangeStatus(long id) { messageMapper.ChangeStatus(id);}
 
-//    @Override
-//    public int GetStatus(int id) {
-//        return messageMapper.GetStatus(id);
-//    }
 }

@@ -3,23 +3,24 @@
 <mapper namespace="com.becheer.donation.dao.AppealMapper">
 
     <resultMap id="MemberAppealResultMap" type="com.becheer.donation.model.extension.appeal.MemberAppealExtension">
-        <id column="id_" jdbcType="BIGINT" property="id" />
-        <result column="appeal_title" jdbcType="VARCHAR" property="appealTitle" />
-        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
-        <result column="appeal_method" jdbcType="VARCHAR" property="appealMethod" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="appeal_title" jdbcType="VARCHAR" property="appealTitle"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
+        <result column="appeal_method" jdbcType="VARCHAR" property="appealMethod"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
 
-    <resultMap id="MemberAppealDetailResultMap" type="com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension">
-        <id column="id_" jdbcType="BIGINT" property="id" />
-        <result column="appeal_title" jdbcType="VARCHAR" property="title" />
-        <result column="appeal_method" jdbcType="VARCHAR" property="method" />
-        <result column="appeal_content" jdbcType="VARCHAR" property="content" />
-        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
-        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="status" jdbcType="INTEGER" property="status" />
+    <resultMap id="MemberAppealDetailResultMap"
+               type="com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="appeal_title" jdbcType="VARCHAR" property="title"/>
+        <result column="appeal_method" jdbcType="VARCHAR" property="method"/>
+        <result column="appeal_content" jdbcType="VARCHAR" property="content"/>
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
     </resultMap>
 
     <select id="SelectAppealByMemberId" parameterType="java.lang.Long" resultMap="MemberAppealResultMap">
@@ -56,33 +57,33 @@
         AND a.member_id= #{param2}
     </select>
 
-    <insert id="appealInsert" parameterType="com.becheer.donation.model.extension.appeal.AppealDetailExtension">
-          INSERT INTO dnt_appeal
-        (
-        member_id,
-        contract_id,
-        project_id,
-        appeal_title,
-        appeal_content,
-        appeal_method,
-        appeal_type,
-        enable_,
-        create_time,
-        status
-        )
+    <insert id="add" parameterType="com.becheer.donation.model.extension.appeal.AppealDetailExtension">
+        INSERT INTO dnt_appeal
+         (
+          member_id,
+          contract_id,
+          project_id,
+          appeal_title,
+          appeal_content,
+          appeal_method,
+          appeal_type,
+          enable_,
+          create_time,
+          status
+          )
         VALUES
-        (
-        #{memberId,jdbcType=BIGINT},
-        #{contractId,jdbcType=BIGINT},
-        #{projectId,jdbcType=BIGINT},
-        #{appealTitle,jdbcType=VARCHAR},
-        #{appealContent,jdbcType=VARCHAR},
-        #{appealMethod,jdbcType=VARCHAR},
-        1,
-        1,
-        now(),
-        0
-        )
+          (
+          #{memberId,jdbcType=BIGINT},
+          #{contractId,jdbcType=BIGINT},
+          #{projectId,jdbcType=BIGINT},
+          #{appealTitle,jdbcType=VARCHAR},
+          #{appealContent,jdbcType=VARCHAR},
+          #{appealMethod,jdbcType=VARCHAR},
+          1,
+          1,
+          now(),
+          0
+          )
     </insert>
 
 </mapper>

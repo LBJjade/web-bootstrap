@@ -66,7 +66,7 @@ public class HomeAppealController extends BaseController {
                 return this.render("/home/launch_detail");
             }
         }catch(Exception ex){
-            LOGGER.error("GetProjectDetail", ex);
+            LOGGER.error("ViewDetail", ex);
             return render_500();
         }
     }
@@ -129,13 +129,16 @@ public class HomeAppealController extends BaseController {
     }
 
 
-    @PostMapping("/appealInsert")
+    @PostMapping("/add")
     @ResponseBody
-    public  ResponseDto appealInsert(HttpServletRequest request,@RequestParam String title,@RequestParam String method,@RequestParam String content,@RequestParam long contractProjectId,@RequestParam long projectId){
+    public  ResponseDto add(HttpServletRequest request,@RequestParam String title,@RequestParam String method,@RequestParam String content,@RequestParam long contractProjectId,@RequestParam long projectId){
         try {
             MemberSessionExtension currentMember=GetCurrentUser(request);
+            if (currentMember==null){
+                return MemberAuthFailed();
+            }
             long memberId=currentMember.memberId;
-            appealService.appealInsert(title,method,content,contractProjectId,projectId,memberId);
+            appealService.add(title,method,content,contractProjectId,projectId,memberId);
             return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
         }catch(Exception ex){
             return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);

@@ -76,16 +76,30 @@
                 <p>我的消息</p>
                 <hr/>
             </div>
-            <div style="min-height: 450px;">
+                <div style="min-height: 450px;">
                 <div class="div_message"  v-for="item in items">
-                    <div  class="div_message_title "   v-if="item.status === 0">
-                        <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="close" class="fa fa-envelope"></i><h4 style="font-weight: 900;"><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}}<span style="font-weight: normal;">2017-06-30 15:08:21</span></h4></div>
-                        <input  class="getid" type="hidden" :value="item.id"/>
-                        <input  class="status" type="hidden" :value="item.status"/>
-                    </div>
-                    <div  class="div_message_title"  v-else="item.status === 1">
-                        <div><i style="color:#00a0ea;float: left;padding-right: 10px;" id="open" class="fa fa-envelope-open-o"></i><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.title}} <span>2017-06-30 15:08:21</span></h4></div>
-                        <input  class="getid" type="hidden" :value="item.id"/>
+                    <div  class="div_message_title "  >
+                        <div  v-if="item.status === 0">
+                            <i style="color:#00a0ea;float: left;padding-right: 10px;" id="close" class="fa fa-envelope"></i>
+                            <h4 style="font-weight: 900;">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                                {{item.title}}
+                                <span style="font-weight: normal;">
+                                    2017-06-30 15:08:21
+                                </span>
+                            </h4>
+                        </div>
+                        <div  v-else="item.status === 1">
+                            <i style="color:#00a0ea;float: left;padding-right: 10px;" id="open" class="fa fa-envelope-open-o"></i>
+                            <h4>
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                                {{item.title}}
+                                <span>
+                                    2017-06-30 15:08:21
+                                </span>
+                            </h4>
+                        </div>
+                         <input  class="getid" type="hidden" :value="item.id"/>
                         <input  class="status" type="hidden" :value="item.status"/>
                     </div>
                     <div class="div_message_content">

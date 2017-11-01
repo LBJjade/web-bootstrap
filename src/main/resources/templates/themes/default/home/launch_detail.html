@@ -106,7 +106,7 @@
         var method=$("#type").find("option:selected").text();
         var content=$("#main").val();
         $.ajax({
-            url:'/home/appeal/appealInsert',
+            url:'/home/appeal/add',
             data:{title:title,method:method,content:content,contractProjectId:contractProjectId,projectId:projectId},
             type:'post',
             dataType:'json',

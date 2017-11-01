@@ -19,7 +19,6 @@ public interface AppealMapper {
 
     MemberAppealDetailExtension SelectAppealDetail(long appealId,long memberId);
 
-//    void appealInsert();
 
-    void appealInsert( AppealDetailExtension appealdetail);
+    void add( AppealDetailExtension appealdetail);
 }
