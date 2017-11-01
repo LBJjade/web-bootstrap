@@ -41,7 +41,8 @@
             payment_method_id,
             paylog_ref_table,
             paylog_ref_record_id,
-            status
+            status,
+            order_no
         )
         VALUES
         (
@@ -59,7 +60,8 @@
             #{paymentMethodId, jdbcType=INTEGER},
             #{paylogRefTable, jdbcType=VARCHAR},
             #{paylogRefRecordId, jdbcType=INTEGER},
-            #{status, jdbcType=INTEGER}
+            #{status, jdbcType=INTEGER},
+            #{orderNo, jdbcType=VARCHAR}
         )
     </insert>
 
