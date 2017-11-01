@@ -324,7 +324,7 @@
             </div>
             <div class="project_block">
             <div id="div_project">
-                <img th:src='${config.getProjectImgRoot()+project.getThumbImg()+"?x-oss-process=image/resize,m_fill,h_300,w_560"}'/>
+                <img th:src='${config.getFileRoot()+project.getThumbImg()+"?x-oss-process=image/resize,m_fill,h_300,w_560"}'/>
             </div>
             <div id="div_project_info">
                 <div class="div_title">
@@ -404,7 +404,7 @@
 
                         <ul v-for="item in items" class="recommend_item" v-cloak>
                             <!--<div class="recommend_item" >-->
-                            <li><img :src="avatorRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" /></li>
+                            <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" /></li>
                             <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount|format}}元</li>
                             <!--</div>-->
                         </ul>
@@ -416,7 +416,7 @@
                     <h2 class="h2_title">相关项目</h2>
                     <div class="recommend_item"  v-for="item in items" v-cloak>
                         <ul>
-                            <li><img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'" /></li>
+                            <li><img :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'" /></li>
                             <li class="recommend_item_word"><a href="project.html" target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
@@ -872,8 +872,7 @@
                     new Vue({
                         el:"#div_recent",
                         data:{
-                            items:data.result,
-                            imgUrl:imgRoot
+                            items:data.result
                         },
                         filters: {
                             format: function (value) {
@@ -945,8 +944,7 @@
                     new Vue({
                         el:'#div_relative',
                         data:{
-                            items:data.result,
-                            imgUrl:imgRoot
+                            items:data.result
                         }
                     });
                 }

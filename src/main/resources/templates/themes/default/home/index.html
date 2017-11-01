@@ -99,7 +99,7 @@
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img :src="avatorRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
+                    <img :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
                     <br/>
                     <br/>
                     <button class="info_button">更换头像</button>
@@ -173,7 +173,6 @@
         f_GetmemberInfo();
     });
 
-
     var membervalidation;
     //获取会员信息
     function f_GetmemberInfo() {
@@ -192,8 +191,7 @@
                     new Vue({
                         el: "#div_member",
                         data: {
-                            member: data.result,
-                            imgRoot: imgRoot
+                            member: data.result
                         }
                     });
                 } else {

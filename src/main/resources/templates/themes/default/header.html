@@ -73,8 +73,7 @@
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var imgRoot= /*[[${config.getImageRoot()}]]*/;
-    var docRoot= /*[[${config.getDocRoot()}]]*/;
+    var fileRoot=/*[[${config.getFileRoot()}]]*/;
     var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
 
     if (memberInfo!=null){

@@ -97,22 +97,6 @@
         </div>
         <div   id="div_page">
         </div>
-                <div v-for="item in items">
-                    <div class="div_message_title">
-                        <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.contractName}}<span>{{item.signTime}}</span></h4></div>
-                    </div>
-                    <div class="div_message_content">
-                        <p>合同名称:{{item.contractName}}</p>
-                        <p>签订日期:{{item.signTime}}</p>
-                        <p>合同金额:{{item.contractAmount>0?item.contractAmount/100:0}}</p>
-                        <p>合同状态:{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a></p>
-                    </div>
-                </div>
-                <p class="p_no_data">暂无消息</p>
-            </div>
-            <div   id="div_page">
-            </div>
-        </div>
     </div>
 </div>
 <div th:replace="themes/default/footer::footer"></div>
@@ -128,8 +112,7 @@
 
     $(document).ready(function () {
         f_GetContract();
-
-    })
+    });
 
 
     function f_GetContract() {
@@ -151,8 +134,7 @@
                         vueContent=new Vue({
                             el: '#div_contract_content',
                             data: {
-                                items: data.result.list,
-                                imgUrl: imgRoot
+                                items: data.result.list
                             },
                             filters:{
                                 format:function(value) {
