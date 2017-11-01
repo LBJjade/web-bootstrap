@@ -41,7 +41,7 @@
             <ul class="ul_login" id="ul_logined" style="display: none">
                 <li></li>
                 <li></li>
-                <li><a th:href="@{/home/message}">消息(0)</a></li>
+                <li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>
                 <li>|</li>
                 <li><a th:href="@{/home}">个人中心</a></li>
                 <li>|</li>
@@ -73,11 +73,8 @@
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var imgRoot= /*[[${config.getImageRoot()}]]*/;
-    var docRoot= /*[[${config.getDocRoot()}]]*/;
+    var fileRoot=/*[[${config.getFileRoot()}]]*/;
     var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
-    var avatorRoot= /*[[${config.getAvatorRoot()}]]*/;
-    var projectImgRoot= /*[[${config.getProjectImgRoot()}]]*/;
 
     if (memberInfo!=null){
         $("#ul_login").hide();
@@ -130,6 +127,23 @@
                 }
             });
         }
+    }
+
+    $(document).ready(function() {
+        if (memberInfo != null) {
+            f_getMemberNum();
+        }
+    });
+
+    function  f_getMemberNum() {
+        $.ajax({
+            url: '/home/message/number',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                $("#message").html(data.result);
+            }
+        });
     }
     /*]]>*/
 </script>

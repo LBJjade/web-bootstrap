@@ -6,9 +6,13 @@ package com.becheer.donation.service;
 * Date : 2017-09-27
 */
 
+
+import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.message.MessageExtension;
 import com.github.pagehelper.PageInfo;
 
 public interface IMessageService {
     PageInfo<MessageExtension> GetMessageList(long memberId, int pageNum, int pageSize);
+    int GetMemberMessagesNum(long memberId);
+    ResponseDto ChangeStatus(long id, long memberId);
 }

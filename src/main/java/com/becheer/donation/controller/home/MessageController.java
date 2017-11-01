@@ -59,4 +59,30 @@ public class MessageController extends BaseController {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
+
+    @PostMapping("/status")
+    @ResponseBody
+    public ResponseDto ChangeStatus(HttpServletRequest request,@RequestParam long id){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        long memberId=currentMember.memberId;
+        return messageService.ChangeStatus(id,memberId);
+    }
+
+    @PostMapping("/number")
+    @ResponseBody
+    public ResponseDto GetMemberMessagesNum(HttpServletRequest request){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        try {
+            int result = messageService.GetMemberMessagesNum(currentMember.memberId);
+            return new ResponseDto(200, Message.GET_MEMBERMESSAGES_SUCCESS,result);
+        }catch(Exception ex){
+            return new ResponseDto(500, Message.GET_MEMBERMESSAGES_FAILED);
+        }
+    }
 }

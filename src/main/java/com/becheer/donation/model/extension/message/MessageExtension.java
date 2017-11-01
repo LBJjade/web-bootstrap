@@ -11,7 +11,9 @@ import com.becheer.donation.utils.DateUtils;
 import java.util.Date;
 
 public class MessageExtension {
-    private int id;
+    private long id;
+
+    private long memberId;
 
     private String type;
 
@@ -21,13 +23,23 @@ public class MessageExtension {
 
     private Date createTime;
 
-    public int getId() {
-        return id;
+    private int status;
+
+    public long getMemberId() { return memberId; }
+
+    public void setMemberId(long memberId) { this.memberId = memberId; }
+
+    public int getStatus() {
+        return status;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStatus(int status) {
+        this.status = status;
     }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     public String getType() {
         return type;
@@ -60,4 +72,6 @@ public class MessageExtension {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+
 }
