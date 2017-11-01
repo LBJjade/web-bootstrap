@@ -57,13 +57,10 @@ public class WxPayServiceImpl implements IWxPayService {
             }
             payWxUnifiedOrderService.insert(params);
 
-            String unifiedOrderId = params.get("id");
-            Integer paylogRefRecordId  = Integer.valueOf(unifiedOrderId);
-
-
-            Integer paymentPlanId= Integer.parseInt(productId);
-
-            paymentPlanService.updatePaylogRefRecordId(paymentPlanId, paylogRefRecordId);
+            // String unifiedOrderId = params.get("id");
+            // Integer paylogRefRecordId  = Integer.valueOf(unifiedOrderId);
+            // Integer paymentPlanId= Integer.parseInt(productId);
+            // paymentPlanService.updatePaylogRefRecordId(paymentPlanId, paylogRefRecordId);
         }
 
         return prepayMap;
@@ -135,14 +132,22 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayHelper.toXml(returnToWxPay);
         }
 
+
         // 验证签名
         if (!WxPayHelper.verifyNotify(notify)) {
+            logger.warn("微信支付结果通知: !!!签名失败!!!");
             returnToWxPay.put("return_code", "FAIL");
             returnToWxPay.put("return_msg", "签名失败");
             return WxPayHelper.toXml(returnToWxPay);
         }
 
         // TODO: 验证appid、mch_id等
+        if (!WxPayHelper.verifyAppIdAndMchId(notify)) {
+            logger.warn("微信支付结果通知: !!!app_id或mch_id错误，确认是否修改了微信支付的配置文件!!!");
+            returnToWxPay.put("return_code", "SUCCESS");
+            returnToWxPay.put("return_msg", "OK");
+            return WxPayHelper.toXml(returnToWxPay);
+        }
 
         // 微信支付平台的提醒: 推荐的做法是,
         // 1. 当收到通知进行处理时，首先检查对应业务数据的状态，判断该通知是否已经处理过，
@@ -154,6 +159,7 @@ public class WxPayServiceImpl implements IWxPayService {
         if (notify.get("out_trade_no") != null) {
             outTradeNo = notify.get("out_trade_no");
         } else {
+            logger.warn("微信支付结果通知: !!!获取统一下单数据时出现异常【out_trade_no=" + outTradeNo + "】:");
             returnToWxPay.put("return_code", "FAIL");
             returnToWxPay.put("return_msg", "缺少参数:商户订单号out_trade_no");
             return WxPayHelper.toXml(returnToWxPay);
@@ -167,9 +173,13 @@ public class WxPayServiceImpl implements IWxPayService {
         try {
             unifiedOrder = payWxUnifiedOrderService.getPayWxUnifiedOrderByOutTradeNo(outTradeNo);
         }catch (Exception e) {
-            logger.warn(e.getMessage());
+            logger.warn("微信支付结果通知: !!!获取统一下单数据时出现异常: " + e.getMessage());
+            returnToWxPay.put("return_code", "SUCCESS");
+            returnToWxPay.put("return_msg", "OK");
+            return WxPayHelper.toXml(returnToWxPay);
         }
         if (unifiedOrder == null) {
+            logger.warn("微信支付结果通知: !!!商户订单号对应的业务数据不存在【out_trade_no=" + outTradeNo + "】");
             returnToWxPay.put("return_code", "FAIL");
             returnToWxPay.put("return_msg", "商户订单号out_trade_no=" + outTradeNo + "对应的业务数据不存在");
             return WxPayHelper.toXml(returnToWxPay);
@@ -197,45 +207,22 @@ public class WxPayServiceImpl implements IWxPayService {
             }
         }
 
-        // 签名、商户信息、业务数据状态、订单金额都没问题的情况下
+        // 更新业务数据状态
+        Date paymentDate = null;
+        String timeEnd = notify.get("time_end");
+        if (!Strings.isNullOrEmpty(timeEnd)) {
+            paymentDate = DateUtils.convertToDate(timeEnd);
+        }
 
+        paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo,  paymentDate, totalFee);
+
+
+        // 签名、商户信息、业务数据状态、订单金额都没问题的情况下
 
         String resultCode = notify.get("result_code");
         String errCode = notify.get("err_code");
         String errCodeMsg = notify.get("err_code_msg");
         payWxUnifiedOrderService.updateNotifyXML(outTradeNo, returnCode, returnMsg, resultCode, errCode, errCodeMsg, notifyXML);
-
-
-        // if ("FAIL".equals(resultCode) && !Strings.isNullOrEmpty(resultMsg)) {
-        //     resultMsg = notify.get("result_msg");
-        // } else if ("SUCCESS".equals(resultCode) && )
-        //
-        // // 1. 成功的情况
-        // if (notify.get("return_code") != null) {
-        //     returnCode = notify.get("return_code");
-        //     if (notify.get("return_code").equals("FAIL")) {
-        //         resultMsg = notify.get("result_msg");
-        //     } else if (notify.get("return_code").equals("SUCCESS")) {
-        //
-        //     }
-        // } else {
-        //     logger.warn("微信支付结果通知: !!!没有return_code节点的微信支付结果通知");
-        // }
-        // payWxUnifiedOrderService.updateNotifyXML(outTradeNo, returnCode, returnMsg, resultCode, errCode, errCodeMsg, notifyXML);
-
-        Date paymentDate = null;
-        String timeEnd = notify.get("time_end");
-        if (!Strings.isNullOrEmpty(timeEnd)) {
-            paymentDate = DateUtils.dateFormat(timeEnd);
-        }
-
-        Integer paymentPlanId = -1;
-        String productId = notify.get("product_id");
-        if (!Strings.isNullOrEmpty(productId)) {
-            paymentPlanId = Integer.parseInt(productId);
-        }
-
-        paymentPlanService.updateReceived("pay_wx_unified_order", paymentPlanId,  paymentDate, totalFee);
 
         returnToWxPay.put("return_code", "SUCCESS");
         returnToWxPay.put("return_msg", "OK");

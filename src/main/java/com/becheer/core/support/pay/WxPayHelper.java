@@ -259,6 +259,21 @@ public class WxPayHelper {
         return HashUtil.md5(stringSignTemp).toUpperCase();
     }
 
+
+    /**
+     * 验证AppID和MchID
+     *
+     * @param params         参数
+     * @return {boolean}
+     */
+    public static boolean verifyAppIdAndMchId(Map<String, String> params) {
+        WxPayConfig config = (WxPayConfig) SpringContextUtil.getBean("wxPayConfig");
+        String appId = params.get("appid");
+        String mchId = params.get("mch_id");
+        String localAppId = config.getAppId();
+        String localMchId = config.getMchId();
+        return appId.equals(localAppId) && mchId.equals(localMchId);
+    }
     /**
      * 支付异步通知时校验sign
      *

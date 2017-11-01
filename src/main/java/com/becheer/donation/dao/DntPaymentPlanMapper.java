@@ -16,8 +16,5 @@ public interface DntPaymentPlanMapper {
 
     int update(DntPaymentPlan model);
 
-    int updateReceived(String paylogRefTable, Integer paylogRefRecordId, Date paymentDate, Integer receivedAmount);
-
-    int updatePaylogRefRecordId(Integer id, Integer payloaRefRecordID);
-
+    int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount);
 }

@@ -30,13 +30,8 @@ public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
     }
 
     @Override
-    public int updateReceived(String paylogRefTable, Integer paylogRefRecordId, Date paymentDate, Integer receivedAmount) {
-        return mapper.updateReceived(paylogRefTable, paylogRefRecordId, paymentDate, receivedAmount);
-    }
-
-    @Override
-    public int updatePaylogRefRecordId(Integer id, Integer payloaRefRecordID) {
-        return mapper.updatePaylogRefRecordId(id, payloaRefRecordID);
+    public int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount) {
+        return mapper.updateReceived(paylogRefTable, orderNo, paymentDate, receivedAmount);
     }
 
 }

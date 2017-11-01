@@ -87,6 +87,8 @@ public class DonateServiceImpl implements IDonateService {
         dntPaymentPlan.setEnable(1);
         dntPaymentPlan.setPaylogRefTable("pay_wx_unified_order");
         dntPaymentPlan.setStatus(0);
+        String orderNo = GenerateUtil.genOrderNo();
+        dntPaymentPlan.setOrderNo(orderNo);
 
         // !!! 以下这些字段没有录入数据
         // payment_date datetime null comment '付款日期【,.!】',
@@ -105,7 +107,7 @@ public class DonateServiceImpl implements IDonateService {
         // TODO 增加容错处理
         paymentPlanService.insert(dntPaymentPlan);
 
-        return payService.pay(GenerateUtil.genOrderNo(), dntPaymentPlan.getId().toString(), amount);
+        return payService.pay(orderNo, dntPaymentPlan.getId().toString(), amount);
     }
 }
 
