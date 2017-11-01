@@ -34,4 +34,9 @@ public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
         return mapper.updateReceived(paylogRefTable, orderNo, paymentDate, receivedAmount);
     }
 
+    @Override
+    public int updateDonate(String orderNo) {
+        return mapper.updateDonate(orderNo);
+    }
+
 }

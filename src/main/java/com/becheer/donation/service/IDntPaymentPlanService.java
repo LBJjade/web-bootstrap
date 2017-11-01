@@ -17,4 +17,6 @@ public interface IDntPaymentPlanService {
 
     int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount);
 
+    int updateDonate(String orderNo);
+
 }
