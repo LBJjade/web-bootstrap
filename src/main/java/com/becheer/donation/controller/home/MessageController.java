@@ -79,6 +79,9 @@ public class MessageController extends BaseController {
     @ResponseBody
     public ResponseDto GetMemberMessagesNum(HttpServletRequest request){
         MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
         try {
             int result = messageService.GetMemberMessagesNum(currentMember.memberId);
             return new ResponseDto(200, Message.GET_MEMBERMESSAGES_SUCCESS,result);
