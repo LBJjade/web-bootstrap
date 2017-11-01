@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
@@ -32,6 +33,11 @@ public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
     @Override
     public int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount) {
         return mapper.updateReceived(paylogRefTable, orderNo, paymentDate, receivedAmount);
+    }
+
+    @Override
+    public Map updateDonate(String orderNo) {
+        return mapper.updateDonate(orderNo);
     }
 
 }

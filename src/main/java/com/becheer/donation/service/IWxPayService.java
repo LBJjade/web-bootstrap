@@ -13,7 +13,5 @@ public interface IWxPayService {
      */
     Map<String, String> pay(String outTradeNo, String productId, long totalFee);
 
-    String payNotify(WxPayQueryOrderResult notifyBody);
-
     String payNotify(String notifyXML);
 }
