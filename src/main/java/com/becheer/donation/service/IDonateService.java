@@ -12,5 +12,5 @@ public interface IDonateService {
     /**
      * 根据主键id获取项目
      */
-    public Map<String, String> donate(Donate donate, String ip);
+    public Map<String, String> donate(Donate donate, String ip, String memberName);
 }

@@ -39,10 +39,17 @@ public class WxPayController extends BaseController {
 
     @PostMapping("/notify")
     @ResponseBody
-    public ResponseDto notify(@RequestBody WxPayQueryOrderResult notifyBody) {
-        String result = wxPayService.payNotify(notifyBody);
+    public ResponseDto notify(@RequestBody String notifyXML) {
+        String result = wxPayService.payNotify(notifyXML);
         return new ResponseDto(200, result);
     }
+
+    // @PostMapping("/notify")
+    // @ResponseBody
+    // public ResponseDto notify(@RequestBody WxPayQueryOrderResult notifyBody) {
+    //     String result = wxPayService.payNotify(notifyBody);
+    //     return new ResponseDto(200, result);
+    // }
 
     // @PostMapping("/pay")
     // @ResponseBody

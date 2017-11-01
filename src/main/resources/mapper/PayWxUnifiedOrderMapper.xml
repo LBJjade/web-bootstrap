@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.PayWxUnifiedOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.becheer.donation.model.PayWxUnifiedOrder">
+        <result column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="appid" jdbcType="VARCHAR" property="appid"/>
+        <result column="mch_id" jdbcType="VARCHAR" property="mchId"/>
+        <result column="device_info" jdbcType="VARCHAR" property="deviceInfo"/>
+        <result column="nonce_str" jdbcType="VARCHAR" property="nonceStr"/>
+        <result column="sign" jdbcType="VARCHAR" property="sign"/>
+        <result column="sign_type" jdbcType="VARCHAR" property="signType"/>
+        <result column="body" jdbcType="VARCHAR" property="body"/>
+        <result column="detail" jdbcType="VARCHAR" property="detail"/>
+        <result column="attach" jdbcType="VARCHAR" property="attach"/>
+        <result column="out_trade_no" jdbcType="VARCHAR" property="outTradeNo"/>
+        <result column="fee_type" jdbcType="VARCHAR" property="feeType"/>
+        <result column="total_fee" jdbcType="INTEGER" property="totalFee"/>
+        <result column="spbill_create_ip" jdbcType="VARCHAR" property="spbillCreateIp"/>
+        <result column="time_start" jdbcType="VARCHAR" property="timeStart"/>
+        <result column="time_expire" jdbcType="VARCHAR" property="timeExpire"/>
+        <result column="goods_tag" jdbcType="VARCHAR" property="goodsTag"/>
+        <result column="notify_url" jdbcType="VARCHAR" property="notifyUrl"/>
+        <result column="trade_type" jdbcType="VARCHAR" property="tradeType"/>
+        <result column="product_id" jdbcType="VARCHAR" property="productId"/>
+        <result column="limit_pay" jdbcType="VARCHAR" property="limitPay"/>
+        <result column="openid" jdbcType="VARCHAR" property="openid"/>
+        <result column="scene_info" jdbcType="VARCHAR" property="sceneInfo"/>
+        <result column="return_code" jdbcType="VARCHAR" property="returnCode"/>
+        <result column="return_msg" jdbcType="VARCHAR" property="returnMsg"/>
+        <result column="err_code" jdbcType="VARCHAR" property="errCode"/>
+        <result column="err_code_des" jdbcType="VARCHAR" property="errCodeDes"/>
+        <result column="prepay_id" jdbcType="VARCHAR" property="prepayId"/>
+        <result column="code_url" jdbcType="VARCHAR" property="codeUrl"/>
+        <result column="notify_return_code" jdbcType="VARCHAR" property="notifyReturnCode"/>
+        <result column="notify_result" jdbcType="VARCHAR" property="notifyResultCode"/>
+        <result column="notify_err_code" jdbcType="VARCHAR" property="notifyErrCode"/>
+        <result column="notify_err_code_des" jdbcType="VARCHAR" property="notifyErrCodeDes"/>
+        <result column="notify_xml" jdbcType="VARCHAR" property="notifyXML"/>
+        <result column="remark_" jdbcType="VARCHAR" property="remark"/>
+        <result column="enable_" jdbcType="BIGINT" property="enable"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+        <result column="update_time" jdbcType="DATE" property="updateTime"/>
+        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="java.util.Map"
+        useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pay_wx_unified_order
+        (
+	        appid,
+	        mch_id,
+            device_info,
+            nonce_str,
+            sign,
+            sign_type,
+            body,
+            detail,
+            attach,
+            out_trade_no,
+            fee_type,
+            total_fee,
+            spbill_create_ip,
+            time_start,
+            time_expire,
+            goods_tag,
+            notify_url,
+            trade_type,
+            product_id,
+            limit_pay,
+            openid,
+            scene_info,
+            return_code,
+            return_msg,
+            err_code,
+            err_code_des,
+            prepay_id,
+            code_url,
+            enable_,
+            create_time,
+            create_by
+        )
+        VALUES
+        (
+ 	        #{appid, jdbcType=VARCHAR},
+	        #{mch_id,  jdbcType=VARCHAR},
+            #{device_info, jdbcType=VARCHAR},
+            #{nonce_str, jdbcType=VARCHAR},
+            #{sign, jdbcType=VARCHAR},
+            #{sign_type, jdbcType=VARCHAR},
+            #{body, jdbcType=VARCHAR},
+            #{detail, jdbcType=VARCHAR},
+            #{attach, jdbcType=VARCHAR},
+            #{out_trade_no, jdbcType=VARCHAR},
+            #{fee_type, jdbcType=VARCHAR},
+            #{total_fee, jdbcType=BIGINT},
+            #{spbill_create_ip, jdbcType=VARCHAR},
+            #{time_start, jdbcType=VARCHAR},
+            #{time_expire, jdbcType=VARCHAR},
+            #{goods_tag, jdbcType=VARCHAR},
+            #{notify_url, jdbcType=VARCHAR},
+            #{trade_type, jdbcType=VARCHAR},
+            #{product_id, jdbcType=VARCHAR},
+            #{limit_pay, jdbcType=VARCHAR},
+            #{openid, jdbcType=VARCHAR},
+            #{scene_info, jdbcType=VARCHAR},
+            #{return_code, jdbcType=VARCHAR},
+            #{return_msg, jdbcType=VARCHAR},
+            #{err_code, jdbcType=VARCHAR},
+            #{err_code_desc, jdbcType=VARCHAR},
+            #{prepay_id, jdbcType=VARCHAR},
+            #{code_url, jdbcType=VARCHAR},
+	        1,
+            now(),
+	        1
+        )
+    </insert>
+
+    <update id="update" parameterType="com.becheer.donation.model.PayWxUnifiedOrder">
+        UPDATE pay_wx_unified_order
+        SET
+            return_code  = #{return_code, jdbcType=VARCHAR},
+            return_msg = #{return_msg, jdbcType=VARCHAR},
+            err_code = #{err_code, jdbcType=VARCHAR},
+            err_code_des = #{err_code_desc, jdbcType=VARCHAR},
+            prepay_id = #{prepay_id, jdbcType=VARCHAR},
+            code_url= #{code_url, jdbcType=VARCHAR},
+            update_time = now(),
+            update_by= 1
+        WHERE id_ = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateNotifyXML">
+        UPDATE pay_wx_unified_order
+        SET
+            notify_return_code = #{param2},
+            notify_return_msg = #{param3},
+            notify_result_code = #{param4},
+            notify_err_code = #{param5},
+            notify_err_code_desc = #{param6},
+            notify_xml = #{param7},
+            update_time = now(),
+            update_by= 2
+        WHERE out_trade_no = #{param1}
+    </update>
+    <select id="getPayWxUnifiedOrderByOutTradeNo" resultMap="BaseResultMap">
+    SELECT
+        appid,
+        mch_id,
+        device_info,
+        nonce_str,
+        sign,
+        sign_type,
+        body,
+        detail,
+        attach,
+        out_trade_no,
+        fee_type,
+        total_fee,
+        spbill_create_ip,
+        time_start,
+        time_expire,
+        goods_tag,
+        notify_url,
+        trade_type,
+        product_id,
+        limit_pay,
+        openid,
+        scene_info,
+        return_code,
+        return_msg,
+        notify_return_code,
+        notify_result_code,
+        notify_err_code,
+        notify_err_code_desc,
+        notify_xml
+    FROM pay_wx_unified_order
+    WHERE out_trade_no = #{param1}
+    </select>
+</mapper>
