@@ -68,12 +68,7 @@ public class MessageController extends BaseController {
             return MemberAuthFailed();
         }
         long memberId=currentMember.memberId;
-        try {
-            messageService.ChangeStatus(id,memberId);
-            return new ResponseDto(200, Message.CHANGE_STATUS_SUCCESS);
-        }catch(Exception ex){
-            return new ResponseDto(500, Message.CHANGE_STATUS_FAILED);
-        }
+        return messageService.ChangeStatus(id,memberId);
     }
 
     @PostMapping("/number")
