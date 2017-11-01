@@ -2,6 +2,7 @@ package com.becheer.donation.dao;
 
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
+import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,4 +18,8 @@ public interface AppealMapper {
     List<MemberAppealExtension> SelectAppealByMemberId(long memberId);
 
     MemberAppealDetailExtension SelectAppealDetail(long appealId,long memberId);
+
+//    void appealInsert();
+
+    void appealInsert( AppealDetailExtension appealdetail);
 }

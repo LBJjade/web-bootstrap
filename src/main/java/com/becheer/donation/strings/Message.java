@@ -167,5 +167,11 @@ public class Message {
      */
     public static final String GET_MEMBERMESSAGES_SUCCESS="消息数获取成功";
     public static final String GET_MEMBERMESSAGES_FAILED="消息数获取失败";
+
+    /**
+     * 提交申诉
+     */
+    public static final String SUBMIT_APPEAL_SUCCESS="申诉提交成功";
+    public static final String SUBMIT_APPEAL_FAILED="申诉提交失败";
 }
 

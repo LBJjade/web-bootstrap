@@ -5,13 +5,16 @@ import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
+import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
+import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.service.IAppealService;
 import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IProgressService;
+import com.becheer.donation.service.IProjectService;
 import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -40,6 +43,9 @@ public class HomeAppealController extends BaseController {
     @Resource
     IProgressService progressService;
 
+    @Resource
+    IProjectService projectService;
+
     @Access(authorities="member")
     @GetMapping("")
     public String View(HttpServletRequest request){
@@ -48,10 +54,21 @@ public class HomeAppealController extends BaseController {
     }
 
     @Access(authorities="member")
-    @GetMapping("/add")
-    public String ViewDetail(HttpServletRequest request){
+    @GetMapping("/add/{contractProjectId}")
+    public String ViewDetail(HttpServletRequest request,@PathVariable long contractProjectId){
         request.setAttribute("config", fileConfig);
-        return this.render("/home/launch_detail");
+        try {
+            MemberProjectDetailExtension memberProjectDetailExtension=projectService.GetMemberProjectDetail(contractProjectId);
+            if (memberProjectDetailExtension==null){
+                return render_404();
+            }else{
+                request.setAttribute("project",memberProjectDetailExtension);
+                return this.render("/home/launch_detail");
+            }
+        }catch(Exception ex){
+            LOGGER.error("GetProjectDetail", ex);
+            return render_500();
+        }
     }
 
     @PostMapping("/list")
@@ -110,4 +127,21 @@ public class HomeAppealController extends BaseController {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
+
+
+    @PostMapping("/appealInsert")
+    @ResponseBody
+    public  ResponseDto appealInsert(HttpServletRequest request,@RequestParam String title,@RequestParam String method,@RequestParam String content,@RequestParam long contractProjectId,@RequestParam long projectId){
+        try {
+            MemberSessionExtension currentMember=GetCurrentUser(request);
+            long memberId=currentMember.memberId;
+            appealService.appealInsert(title,method,content,contractProjectId,projectId,memberId);
+            return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
+        }catch(Exception ex){
+            return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
+        }
+    }
+
+
+
 }

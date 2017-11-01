@@ -110,7 +110,7 @@
                 <li class="active"><a href="#" data-target="#div_tab_info" data-toggle="tab">参与情况</a></li>
                 <li><a href="#" data-target="#div_tab_detail" data-toggle="tab">项目详情</a></li>
                 <li><a href="#" data-target="#div_tab_public" data-toggle="tab">善款公开</a></li>
-                <a href="/home/appeal/add"><li> <button class="info_button" >我要申诉</button></li></a>
+                <a th:href="@{'/home/appeal/add/'+${project.getId()}}" ><li> <button class="info_button" >我要申诉</button></li></a>
             </ul>
 
             <div id="div_project_content">

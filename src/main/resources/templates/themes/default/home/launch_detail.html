@@ -51,24 +51,23 @@
                 <p>发起申诉</p>
                 <hr/>
             </div>
-
             <table class="table_member_content">
                 <tr>
                     <td>申诉主题</td>
-                    <td><input type="text" class="form-control" style="width: 250px;height: 30px"/></td>
+                    <td><input id="theme" type="text" class="form-control" style="width: 250px;height: 30px"/></td>
                 </tr>
                 <tr>
                     <td>申诉项目</td>
-                    <td>孤寡老人助困基金项目</td>
+                    <td><th:block th:text="${project.getProjectName()}"></th:block></td>
                 </tr>
                 <tr>
                     <td>申诉合同</td>
-                    <td>孤寡老人助困基金项目合同</td>
+                    <td><th:block th:text="${project.getContractName()}"></th:block></td>
                 </tr>
                 <tr>
                     <td>申诉类型</td>
                     <td>
-                        <select class="form-control" style="width: 250px;height: 32px">
+                        <select id="type" class="form-control" style="width: 250px;height: 32px">
                             <option>资金使用申诉</option>
                             <option>合同履约申诉</option>
                             <option>批资申诉</option>
@@ -78,7 +77,7 @@
                 <tr>
                     <td>申诉内容</td>
                     <td>
-                        <textarea class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px"
+                        <textarea id="main" class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px"
                                   rows="5"></textarea>
                     </td>
                 </tr>
@@ -97,10 +96,26 @@
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
-<script type="text/javascript">
-    $("#btn_submit").click(function () {
-        layer.alert("提交成功");
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var contractProjectId=/*[[${project.getId()}]]*/;
+    var projectId=/*[[${project.getProjectId()}]]*/;
+    $("#btn_submit").click(function(){
+        var title= $("#theme").val();
+        var method=$("#type").find("option:selected").text();
+        var content=$("#main").val();
+        $.ajax({
+            url:'/home/appeal/appealInsert',
+            data:{title:title,method:method,content:content,contractProjectId:contractProjectId,projectId:projectId},
+            type:'post',
+            dataType:'json',
+            success:function(){
+                    layer.alert("提交成功");
+            }
+        })
     })
+    /*]]>*/
 </script>
 </body>
 </html>

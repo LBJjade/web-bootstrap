@@ -9,6 +9,7 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.dao.AppealMapper;
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
+import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import com.becheer.donation.service.IAppealService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -34,5 +35,17 @@ public class AppealServiceImpl implements IAppealService {
     @Override
     public MemberAppealDetailExtension GetMemberAppealDetail(long appealId,long memberId) {
         return appealMapper.SelectAppealDetail(appealId,memberId);
+    }
+
+    @Override
+    public  void appealInsert(String title,String method, String content,long contractProjectId,long projectId,long memberId) {
+        AppealDetailExtension appealdetail=new AppealDetailExtension();
+        appealdetail.setAppealTitle(title);
+        appealdetail.setAppealMethod(method);
+        appealdetail.setAppealContent(content);
+        appealdetail.setContractId(contractProjectId);
+        appealdetail.setProjectId(projectId);
+        appealdetail.setMemberId(memberId);
+        appealMapper.appealInsert(appealdetail);
     }
 }
