@@ -125,9 +125,7 @@
     var pageCount;
     var vueContent;
     var num;
-    var a;
-    var b;
-    var c;
+    var currentItem;
     var status=$(".div_message_title").find(".status").val();
 
     $(document).ready(function () {
@@ -147,12 +145,7 @@
                 num=num-1;
                 $("#message").html(num);
             }
-            a=$(this).find("i");
-            b=$(this).find("h4");
-            c=$(this).find("i");
-//            $(this).find("i").removeClass("fa-envelope");
-//            $(this).find("h4").removeAttr("style");
-//            $(this).find("i").attrClass("fa-envelope-open-o");
+            currentItem=$(this);
 
         }else{
             $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-down");
@@ -169,9 +162,9 @@
             dataType: 'json',
             success: function (data) {
                 if(data.code===200){
-                    a.removeClass("fa-envelope");
-                    b.removeAttr("style");
-                    c.addClass("fa-envelope-open-o");
+                    currentItem.find("i").removeClass("fa-envelope");
+                    currentItem.find("h4").removeAttr("style");
+                    currentItem.find("i").addClass("fa-envelope-open-o");
                 }
                 else{
                     layer.alert("状态修改失败");
