@@ -22,6 +22,7 @@ public class DntPaymentPlan {
     private String paylogRefTable ; //付款方式流水记录表
     private Integer paylogRefRecordId ; //付款方式流水记录标识
     private Integer status ; //状态 0未捐赠 1已捐赠'
+    private String orderNo; //订单号
 
     public Integer getId() {
         return id;
@@ -165,5 +166,13 @@ public class DntPaymentPlan {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }

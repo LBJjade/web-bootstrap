@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Service
 public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
@@ -26,6 +27,11 @@ public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
     @Override
     public int update(DntPaymentPlan model) {
         return mapper.update(model);
+    }
+
+    @Override
+    public int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount) {
+        return mapper.updateReceived(paylogRefTable, orderNo, paymentDate, receivedAmount);
     }
 
 }
