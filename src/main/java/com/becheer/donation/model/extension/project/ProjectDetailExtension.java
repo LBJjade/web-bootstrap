@@ -7,6 +7,7 @@ package com.becheer.donation.model.extension.project;
 */
 
 import com.becheer.donation.utils.DateUtils;
+import com.becheer.donation.utils.StringUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -85,8 +86,10 @@ public class ProjectDetailExtension {
         this.longTerm = longTerm;
     }
 
-    public long getProjectTargetAmount() {
-        return projectTargetAmount;
+    public String getProjectTargetAmount() throws Exception {
+        StringUtil s=new StringUtil();
+        String num=String.valueOf(projectTargetAmount/100);
+        return s.formatCurrency(num);
     }
 
     public void setProjectTargetAmount(long projectTargetAmount) {
@@ -101,8 +104,10 @@ public class ProjectDetailExtension {
         this.content = content;
     }
 
-    public long getAcceptedAmount() {
-        return acceptedAmount;
+    public String getAcceptedAmount() {
+        StringUtil s=new StringUtil();
+        String num=String.valueOf(acceptedAmount/100);
+        return s.formatCurrency(num);
     }
 
     public void setAcceptedAmount(long acceptedAmount) {

@@ -359,7 +359,7 @@
                     </li>
                     <li>
                         <p>善款总额</p>
-                        <input type="number" :value="model.receivedAmount" readonly="true"/>
+                        <input id="donate_summary" type="text" :value="model.receivedAmount|format"  readonly="true"/>
                         <p style="display: inline;">元</p>
                     </li>
                     <li>
@@ -415,7 +415,7 @@
                     <div  v-cloak>
                         <ul class="recommend_item" v-for="item in items">
                             <li><img :src="avatorRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
-                            <li class="recommend_item_info">{{item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount/1000}}元
+                            <li class="recommend_item_info">{{item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount|format}}元
                             </li>
                         </ul>
                     </div>
@@ -839,6 +839,54 @@
                         data: {
                             items: data.result,
                             imgUrl: imgRoot
+                        },
+                        filters: {
+                            format: function (value) {
+                                value=value/100;
+                                var str = value.toString();
+                                var spot = str.split(".")[1];
+                                str = str.split(".")[0];
+//                                var str = value;
+                                var length = str.length;
+                                var get, lost;
+                                var num = new Array();
+                                var num = "";
+                                for (var i = 0; i < length; i + 3) {
+                                    if (length > 3) {
+                                        get = str.substring(length - 4, length - 1);
+                                        lost = str.substring(0, length - 3);
+                                        str = lost;
+                                        if (num == "") {
+                                            num = get;
+                                        } else {
+                                            num = get + "," + num;
+                                        }
+                                        var before = num;
+                                        length = length - 3;
+                                    } else {
+                                        if (lost == undefined) {
+                                            num = str;
+                                        } else {
+                                            num = lost + "," + before;
+                                        }
+                                        break;
+                                    }
+                                }
+                                //num=parseFloat(num).toFixed(2);
+                                if (spot == undefined) {
+                                    num = num + ".00";
+                                } else {
+                                    if (spot.length > 2) {
+                                        spot = spot.substring(0, 2);
+                                        num = num + "." + spot;
+                                    } else if (spot.length == 2) {
+                                        num = num + "." + spot;
+                                    } else {
+                                        num = num + "." + spot + "0";
+                                    }
+                                }
+                                return num;
+                            }
                         }
                     });
                 }
@@ -908,8 +956,62 @@
                         el: "#ul_total",
                         data: {
                             model: data.result
+//                            model:{receivedAmount:"10000654.6",donateTime:"1",benefitAmount:"37",benefitGroup:"5"}
+                        },
+                        filters:{
+                            format:function(value) {
+                                value=value/100;
+                                var str = value.toString();
+                                var spot=str.split(".")[1];
+                                str=str.split(".")[0];
+//                                var str = value;
+                                var length = str.length;
+                                var get, lost;
+                                var num = new Array();
+                                var num = "";
+                                for (var i = 0; i < length; i + 3) {
+                                    if (length > 3) {
+                                        get = str.substring(length - 4, length - 1);
+                                        lost = str.substring(0, length - 3);
+                                        str = lost;
+                                        if (num == "") {
+                                            num = get;
+                                        } else {
+                                            num = get + "," + num;
+                                        }
+                                        var before = num;
+                                        length = length - 3;
+                                    } else {
+                                        if (lost == undefined) {
+                                            num = str;
+                                        } else {
+                                            num = lost + "," + before;
+                                        }
+                                        break;
+                                    }
+                                }
+                                //num=parseFloat(num).toFixed(2);
+                                if(spot == undefined){
+                                    num=num+".00";
+                                }else{
+                                    if(spot.length > 2) {
+                                        spot = spot.substring(0,2);
+                                        num=num+"."+spot;
+                                    }else if(spot.length == 2){
+                                        num=num+"."+spot;
+                                    }else{
+                                        num=num+"."+spot+"0";
+                                    }
+                                }
+                                return num;
+                            }
                         }
+
                     });
+//                    var Money=data.result.receivedAmount;
+//                    alert(Money);
+//                    var a=f_formatMoney(Money);
+//                    $("#donate_summary").=a;
                 }
             }
         });
@@ -1070,6 +1172,51 @@
         }
         Countdown();
     })
+
+
+//    //格式化金额
+//    function f_formatMoney(value) {
+//        var str=value.toString();
+//        alert(str);
+//        var length = str.length;
+//        alert(1);
+//        alert(length);
+//        var get, lost;
+//        alert(2);
+//        var num = new Array();
+//        var num = "";
+//        for (var i = 0; i < length; i + 3) {
+//            if (length > 3) {
+//                get = str.substring(length - 4, length - 1);
+//                alert(get);
+//                lost = str.substring(0, length - 3);
+//                alert(lost);
+//                str = lost;
+//                if (num == "") {
+//                    num = get;
+//                } else {
+//                    num = get + "," + num;
+//                    alert(1);
+//                    alert(num);
+//                }
+//                var before = num;
+//                length = length - 3;
+//            } else {
+//                if (lost == undefined) {
+//                    num = str;
+//                } else {
+//                    num = lost + "," + before;
+//                    alert(num);
+//                    alert(2);
+//                }
+//                break;
+//            }
+//        }
+//        //num=parseFloat(num).toFixed(2);
+//        alert(num);
+//        return num;
+//    }
+
 
     //监听后台websocket
 
