@@ -60,10 +60,6 @@
         }
 
 
-
-
-
-
     </style>
 </head>
 <body>
@@ -92,9 +88,12 @@
 
 
                     <a href="home/edit" id="a_edit" style="display: none;">
-                    <button class="info_button" style="float: right">编辑</button>
-                    <span class="complete" style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;">请完善您的个人信息<img th:src="@{~/image/vector.png}" style="float: right;width: 32px;"></span>
-                </a></p>
+                        <button class="info_button" style="float: right">编辑</button>
+                        <span class="complete"
+                              style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
+                                th:src="@{~/image/vector.png}"
+                                style="float: right;width: 27px;margin-right: 7px;"></span>
+                    </a></p>
                 <hr/>
             </div>
             <div class="div_content" id="div_member">
@@ -175,6 +174,7 @@
 
 
     var membervalidation;
+
     //获取会员信息
     function f_GetmemberInfo() {
         $.ajax({
@@ -187,7 +187,7 @@
                     if (data.result.validation === 1 || data.result.validation === 4) {
                         $("#a_edit").show();
                     }
-                    membervalidation=data.result.validation;
+                    membervalidation = data.result.validation;
                     f_cue(membervalidation);
                     new Vue({
                         el: "#div_member",
@@ -203,13 +203,13 @@
         });
     }
 
-   function f_cue(validation){
-        if(validation === 1 || validation === 4){
+    function f_cue(validation) {
+        if (validation === 1 || validation === 4) {
             $(".complete").fadeIn(3000);
-        } else{
+        } else {
             $(".complete").hide();
         }
-   }
+    }
 
     /*]]>*/
 </script>

@@ -38,6 +38,16 @@ public class ProjectDetailExtension {
 
     private String thumbImg;
 
+    private String projectTypeName;
+
+    public String getProjectTypeName() {
+        return projectTypeName;
+    }
+
+    public void setProjectTypeName(String projectTypeName) {
+        this.projectTypeName = projectTypeName;
+    }
+
     public long getId() {
         return id;
     }

@@ -5,6 +5,7 @@
   <resultMap id="DetailResultMap" type="com.becheer.donation.model.extension.project.ProjectDetailExtension">
     <id column="id_" jdbcType="BIGINT" property="id" />
     <result column="project_type_id" jdbcType="BIGINT" property="projectTypeId" />
+    <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
@@ -119,19 +120,22 @@
   
   <select id="SelectProjectDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
     SELECT
-      id_,
-      project_type_id,
-      project_name,
-      start_time,
-      end_time,
-      long_term,
-      content,
-      project_target_amount,
-      accepted_amount,
-      thumb_img
+     p.id_,
+     p.project_type_id,
+     t.project_type_name,
+     p.project_name,
+     p.start_time,
+     p.end_time,
+     p.long_term,
+     p.content,
+     p.project_target_amount,
+     p.accepted_amount,
+     p.thumb_img
     FROM
-      dnt_project
-    WHERE id_=#{projectId,jdbcType=BIGINT} AND enable_ = 1 AND status =3
+      dnt_project p
+    LEFT JOIN
+      dnt_project_type t on p.project_type_id = t.id_
+    WHERE p.id_=#{projectId,jdbcType=BIGINT} AND p.enable_ = 1 AND p.status =3
   </select>
 
   <select id="SelectProjectByTypeId" parameterType="java.lang.Long" resultMap="ListProjectResultMap">
