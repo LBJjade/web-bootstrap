@@ -125,7 +125,11 @@
     var pageCount;
     var vueContent;
     var num;
+    var a;
+    var b;
+    var c;
     var status=$(".div_message_title").find(".status").val();
+
     $(document).ready(function () {
         f_GetMessage();
     });
@@ -138,15 +142,17 @@
             $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-up");
             $(this).next().show();
             if($(this).children().find("i").hasClass("fa-envelope")){
-//                f_getStatus(id);
                 f_change(id);
                 num=$("#message").html();
                 num=num-1;
                 $("#message").html(num);
             }
-            $(this).find("i").remove("class","fa fa-envelope");
-            $(this).find("h4").removeAttr("style");
-            $(this).find("i").attr("class","fa fa-envelope-open-o");
+            a=$(this).find("i");
+            b=$(this).find("h4");
+            c=$(this).find("i");
+//            $(this).find("i").removeClass("fa-envelope");
+//            $(this).find("h4").removeAttr("style");
+//            $(this).find("i").attrClass("fa-envelope-open-o");
 
         }else{
             $(this).find("span").eq(0).attr("class","glyphicon glyphicon-chevron-down");
@@ -162,6 +168,14 @@
             type: 'post',
             dataType: 'json',
             success: function (data) {
+                if(data.code===200){
+                    a.removeClass("fa-envelope");
+                    b.removeAttr("style");
+                    c.addClass("fa-envelope-open-o");
+                }
+                else{
+                    layer.alert("状态修改失败");
+                }
             }
         });
 
@@ -212,6 +226,7 @@
             f_changestatus(id);
         }
     }
+
 
     //翻页回调函数
     function f_PageCallBack(newPage) {
