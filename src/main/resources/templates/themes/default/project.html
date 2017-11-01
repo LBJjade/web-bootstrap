@@ -141,7 +141,7 @@
                     </ul>
                 </div>
             </div>
-            <div th:replace="themes/default/details::details"></div>
+            <!--<div th:replace="themes/default/details::details"></div>-->
             <div th:replace="themes/default/section::section"></div>
 
         </div>
@@ -186,9 +186,14 @@
                     </div>
                 </div>
             </div>
+            <div class="left_item" style="text-align: center" id="div_page">
+            </div>
         </div>
     </div>
 </div>
+
+
+
 
 <div th:replace="themes/default/footer::footer"></div>
 
@@ -200,11 +205,11 @@
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var pageSize = 6;
+    var pageSize = 2;
     var pageNum = 1;
     var pageCount;
-    var typeId;
     var vueContent;
+    var typeItem;
 
     $(document).ready(function () {
         f_GetProjectType();
@@ -232,19 +237,19 @@
     }
 
     function f_SetProjectType(item) {
-        typeId = item.id;
-        f_GetProject(item);
+        typeItem=item;
+        f_GetProject();
     }
 
-    function f_GetProject(tItem) {
+    function f_GetProject() {
         $.ajax({
             url: '/project/list',
             type: 'post',
-            data: {pageSize: pageSize, pageNum: pageNum, tid:tItem.id},
+            data: {pageSize: pageSize, pageNum: pageNum, tid:typeItem.id},
             dataType: 'json',
             success: function (data) {
                 if (data.code === 200) {
-                    $("#b_title").html(tItem.name);
+                    $("#b_title").html(typeItem.name);
                     pageCount = data.result.pages;
                     pageNum = data.result.pageNum;
                     $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);

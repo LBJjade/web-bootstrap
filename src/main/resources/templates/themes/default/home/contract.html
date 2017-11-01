@@ -89,7 +89,7 @@
                 <div class="div_message_content">
                     <p>合同名称:{{item.contractName}}</p>
                     <p>签订日期:{{item.signTime}}</p>
-                    <p>合同金额:{{item.contractAmount>0?item.contractAmount/100:0}}</p>
+                    <p class="contractAmount">合同金额:{{item.contractAmount|format}}</p>
                     <p>合同状态:{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a></p>
                 </div>
             </div>
@@ -128,6 +128,7 @@
 
     $(document).ready(function () {
         f_GetContract();
+
     })
 
 
@@ -152,6 +153,54 @@
                             data: {
                                 items: data.result.list,
                                 imgUrl: imgRoot
+                            },
+                            filters:{
+                                format:function(value) {
+                                    value=value/100;
+                                    value=value.toString();
+                                    var spot=value.split(".")[1];
+                                    var str=value.split(".")[0];
+//                                var str = value;
+                                    var length = str.length;
+                                    var get, lost;
+                                    var num = new Array();
+                                    var num = "";
+                                    for (var i = 0; i < length; i + 3) {
+                                        if (length > 3) {
+                                            get = str.substring(length - 4, length - 1);
+                                            lost = str.substring(0, length - 3);
+                                            str = lost;
+                                            if (num == "") {
+                                                num = get;
+                                            } else {
+                                                num = get + "," + num;
+                                            }
+                                            var before = num;
+                                            length = length - 3;
+                                        } else {
+                                            if (lost == undefined) {
+                                                num = str;
+                                            } else {
+                                                num = lost + "," + before;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    //num=parseFloat(num).toFixed(2);
+                                    if(spot == undefined){
+                                        num=num+".00";
+                                    }else{
+                                        if(spot.length > 2) {
+                                            spot = spot.substring(0,2);
+                                            num=num+"."+spot;
+                                        }else if(spot.length == 2){
+                                            num=num+"."+spot;
+                                        }else{
+                                            num=num+"."+spot+"0";
+                                        }
+                                    }
+                                    return num;
+                                }
                             }
                         });
                         if (data.result.list.length===0){
@@ -174,6 +223,50 @@
         pageNum=newPage;
         f_GetContract();
     }
+
+
+    //    //格式化金额
+        function f_formatMoney(value) {
+            var str=value.toString();
+            alert(str);
+            var length = str.length;
+            alert(1);
+            alert(length);
+            var get, lost;
+            alert(2);
+            var num = new Array();
+            var num = "";
+            for (var i = 0; i < length; i + 3) {
+                if (length > 3) {
+                    get = str.substring(length - 4, length - 1);
+                    alert(get);
+                    lost = str.substring(0, length - 3);
+                    alert(lost);
+                    str = lost;
+                    if (num == "") {
+                        num = get;
+                    } else {
+                        num = get + "," + num;
+                        alert(1);
+                        alert(num);
+                    }
+                    var before = num;
+                    length = length - 3;
+                } else {
+                    if (lost == undefined) {
+                        num = str;
+                    } else {
+                        num = lost + "," + before;
+                        alert(num);
+                        alert(2);
+                    }
+                    break;
+                }
+            }
+            //num=parseFloat(num).toFixed(2);
+            alert(num);
+            return num;
+        }
     /*]]>*/
 </script>
 </body>

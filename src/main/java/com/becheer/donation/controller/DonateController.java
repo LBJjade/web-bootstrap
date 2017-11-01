@@ -75,8 +75,10 @@ public class DonateController extends BaseController {
 //                MemberAuthFailed();
 //            }
             Long memberId = null; // currentMember.getMemberId();
+            String memberName = null;
             if (currentMember != null) {
                 memberId = currentMember.getMemberId();
+                memberName = currentMember.getMemberName();
             }
             Donate donate = new Donate();
             donate.setMemberId(memberId);
@@ -101,7 +103,7 @@ public class DonateController extends BaseController {
 //            }
 
             String ip = IPUtil.getRealIp();
-            Map<String, String> map = donateService.donate(donate, ip);
+            Map<String, String> map = donateService.donate(donate, ip, memberName);
             String returnCode = map.get("return_code");
             String resultCode = map.get("result_code");
             String qrCodeURL = null;

@@ -180,12 +180,51 @@
                                 imgUrl: imgRoot
                             },
                             filters:{
-                                format:function(value){
-                                    if (value===0){
-                                        return "0.00"
-                                    }else{
-                                        return (value/100).toFixed(2);
+                                format:function(value) {
+                                    value=value/100;
+                                    value=value.toString();
+                                    var spot=value.split(".")[1];
+                                    var str=value.split(".")[0];
+//                                var str = value;
+                                    var length = str.length;
+                                    var get, lost;
+                                    var num = new Array();
+                                    var num = "";
+                                    for (var i = 0; i < length; i + 3) {
+                                        if (length > 3) {
+                                            get = str.substring(length - 4, length - 1);
+                                            lost = str.substring(0, length - 3);
+                                            str = lost;
+                                            if (num == "") {
+                                                num = get;
+                                            } else {
+                                                num = get + "," + num;
+                                            }
+                                            var before = num;
+                                            length = length - 3;
+                                        } else {
+                                            if (lost == undefined) {
+                                                num = str;
+                                            } else {
+                                                num = lost + "," + before;
+                                            }
+                                            break;
+                                        }
                                     }
+                                    //num=parseFloat(num).toFixed(2);
+                                    if(spot == undefined){
+                                        num=num+".00";
+                                    }else{
+                                        if(spot.length > 2) {
+                                            spot = spot.substring(0,2);
+                                            num=num+"."+spot;
+                                        }else if(spot.length == 2){
+                                            num=num+"."+spot;
+                                        }else{
+                                            num=num+"."+spot+"0";
+                                        }
+                                    }
+                                    return num;
                                 }
                             }
                         });
