@@ -70,7 +70,7 @@
         from dnt_message
         where member_id = #{memberId}
         and status =0
-        and enable_=1;
+        and enable_=1
     </select>
 
 
@@ -80,6 +80,7 @@
          set status = 1,
          update_time = now()
          where id_ = #{id}
+         and member_id = #{memberId}
     </update>
 
 </mapper>
