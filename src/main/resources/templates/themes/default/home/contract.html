@@ -97,7 +97,6 @@
         </div>
         <div   id="div_page">
         </div>
-        </div>
     </div>
 </div>
 <div th:replace="themes/default/footer::footer"></div>
@@ -113,8 +112,7 @@
 
     $(document).ready(function () {
         f_GetContract();
-
-    })
+    });
 
 
     function f_GetContract() {
@@ -136,8 +134,7 @@
                         vueContent=new Vue({
                             el: '#div_contract_content',
                             data: {
-                                items: data.result.list,
-                                imgUrl: imgRoot
+                                items: data.result.list
                             },
                             filters:{
                                 format:function(value) {

@@ -147,10 +147,38 @@ public class Message {
     public static final String MEMBER_APPEAL_PROGRESS_SUCCESS="获取申诉进展成功";
 
     /**
+     * 未读消息数
+     */
+    public static final String MESSAGE_NUMBER_GET_SUCCESS="获取消息数成功";
+    public static final String MESSAGE_NUMBER_GET_FAILED="获取消息数失败";
+    /**
      * 微信支付
      */
     public static final String WXPAY_SUCCESS="提交微信支付成功";
 
+    /**
+     * 改变状态
+     */
+    public static final String CHANGE_STATUS_SUCCESS="状态修改成功";
+    public static final String CHANGE_STATUS_FAILED="状态修改失败";
+
+    /**
+     * 得到状态
+     */
+    public static final String GET_STATUS_SUCCESS="状态获取成功";
+    public static final String GET_STATUS_FAILED="状态获取失败";
+
+    /**
+     * 获取用户消息数
+     */
+    public static final String GET_MEMBERMESSAGES_SUCCESS="消息数获取成功";
+    public static final String GET_MEMBERMESSAGES_FAILED="消息数获取失败";
+
+    /**
+     * 提交申诉
+     */
+    public static final String SUBMIT_APPEAL_SUCCESS="申诉提交成功";
+    public static final String SUBMIT_APPEAL_FAILED="申诉提交失败";
 
     public static final String DONATE_PROJECT_TYPE_ID_IS_EMPTY = "请选择项目类别";
     public static final String DONATE_AMOUNT_IS_EMPTY = "请选择捐赠金额";
