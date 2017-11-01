@@ -67,8 +67,9 @@ public class MessageController extends BaseController {
         if (currentMember==null){
             return MemberAuthFailed();
         }
+        long memberId=currentMember.memberId;
         try {
-            messageService.ChangeStatus(id);
+            messageService.ChangeStatus(id,memberId);
             return new ResponseDto(200, Message.CHANGE_STATUS_SUCCESS);
         }catch(Exception ex){
             return new ResponseDto(500, Message.CHANGE_STATUS_FAILED);

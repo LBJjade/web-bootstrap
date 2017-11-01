@@ -13,5 +13,5 @@ import com.github.pagehelper.PageInfo;
 public interface IMessageService {
     PageInfo<MessageExtension> GetMessageList(long memberId, int pageNum, int pageSize);
     int GetMemberMessagesNum(long memberId);
-    void ChangeStatus(long id);
+    void ChangeStatus(long id,long memberId);
 }

@@ -13,6 +13,8 @@ import java.util.Date;
 public class MessageExtension {
     private long id;
 
+    private long memberId;
+
     private String type;
 
     private String title;
@@ -22,6 +24,10 @@ public class MessageExtension {
     private Date createTime;
 
     private int status;
+
+    public long getMemberId() { return memberId; }
+
+    public void setMemberId(long memberId) { this.memberId = memberId; }
 
     public int getStatus() {
         return status;

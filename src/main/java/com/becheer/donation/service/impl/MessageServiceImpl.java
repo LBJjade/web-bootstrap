@@ -43,6 +43,11 @@ public class MessageServiceImpl implements IMessageService {
     }
 
     @Override
-    public void ChangeStatus(long id) { messageMapper.ChangeStatus(id);}
+    public void ChangeStatus(long id,long memberId) {
+        MessageExtension extension=new MessageExtension();
+        extension.setId(id);
+        extension.setMemberId(memberId);
+        messageMapper.ChangeStatus(extension);
+    }
 
 }

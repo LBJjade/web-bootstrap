@@ -128,7 +128,6 @@
     var status=$(".div_message_title").find(".status").val();
     $(document).ready(function () {
         f_GetMessage();
-//        f_getmembernum();
     });
 
 
@@ -163,8 +162,6 @@
             type: 'post',
             dataType: 'json',
             success: function (data) {
-//                    f_getnum();
-//                    f_getmembernum();
             }
         });
 
@@ -209,34 +206,6 @@
 
     }
 
-    //    function f_getnum( ) {
-    //        $.ajax({
-    //            url: '/home/message/num',
-    //            type: 'post',
-    //            dataType: 'json',
-    //            success: function (data) {
-    //                $("#message").html("消息("+data.result+")");
-    //            }
-    //        });
-    //    }
-
-
-
-
-//    function f_getStatus(id){
-//        $.ajax({
-//            url: '/home/message/getStatus',
-//            data: {id: id},
-//            type: 'post',
-//            dataType: 'json',
-//            success: function (data) {
-//                if (data.result === 0) {
-//                    f_changestatus(id);
-//                }
-//            }
-//        })
-//
-//    }
 
     function f_change(id) {
         if(status == 0){
