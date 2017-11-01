@@ -90,21 +90,21 @@ public class WxPayServiceImpl implements IWxPayService {
         }
 
 
-        // // 验证签名
-        // if (!WxPayHelper.verifyNotify(notify)) {
-        //     logger.warn("微信支付结果通知: !!!签名失败!!!");
-        //     returnToWxPay.put("return_code", "FAIL");
-        //     returnToWxPay.put("return_msg", "签名失败");
-        //     return WxPayHelper.toXml(returnToWxPay);
-        // }
+        // 验证签名
+        if (!WxPayHelper.verifyNotify(notify)) {
+            logger.warn("微信支付结果通知: !!!签名失败!!!");
+            returnToWxPay.put("return_code", "FAIL");
+            returnToWxPay.put("return_msg", "签名失败");
+            return WxPayHelper.toXml(returnToWxPay);
+        }
 
-        // // TODO: 验证appid、mch_id等
-        // if (!WxPayHelper.verifyAppIdAndMchId(notify)) {
-        //     logger.warn("微信支付结果通知: !!!app_id或mch_id错误，确认是否修改了微信支付的配置文件!!!");
-        //     returnToWxPay.put("return_code", "SUCCESS");
-        //     returnToWxPay.put("return_msg", "OK");
-        //     return WxPayHelper.toXml(returnToWxPay);
-        // }
+        // 验证appid、mch_id等
+        if (!WxPayHelper.verifyAppIdAndMchId(notify)) {
+            logger.warn("微信支付结果通知: !!!app_id或mch_id错误，确认是否修改了微信支付的配置文件!!!");
+            returnToWxPay.put("return_code", "SUCCESS");
+            returnToWxPay.put("return_msg", "OK");
+            return WxPayHelper.toXml(returnToWxPay);
+        }
 
         // 微信支付平台的提醒: 推荐的做法是,
         // 1. 当收到通知进行处理时，首先检查对应业务数据的状态，判断该通知是否已经处理过，
@@ -121,9 +121,6 @@ public class WxPayServiceImpl implements IWxPayService {
             returnToWxPay.put("return_msg", "缺少参数:商户订单号out_trade_no");
             return WxPayHelper.toXml(returnToWxPay);
         }
-        // todo
-        paymentPlanService.updateDonate(outTradeNo);
-
 
         // 按照out_trade_no获取微信支付统一下单接口的数据
 
@@ -146,7 +143,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
         // 检查业务数据状态
         // 1. 订单已经被处理过。重复通知。
-        // TODO: 觉得这种可能性不大，如果有出现需要确认我们的业务逻辑是否有问题或被人修改过数据。写warn日志
+        // 觉得这种可能性不大，如果有出现需要确认我们的业务逻辑是否有问题或被人修改过数据。写warn日志
         if ("SUCCESS".equals(unifiedOrder.getNotifyReturnCode())) {
             logger.warn("微信支付结果通知: !!!通知相关的业务数据状态被标识为已完成，但仍收到微信支付结果通知【out_trade_no=" + outTradeNo + "】!!!");
             returnToWxPay.put("return_code", "SUCCESS");

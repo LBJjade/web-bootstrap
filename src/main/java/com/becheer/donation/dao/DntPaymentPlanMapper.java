@@ -9,6 +9,7 @@ import com.becheer.donation.model.DntPaymentPlan;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Map;
 
 @Component
 public interface DntPaymentPlanMapper {
@@ -18,5 +19,5 @@ public interface DntPaymentPlanMapper {
 
     int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount);
 
-    int updateDonate(String orderNo);
+    Map updateDonate(String orderNo);
 }

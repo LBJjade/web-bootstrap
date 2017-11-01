@@ -97,7 +97,7 @@
         WHERE paylog_ref_table = #{param1} AND order_no = #{param2}
     </update>
 
-    <select id="updateDonate">
+    <select id="updateDonate" resultType="java.util.Map" statementType="CALLABLE">
         call updateDonate(#{param1})
     </select>
 </mapper>
