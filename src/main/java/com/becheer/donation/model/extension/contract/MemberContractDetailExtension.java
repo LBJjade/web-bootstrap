@@ -23,7 +23,7 @@ public class MemberContractDetailExtension {
 
     private Date endTime;
 
-    private Date signTime;
+    private Date aSignTime;
 
     private int enable;
 
@@ -79,12 +79,12 @@ public class MemberContractDetailExtension {
         this.endTime = endTime;
     }
 
-    public Date getSignTime() {
-        return signTime;
+    public Date getaSignTime() {
+        return aSignTime;
     }
 
-    public void setSignTime(Date signTime) {
-        this.signTime = signTime;
+    public void setaSignTime(Date aSignTime) {
+        this.aSignTime = aSignTime;
     }
 
     public int getEnable() {
@@ -112,7 +112,12 @@ public class MemberContractDetailExtension {
             case 4:
                 return "重新编辑中";
             case 5:
-                return "待签订";
+                //此处临时处理，因枚举值缺失,须同后台沟通统一。
+                if (aSignTime!=null){
+                    return "捐赠人已签订";
+                }else {
+                    return "待签订";
+                }
             case 6:
                 return "基金会已签订";
             case 7:

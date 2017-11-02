@@ -3,6 +3,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+    <script th:src="@{/plugin/layer/layer.js}"></script>
     <title>
         合同明细
     </title>
@@ -302,8 +304,6 @@
 
 </head>
 <body>
-<form name="form1">
-
     <div class="w">
         <div class="logo">
             <img th:src="@{~/image/logo/375x100.png}"/>
@@ -330,40 +330,75 @@
                 </tr>
                 <tr>
                     <td>合同金额:</td>
-                    <td><th:block th:text="${ccontract.getContractAmount()}"></th:block></td>
+                    <td><th:block th:text="${contract.getContractAmount()}"></th:block></td>
                 </tr>
             </table>
         </div>
-        <div class="m m2" style="margin-bottom: 50px">
-            <table class="tb4">
-                <tr>
-                    <th>合同内容</th>
-                </tr>
-                <tr>
-                    <td>
-                        <div>
-                            <th:block th:text="${contract.getContent()}"></th:block>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="d3">
-                <input type="checkbox" />我已详细阅读并同意合同条款
-                <button class="info_button">签订</button>
+        <div class="m m2" style="margin-bottom: 50px;">
+            <div style="min-height: 450px">
+                <table class="tb4">
+                    <tr>
+                        <th>合同内容</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <th:block th:text="${contract.getContent()}"></th:block>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div th:if="${contract.getStatus()==5||contract.getStatus()==6}" id="div_agree" class="d3">
+                <input type="checkbox" id="ipt_agree" onclick="f_ruleClick()" />我已详细阅读并同意合同条款
+                <button class="info_button" id="btn_sign" onclick="f_sign()">签订</button>
             </div>
         </div>
     </div>
-    <div class="v-h">
-
-        <div class="w">
-            <button class="print-btn" onclick="">导出</button>
-
-            <button class="print-btn" onclick="javascript:window.print();">打印</button>
-
+        <div class="v-h">
+            <div class="w">
+                <button class="print-btn" onclick="f_export()">导出</button>
+                <button class="print-btn" onclick="javascript:window.print();">打印</button>
+            </div>
         </div>
     </div>
-    </div>
-</form>
 
 </body>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var contractId =/*[[${contract.getId()}]]*/;
+
+    function f_sign() {
+        if (!$("#ipt_agree").get(0).checked) {
+            layer.alert("请先仔细阅读并勾选'我已详细阅读并同意合同条款'");
+        } else {
+            layer.confirm("确定签订合同？", function () {
+                    $.ajax({
+                        url: '/home/contract/sign',
+                        type: 'post',
+                        data: {contractId: contractId},
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.code === 200) {
+                                layer.alert(data.msg);
+                                $("#div_agree").hidden();
+                            } else {
+                                layer.alert(data.msg);
+                            }
+                            layer.closeAll();
+                        }
+                    });
+                }, function () {
+                    layer.closeAll();
+                }
+            );
+        }
+    }
+
+    function f_export() {
+        alert("导出功能正在完善");
+    }
+
+    /*]]>*/
+</script>
 </html>

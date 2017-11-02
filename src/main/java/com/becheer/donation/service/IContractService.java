@@ -6,6 +6,7 @@ package com.becheer.donation.service;
 * Date : 2017-10-07
 */
 
+import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
@@ -20,4 +21,6 @@ public interface IContractService {
     MemberContractDetailExtension GetMemberContractDetail(long contractId);
 
     MemberContractContentExtension GetContractContent(long contractId);
+
+    ResponseDto UpdateContractStatuas(long contractId,long memberId);
 }

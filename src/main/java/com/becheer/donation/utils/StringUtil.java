@@ -53,26 +53,31 @@ public class StringUtil {
         return num;
     }
 
-    public static String formatMoney(long money){
-        if (money==0){
+    //方法未完成
+    public static String formatMoney(long money) {
+        if (money == 0) {
             return "0.00";
         }
-        if (Math.abs(money)<100000){
-            return String.valueOf(money/100);
+        if (Math.abs(money) < 100000) {
+            return String.valueOf(money / 100);
         }
-        String sign=money<0?"-":"";
-        money=Math.abs(money);
-        String stringMoney=String.valueOf(money/100);
-        String stringDecimnal=stringMoney.substring(stringMoney.length()-1);
-        String stringInteger=stringMoney.substring(0,stringMoney.indexOf('.')-1);
-        stringInteger=new StringBuffer(stringInteger).reverse().toString();
+        String sign = money < 0 ? "-" : "";
+        money = Math.abs(money);
+        Double d=((double)money)/100;
+        String stringMoney ="";
+        String stringDecimnal = stringMoney.substring(stringMoney.length() - 1);
+        String stringInteger = stringMoney.substring(0, stringMoney.indexOf('.') - 1);
+        stringInteger = new StringBuffer(stringInteger).reverse().toString();
         char charInteger[] = stringInteger.toCharArray();
-        String result="";
-        for(int i=0;i<charInteger.length;i++){
-            result+=charInteger[i];
-            if ((i+1)%3==0&&i!=charInteger.length-1){
-                result+=",";
+        String result = "";
+        for (int i = 0; i < charInteger.length; i++) {
+            result += charInteger[i];
+            if ((i + 1) % 3 == 0 && i != charInteger.length - 1) {
+                result += ",";
             }
         }
+        result = new StringBuffer(result).reverse().toString();
+        result = sign + result + stringDecimnal;
+        return result;
     }
 }

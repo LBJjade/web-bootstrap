@@ -7,10 +7,12 @@ package com.becheer.donation.service.impl;
 */
 
 import com.becheer.donation.dao.ContractMapper;
+import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.service.IContractService;
+import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -40,5 +42,15 @@ public class ContractServiceImpl implements IContractService {
     @Override
     public MemberContractContentExtension GetContractContent(long contractId) {
         return contractMapper.SelectContractContent(contractId);
+    }
+
+    @Override
+    public ResponseDto UpdateContractStatuas(long contractId, long memberId) {
+        int result = contractMapper.UpdateContractStatus(contractId,memberId);
+        if (result>0){
+            return new ResponseDto(200, Message.CONTRACT_SIGN_SUCCESS);
+        }else {
+            return new ResponseDto(500, Message.CONTRACT_SIGN_FAILED);
+        }
     }
 }

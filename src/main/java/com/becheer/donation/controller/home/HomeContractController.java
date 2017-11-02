@@ -8,7 +8,6 @@ import com.becheer.donation.model.extension.contract.MemberContractDetailExtensi
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
-import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IPaymentPlanService;
 import com.becheer.donation.strings.Message;
@@ -118,4 +117,20 @@ public class HomeContractController extends BaseController {
             return render_500();
         }
     }
+
+    @PostMapping("/sign")
+    @ResponseBody
+    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        try {
+            return contractService.UpdateContractStatuas(contractId,currentMember.getMemberId());
+        }catch(Exception ex){
+            LOGGER.error("SignContract", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
 }
