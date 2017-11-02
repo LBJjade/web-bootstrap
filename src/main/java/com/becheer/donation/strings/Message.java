@@ -190,4 +190,10 @@ public class Message {
      * 阿里OSS服务器根目录占位符
      */
     public static final String REPLACE_HOLDER_PROJECT_CONTENT = "\\$ImageRoot\\$";
+
+    /**
+     * 合同签订
+     */
+    public static final String CONTRACT_SIGN_SUCCESS="合同签订成功";
+    public static final String CONTRACT_SIGN_FAILED="合同签订失败";
 }

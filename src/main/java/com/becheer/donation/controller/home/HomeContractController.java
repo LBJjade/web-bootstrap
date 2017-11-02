@@ -3,11 +3,11 @@ package com.becheer.donation.controller.home;
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
-import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IPaymentPlanService;
 import com.becheer.donation.strings.Message;
@@ -100,4 +100,37 @@ public class HomeContractController extends BaseController {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
+
+    @Access(authorities="member")
+    @GetMapping(value = "/content/{contractId}")
+    public String GetContractContent(HttpServletRequest request,@PathVariable long contractId) {
+        try{
+            MemberContractContentExtension result=contractService.GetContractContent(contractId);
+            if (result==null){
+                return render_404();
+            }else{
+                request.setAttribute("contract",result);
+                return render("home/contract_content");
+            }
+        }catch(Exception ex){
+            LOGGER.error("GetContractContent", ex);
+            return render_500();
+        }
+    }
+
+    @PostMapping("/sign")
+    @ResponseBody
+    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        try {
+            return contractService.UpdateContractStatuas(contractId,currentMember.getMemberId());
+        }catch(Exception ex){
+            LOGGER.error("SignContract", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
 }

@@ -23,11 +23,13 @@ public class MemberContractDetailExtension {
 
     private Date endTime;
 
-    private Date signTime;
+    private Date aSignTime;
 
     private int enable;
 
-    private String status;
+    private int status;
+
+    private String contractNo;
 
     public long getId() {
         return id;
@@ -77,12 +79,12 @@ public class MemberContractDetailExtension {
         this.endTime = endTime;
     }
 
-    public Date getSignTime() {
-        return signTime;
+    public Date getaSignTime() {
+        return aSignTime;
     }
 
-    public void setSignTime(Date signTime) {
-        this.signTime = signTime;
+    public void setaSignTime(Date aSignTime) {
+        this.aSignTime = aSignTime;
     }
 
     public int getEnable() {
@@ -93,21 +95,53 @@ public class MemberContractDetailExtension {
         this.enable = enable;
     }
 
-    public String getStatus() {
-        switch (enable){
+    public int getStatus() {
+        return status;
+    }
+
+    public String getStatusText(){
+        switch (status){
             case 0:
-                return "已作废";
+                return "编辑中";
             case 1:
-                return "执行中";
+                return "审批中";
             case 2:
-                return "已终止";
+                return "已审批";
             case 3:
-                return "已结束";
-            default:return "";
+                return "已驳回";
+            case 4:
+                return "重新编辑中";
+            case 5:
+                //此处临时处理，因枚举值缺失,须同后台沟通统一。
+                if (aSignTime!=null){
+                    return "捐赠人已签订";
+                }else {
+                    return "待签订";
+                }
+            case 6:
+                return "基金会已签订";
+            case 7:
+                return "执行中";
+            case 8:
+                return "已完成";
+            case 9:
+                return "已终止";
+            case 10:
+                return "已作废";
+                default:
+                    return "";
         }
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getContractNo() {
+        return contractNo;
+    }
+
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
     }
 }

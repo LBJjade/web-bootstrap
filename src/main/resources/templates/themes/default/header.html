@@ -76,28 +76,35 @@
     var fileRoot=/*[[${config.getFileRoot()}]]*/;
     var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
 
-    if (memberInfo!=null){
-        $("#ul_login").hide();
-        $("#ul_logined").show();
-        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
-    }else{
-        var userCookie=getCookie("member");
-        if(userCookie!=null){
-            $.ajax({
-                url: '/login/autoLogin',
-                type: 'post',
-                data:{memberId:userCookie.split('|')[0],cookie:userCookie.split('|')[1]},
-                dataType: 'json',
-                success: function (data) {
-                    if(data.code===200){
-                        memberInfo=data.result;
-                        $("#ul_login").hide();
-                        $("#ul_logined").show();
-                        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
-                        window.location.href="/";
+    $(document).ready(function() {
+        f_autoLogin();
+    });
+
+    function f_autoLogin() {
+        if (memberInfo!=null){
+            f_getMemberNum();
+            $("#ul_login").hide();
+            $("#ul_logined").show();
+            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+        }else{
+            var userCookie=getCookie("member");
+            if(userCookie!=null){
+                $.ajax({
+                    url: '/login/autoLogin',
+                    type: 'post',
+                    data:{memberId:userCookie.split('|')[0],cookie:userCookie.split('|')[1]},
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.code===200){
+                            memberInfo=data.result;
+                            $("#ul_login").hide();
+                            $("#ul_logined").show();
+                            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+                            f_getMemberNum();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
@@ -129,11 +136,6 @@
         }
     }
 
-    $(document).ready(function() {
-        if (memberInfo != null) {
-            f_getMemberNum();
-        }
-    });
 
     function  f_getMemberNum() {
         $.ajax({

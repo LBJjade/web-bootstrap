@@ -71,6 +71,7 @@ public class LoginController extends BaseController {
             if (autoLogin){
                 Cookie cookie = new Cookie("member", memberSessionExtension.getMemberId()+"|"+GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
                 cookie.setMaxAge(2592000); //设置cookie的过期时间是10s
+                cookie.setPath("/");
                 response.addCookie(cookie);
             }
         }
@@ -87,6 +88,7 @@ public class LoginController extends BaseController {
             request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
             Cookie cookie = new Cookie("member", null);
             cookie.setMaxAge(0);
+            cookie.setPath("/");
             response.addCookie(cookie);
             return new ResponseDto(200,Message.LOGINOUT_SUCCESS);
         }

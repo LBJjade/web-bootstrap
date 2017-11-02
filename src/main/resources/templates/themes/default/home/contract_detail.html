@@ -53,7 +53,8 @@
                 <tr><td>合同金额</td><td><th:block th:text="${contract.getContractAmount()>0?contract.getContractAmount()/100:0}"></th:block></td></tr>
                 <tr><td>已捐金额</td><td><th:block th:text="${contract.getDonatedAmount()>0?contract.getDonatedAmount()/100:0}"></th:block></td></tr>
                 <tr><td>合同周期</td><td><th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block></td></tr>
-                <tr><td>合同状态</td><td><th:block th:text="${contract.getStatus()}"></th:block></td></tr>
+                <tr><td>合同状态</td><td><th:block th:text="${contract.getStatusText()}"></th:block></td></tr>
+                <tr><td>合同内容</td><td><a href="javascript:f_openContent()">点击查看</a></td></tr>
             </table>
             <div class="div_member_title">
                 <p>合同捐赠详情</p>
@@ -109,6 +110,17 @@
                     });
                 }
             }
+        });
+    }
+    
+    function f_openContent() {
+        layer.open({
+            type: 2,
+            title: '合同内容',
+            shadeClose: true,
+            shade: 0.6,
+            area: ['1100px', '90%'],
+            content: '/home/contract/content/'+contractId
         });
     }
     /*]]>*/
