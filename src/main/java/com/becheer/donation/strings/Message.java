@@ -190,4 +190,5 @@ public class Message {
      * 阿里OSS服务器根目录占位符
      */
     public static final String REPLACE_HOLDER_PROJECT_CONTENT = "\\$ImageRoot\\$";
+    public static final String WXPAY_GET_STATUS_SUCCESS = "支付状态获取成功";
 }
