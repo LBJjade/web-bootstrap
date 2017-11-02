@@ -21,6 +21,19 @@
         <result column="enable_" jdbcType="INTEGER" property="enable" />
     </resultMap>
 
+    <resultMap id="MemberContractContentResultMap" type="com.becheer.donation.model.extension.contract.MemberContractContentExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
+        <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="a_sign_time" jdbcType="TIMESTAMP" property="signTime" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+    </resultMap>
+
     <select id="SelectContractByMemberId" parameterType="java.lang.Long" resultMap="MemberContractResultMap">
         SELECT
             id_,
@@ -41,7 +54,24 @@
             begin_time,
             end_time,
             a_sign_time,
-            enable_
+            enable_,
+            status
+        FROM dnt_contract
+        WHERE id_=#{contractId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
+    </select>
+
+    <select id="SelectContractContent" parameterType="java.lang.Long" resultMap="MemberContractContentResultMap">
+        SELECT
+        id_,
+        contract_name,
+        contract_amount,
+        donated_amount,
+        begin_time,
+        end_time,
+        a_sign_time,
+        enable_,
+        status,
+        content
         FROM dnt_contract
         WHERE id_=#{contractId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
     </select>

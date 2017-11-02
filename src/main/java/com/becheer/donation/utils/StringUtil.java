@@ -52,4 +52,27 @@ public class StringUtil {
         }
         return num;
     }
+
+    public static String formatMoney(long money){
+        if (money==0){
+            return "0.00";
+        }
+        if (Math.abs(money)<100000){
+            return String.valueOf(money/100);
+        }
+        String sign=money<0?"-":"";
+        money=Math.abs(money);
+        String stringMoney=String.valueOf(money/100);
+        String stringDecimnal=stringMoney.substring(stringMoney.length()-1);
+        String stringInteger=stringMoney.substring(0,stringMoney.indexOf('.')-1);
+        stringInteger=new StringBuffer(stringInteger).reverse().toString();
+        char charInteger[] = stringInteger.toCharArray();
+        String result="";
+        for(int i=0;i<charInteger.length;i++){
+            result+=charInteger[i];
+            if ((i+1)%3==0&&i!=charInteger.length-1){
+                result+=",";
+            }
+        }
+    }
 }

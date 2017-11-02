@@ -27,7 +27,9 @@ public class MemberContractDetailExtension {
 
     private int enable;
 
-    private String status;
+    private int status;
+
+    private String contractNo;
 
     public long getId() {
         return id;
@@ -93,21 +95,48 @@ public class MemberContractDetailExtension {
         this.enable = enable;
     }
 
-    public String getStatus() {
-        switch (enable){
+    public int getStatus() {
+        return status;
+    }
+
+    public String getStatusText(){
+        switch (status){
             case 0:
-                return "已作废";
+                return "编辑中";
             case 1:
-                return "执行中";
+                return "审批中";
             case 2:
-                return "已终止";
+                return "已审批";
             case 3:
-                return "已结束";
-            default:return "";
+                return "已驳回";
+            case 4:
+                return "重新编辑中";
+            case 5:
+                return "待签订";
+            case 6:
+                return "基金会已签订";
+            case 7:
+                return "执行中";
+            case 8:
+                return "已完成";
+            case 9:
+                return "已终止";
+            case 10:
+                return "已作废";
+                default:
+                    return "";
         }
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getContractNo() {
+        return contractNo;
+    }
+
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
     }
 }

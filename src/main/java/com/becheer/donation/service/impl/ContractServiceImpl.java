@@ -7,6 +7,7 @@ package com.becheer.donation.service.impl;
 */
 
 import com.becheer.donation.dao.ContractMapper;
+import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.service.IContractService;
@@ -34,5 +35,10 @@ public class ContractServiceImpl implements IContractService {
     @Override
     public MemberContractDetailExtension GetMemberContractDetail(long contractId) {
         return contractMapper.SelectContractDetail(contractId);
+    }
+
+    @Override
+    public MemberContractContentExtension GetContractContent(long contractId) {
+        return contractMapper.SelectContractContent(contractId);
     }
 }
