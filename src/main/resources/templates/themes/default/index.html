@@ -1067,7 +1067,7 @@
                         }
                     }
             });
-            var timer = 60;
+            var timer = 120;
 
             function Countdown() {
                 if (timer >= 1) {
@@ -1108,14 +1108,13 @@
                         var returnCode = data.result.notify_return_code;
                         var resultCode = data.result.notify_result_code;
                         var errCodeDesc = data.result.notify_err_code_desc;
-                        stopCount();
                         if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
                             $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
-                            autoCloseAfterPaidInterval = setInterval("autoClose()", 1000);
+                            stopCount();
+                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
                         } else {
                             $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
                         }
-                        $(".close_qr").click();
                     }
                 }
         });
@@ -1177,7 +1176,7 @@
                     }
                 }
         });
-        var timer = 60;
+        var timer = 120;
 
         function Countdown() {
             if (timer >= 1) {
