@@ -6,6 +6,7 @@ import com.becheer.core.support.pay.WxPayQueryOrderResult;
 import com.becheer.core.support.pay.WxPayReturnToWeixin;
 import com.becheer.core.util.XmlUtil;
 import com.becheer.donation.model.PayWxUnifiedOrder;
+import com.becheer.donation.service.IDntNoContractDonateService;
 import com.becheer.donation.service.IDntPaymentPlanService;
 import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.service.IPayWxUnifiedOrderService;
@@ -31,6 +32,9 @@ public class WxPayServiceImpl implements IWxPayService {
 
     @Resource
     private IDntPaymentPlanService paymentPlanService;
+
+    @Resource
+    private IDntNoContractDonateService noContractDonateService;
 
     @Override
     public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
@@ -67,53 +71,6 @@ public class WxPayServiceImpl implements IWxPayService {
     }
 
     @Override
-    public String payNotify(WxPayQueryOrderResult notifyBody) {
-
-        boolean notifyIsValid = false;
-        String failMsg = "";
-        if (notifyBody.getResultCode().equals("SUCCESS")) {
-            if (notifyBody.getReturnCode().equals("SUCCESS")) {
-
-                // TODO 校验签名验证,并校验返回的订单金额是否与商户侧的订单金额一致
-
-                String sign = "";
-                String outTradeNo = "";
-                int totalFee = 0;
-
-                if (!notifyBody.getSign().equals(sign)) {
-                    failMsg = "签名失败";
-                }
-
-                if (notifyBody.getOutTradeNo().equals(outTradeNo)) {
-                    failMsg = "无效的订单号";
-                }
-
-                if (notifyBody.getTotalFee() == totalFee) {
-                    failMsg = "无效的支付金额";
-                }
-                if (Strings.isNullOrEmpty(failMsg)) {
-                    notifyIsValid = true;
-                } else {
-                    notifyIsValid = false;
-                }
-            }
-        } else {
-            // TODO 微信支付接口通知我们支付失败，需要将支付失败的原因显示在对应的业务表中。
-
-        }
-
-        WxPayReturnToWeixin wxPayReturnToWeixin = new WxPayReturnToWeixin();
-        if (notifyBody.getReturnCode().equals("SUCCESS") && notifyBody.getResultCode().equals("SUCCESS") && notifyIsValid) {
-            wxPayReturnToWeixin.setReturnCode("SUCCESS");
-            wxPayReturnToWeixin.setReturnMsg("OK");
-        } else {
-            wxPayReturnToWeixin.setReturnCode("FAIL");
-            wxPayReturnToWeixin.setReturnMsg("签名失败");
-        }
-        return wxPayReturnToWeixin.toXML();
-    }
-
-    @Override
     public String payNotify(String notifyXML) {
         logger.info("收到微信支付结果通知:");
         logger.info(notifyXML);
@@ -141,7 +98,7 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayHelper.toXml(returnToWxPay);
         }
 
-        // TODO: 验证appid、mch_id等
+        // 验证appid、mch_id等
         if (!WxPayHelper.verifyAppIdAndMchId(notify)) {
             logger.warn("微信支付结果通知: !!!app_id或mch_id错误，确认是否修改了微信支付的配置文件!!!");
             returnToWxPay.put("return_code", "SUCCESS");
@@ -165,7 +122,6 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayHelper.toXml(returnToWxPay);
         }
 
-
         // 按照out_trade_no获取微信支付统一下单接口的数据
 
         PayWxUnifiedOrder unifiedOrder = null;
@@ -187,7 +143,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
         // 检查业务数据状态
         // 1. 订单已经被处理过。重复通知。
-        // TODO: 觉得这种可能性不大，如果有出现需要确认我们的业务逻辑是否有问题或被人修改过数据。写warn日志
+        // 觉得这种可能性不大，如果有出现需要确认我们的业务逻辑是否有问题或被人修改过数据。写warn日志
         if ("SUCCESS".equals(unifiedOrder.getNotifyReturnCode())) {
             logger.warn("微信支付结果通知: !!!通知相关的业务数据状态被标识为已完成，但仍收到微信支付结果通知【out_trade_no=" + outTradeNo + "】!!!");
             returnToWxPay.put("return_code", "SUCCESS");
@@ -215,6 +171,8 @@ public class WxPayServiceImpl implements IWxPayService {
         }
 
         paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo,  paymentDate, totalFee);
+        paymentPlanService.updateDonate(outTradeNo);
+
 
 
         // 签名、商户信息、业务数据状态、订单金额都没问题的情况下
