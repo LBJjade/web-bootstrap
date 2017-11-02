@@ -17,5 +17,7 @@ public interface IPayWxUnifiedOrderService {
     int updateNotifyXML(String outTradeNo, String returnCode, String returnMsg, String resultCode, String errCode, String errCodeMsg, String notifyXML);
 
     PayWxUnifiedOrder getPayWxUnifiedOrderByOutTradeNo(String outTradeNo);
+
+    Map<String, String> status(String orderNo);
 }
 

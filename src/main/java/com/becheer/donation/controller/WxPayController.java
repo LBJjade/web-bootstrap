@@ -36,4 +36,12 @@ public class WxPayController extends BaseController {
         String result = wxPayService.payNotify(notifyXML);
         return new ResponseDto(200, result);
     }
+
+    @PostMapping("/status")
+    @ResponseBody
+    public ResponseDto status(@RequestBody String orderNo) {
+        String result = wxPayService.status(orderNo);
+
+        return new ResponseDto(200, result);
+    }
 }

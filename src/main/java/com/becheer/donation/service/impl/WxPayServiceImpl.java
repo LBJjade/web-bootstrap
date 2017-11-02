@@ -187,6 +187,11 @@ public class WxPayServiceImpl implements IWxPayService {
         return WxPayHelper.toXml(returnToWxPay);
     }
 
+    @Override
+    public Map<String, String> status(String orderNo) {
+        return payWxUnifiedOrderService.status(orderNo);
+    }
+
     // 测试数据
     /**
      * FAIL 签名错误
