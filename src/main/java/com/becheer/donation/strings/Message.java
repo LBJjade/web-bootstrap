@@ -185,4 +185,9 @@ public class Message {
     public static final String DONATE_PROJECT_TYPE_ID_BAD_REQUEST = "无效的请求(项目类型)";
     public static final String DONATE_AMOUNT_BAD_REQUEST = "无效的请求(捐赠金额)";
     public static final String DONATE_PROJECT_ID_BAD_REQUEST = "无效的请求(项目)";
+
+    /**
+     * 阿里OSS服务器根目录占位符
+     */
+    public static final String REPLACE_HOLDER_PROJECT_CONTENT = "\\$ImageRoot\\$";
 }

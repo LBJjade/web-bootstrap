@@ -1,6 +1,10 @@
 package com.becheer.donation.model.extension.project;
 
+import com.becheer.donation.configs.FileConfig;
+import com.becheer.donation.service.SpringContextUtil;
+import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
@@ -10,6 +14,7 @@ import java.util.Date;
 * Date : 2017-10-10
 */
 public class MemberProjectDetailExtension {
+
     private long id;
 
     private long projectId;
@@ -61,7 +66,7 @@ public class MemberProjectDetailExtension {
     }
 
     public String getContent() {
-        return content;
+        return content.replaceAll(Message.REPLACE_HOLDER_PROJECT_CONTENT,((FileConfig) SpringContextUtil.getBean("fileConfig")).getFileRoot());
     }
 
     public void setContent(String content) {
