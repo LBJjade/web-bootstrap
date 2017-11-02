@@ -531,9 +531,10 @@
             <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span id="donateAmount" class="order_fund" style=""></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
+                            id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
-                <div class="code_time">距离二维码过期还有<span class="time" style="color: red"></span>秒</div>
+                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒</div>
                 <div class="model-body" style="text-align: center">
 
                     <div class="model-body code_img row" style="text-align: center">
@@ -1062,11 +1063,11 @@
                         if (data.code === 200) {
                             $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
                             $("#orderNo").html(data.result.orderNo);
-                            checkPayStatusInterval = setInterval("checkPayStatus()", 15000);
+                            checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
                         }
                     }
             });
-            var timer = 60;
+            var timer = 120;
 
             function Countdown() {
                 if (timer >= 1) {
@@ -1074,7 +1075,7 @@
                     t = setTimeout(function () {
                         Countdown();
                     }, 1000);
-                    $(".time").html(timer);
+                    $("#waitingPayTimerText").html(timer);
                 } else {
 //                    alert("二维码过期");
 //                    $("#div_cf_donate").model('hide');
@@ -1087,7 +1088,6 @@
             }
 
             Countdown();
-
 
 
         }
@@ -1109,11 +1109,12 @@
                         var resultCode = data.result.notify_result_code;
                         var errCodeDesc = data.result.notify_err_code_desc;
                         if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
-                            alert("支付成功")
+                            $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
+                            stopCount();
+                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
                         } else {
-                            alert(errCodeDesc);
+                            $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
                         }
-                        $(".close_qr").click();
                     }
                 }
         });
@@ -1130,6 +1131,18 @@
         stopCount();
     })
 
+    var autoCloseTimeout = 5;
+    function autoCloseAfterPaid() {
+        if (autoCloseTimeout > 1) {
+            autoCloseTimeout -= 1;
+            $("#autoCloseAfterPaidTimerText").html(autoCloseTimeout);
+            $("#qrCodeImageId").attr("src", "");
+        } else {
+            clearInterval(autoCloseAfterPaidInterval);
+            $(".close_qr").click();
+        }
+    }
+
     //关闭函数
     function stopCount() {
         clearTimeout(t);
@@ -1138,7 +1151,7 @@
 
     //刷新二维码
     $(".fresh").click(function () {
-        $(".code_time").html("距离二维码过期还有<span class=\"time\" style=\"color: red\"></span>秒");
+        $(".code_time").html("距离二维码过期还有<span id=\"waitingPayTimerText\" class=\"time\" style=\"color: red\"></span>秒");
         $(".fresh").css("z-index", "-1");
         $("#qrCodeImageId").removeClass("qrCodeImageId");
         var projectTypeId = $("#sel_project_type").val();
@@ -1163,7 +1176,7 @@
                     }
                 }
         });
-        var timer = 60;
+        var timer = 120;
 
         function Countdown() {
             if (timer >= 1) {
