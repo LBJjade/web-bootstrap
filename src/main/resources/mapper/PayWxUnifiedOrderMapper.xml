@@ -46,7 +46,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="java.util.Map"
-        useGeneratedKeys="true" keyProperty="id">
+            useGeneratedKeys="true" keyProperty="id">
         INSERT INTO pay_wx_unified_order
         (
 	        appid,
@@ -177,5 +177,12 @@
         notify_xml
     FROM pay_wx_unified_order
     WHERE out_trade_no = #{param1}
+    </select>
+
+    <select id="status" parameterType="String" resultType ="java.util.Map">
+        SELECT
+          out_trade_no, notify_return_code, notify_return_msg, notify_result_code, notify_err_code, notify_err_code_desc
+        FROM pay_wx_unified_order
+        WHERE out_trade_no = #{param1}
     </select>
 </mapper>
