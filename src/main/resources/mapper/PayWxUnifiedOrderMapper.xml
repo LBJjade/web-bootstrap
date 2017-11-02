@@ -179,9 +179,9 @@
     WHERE out_trade_no = #{param1}
     </select>
 
-    <select id="status" resultMap="java.util.Map">
+    <select id="status" parameterType="String" resultType ="java.util.Map">
         SELECT
-          notify_return_code, notify_return_msg, notify_result_code, notify_err_code, notify_err_code_desc
+          out_trade_no, notify_return_code, notify_return_msg, notify_result_code, notify_err_code, notify_err_code_desc
         FROM pay_wx_unified_order
         WHERE out_trade_no = #{param1}
     </select>

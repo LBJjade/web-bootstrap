@@ -18,6 +18,6 @@ public interface IPayWxUnifiedOrderService {
 
     PayWxUnifiedOrder getPayWxUnifiedOrderByOutTradeNo(String outTradeNo);
 
-    Map<String, String> status(String orderNo);
+    Map status(String orderNo);
 }
 

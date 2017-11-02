@@ -27,5 +27,5 @@ public interface PayWxUnifiedOrderMapper {
 
     PayWxUnifiedOrder getPayWxUnifiedOrderByOutTradeNo(String outTradeNo);
 
-    Map<String, String> status(String outTradeNo);
+    Map status(String outTradeNo);
 }

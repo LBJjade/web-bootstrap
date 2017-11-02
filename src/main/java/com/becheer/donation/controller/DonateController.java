@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,6 +105,9 @@ public class DonateController extends BaseController {
 
             String ip = IPUtil.getRealIp();
             Map<String, String> map = donateService.donate(donate, ip, memberName);
+
+
+            Map<String, String> prepay = new HashMap<>();
             String returnCode = map.get("return_code");
             String resultCode = map.get("result_code");
             String qrCodeURL = null;
@@ -111,15 +115,17 @@ public class DonateController extends BaseController {
                 // responsedTradeType = wxPayResponse.get("trade_type");
                 // preparedId = wxPayResponse.get("prepared_id");
                 qrCodeURL = map.get("code_url");
+                if (qrCodeURL != null) {
+                    String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
+                    prepay.put("qrCodeImageBase64", qrCodeImageBase64);
+                }
+                String orderNo = map.get("orderNo");
+                prepay.put("orderNo", orderNo);
             }
 
-            if (qrCodeURL != null) {
-                String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
-                map.put("qrCodeImageBase64", qrCodeImageBase64);
-            }
 
 
-            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, map);
+            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
         } catch (Exception ex) {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }

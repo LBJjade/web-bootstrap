@@ -11,12 +11,6 @@
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
-    <!--websocket-->
-
-    <script th:src="@{/js/sockjs.min.js}"></script>
-    <script th:src="@{/js/stomp.js}"></script>
-    <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
-
     <style type="text/css">
         * {
             font-family: 微软雅黑;
@@ -338,20 +332,20 @@
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
                         <a :href="'project/'+item.projectId" target="_blank">
                             <img :alt="item.projectName"
-                                 :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fixed,h_600,w_900'"/></a>
+                                 :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fixed,h_600,w_900'"/>
+                        </a>
                     </li>
                 </ul>
                 <div id="div_banner_title">
                     <p id="p_banner"></p>
-                    <ul id="ul_index">
-                    </ul>
+                    <ul id="ul_index"></ul>
                 </div>
             </div>
         </div>
         <div class="col-sm-3" style="padding-left: 5px; height: 400px">
             <div id="div_total">
                 <div class="div_title">
-                    <h2 class="h2_title">爱心动态</h2>
+                    <h2 class="h2_title">爱心统计</h2>
                 </div>
                 <ul id="ul_total">
                     <li>
@@ -515,26 +509,6 @@
                     </form>
                 </div>
             </div>
-
-            <!--<noscript><h2 style="color: #ff0000">貌似你的浏览器不支持websocket</h2></noscript>-->
-            <!--<div>-->
-            <!--<div>-->
-            <!--<button id="connect" onclick="connect();">连接</button>-->
-            <!--<button id="disconnect" disabled="disabled" onclick="disconnect();">断开连接</button>-->
-            <!--</div>-->
-            <!--<div id="conversationDiv">-->
-            <!--<label>输入你的名字</label><input type="text" id="socketName" />-->
-            <!--<button id="sendName" onclick="sendName();">发送</button>-->
-            <!--<p id="response"></p>-->
-            <!--</div>-->
-            <!--</div>-->
-
-            <!--Welcome<br/>-->
-            <!--<input id="text" type="text" /><button onclick="send()">Send</button>    <button onclick="closeWebSocket()">Close</button>-->
-            <!--<div id="message">-->
-            <!--</div>-->
-
-
         </div>
     </div>
 </div>
@@ -556,9 +530,8 @@
 
             <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
-                    <span class="donate_msg" style="font-family: 微软雅黑;">你已提交捐款,订单号为：</span>
-                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
-                            class="order_fund" style=""></span></span>
+                    <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span class="time" style="color: red"></span>秒</div>
                 <div class="model-body" style="text-align: center">
@@ -624,8 +597,8 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
-                                                                                        id="ipt_dnt_mobile"/></div>
+                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" id="ipt_dnt_mobile"/></div>
                 <div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;
                     <input type="number" id="ipt_dnt_amount"/>
                 </div>
@@ -1074,7 +1047,7 @@
             // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
             // amount = math.eval(amount * 100);
             var amount = span_money * 100;
-            $(".order_fund").html(span_money);
+            $("#donateAmount").html(span_money);
             $.ajax({
                 url: '/donate/donate',
                 type: 'post',
@@ -1088,6 +1061,8 @@
                     function (data) {
                         if (data.code === 200) {
                             $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
+                            $("#orderNo").html(data.result.orderNo);
+                            checkPayStatusInterval = setInterval("checkPayStatus()", 15000);
                         }
                     }
             });
@@ -1112,9 +1087,37 @@
             }
 
             Countdown();
+
+
+
         }
     }
 
+    function checkPayStatus() {
+        var orderNo = $("#orderNo").html();
+        $.ajax({
+            url: '/wxpay/status',
+            type: 'post',
+            data: {
+                orderNo: orderNo
+            },
+            dataType: 'json',
+            success:
+                function (data) {
+                    if (data.code === 200) {
+                        var returnCode = data.result.notify_return_code;
+                        var resultCode = data.result.notify_result_code;
+                        var errCodeDesc = data.result.notify_err_code_desc;
+                        if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
+                            alert("支付成功")
+                        } else {
+                            alert(errCodeDesc);
+                        }
+                        $(".close_qr").click();
+                    }
+                }
+        });
+    }
 
     $(".code_img").mouseover(function () {
         $("#qr_logo").fadeIn(2000);
@@ -1130,6 +1133,7 @@
     //关闭函数
     function stopCount() {
         clearTimeout(t);
+        clearInterval(checkPayStatusInterval);
     }
 
     //刷新二维码
@@ -1181,11 +1185,6 @@
         Countdown();
 
 
-        setInterval("checkPayStatus()", 5000);
-
-        function checkPayStatus() {
-            alert('check') ;
-        }
     })
 
 

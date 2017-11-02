@@ -51,7 +51,7 @@ public class PayWxUnifiedOrderServiceImpl implements IPayWxUnifiedOrderService {
     }
 
     @Override
-    public Map<String, String> status(String orderNo) {
+    public Map status(String orderNo) {
         return mapper.status(orderNo);
     }
 

@@ -2,14 +2,12 @@ package com.becheer.donation.service.impl;
 
 import com.becheer.core.support.pay.WxPay;
 import com.becheer.core.support.pay.WxPayHelper;
-import com.becheer.core.support.pay.WxPayQueryOrderResult;
-import com.becheer.core.support.pay.WxPayReturnToWeixin;
 import com.becheer.core.util.XmlUtil;
 import com.becheer.donation.model.PayWxUnifiedOrder;
 import com.becheer.donation.service.IDntNoContractDonateService;
 import com.becheer.donation.service.IDntPaymentPlanService;
-import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.service.IPayWxUnifiedOrderService;
+import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.utils.DateUtils;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -40,16 +38,10 @@ public class WxPayServiceImpl implements IWxPayService {
     public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
 
         Map<String, String> params = WxPayHelper.buildUnifiedOrderParasMap(outTradeNo, productId, String.valueOf(totalFee));
-        // 保存构造好的参数
-        // 不要在这里保存，跟微信支付反馈的信息一起保存
-        // payWxUnifiedOrderService.insert(params);
 
         String prepayXML = WxPay.unifiedOrder(params);
         Map prepayMap = XmlUtil.parseXml2Map(prepayXML);
-        // Map<String, String> prepayMap = WxPayHelper.xmlToMap(prepayXML);
         if (WxPayHelper.verifyNotify(prepayMap)) {
-            // 保存微信支付反馈的信息
-            // payWxUnifiedOrderService.update(prepayMap);
             Iterator keyIterator = prepayMap.keySet().iterator();
             while (keyIterator.hasNext()) {
                 String key = (String) keyIterator.next();
@@ -60,11 +52,6 @@ public class WxPayServiceImpl implements IWxPayService {
                 params.put(key, value);
             }
             payWxUnifiedOrderService.insert(params);
-
-            // String unifiedOrderId = params.get("id");
-            // Integer paylogRefRecordId  = Integer.valueOf(unifiedOrderId);
-            // Integer paymentPlanId= Integer.parseInt(productId);
-            // paymentPlanService.updatePaylogRefRecordId(paymentPlanId, paylogRefRecordId);
         }
 
         return prepayMap;
@@ -188,7 +175,7 @@ public class WxPayServiceImpl implements IWxPayService {
     }
 
     @Override
-    public Map<String, String> status(String orderNo) {
+    public Map status(String orderNo) {
         return payWxUnifiedOrderService.status(orderNo);
     }
 
