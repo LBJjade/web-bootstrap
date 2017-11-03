@@ -24,6 +24,7 @@
     <resultMap id="MemberContractContentResultMap" type="com.becheer.donation.model.extension.contract.MemberContractContentExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="contract_no" jdbcType="VARCHAR" property="contractNo"/>
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
         <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
         <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
@@ -71,7 +72,8 @@
         a_sign_time,
         enable_,
         status,
-        content
+        content,
+        contract_no
         FROM dnt_contract
         WHERE id_=#{contractId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
     </select>
