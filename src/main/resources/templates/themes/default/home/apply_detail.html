@@ -57,7 +57,7 @@
             <table class="table_member_content">
                 <tr><td>捐赠项目类别</td><td><th:block th:text="${apply.getProjectTypeName()}"/></td></tr>
                 <tr th:if="${apply.getProjectName()}!=null"><td>捐赠项目</td><td><th:block th:text="${apply.getProjectName()}"/></td></tr>
-                <tr><td>捐赠金额</td><td><th:block th:text="${apply.getIntentionAmount()!=0?apply.getIntentionAmount()/100:0}"/></td></tr>
+                <tr><td>捐赠金额</td><td><th:block th:text="${apply.getIntentionAmount()}"/></td></tr>
                 <tr><td>申请时间</td><td><th:block th:text="${apply.getCreateTime()}"/></td></tr>
                 <tr><td>状态</td><td><th:block th:text="${apply.getStatus()}"/></td></tr>
                 <tr><td>备注</td><td><th:block th:text="${apply.getRemark()}"/></td></tr>

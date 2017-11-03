@@ -1,5 +1,8 @@
 package com.becheer.donation.utils;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 public class StringUtil {
 
     public static String formatCurrency(String currenty) {
@@ -53,31 +56,30 @@ public class StringUtil {
         return num;
     }
 
-    //方法未完成
+    //格式化金额 98765432100 TO 986,654,321.00
     public static String formatMoney(long money) {
         if (money == 0) {
+            //0 直接 return
             return "0.00";
         }
-        if (Math.abs(money) < 100000) {
-            return String.valueOf(money / 100);
-        }
+        //负数处理
         String sign = money < 0 ? "-" : "";
         money = Math.abs(money);
-        Double d=((double)money)/100;
-        String stringMoney ="";
-        String stringDecimnal = stringMoney.substring(stringMoney.length() - 1);
-        String stringInteger = stringMoney.substring(0, stringMoney.indexOf('.') - 1);
-        stringInteger = new StringBuffer(stringInteger).reverse().toString();
-        char charInteger[] = stringInteger.toCharArray();
+        if (money < 100000) {
+            // 绝对值不足六位，不用添加','
+            return String.valueOf(money / 100);
+        }
+        //解决大数除不准的问题
+        String stringMoney=new BigDecimal(new DecimalFormat("0.00").format(((double)money)/100)).toString();
+        stringMoney = new StringBuffer(stringMoney).reverse().toString();
+        char charInteger[] = stringMoney.toCharArray();
         String result = "";
         for (int i = 0; i < charInteger.length; i++) {
             result += charInteger[i];
-            if ((i + 1) % 3 == 0 && i != charInteger.length - 1) {
+            if ((i -2) % 3 == 0 && i != charInteger.length - 1&&i>2) {
                 result += ",";
             }
         }
-        result = new StringBuffer(result).reverse().toString();
-        result = sign + result + stringDecimnal;
-        return result;
+        return sign+new StringBuffer(result).reverse().toString();
     }
 }

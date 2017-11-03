@@ -88,7 +88,7 @@
                         <tr v-for="item in items" v-cloak>
                             <td class="text-left">{{item.projectTypeName}}</td>
                             <td class="text-left">{{item.projectName}}</td>
-                            <td class="text-right">{{item.intentionAmount|format}}</td>
+                            <td class="text-right">{{item.intentionAmount}}</td>
                             <td class="text-center">{{item.createTime}}</td>
                             <td class="text-left">{{item.remark}}</td>
                             <td class="text-center">{{item.statusText}}</td>
@@ -147,56 +147,7 @@
                             el: '#table_content',
                             data: {
                                 items: data.result.list
-                            },
-                            filters:{
-                                format:function(value) {
-                                    value=value/100;
-                                 var str = value.toString();
-                                 var spot=str.split(".")[1];
-                                 str=str.split(".")[0];
-//                                var str = value;
-                                    var length = str.length;
-                                    var get, lost;
-                                    var num = new Array();
-                                    var num = "";
-                                    for (var i = 0; i < length; i + 3) {
-                                        if (length > 3) {
-                                            get = str.substring(length - 4, length - 1);
-                                            lost = str.substring(0, length - 3);
-                                            str = lost;
-                                            if (num == "") {
-                                                num = get;
-                                            } else {
-                                                num = get + "," + num;
-                                            }
-                                            var before = num;
-                                            length = length - 3;
-                                        } else {
-                                            if (lost == undefined) {
-                                                num = str;
-                                            } else {
-                                                num = lost + "," + before;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    //num=parseFloat(num).toFixed(2);
-                                    if(spot == undefined){
-                                        num=num+".00";
-                                    }else{
-                                        if(spot.length > 2) {
-                                            spot = spot.substring(0,2);
-                                            num=num+"."+spot;
-                                        }else if(spot.length == 2){
-                                            num=num+"."+spot;
-                                        }else{
-                                            num=num+"."+spot+"0";
-                                        }
-                                    }
-                                    return num;
-                                }
                             }
-
                         });
                         if (data.result.list.length === 0) {
                             $(".p_no_data").show();

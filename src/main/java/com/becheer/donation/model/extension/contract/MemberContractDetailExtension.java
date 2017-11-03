@@ -1,6 +1,7 @@
 package com.becheer.donation.model.extension.contract;
 
 import com.becheer.donation.utils.DateUtils;
+import com.becheer.donation.utils.StringUtil;
 
 import java.util.Date;
 
@@ -47,16 +48,16 @@ public class MemberContractDetailExtension {
         this.contractName = contractName;
     }
 
-    public long getContractAmount() {
-        return contractAmount;
+    public String getContractAmount() {
+        return StringUtil.formatMoney(contractAmount);
     }
 
     public void setContractAmount(long contractAmount) {
         this.contractAmount = contractAmount;
     }
 
-    public long getDonatedAmount() {
-        return donatedAmount;
+    public String getDonatedAmount() {
+        return StringUtil.formatMoney(donatedAmount);
     }
 
     public void setDonatedAmount(long donatedAmount) {

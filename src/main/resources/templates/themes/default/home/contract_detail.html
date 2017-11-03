@@ -50,8 +50,8 @@
             </div>
             <table class="table_member_content">
                 <tr><td>合同名称</td><td><th:block th:text="${contract.getContractName()}"></th:block></td></tr>
-                <tr><td>合同金额</td><td><th:block th:text="${contract.getContractAmount()>0?contract.getContractAmount()/100:0}"></th:block></td></tr>
-                <tr><td>已捐金额</td><td><th:block th:text="${contract.getDonatedAmount()>0?contract.getDonatedAmount()/100:0}"></th:block></td></tr>
+                <tr><td>合同金额</td><td><th:block th:text="${contract.getContractAmount()}"></th:block></td></tr>
+                <tr><td>已捐金额</td><td><th:block th:text="${contract.getDonatedAmount()}"></th:block></td></tr>
                 <tr><td>合同周期</td><td><th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block></td></tr>
                 <tr><td>合同状态</td><td><th:block th:text="${contract.getStatusText()}"></th:block></td></tr>
                 <tr><td>合同内容</td><td><a href="javascript:f_openContent()">点击查看</a></td></tr>
@@ -73,7 +73,7 @@
                 </thead>
                 <tr v-for="item in items" v-cloak>
                     <td>{{item.title}}</td>
-                    <td>{{item.amount>0?item.amount/100:0}}</td>
+                    <td>{{item.amount}}</td>
                     <td>{{item.deadLine}}</td>
                     <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
                     <td>{{item.statusText}}</td>

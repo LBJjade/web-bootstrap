@@ -1,5 +1,7 @@
 package com.becheer.donation.model.extension.project;
 
+import com.becheer.donation.utils.StringUtil;
+
 /*
 * MemberProjectExtension 会员参与的项目
 * Creator : xiaokepu
@@ -12,9 +14,9 @@ public class MemberProjectExtension {
 
     private String thumbImg;
 
-    private String projectTargetAmount;
+    private long projectTargetAmount;
 
-    private String acceptedAmount;
+    private long acceptedAmount;
 
     private long contractId;
 
@@ -49,18 +51,18 @@ public class MemberProjectExtension {
     }
 
     public String getProjectTargetAmount() {
-        return projectTargetAmount;
+        return StringUtil.formatMoney(projectTargetAmount);
     }
 
-    public void setProjectTargetAmount(String projectTargetAmount) {
+    public void setProjectTargetAmount(long projectTargetAmount) {
         this.projectTargetAmount = projectTargetAmount;
     }
 
     public String getAcceptedAmount() {
-        return acceptedAmount;
+        return StringUtil.formatMoney(acceptedAmount);
     }
 
-    public void setAcceptedAmount(String acceptedAmount) {
+    public void setAcceptedAmount(long acceptedAmount) {
         this.acceptedAmount = acceptedAmount;
     }
 
@@ -80,16 +82,16 @@ public class MemberProjectExtension {
         this.projectId = projectId;
     }
 
-    public long getContractAmount() {
-        return contractAmount;
+    public String getContractAmount() {
+        return StringUtil.formatMoney(contractAmount);
     }
 
     public void setContractAmount(long contractAmount) {
         this.contractAmount = contractAmount;
     }
 
-    public long getDonatedAmount() {
-        return donatedAmount;
+    public String getDonatedAmount() {
+        return StringUtil.formatMoney(donatedAmount);
     }
 
     public void setDonatedAmount(long donatedAmount) {

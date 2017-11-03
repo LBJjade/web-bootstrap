@@ -101,10 +101,8 @@ public class ProjectDetailExtension {
         this.longTerm = longTerm;
     }
 
-    public String getProjectTargetAmount() throws Exception {
-        StringUtil s=new StringUtil();
-        String num=String.valueOf(projectTargetAmount/100);
-        return s.formatCurrency(num);
+    public String getProjectTargetAmount(){
+        return StringUtil.formatMoney(projectTargetAmount);
     }
 
     public void setProjectTargetAmount(long projectTargetAmount) {
@@ -120,9 +118,7 @@ public class ProjectDetailExtension {
     }
 
     public String getAcceptedAmount() {
-        StringUtil s=new StringUtil();
-        String num=String.valueOf(acceptedAmount/100);
-        return s.formatCurrency(num);
+        return StringUtil.formatMoney(acceptedAmount);
     }
 
     public void setAcceptedAmount(long acceptedAmount) {
