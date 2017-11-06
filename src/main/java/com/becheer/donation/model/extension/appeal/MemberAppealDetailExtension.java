@@ -27,6 +27,8 @@ public class MemberAppealDetailExtension {
 
     private int status;
 
+    private String statusText;
+
     public long getId() {
         return id;
     }
@@ -83,22 +85,26 @@ public class MemberAppealDetailExtension {
         this.createTime = createTime;
     }
 
-    public String getStatus() {
-        switch(status){
-            case 0:
-                return "待审核";
-            case 1:
-                return "处理中";
-            case 2:
-                return "已处理";
-            case 3:
-                return "已驳回";
-                default:
-                    return "";
-        }
+    public int getStatus() {
+        return status;
     }
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getStatusText() {
+        switch (status){
+            case 0:
+                return "已提交";
+            case 1:
+                return "已驳回";
+            case 2:
+                return "处理中";
+            case 3:
+                return "已处理";
+            default:
+                return "";
+        }
     }
 }

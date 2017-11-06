@@ -49,7 +49,8 @@
     <result column="allocate_amount" jdbcType="BIGINT" property="allocateAmount" />
     <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
-    <result column="enable_" jdbcType="INTEGER" property="enable" />
+    <result column="a_sign_time" jdbcType="TIMESTAMP" property="signTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   
   <sql id="ListPageColumn">
@@ -176,7 +177,8 @@
       cp.allocate_amount,
       c.begin_time,
       c.end_time,
-      c.enable_
+      c.status,
+      c.a_sign_time
     FROM
     dnt_contract_project cp
     LEFT JOIN dnt_project p ON cp.project_id = p.id_

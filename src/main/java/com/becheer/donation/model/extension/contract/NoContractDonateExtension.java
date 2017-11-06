@@ -6,6 +6,8 @@ package com.becheer.donation.model.extension.contract;
 * Date : 2017-09-20
 */
 
+import com.becheer.donation.utils.StringUtil;
+
 import java.util.Date;
 
 public class NoContractDonateExtension {
@@ -45,8 +47,8 @@ public class NoContractDonateExtension {
         this.memberName = memberName;
     }
 
-    public long getAmount() {
-        return amount;
+    public String getAmount() {
+        return StringUtil.formatMoney(amount);
     }
 
     public void setAmount(long amount) {

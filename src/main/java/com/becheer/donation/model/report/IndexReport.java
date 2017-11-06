@@ -1,5 +1,7 @@
 package com.becheer.donation.model.report;
 
+import com.becheer.donation.utils.StringUtil;
+
 /*
 * 
 * Creator : xiaokepu
@@ -14,8 +16,8 @@ public class IndexReport {
 
     private long benefitGroup;
 
-    public long getReceivedAmount() {
-        return receivedAmount;
+    public String getReceivedAmount() {
+        return StringUtil.formatMoney(receivedAmount);
     }
 
     public void setReceivedAmount(long receivedAmount) {

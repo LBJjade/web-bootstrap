@@ -420,7 +420,7 @@
                     <ul v-for="item in items" class="recommend_item" v-cloak>
                         <!--<div class="recommend_item" >-->
                         <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
-                        <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount|format}}元</li>
+                        <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount}}元</li>
                         <!--</div>-->
                     </ul>
                 </div>
@@ -440,18 +440,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--<div class="right_panel" id="div_question">-->
-            <!--<div class="div_title">-->
-            <!--<h2 class="h2_title">常见问题</h2>-->
-            <!--<p>1.捐赠流程是什么</p>-->
-            <!--<p>2.如何查询自己捐赠的善款使用情况</p>-->
-            <!--<p>3.是否支持匿名捐赠</p>-->
-            <!--<p>4.个人可以发起捐赠项目吗</p>-->
-            <!--<p>5.世纪爱心慈善基金会是一个怎样的组织</p>-->
-            <!--</div>-->
-            <!--</div>-->
-
         </div>
     </div>
 </div>
@@ -474,20 +462,6 @@
             </div>
 
             <div class="model-body" style="text-align: center;margin-top: -15px;">
-                <!--<div style="float:left;margin-top: 10px;margin-left: 80px;">请选择项目类别：-->
-                <!--<select id="sel_project_type" onchange="f_GetProject()">-->
-                <!--<option value="0">请选择项目类别</option>-->
-                <!--<option  v-for="item in items" id="name" :value="item.id">{{item.name}}</option>-->
-                <!--</select>-->
-                <!--&lt;!&ndash;<input type="hidden" :value="item.name">&ndash;&gt;-->
-                <!--</div>-->
-                <!--<div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">-->
-                <!--请&nbsp;&nbsp;选&nbsp;&nbsp;择&nbsp;&nbsp;项&nbsp;&nbsp;目:&nbsp;-->
-                <!--<select id="sel_project" style="width: 124px;">-->
-                <!--<option value="0">请选择项目</option>-->
-                <!--<option  v-for="item in items" :value="item.projectId">{{item.projectName}}</option>-->
-                <!--</select>-->
-                <!--</div>-->
                 <div id="span_money" style="clear: both;">
                     <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
                     <div style="margin-bottom:10px;">
@@ -622,85 +596,6 @@
     </div>
 </div>
 
-<!--扫码成功弹出层-->
-
-<!--<div class="model fade" id="div_cf_donate_success" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"-->
-<!--aria-hidden="true" data-backdrop='static'>-->
-<!--<div class="model-dialog" style="margin-top:100px">-->
-<!--<div class="model-content" style="width: 600px">-->
-<!--<div class="model-header">-->
-<!--<button type="button" class="close_qr" >-->
-<!--&times;-->
-<!--</button>-->
-<!--<h4 class="model-title" style="width: 100%;text-align: center;">-->
-<!--扫码成功-->
-<!--</h4>-->
-<!--</div>-->
-
-
-<!--&lt;!&ndash;<img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>&ndash;&gt;-->
-<!--<div class="model-footer" style="text-align: center">-->
-<!--使用微信扫码捐赠-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;捐赠弹出层&ndash;&gt;-->
-<!--<div class="modal fade" id="div_donate" tabindex="-1" role="dialog" aria-labelledby="lable_donate" aria-hidden="true">-->
-<!--<div class="modal-dialog" style="margin-top:100px">-->
-<!--<div class="modal-content" style="width: 450px">-->
-<!--<div class="modal-header">-->
-<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
-<!--&times;-->
-<!--</button>-->
-<!--<h6 class="modal-title">-->
-<!--感谢您对广东世纪爱心慈善基金会的支持,<br/>-->
-<!--您提交捐赠申请后,工作人员会主动联系您确认捐赠意向.-->
-<!--</h6>-->
-<!--</div>-->
-<!--<div class="modal-body" style="text-align: center">-->
-<!--捐赠金额:<input type="text" />-->
-<!--<br/>-->
-<!--<br/>-->
-<!--联系方式:<input type="text" />-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<input type="checkbox" />使用个人信息里的联系方式-->
-<!--</div>-->
-<!--<div class="modal-footer" style="text-align: center">-->
-<!--<button type="button" class="btn btn-primary" data-dismiss="modal">提交-->
-<!--</button>-->
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#div_qr_donate"  data-dismiss="modal">-->
-<!--我要直接捐赠-->
-<!--</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;直接捐赠弹出层&ndash;&gt;-->
-<!--<div class="modal fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true">-->
-<!--<div class="modal-dialog" style="margin-top:100px">-->
-<!--<div class="modal-content" style="width: 450px">-->
-<!--<div class="modal-header">-->
-<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
-<!--&times;-->
-<!--</button>-->
-<!--<h6 class="modal-title" style="width: 100%;text-align: center;">-->
-<!--扫描二维码,捐赠本项目-->
-<!--</h6>-->
-<!--</div>-->
-<!--<div class="modal-body" style="text-align: center">-->
-<!--<img src="content/image/qr_code.png" height="200" width="200"/></div>-->
-<!--<div class="modal-footer" style="text-align: center">-->
-<!--支持微信,支付宝扫码捐赠-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
 <!--全局JS-->
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -737,8 +632,6 @@
 
 
     $(".btn_submit").click(function () {
-//        var projectTypeId = $("#sel_project_type").val();
-//        var projectId = $("#sel_project").val();
         var amount = $("#ipt_dnt_amount").val();
         var mobile = $("#ipt_dnt_mobile").val();
         $.ajax({
@@ -896,57 +789,6 @@
                         el: "#div_recent",
                         data: {
                             items: data.result
-                        },
-                        filters: {
-                            format: function (value) {
-                                value = value / 100;
-                                var str = value.toString();
-                                var spot = str.split(".")[1];
-                                str = str.split(".")[0];
-                                //                                var str = value;
-                                str = parseInt(str);
-                                str = str;
-                                str = str.toString();
-                                var length = str.length;
-                                var get, lost;
-                                var num = new Array();
-                                var num = "";
-                                for (var i = 0; i < length; i + 3) {
-                                    if (length > 3) {
-                                        get = str.substring(length - 4, length - 1);
-                                        lost = str.substring(0, length - 3);
-                                        str = lost;
-                                        if (num == "") {
-                                            num = get;
-                                        } else {
-                                            num = get + "," + num;
-                                        }
-                                        var before = num;
-                                        length = length - 3;
-                                    } else {
-                                        if (lost == undefined) {
-                                            num = str;
-                                        } else {
-                                            num = lost + "," + before;
-                                        }
-                                        break;
-                                    }
-                                }
-                                //num=parseFloat(num).toFixed(2);
-                                if (spot == undefined) {
-                                    num = num + ".00";
-                                } else {
-                                    if (spot.length > 2) {
-                                        spot = spot.substring(0, 2);
-                                        num = num + "." + spot;
-                                    } else if (spot.length == 2) {
-                                        num = num + "." + spot;
-                                    } else {
-                                        num = num + "." + spot + "0";
-                                    }
-                                }
-                                return num;
-                            }
                         }
                     });
                 }
@@ -995,39 +837,12 @@
 
 
     function f_Donate() {
-        //        if (memberInfo === null) {
-        //            var msg = "没有登录";
-        //            layer.alert(msg, function () {
-        //                window.location.href = "/login";
-        //            });
-        //            setTimeout(function () {
-        //                window.location.href = "/login";
-        //            }, 3000);
-        //        } else
-//         var projectType =$("#sel_project_type").find("option:selected").text();
-//         var projectName =$("#sel_project").find("option:selected").text();
-//        var projectName =/*[[${project.getProjectName()}]]*/;
-//        var projectType =/*[[${project.getProjectTypeName()}]]*/;
-//         alert(projectName);
-//         alert(projectType);
         if (projectType == "请选择项目类别") {
-            alert("你还没有选择项目");
-            //            layer.closeAll();
-            //            layer.alert("你还没有选择项目",function(){
-            //                window.location.href = "/index";
-            //            },3000);
+            layer.alert("你还没有选择项目");
         } else if (flag == 0) {
-            alert("你还没有选择金额");
+            layer.alert("你还没有选择金额");
         } else {
             $("#div_cf_donate").model('show');
-//            var projectId =/*[[${project.getId()}]]*/;
-//            var projectTypeId =/*[[${project.getProjectTypeId()}]]*/;
-//             alert(projectId);
-//             alert(projectTypeId);
-//             var projectTypeId = $("#sel_project_type").val();
-//             var projectId = $("#sel_project").val();
-            // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
-            // amount = math.eval(amount * 100);
             var amount = span_money * 100;
             $(".order_fund").html(span_money);
             $.ajax({
@@ -1056,12 +871,8 @@
                     }, 1000);
                     $(".time").html(timer);
                 } else {
-                    //                    alert("二维码过期");
-                    //                    $("#div_cf_donate").model('hide');
-                    //                    $("#qrCodeImageId").removeAttrs("src");
                     $("#qrCodeImageId").attr("src", "");
                     $(".fresh").css("z-index", "3");
-                    //                    $("#qrCodeImageId").attr("class","qrCodeImageId");
                     $(".code_time").html("二维码已经失效，请刷新！");
                 }
             }
@@ -1092,12 +903,6 @@
         $(".code_time").html("距离二维码过期还有<span class=\"time\" style=\"color: red\"></span>秒");
         $(".fresh").css("z-index", "-1");
         $("#qrCodeImageId").removeClass("qrCodeImageId");
-//        var projectId =/*[[${project.getId()}]]*/;
-//        var projectTypeId =/*[[${project.getProjectTypeId()}]]*/;
-//         var projectTypeId = $("#sel_project_type").val();
-//         var projectId = $("#sel_project").val();
-        // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
-        // amount = math.eval(amount * 100);
         var amount = span_money * 100;
         $(".order_fund").html(amount / 100);
         $.ajax({
@@ -1126,8 +931,6 @@
                 }, 1000);
                 $(".time").html(timer);
             } else {
-                //                    alert("二维码过期");
-                //                    $("#div_cf_donate").model('hide');
                 $("#qrCodeImageId").attr("src", "");
                 $(".fresh").css("z-index", "3");
                 $("#qrCodeImageId").attr("class", "qrCodeImageId");

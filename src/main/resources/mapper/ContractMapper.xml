@@ -8,6 +8,7 @@
         <result column="a_sign_time" jdbcType="TIMESTAMP" property="signTime" />
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
         <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="status" jdbcType="INTEGER" property="status" />
     </resultMap>
 
     <resultMap id="MemberContractDetailResultMap" type="com.becheer.donation.model.extension.contract.MemberContractDetailExtension">
@@ -41,7 +42,8 @@
             contract_name,
             a_sign_time,
             contract_amount,
-            enable_
+            enable_,
+            status
         FROM dnt_contract
         WHERE member_id=#{memberId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
     </select>

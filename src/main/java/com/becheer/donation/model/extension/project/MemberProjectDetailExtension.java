@@ -4,6 +4,7 @@ import com.becheer.donation.configs.FileConfig;
 import com.becheer.donation.service.SpringContextUtil;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.DateUtils;
+import com.becheer.donation.utils.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -37,9 +38,11 @@ public class MemberProjectDetailExtension {
 
     private Date endTime;
 
-    private int enable;
+    private int status;
 
-    private String status;
+    private String statusText;
+
+    private Date signTime;
 
     public long getId() {
         return id;
@@ -81,16 +84,16 @@ public class MemberProjectDetailExtension {
         this.contractName = contractName;
     }
 
-    public long getContractAmount() {
-        return contractAmount;
+    public String getContractAmount() {
+        return StringUtil.formatMoney(contractAmount);
     }
 
     public void setContractAmount(long contractAmount) {
         this.contractAmount = contractAmount;
     }
 
-    public long getDonatedAmount() {
-        return donatedAmount;
+    public String getDonatedAmount() {
+        return StringUtil.formatMoney(donatedAmount);
     }
 
     public void setDonatedAmount(long donatedAmount) {
@@ -129,29 +132,53 @@ public class MemberProjectDetailExtension {
         this.endTime = endTime;
     }
 
-    public int getEnable() {
-        return enable;
+    public int getStatus() {
+        return status;
     }
 
-    public void setEnable(int enable) {
-        this.enable = enable;
-    }
-
-    public String getStatus() {
-        switch (enable){
-            case 0:
-                return "已作废";
-            case 1:
-                return "执行中";
-            case 2:
-                return "已终止";
-            case 3:
-                return "已结束";
-                default:return "";
-        }
-    }
-
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Date getSignTime() {
+        return signTime;
+    }
+
+    public void setSignTime(Date signTime) {
+        this.signTime = signTime;
+    }
+
+    public String getStatusText(){
+        switch (status){
+            case 0:
+                return "编辑中";
+            case 1:
+                return "审批中";
+            case 2:
+                return "已审批";
+            case 3:
+                return "已驳回";
+            case 4:
+                return "重新编辑中";
+            case 5:
+                //此处临时处理，因枚举值缺失,须同后台沟通统一。
+                if (signTime!=null){
+                    return "捐赠人已签订";
+                }else {
+                    return "待签订";
+                }
+            case 6:
+                return "基金会已签订";
+            case 7:
+                return "执行中";
+            case 8:
+                return "已完成";
+            case 9:
+                return "已终止";
+            case 10:
+                return "已作废";
+            default:
+                return "";
+        }
     }
 }

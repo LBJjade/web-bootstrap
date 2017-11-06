@@ -818,54 +818,6 @@
                         el: "#div_recent",
                         data: {
                             items: data.result
-                        },
-                        filters: {
-                            format: function (value) {
-                                value = value / 100;
-                                var str = value.toString();
-                                var spot = str.split(".")[1];
-                                str = str.split(".")[0];
-//                                var str = value;
-                                var length = str.length;
-                                var get, lost;
-                                var num = new Array();
-                                var num = "";
-                                for (var i = 0; i < length; i + 3) {
-                                    if (length > 3) {
-                                        get = str.substring(length - 4, length - 1);
-                                        lost = str.substring(0, length - 3);
-                                        str = lost;
-                                        if (num == "") {
-                                            num = get;
-                                        } else {
-                                            num = get + "," + num;
-                                        }
-                                        var before = num;
-                                        length = length - 3;
-                                    } else {
-                                        if (lost == undefined) {
-                                            num = str;
-                                        } else {
-                                            num = lost + "," + before;
-                                        }
-                                        break;
-                                    }
-                                }
-                                //num=parseFloat(num).toFixed(2);
-                                if (spot == undefined) {
-                                    num = num + ".00";
-                                } else {
-                                    if (spot.length > 2) {
-                                        spot = spot.substring(0, 2);
-                                        num = num + "." + spot;
-                                    } else if (spot.length == 2) {
-                                        num = num + "." + spot;
-                                    } else {
-                                        num = num + "." + spot + "0";
-                                    }
-                                }
-                                return num;
-                            }
                         }
                     });
                 }
@@ -935,62 +887,8 @@
                         el: "#ul_total",
                         data: {
                             model: data.result
-//                            model:{receivedAmount:"10000654.6",donateTime:"1",benefitAmount:"37",benefitGroup:"5"}
-                        },
-                        filters: {
-                            format: function (value) {
-                                value = value / 100;
-                                var str = value.toString();
-                                var spot = str.split(".")[1];
-                                str = str.split(".")[0];
-//                                var str = value;
-                                var length = str.length;
-                                var get, lost;
-                                var num = new Array();
-                                var num = "";
-                                for (var i = 0; i < length; i + 3) {
-                                    if (length > 3) {
-                                        get = str.substring(length - 4, length - 1);
-                                        lost = str.substring(0, length - 3);
-                                        str = lost;
-                                        if (num == "") {
-                                            num = get;
-                                        } else {
-                                            num = get + "," + num;
-                                        }
-                                        var before = num;
-                                        length = length - 3;
-                                    } else {
-                                        if (lost == undefined) {
-                                            num = str;
-                                        } else {
-                                            num = lost + "," + before;
-                                        }
-                                        break;
-                                    }
-                                }
-                                //num=parseFloat(num).toFixed(2);
-                                if (spot == undefined) {
-                                    num = num + ".00";
-                                } else {
-                                    if (spot.length > 2) {
-                                        spot = spot.substring(0, 2);
-                                        num = num + "." + spot;
-                                    } else if (spot.length == 2) {
-                                        num = num + "." + spot;
-                                    } else {
-                                        num = num + "." + spot + "0";
-                                    }
-                                }
-                                return num;
-                            }
                         }
-
                     });
-//                    var Money=data.result.receivedAmount;
-//                    alert(Money);
-//                    var a=f_formatMoney(Money);
-//                    $("#donate_summary").=a;
                 }
             }
         });
@@ -1022,31 +920,16 @@
     }
 
     function f_Donate() {
-//        if (memberInfo === null) {
-//            var msg = "没有登录";
-//            layer.alert(msg, function () {
-//                window.location.href = "/login";
-//            });
-//            setTimeout(function () {
-//                window.location.href = "/login";
-//            }, 3000);
-//        } else
         var projectType = $("#sel_project_type").find("option:selected").text();
         var projectName = $("#sel_project").find("option:selected").text();
         if (projectType == "请选择项目类别") {
             alert("你还没有选择项目");
-//            layer.closeAll();
-//            layer.alert("你还没有选择项目",function(){
-//                window.location.href = "/index";
-//            },3000);
         } else if (flag == 0) {
             alert("你还没有选择金额");
         } else {
             $("#div_cf_donate").model('show');
             var projectTypeId = $("#sel_project_type").val();
             var projectId = $("#sel_project").val();
-            // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
-            // amount = math.eval(amount * 100);
             var amount = span_money * 100;
             $("#donateAmount").html(span_money);
             $.ajax({
@@ -1077,19 +960,12 @@
                     }, 1000);
                     $("#waitingPayTimerText").html(timer);
                 } else {
-//                    alert("二维码过期");
-//                    $("#div_cf_donate").model('hide');
-//                    $("#qrCodeImageId").removeAttrs("src");
                     $("#qrCodeImageId").attr("src", "");
                     $(".fresh").css("z-index", "3");
-//                    $("#qrCodeImageId").attr("class","qrCodeImageId");
                     $(".code_time").html("二维码已经失效，请刷新！");
                 }
             }
-
             Countdown();
-
-
         }
     }
 
@@ -1187,21 +1063,14 @@
                 }, 1000);
                 $(".time").html(timer);
             } else {
-//                    alert("二维码过期");
-//                    $("#div_cf_donate").model('hide');
                 $("#qrCodeImageId").attr("src", "");
                 $(".fresh").css("z-index", "3");
                 $("#qrCodeImageId").attr("class", "qrCodeImageId");
                 $(".code_time").html("二维码已经失效，请刷新！");
             }
         }
-
         Countdown();
-
-
     })
-
-
     /*]]>*/
 </script>
 </body>

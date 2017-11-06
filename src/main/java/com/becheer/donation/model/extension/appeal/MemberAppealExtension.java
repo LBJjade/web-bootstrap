@@ -25,6 +25,8 @@ public class MemberAppealExtension {
 
     private int status;
 
+    private String statusText;
+
     public int getId() {
         return id;
     }
@@ -79,5 +81,20 @@ public class MemberAppealExtension {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getStatusText() {
+        switch (status){
+            case 0:
+                return "已提交";
+            case 1:
+                return "已驳回";
+            case 2:
+                return "处理中";
+            case 3:
+                return "已处理";
+                default:
+                    return "";
+        }
     }
 }

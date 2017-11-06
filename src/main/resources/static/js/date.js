@@ -1,4 +1,7 @@
 function f_FormatDateTime(inputTime) {
+    if (inputTime===null){
+        return null;
+    }
     var date = new Date(inputTime);
     var y = date.getFullYear();
     var m = date.getMonth() + 1;

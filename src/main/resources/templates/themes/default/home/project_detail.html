@@ -119,9 +119,9 @@
                         <table id="table_content_info">
                             <tr><td>项目名称</td><td><th:block th:text="${project.getProjectName()}"></th:block></td></tr>
                             <tr><td>合同名称</td><td><th:block th:text="${project.getContractName()}"></th:block></td></tr>
-                            <tr><td>合同金额</td><td><th:block th:text="${project.getContractAmount()>0?project.getContractAmount()/100:0}"></th:block></td></tr>
-                            <tr><td>合同状态</td><td><th:block th:text="${project.getStatus()}"></th:block></td></tr>
-                            <tr><td>待捐赠金额</td><td><th:block th:text="${project.getContractAmount()-project.getDonatedAmount()}"></th:block></td></tr>
+                            <tr><td>合同状态</td><td><th:block th:text="${project.getStatusText()}"></th:block></td></tr>
+                            <tr><td>合同金额</td><td><th:block th:text="${project.getContractAmount()}"></th:block></td></tr>
+                            <tr><td>已捐金额</td><td><th:block th:text="${project.getDonatedAmount()}"></th:block></td></tr>
                             <tr><td style="border-bottom: none">合同周期</td><td style="border-bottom: none"><th:block th:text="${project.getBeginTime()+' ~ '+project.getEndTime()}"></th:block></td></tr>
                         </table>
                         <hr/>
