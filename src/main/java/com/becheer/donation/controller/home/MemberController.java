@@ -1,6 +1,7 @@
 package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
+import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
@@ -8,10 +9,7 @@ import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.Message;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -48,5 +46,12 @@ public class MemberController extends BaseController {
         memberInfoExtension.setValidation(2);
         memberInfoExtension.setId(currentMember.getMemberId());
         return memberService.UpdateMemberInfo(memberInfoExtension);
+    }
+
+    @Access(authorities="member")
+    @GetMapping(value = "/upload")
+    public String upload(HttpServletRequest request) {
+        request.setAttribute("config", fileConfig);
+        return this.render("home/avator_upload");
     }
 }
