@@ -7,12 +7,13 @@
     <meta name="renderer" content="webkit" />
 
     <title>index</title>
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
         #div_content{
             width: 985px;
-            height: 850px;
+            height: 1200px;
             border: 1px #eee solid;
             margin-left: 10px;
             padding-top: 30px;
@@ -23,9 +24,9 @@
         #div_avator{
             width: 250px;
             height: 300px;
-            border-right: 1px #ccc dashed;
+            border: 1px #ccc dashed;
             text-align: center;
-            float: left;
+            margin-left: 200px;
         }
 
         #div_content_info{
@@ -74,14 +75,15 @@
                 <hr />
             </div>
             <div id="div_content">
-                <div id="div_avator">
-                    <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
-                    <br/>
-                    <br/>
-                    <button class="btn btn-info">更换头像</button>
-                </div>
                 <div id="div_content_info">
+
                     <table id="table_content_info">
+                        <div id="div_avator" class="row">
+                            <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                            <br/>
+                            <br/>
+                            <button class="btn btn-info">更换头像</button>
+                        </div>
                         <tr><td>手机号码</td><td><input type="text" readonly="readonly" id="ipt_mobile" th:value="${member.getMobile()}"/></td></tr>
                         <tr><td>真实姓名</td><td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td></tr>
                         <tr><td>身份证号</td><td><input type="text" id="ipt_id_card" th:value="${member.getIdCard()}"/></td></tr>

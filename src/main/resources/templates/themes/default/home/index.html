@@ -7,6 +7,7 @@
     <meta name="renderer" content="webkit"/>
 
     <title>广东省世纪爱心慈善基金会</title>
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -68,14 +69,7 @@
 <div class="center-block" style="width: 1200px;">
     <div class="row">
         <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li><i class="fa fa-angle-right" aria-hidden="true"
-                           style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a href="#">个人中心</a></li>
-                </ul>
-            </div>
+
         </div>
     </div>
     <div class="row">
@@ -84,17 +78,30 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p style="line-height: 30px;margin: -5px;"><span style="line-height: 40px">我的信息</span>
+                <div id="div_navbar" style="margin: 10px">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">我的信息</a></li>
+
+                        <a href="home/edit" id="a_edit" style="display: none;">
+                            <button class="info_button" style="float: right">编辑</button>
+                            <span class="complete"
+                                  style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
+                                    th:src="@{~/image/vector.png}"
+                                    style="float: right;width: 27px;margin-right: 7px;"></span>
+                        </a></p>
+
+                    </ul>
+                </div>
+                <!--<p style="line-height: 30px;margin: -5px;"><span style="line-height: 40px">我的信息</span>-->
 
 
-                    <a href="home/edit" id="a_edit" style="display: none;">
-                        <button class="info_button" style="float: right">编辑</button>
-                        <span class="complete"
-                              style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
-                                th:src="@{~/image/vector.png}"
-                                style="float: right;width: 27px;margin-right: 7px;"></span>
-                    </a></p>
-                <hr/>
+
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
@@ -106,42 +113,42 @@
                 <div id="div_content_info">
                     <table class="table_content_info" v-cloak>
                         <tr>
-                            <td v-if="member.role===1">真实姓名</td>
-                            <td v-if="member.role===2">公司名称</td>
+                            <td v-if="member.role===1">真实姓名：</td>
+                            <td v-if="member.role===2">公司名称：</td>
                             <td>{{member.name}}</td>
                         </tr>
                         <tr>
-                            <td>手机号码</td>
+                            <td>手机号码：</td>
                             <td>{{member.mobile}}</td>
                         </tr>
                         <tr v-if="member.role===1">
-                            <td>身份证号</td>
+                            <td>身份证号：</td>
                             <td>{{member.idCard}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>组织机构代码</td>
+                            <td>组织机构代码：</td>
                             <td>{{member.organizationCode}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>公司性质</td>
+                            <td>公司性质：</td>
                             <td>{{member.organizationType}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>营业执照</td>
+                            <td>营业执照：</td>
                             <td><a href="#">点击查看</a></td>
                         </tr>
                         <tr v-if="member.role===1">
-                            <td>性别</td>
+                            <td>性别：</td>
                             <td v-if="member.sex===0">保密</td>
                             <td v-if="member.sex===1">男</td>
                             <td v-if="member.sex===2">女</td>
                         </tr>
                         <tr v-if="member.role===1">
-                            <td>生日</td>
+                            <td>生日：</td>
                             <td>{{member.birthday}}</td>
                         </tr>
                         <tr>
-                            <td>曾参与的公益项目</td>
+                            <td>曾参与的公益项目：</td>
                             <td>{{member.project}}</td>
                         </tr>
                         <tr v-if="member.role===1">
@@ -150,7 +157,7 @@
                             <td>{{member.summary}}</td>
                         </tr>
                         <tr>
-                            <td>认证状态</td>
+                            <td>认证状态：</td>
                             <td v-if="member.validation===1">未认证</td>
                             <td v-if="member.validation===2">审核中</td>
                             <td v-if="member.validation===3">已认证</td>

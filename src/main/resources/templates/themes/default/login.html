@@ -78,9 +78,9 @@
                 <tr>
                     <td>登录密码</td>
                     <td style="margin-right: 250px;display: block;">
-                        <input type="password" class="input_text ipt_pwd" id="ipt_pwd" placeholder="请输入8位密码"/>
+                        <input type="password" class="input_text ipt_pwd" id="ipt_pwd" placeholder="请输入6位密码"/>
                         <div class="pw_error error"  style="margin-right: 210px;">密码不能为空</div>
-                        <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于8位</div>
+                        <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于6位</div>
                     </td>
                 </tr>
                 <tr>
@@ -165,7 +165,7 @@
             $(".pw_error").show();
         }else{
             $(".pw_error").hide();
-            if($(".ipt_pwd").val().length < 8){
+            if($(".ipt_pwd").val().length < 6){
                 $(".pw_error_0").show();
             }else{
                 $(".pw_error_0").hide();
