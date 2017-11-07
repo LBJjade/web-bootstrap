@@ -6,6 +6,7 @@ package com.becheer.donation.service.impl;
 * Date : 2017-09-14
 */
 
+import com.becheer.donation.configs.OssConfig;
 import com.becheer.donation.dao.MemberMapper;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
@@ -14,10 +15,14 @@ import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.HashUtil;
+import com.becheer.donation.utils.OssUtil;
 import com.becheer.donation.utils.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.Date;
 
 @Service
@@ -25,6 +30,9 @@ public class MemberServiceImpl implements IMemberService {
 
     @Resource
     private MemberMapper memberMapper;
+
+    @Autowired
+    OssConfig ossConfig;
 
     @Override
     public ResponseDto SubmitRegister(String mobile, String pwd, int role) {
@@ -150,6 +158,32 @@ public class MemberServiceImpl implements IMemberService {
             return new ResponseDto(200,Message.MEMBER_UPDATE_SUCCESS);
         }else{
             return new ResponseDto(500,Message.MEMBER_UPDATE_ERROR);
+        }
+    }
+
+    @Override
+    public ResponseDto uploadAvator(long memberId, String fileStr) {
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            byte[] bytes = new byte[0];
+            fileStr = fileStr.split(",")[1];
+            bytes = decoder.decodeBuffer(fileStr);
+            for (int i = 0; i < bytes.length; ++i) {
+                // 调整异常数据
+                if (bytes[i] < 0) {
+                    bytes[i] += 256;
+                }
+            }
+            String fileName = ossConfig.getAvatorPath() + "a" + memberId + ".jpg";
+            OssUtil.addByteArray(bytes, fileName);
+            int result=memberMapper.updateAvator(fileName,memberId);
+            if (result>0){
+                return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS);
+            }else{
+                return new ResponseDto(500, Message.MEMBER_AVATOR_UPLOAD_ERROR);
+            }
+        } catch (Exception e) {
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 

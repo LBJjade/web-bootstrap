@@ -50,10 +50,18 @@
             margin-top: .2em;
         }
 
-        .jc-demo-box {
+        .btn_panel {
+            width: 180px;
+            position: absolute;
+            right: 20px;
+        }
+
+        .jc-box {
             text-align: left;
-            margin: 2em auto;
+            margin: 20px 10px 10px 10px;
+            padding: 10px;
             background: white;
+            height: auto;
             border: 1px #bbb solid;
             -webkit-border-radius: 4px;
             -moz-border-radius: 4px;
@@ -61,7 +69,8 @@
             -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
             -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
             box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
-            padding: 1em 2em 2em;
+            min-height: 420px;
+            /*padding: 1em 2em 2em;*/
         }
 
         form {
@@ -145,6 +154,7 @@
         .jcrop-droptarget canvas {
             background-color: #f0f0f0;
         }
+
         canvas {
             position: absolute;
             top: 0;
@@ -170,6 +180,28 @@
             overflow: hidden;
             border: none;
         }
+
+        .info_button {
+            font-size: 14px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+        }
+
+        .p_current {
+            color: #444444;
+        }
+
+        #target{
+            height: 200px;
+            width: 200px;
+        }
     </style>
 
 </head>
@@ -178,22 +210,25 @@
 <div class="container">
     <div class="row">
         <div class="span12">
-            <div class="jc-demo-box">
-
+            <div class="jc-box">
                 <div class="jcrop-wrapper">
                     <div id="preview-pane">
                         <div class="preview-container">
                             <img class="jcrop-preview" alt="Preview"/>
                         </div>
                     </div>
-                    <div style="margin: .8em 0 .5em;">
-                        <button id="upload_button">选择头像</button>
-                        <button id="draw_button">上传</button>
-                        <input type="file" id="upload"/>
+                    <div style="text-align: center">
+                        <img id="target" th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                        <p class="p_current">当前头像</p>
                     </div>
-                    <img id="target"/>
                 </div>
                 <div class="clearfix"></div>
+
+            </div>
+            <div class="btn_panel">
+                <button id="upload_button" class="info_button">选择头像</button>
+                <button id="draw_button" class="info_button">上传</button>
+                <input type="file" id="upload"/>
             </div>
         </div>
     </div>
@@ -205,146 +240,142 @@
 <script th:src="@{/plugin/jcrop/js/html2canvas.js}"></script>
 
 <script type="text/javascript">
+
     //通过Jcrop插件实现，思路 选择图片后，预览图片，并在图片上添加选择框， 保存时，将选择框选中的图片转成字节码
-    jQuery(function ($) {
-        var jcrop_api;
-        var
-            boundx,
-            boundy,
-            $preview = $('#preview-pane'),
-            $pcnt = $('#preview-pane .preview-container'),
-            $pimg = $('#preview-pane .preview-container img'),
-            //预览图片大小
-            xsize = 200 || $pcnt.width(),
-            ysize = 200 || $pcnt.height();
-        //选择图片后，再初始化
-        //initJcrop();
+    var jcrop_api;
+    var boundx;
+    var boundy;
+    var $preview = $('#preview-pane');
+    var $pcnt = $('#preview-pane .preview-container');
+    var $pimg = $('#preview-pane .preview-container img');
+    //预览图片大小
+    var xsize = 200 || $pcnt.width();
+    var ysize = 200 || $pcnt.height();
 
-        //初始化
-        function initJcrop() {
-            $('.requiresjcrop').hide();
+    //初始化
+    function initJcrop() {
+        $('.requiresjcrop,.p_current').hide();
 
-            $('#target').Jcrop({
-                onChange: updatePreview,
-                onSelect: updatePreview,
-                boxWidth: 400   //图片选择区域大小
-            }, function () {
+        $('#target').Jcrop({
+            onChange: updatePreview,
+            onSelect: updatePreview,
+            boxWidth: 400   //图片选择区域大小
+        }, function () {
 
-                var bounds = this.getBounds();
-                boundx = bounds[0];
-                boundy = bounds[1];
+            var bounds = this.getBounds();
+            boundx = bounds[0];
+            boundy = bounds[1];
 
-                jcrop_api = this;
+            jcrop_api = this;
 
-                //设置初始位置
-                //图片左上角为圆点组成直角坐标系，位于第四象限
-                jcrop_api.animateTo([100, 100, 300, 300]);
+            //设置初始位置
+            //图片左上角为圆点组成直角坐标系，位于第四象限
+            jcrop_api.animateTo([0, 0, 100, 100]);
 
-                //设置选择框范围
-                jcrop_api.setOptions({
-                    minSize: [100, 100]
-                    // ,maxSize: [ 600, 600 ]
-                });
-
-                //设置宽高比
-                jcrop_api.setOptions({aspectRatio: 1 / 1});
-                $('.requiresjcrop').show();
-                $preview.appendTo(jcrop_api.ui.holder);
+            //设置选择框范围
+            jcrop_api.setOptions({
+                minSize: [100, 100]
+                // ,maxSize: [ 600, 600 ]
             });
-        };
 
-        //更新预览图（设置背景偏移，设置图片像素）
-        function updatePreview(c) {
-            if (parseInt(c.w) > 0) {
-                var rx = xsize / c.w;
-                var ry = ysize / c.h;
-                var bounds = jcrop_api.getBounds();
-                boundx = bounds[0];
-                boundy = bounds[1];
-                var width = Math.round(rx * boundx) + 'px';
-                var height = Math.round(ry * boundy) + 'px';
-                $pimg.css({
-                    width: width,
-                    height: height,
-                    marginLeft: '-' + Math.round(rx * c.x) + 'px',
-                    marginTop: '-' + Math.round(ry * c.y) + 'px'
-                });
-            }
-        };
-
-        function changePreview(obj, url) {
-            $(obj).attr('src', url);
-        }
-
-        //渲染
-        function readImgURL(input, callback) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    callback && callback(e)
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        $('#upload_button').on('click', function () {
-            $('#upload').trigger('click')
+            //设置宽高比
+            jcrop_api.setOptions({aspectRatio: 1 / 1});
+            $('.requiresjcrop').show();
+            $preview.appendTo(jcrop_api.ui.holder);
         });
+    };
 
-        //选择图片后，重新加载
-        $('#upload').on('change', function (ee) {
-            var val = $(this).val();
-            var uploadImg = val.split('\\');
-            var uploadImgName = uploadImg[uploadImg.length - 1].split('.')[0];
-            $(this).data('uploadImgName', uploadImgName)
-            readImgURL(this, function (ee) {
-                initJcrop();
-                var url = ee.target.result;
-                jcrop_api.setImage(url);
-                changePreview($pimg, url);
-            })
-
-        });
-
-        //生成截图
-        $('#draw_button').on('click', function () {
-            var oTarget = $('.jcrop-holder :first-child :first-child')[0];
-            drawImage($pcnt, function (data) {
-                var dataBlob = dataURItoBlob(data)
-                var uploadImgName = $('#upload').data('uploadImgName');
-                uploadFormData(uploadImgName, dataBlob)
-                debugger
+    //更新预览图（设置背景偏移，设置图片像素）
+    function updatePreview(c) {
+        if (parseInt(c.w) > 0) {
+            var rx = xsize / c.w;
+            var ry = ysize / c.h;
+            var bounds = jcrop_api.getBounds();
+            boundx = bounds[0];
+            boundy = bounds[1];
+            var width = Math.round(rx * boundx) + 'px';
+            var height = Math.round(ry * boundy) + 'px';
+            $pimg.css({
+                width: width,
+                height: height,
+                marginLeft: '-' + Math.round(rx * c.x) + 'px',
+                marginTop: '-' + Math.round(ry * c.y) + 'px'
             });
-        });
-
-        //ajax上传
-        function uploadFormData(name, dataBlob) {
-            var fd = new FormData();
-            fd.append('fname', name);
-            fd.append('data', dataBlob);
-            alert(dataBlob);
-
         }
+    };
 
-        //绘制
-        function drawImage(obj, callback) {
-            html2canvas(obj, {
-                onrendered: function (canvas) {
-                    var imgData = canvas.toDataURL('image/png');
-                    var v = 0, test;
-                    callback && callback(imgData);
-                }
-            })
-        }
+    function changePreview(obj, url) {
+        $(obj).attr('src', url);
+    }
 
-        //Base64转字节码
-        function dataURItoBlob(dataURI) {
-            var type = /data:([\w]+\/[\w]+);base64/.exec(dataURI)[1];
-            var binary = atob(dataURI.split(',')[1]), array = [];
-            for (var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));
-            return new Blob([new Uint8Array(array)], {type: type});
+    //渲染
+    function readImgURL(input, callback) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                callback && callback(e)
+            }
+            reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    $('#upload_button').on('click', function () {
+        $('#upload').trigger('click')
     });
+
+    //选择图片后，重新加载
+    $('#upload').on('change', function (ee) {
+        var val = $(this).val();
+        var uploadImg = val.split('\\');
+        var uploadImgName = uploadImg[uploadImg.length - 1].split('.')[0];
+        $(this).data('uploadImgName', uploadImgName)
+        readImgURL(this, function (ee) {
+            initJcrop();
+            var url = ee.target.result;
+            jcrop_api.setImage(url);
+            changePreview($pimg, url);
+        })
+
+    });
+
+    //生成截图
+    $('#draw_button').on('click', function () {
+        var oTarget = $('.jcrop-holder :first-child :first-child')[0];
+        drawImage($pcnt, function (data) {
+            f_uploadAvator(data);
+        });
+    });
+
+    //ajax上传
+    function f_uploadAvator(imgStr) {
+        $.ajax({
+            url: '/home/member/upload',
+            data: {imgStr: imgStr},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if(data.code===200){
+                    layer.alert(data.msg,function () {
+                        parent.location.reload();
+//                        parent.layer.closeAll();
+                    });
+                }else{
+                    layer.alert(data.msg);
+                }
+            }
+        });
+    }
+
+    //绘制
+    function drawImage(obj, callback) {
+        html2canvas(obj, {
+            onrendered: function (canvas) {
+                var imgData = canvas.toDataURL('image/png');
+                var v = 0, test;
+                callback && callback(imgData);
+            }
+        })
+    }
 </script>
 
 </body>

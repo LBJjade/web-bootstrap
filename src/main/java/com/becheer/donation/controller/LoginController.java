@@ -65,7 +65,7 @@ public class LoginController extends BaseController {
             memberSessionExtension.setMobile(result.getResult().getMobile());
             memberSessionExtension.setRole(result.getResult().getRole());
             memberSessionExtension.setValidation(result.getResult().getValidation());
-
+            memberSessionExtension.setAvator(result.getResult().getAvatorImg());
             request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
             //自动登录，设置cookie
             if (autoLogin){
@@ -107,6 +107,7 @@ public class LoginController extends BaseController {
                 memberSessionExtension.setMobile(member.getMobile());
                 memberSessionExtension.setRole(member.getRole());
                 memberSessionExtension.setValidation(member.getValidation());
+                memberSessionExtension.setAvator(member.getAvatorImg());
                 request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
                 return new ResponseDto(200,Message.LOGIN_SUCCESS,memberSessionExtension);
             }

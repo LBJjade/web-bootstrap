@@ -84,4 +84,13 @@
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 
+    <update id="updateAvator">
+        UPDATE
+          dnt_member
+        SET
+            update_time = now(),
+            avator_img=#{param1}
+        WHERE id_ = #{param2}
+    </update>
+
 </mapper>
