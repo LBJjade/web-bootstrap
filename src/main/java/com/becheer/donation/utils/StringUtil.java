@@ -1,60 +1,12 @@
 package com.becheer.donation.utils;
 
+import sun.misc.BASE64Decoder;
+
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class StringUtil {
-
-    public static String formatCurrency(String currenty) {
-        String [] money=currenty.split("\\.");
-//        String str = currenty.split("\\.")[0];
-//        String str = currenty.split("\\.")[1];
-
-        String str=money[0];
-        String spot="";
-        try{
-            spot=money[1];
-        }catch(Exception e){
-           System.out.println( e.getMessage());
-        }
-        String get = "", lost = "";
-        String  num = "";
-        int length = str.length();
-        while (length > 0) {
-            if (length > 3) {
-                get = str.substring(length - 4, length - 1);
-                lost = str.substring(0, length - 3);
-                str = lost;
-                if (num == "") {
-                    num = get;
-                } else {
-                    num = get + "," + num;
-                }
-
-                length = length - 3;
-            } else {
-                if (lost == "") {
-                    num = str;
-                } else {
-                    num = lost + "," + num;
-                }
-                length = length - 3;
-            }
-        }
-        if (spot == "") {
-            num = num + ".00";
-        } else {
-            if (spot.length() > 2) {
-                spot = spot.substring(0, 2);
-                num = num + "." + spot;
-            } else if (spot.length() == 2) {
-                num = num + "." + spot;
-            } else {
-                num = num + "." + spot + "0";
-            }
-        }
-        return num;
-    }
 
     //格式化金额 98765432100 TO 986,654,321.00
     public static String formatMoney(long money) {
@@ -82,4 +34,25 @@ public class StringUtil {
         }
         return sign+new StringBuffer(result).reverse().toString();
     }
+
+    //Base64转byte 数组
+    public static byte[] base64ImgToByteArray(String fileStr) {
+        try {
+            BASE64Decoder decoder = new BASE64Decoder();
+            byte[] bytes;
+            fileStr = fileStr.split(",")[1];
+
+            bytes = decoder.decodeBuffer(fileStr);
+            for (int i = 0; i < bytes.length; ++i) {
+                // 调整异常数据
+                if (bytes[i] < 0) {
+                    bytes[i] += 256;
+                }
+            }
+            return bytes;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

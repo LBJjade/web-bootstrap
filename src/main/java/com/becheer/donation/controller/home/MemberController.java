@@ -9,6 +9,7 @@ import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.OssUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
@@ -65,6 +66,9 @@ public class MemberController extends BaseController {
         MemberSessionExtension currentMember=GetCurrentUser(request);
         if (currentMember==null){
             return MemberAuthFailed();
+        }
+        if (StringUtils.isEmpty(imgStr)){
+            return new ResponseDto(400,Message.MEMBER_AVATOR_NULL);
         }
         return memberService.uploadAvator(currentMember.getMemberId(),imgStr);
     }

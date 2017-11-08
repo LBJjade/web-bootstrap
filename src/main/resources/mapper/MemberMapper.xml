@@ -80,6 +80,9 @@
           organization_type=#{organizationType,jdbcType=VARCHAR},
           organization_code=#{organizationCode,jdbcType=VARCHAR},
           update_time = now(),
+          <if test="idCardFrontImg!=null">id_card_front_img=#{idCardFrontImg},</if>
+          <if test="idCardBackImg!=null">id_card_back_img=#{idCardBackImg},</if>
+          <if test="license!=null">license=#{license},</if>
           validation=#{validation,jdbcType=INTEGER}
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>

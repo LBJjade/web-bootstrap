@@ -108,6 +108,7 @@ public class Message {
 
     public static final String MEMBER_AVATOR_UPLOAD_SUCCESS="上传成功";
 
+    public static final String MEMBER_AVATOR_NULL="请先选择头像";
 
     /**
      * 我的消息页面

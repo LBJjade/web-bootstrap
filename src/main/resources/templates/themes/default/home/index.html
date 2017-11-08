@@ -128,7 +128,7 @@
                         </tr>
                         <tr v-if="member.role===2">
                             <td>营业执照</td>
-                            <td><a href="#">点击查看</a></td>
+                            <td><a href="javascript:f_showLicense()">点击查看</a></td>
                         </tr>
                         <tr v-if="member.role===1">
                             <td>性别</td>
@@ -168,6 +168,8 @@
 <script type="text/javascript">
     /*<![CDATA[*/
     //会员信息
+    var license;
+
     $(document).ready(function () {
         f_GetmemberInfo();
     });
@@ -209,7 +211,7 @@
         }
     }
 
-    function f_uploadAvator(){
+    function f_uploadAvator() {
         layer.open({
             type: 2,
             title: '上传头像',
@@ -220,6 +222,10 @@
         });
     }
 
+    function f_showLicense() {
+        
+    }
+    
     /*]]>*/
 </script>
 </body>

@@ -162,7 +162,7 @@
         }
 
         #preview-pane {
-            display: block;
+            display: none;
             position: absolute;
             z-index: 2000;
             top: 10px;
@@ -281,6 +281,7 @@
             //设置宽高比
             jcrop_api.setOptions({aspectRatio: 1 / 1});
             $('.requiresjcrop').show();
+            $("#preview-pane").show();
             $preview.appendTo(jcrop_api.ui.holder);
         });
     };

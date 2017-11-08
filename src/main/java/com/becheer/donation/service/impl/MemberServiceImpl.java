@@ -17,6 +17,8 @@ import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.HashUtil;
 import com.becheer.donation.utils.OssUtil;
 import com.becheer.donation.utils.RedisUtil;
+import com.becheer.donation.utils.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.misc.BASE64Decoder;
@@ -130,6 +132,8 @@ public class MemberServiceImpl implements IMemberService {
             memberInfoExtension.setIdCard(member.getIdCard());
             memberInfoExtension.setSex(member.getSex());
             memberInfoExtension.setBirthday(member.getBirthday());
+            memberInfoExtension.setIdCardFront(member.getIdCardFrontImg());
+            memberInfoExtension.setIdCardBack(member.getIdCardBackImg());
         }else if (member.getRole()==2){
             //公司
             memberInfoExtension.setOrganizationType(member.getOrganizationType());
@@ -152,6 +156,30 @@ public class MemberServiceImpl implements IMemberService {
         member.setValidation(memberInfoExtension.getValidation());
         member.setOrganizationCode(memberInfoExtension.getOrganizationCode());
         member.setOrganizationType(memberInfoExtension.getOrganizationType());
+        if (!StringUtils.isEmpty(memberInfoExtension.getIdCardFront())){
+            byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardFront());
+            String fileName = "fImg"+memberInfoExtension.getId();
+            fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
+            fileName=ossConfig.getIdCardPath()+fileName;
+            OssUtil.addByteArray(bytes,fileName);
+            member.setIdCardFrontImg(fileName);
+        }
+        if (!StringUtils.isEmpty(memberInfoExtension.getLicense())){
+            byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getLicense());
+            String fileName = "lImg"+memberInfoExtension.getId();
+            fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
+            fileName=ossConfig.getLicensePath()+fileName;
+            OssUtil.addByteArray(bytes,fileName);
+            member.setLicense(fileName);
+        }
+        if (!StringUtils.isEmpty(memberInfoExtension.getIdCardBack())){
+            byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardBack());
+            String fileName = "bImg"+memberInfoExtension.getId();
+            fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
+            fileName=ossConfig.getIdCardPath()+fileName;
+            OssUtil.addByteArray(bytes,fileName);
+            member.setIdCardBackImg(fileName);
+        }
         int result = memberMapper.UpdateMember(member);
         if (result>0){
             RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY+":"+ConstString.TABLE_MEMBER+":"+member.getId());
@@ -164,16 +192,7 @@ public class MemberServiceImpl implements IMemberService {
     @Override
     public ResponseDto uploadAvator(long memberId, String fileStr) {
         try {
-            BASE64Decoder decoder = new BASE64Decoder();
-            byte[] bytes = new byte[0];
-            fileStr = fileStr.split(",")[1];
-            bytes = decoder.decodeBuffer(fileStr);
-            for (int i = 0; i < bytes.length; ++i) {
-                // 调整异常数据
-                if (bytes[i] < 0) {
-                    bytes[i] += 256;
-                }
-            }
+            byte[] bytes= StringUtil.base64ImgToByteArray(fileStr);
             String fileName = ossConfig.getAvatorPath() + "a" + memberId + ".jpg";
             OssUtil.addByteArray(bytes, fileName);
             int result=memberMapper.updateAvator(fileName,memberId);

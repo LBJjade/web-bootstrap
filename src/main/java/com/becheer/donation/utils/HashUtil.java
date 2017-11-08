@@ -24,6 +24,17 @@ public class HashUtil {
         return SHA256(pwd);
     }
 
+    //加密文件名 OSS用
+    public static String getEncryptedFileName(String fileName){
+        if (fileName==null||fileName.length()==0){
+            return fileName;
+        }
+        fileName=SHA256(fileName);
+        fileName="B"+fileName+"bc";
+        fileName=MD5(fileName);
+        return fileName;
+    }
+
     //MD5
     public static String MD5(String source) {
         return SHA(source,"MD5");

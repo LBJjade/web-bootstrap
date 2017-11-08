@@ -23,6 +23,10 @@ public class OssConfig {
 
     private String avatorPath;
 
+    private String idCardPath;
+
+    private String licensePath;
+
     public String getEndpoint() {
         return endpoint;
     }
@@ -61,5 +65,21 @@ public class OssConfig {
 
     public void setAvatorPath(String avatorPath) {
         this.avatorPath = avatorPath;
+    }
+
+    public String getIdCardPath() {
+        return idCardPath;
+    }
+
+    public void setIdCardPath(String idCardPath) {
+        this.idCardPath = idCardPath;
+    }
+
+    public String getLicensePath() {
+        return licensePath;
+    }
+
+    public void setLicensePath(String licensePath) {
+        this.licensePath = licensePath;
     }
 }

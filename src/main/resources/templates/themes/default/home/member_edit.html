@@ -47,6 +47,26 @@
             height: 25px;
             width: 220px;
         }
+        .div_img{
+            height: 120px;
+            position: absolute;
+        }
+        .div_img input{
+            float: left;
+        }
+        .input_img{
+            opacity: 0;
+            width: 120px !important;
+            height: 120px !important;
+            border: 1px solid;
+            /*position: absolute;*/
+        }
+        .input_img2{
+            opacity: 0;
+            margin-left: 5px;
+            /*position: absolute;*/
+            /*left: 120px;*/
+        }
     </style>
 </head>
 <body>
@@ -92,8 +112,12 @@
                         </tr>
                         <tr><td></td>
                             <td>
-                                <img th:src="@{/image/id_card.png}" height="120" width="120" style="margin-bottom: 10px"/>
-                                <img th:src="@{/image/id_card.png}" height="120" width="120" style="margin-bottom: 10px"/>
+                                <div class="div_img">
+                                    <input type="file" id="ipt_f" class="input_img" onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg" />
+                                    <input type="file" id="ipf_b" class="input_img input_img2" onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg" />
+                                </div>
+                                <img id="img_f" th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
+                                <img id="img_b" th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
                             </td>
                         </tr>
                         <tr>
@@ -133,6 +157,30 @@
     $("#ipt_project").val(memberProject);
     $("#ipt_summary").val(memberSummary);
 
+    var imgB="";
+    var imgF="";
+
+    function f_getFileUrl(sourceId) {
+        var url;
+        if (navigator.userAgent.indexOf("MSIE")>=1) {
+            // IE
+            url = $('#'+sourceId).val();
+        } else {
+            //其他浏览器
+            url = window.URL.createObjectURL($("#"+sourceId).prop('files')[0]);
+        }
+        return url;
+    }
+
+    /**
+     * 图片预览
+     */
+    function f_preImg(sourceId, targetId) {
+        var url = f_getFileUrl(sourceId);
+        f_readAsDataURL(sourceId);
+        $('#'+targetId).attr("src",url);
+    }
+
     $(".btn_save").click(function () {
         var memberName=$("#ipt_name").val();
         var mobile=$("#ipt_mobile").val();
@@ -144,7 +192,7 @@
 
         $.ajax({
             url:'/home/member/submit',
-            data:{name:memberName,mobile:mobile,idCard:idCard,sex:sex,birthday:birthday,project:project,summary:summary},
+            data:{name:memberName,mobile:mobile,idCard:idCard,sex:sex,birthday:birthday,project:project,summary:summary,idCardFront:imgF,idCardBack:imgB},
             type:'post',
             dataType:'json',
             success:function (data) {
@@ -161,6 +209,24 @@
             }
         });
     });
+
+    function f_readAsDataURL(item){
+        //检验是否为图像文件
+        var file = $("#"+item).prop('files')[0];
+        if(!/image\/\w+/.test(file.type)){
+            return "";
+        }
+        var reader = new FileReader();
+        //将文件以Data URL形式读入页面
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            if (item==="ipt_f"){
+                imgF=this.result;
+            }else{
+                imgB=this.result;
+            }
+        }
+    }
 
     function f_uploadAvator(){
         layer.open({
