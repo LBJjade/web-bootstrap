@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>index</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -52,7 +51,14 @@
 <div class="center-block" style="width: 1200px;">
     <div class="row">
         <div class="col-sm-12">
-
+            <div id="div_navbar" style="margin-top: 10px">
+                <ul>
+                    <li><a href="#">首页</a></li>
+                    <li><i class="fa fa-angle-right" aria-hidden="true"
+                           style="font-size: 20px;color: #999999; "></i></li>
+                    <li class="active"><a href="#">个人中心</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="row">
@@ -61,19 +67,8 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <div id="div_navbar" style="margin-top: 10px">
-                    <ul>
-                        <li><a href="#">首页</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">个人中心</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">我的捐赠申请</a></li>
-                    </ul>
-                </div>
-                <!--<p style="margin-bottom: 9px;">我的捐赠申请</p>-->
-                <!--<hr/>-->
+                <p style="margin-bottom: 9px;">我的捐赠申请</p>
+                <hr/>
             </div>
             <div style="min-height: 450px;">
                 <div style="padding-left: 25px">
@@ -90,12 +85,12 @@
                         </thead>
                         <tbody>
                         <tr v-for="item in items" v-cloak>
-                            <td class="text-left" style="width: 160px;">{{item.projectTypeName}}</td>
+                            <td class="text-left" style="width: 130px">{{item.projectTypeName}}</td>
                             <td class="text-left">{{item.projectName}}</td>
-                            <td class="text-right">{{item.intentionAmount|format}}</td>
+                            <td class="text-right">{{item.intentionAmount}}</td>
                             <td class="text-center">{{item.createTime}}</td>
                             <td class="text-center">{{item.statusText}}</td>
-                            <td class="text-center" style="width: 120px">
+                            <td class="text-center"  style="width: 115px">
                                 <a :href="'/home/apply/'+item.id" target="_blank">
                                     <button class="info_button">查看</button>
                                 </a>
@@ -150,56 +145,7 @@
                             el: '#table_content',
                             data: {
                                 items: data.result.list
-                            },
-                            filters: {
-                                format: function (value) {
-                                    value = value / 100;
-                                    var str = value.toString();
-                                    var spot = str.split(".")[1];
-                                    str = str.split(".")[0];
-//                                var str = value;
-                                    var length = str.length;
-                                    var get, lost;
-                                    var num = new Array();
-                                    var num = "";
-                                    for (var i = 0; i < length; i + 3) {
-                                        if (length > 3) {
-                                            get = str.substring(length - 4, length - 1);
-                                            lost = str.substring(0, length - 3);
-                                            str = lost;
-                                            if (num == "") {
-                                                num = get;
-                                            } else {
-                                                num = get + "," + num;
-                                            }
-                                            var before = num;
-                                            length = length - 3;
-                                        } else {
-                                            if (lost == undefined) {
-                                                num = str;
-                                            } else {
-                                                num = lost + "," + before;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    //num=parseFloat(num).toFixed(2);
-                                    if (spot == undefined) {
-                                        num = num + ".00";
-                                    } else {
-                                        if (spot.length > 2) {
-                                            spot = spot.substring(0, 2);
-                                            num = num + "." + spot;
-                                        } else if (spot.length == 2) {
-                                            num = num + "." + spot;
-                                        } else {
-                                            num = num + "." + spot + "0";
-                                        }
-                                    }
-                                    return num;
-                                }
                             }
-
                         });
                         if (data.result.list.length === 0) {
                             $(".p_no_data").show();
@@ -247,17 +193,6 @@
         pageNum = newPage;
         f_GetApply();
     }
-
-    //格式化时间只保留年月日
-    function f_FormatTime(inputTime) {
-        var date = new Date(inputTime);
-        var y = date.getFullYear();
-        var m = date.getMonth() + 1;
-        m = m < 10 ? ('0' + m) : m;
-        var d = date.getDate();
-        d = d < 10 ? ('0' + d) : d;
-        return y + '-' + m + '-' + d;
-    };
 
     //格式化时间只保留年月日
     function f_FormatTime(inputTime) {
