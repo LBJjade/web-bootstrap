@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="header">
 <head>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/bootstrapValidator.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -35,6 +37,7 @@
                 <li>您好,欢迎您!</li>
                 <li></li>
                 <li><a th:href="@{/login}">登录</a></li>
+                <!--<li><span data-toggle="model" data-target="#myModal" data-dismiss="model">登录</span></li>-->
                 <li>|</li>
                 <li><a th:href="@{/register}">注册</a></li>
             </ul>
@@ -67,8 +70,87 @@
     </div>
 </div>
 
+
+
+<!--登陆弹出层-->
+<div class="model fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: auto">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" style="width: 100%;text-align: center;">
+                    登陆
+                </h4>
+            </div>
+
+
+            <div class="model-body" style="text-align: center">
+                <form id="defaultForm"class="form-horizontal" >
+                    <!--<div class="form-group">-->
+                        <!--<label class="col-lg-3 control-label">手机号码</label>-->
+                        <!--<div class="col-lg-5">-->
+                            <!--<input type="text" class="form-control" name="firstName" placeholder="请输入手机号码" />-->
+                            <!--<span class="help-block" id="firstNameMessage">-->
+
+                                <!--</span>-->
+                        <!--</div>-->
+                        <!--&lt;!&ndash;<div class="col-lg-4">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<input type="text" class="form-control" name="lastName" placeholder="Last name" />&ndash;&gt;-->
+                            <!--&lt;!&ndash;<span class="help-block lastNameMessage"></span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">手机号码</label>
+                        <div class="col-lg-7">
+                            <input type="text" id="phone" class="form-control" name="phone" placeholder="请输入手机号码" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">登录密码</label>
+                        <div class="col-lg-7">
+                            <input type="text" id="pw" class="form-control" name="pw" placeholder="请输入密码"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label">验证码</label>
+                        <div class="col-lg-7">
+                            <input type="text" id="code" class="form-control" name="code" placeholder="请输入验证码"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
+                    </div>
+
+                    <div class="form-group">
+                    <input type="checkbox" id="ipt_cookie" style="margin-left: -150px;"/>下次自动登录
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-11 col-lg-offset-1">
+                            <button type="button" id="btn_login" class="btn btn-primary">登陆</button>
+                            <span><a th:href="@{/resetpw}">忘记密码?</a></span>
+                            <span><a th:href="@{/resetpw}">修改密码?</a></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/jquery.validate.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrapValidator.js}"></script>
 <script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
@@ -76,9 +158,9 @@
     var fileRoot=/*[[${config.getFileRoot()}]]*/;
     var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
 
-    $(document).ready(function() {
-        f_autoLogin();
-    });
+//    $(document).ready(function() {
+//        f_autoLogin();
+//    });
 
     function f_autoLogin() {
         if (memberInfo!=null){
@@ -107,6 +189,10 @@
             }
         }
     }
+
+    $(".verify_code").click(function () {
+        $(this).attr("src","Verify/code.jpg?t="+Math.random());
+    });
 
     function getCookie(name)
     {
@@ -147,6 +233,111 @@
             }
         });
     }
+
+
+    $(document).ready(function() {
+        f_autoLogin();
+        $('#defaultForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                phone: {
+                    message: 'The phone is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '手机号码不能为空'
+                        },
+                        regexp:{
+                            regexp : /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
+                            message: '手机号码格式不正确'
+                        }
+                    }
+                },
+                pw: {
+//                    container: '#firstNameMessage',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            message: '密码不能少于6位'
+                        }
+                    }
+                },
+                code: {
+//                    container: '.lastNameMessage',
+                    validators: {
+                        notEmpty: {
+                            message: '验证码不能为空'
+                        },
+                        stringLength: {
+                            min: 4,
+                            max: 4,
+                            message: '验证码格式不正确'
+                        }
+                    }
+                }
+
+            }
+        });
+        $("#btn_login").click(function () {
+            var bv = $('#defaultForm').data('bootstrapValidator');
+            bv.validate();
+            if (bv.isValid()) {
+                var mobile = $("#phone").val();
+                var pwd = $("#pw").val();
+                var code = $("#code").val();
+                var autoLogin = $("#ipt_cookie").is(':checked');
+                $.ajax({
+                    url: "/login/submit",
+                    data: {mobile: mobile, code: code, pwd: pwd, autoLogin: autoLogin},
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.code === 407) {
+                            window.location.href = "/home";
+                        } else {
+                            layer.alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+
+    });
+
+    //login
+//    $("#btn_login").click(function () {
+//        var mobile=$("#phone").val();
+//        var pwd=$("#pw").val();
+//        var code=$("#code").val();
+//        alert(mobile);
+//        alert(pwd);
+//        alert(code);
+//        var autoLogin=$("#ipt_cookie").is(':checked');
+//        alert(autoLogin);
+//        $.ajax({
+//            url:"/login/submit",
+//            data:{mobile:mobile,code:code,pwd:pwd,autoLogin:autoLogin},
+//            type:'post',
+//            dataType:'json',
+//            success:function (data) {
+//                if (data.code===407){
+//                    alert(1);
+//                }else{
+//                    layer.alert(data.msg);
+//                }
+//            }
+//        });
+//    });
+
+
+
     /*]]>*/
 </script>
 </body>
