@@ -44,6 +44,10 @@ public class MemberInfoExtension implements Serializable {
 
     private String license;
 
+    private String idCardFront;
+
+    private String idCardBack;
+
     public long getId() {
         return id;
     }
@@ -154,5 +158,21 @@ public class MemberInfoExtension implements Serializable {
 
     public void setLicense(String license) {
         this.license = license;
+    }
+
+    public String getIdCardFront() {
+        return idCardFront;
+    }
+
+    public void setIdCardFront(String idCardFront) {
+        this.idCardFront = idCardFront;
+    }
+
+    public String getIdCardBack() {
+        return idCardBack;
+    }
+
+    public void setIdCardBack(String idCardBack) {
+        this.idCardBack = idCardBack;
     }
 }

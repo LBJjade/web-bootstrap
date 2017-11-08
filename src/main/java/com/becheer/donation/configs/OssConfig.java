@@ -21,6 +21,8 @@ public class OssConfig {
 
     private String bucketName;
 
+    private String avatorPath;
+
     public String getEndpoint() {
         return endpoint;
     }
@@ -51,5 +53,13 @@ public class OssConfig {
 
     public void setBucketName(String bucketName) {
         this.bucketName = bucketName;
+    }
+
+    public String getAvatorPath() {
+        return avatorPath;
+    }
+
+    public void setAvatorPath(String avatorPath) {
+        this.avatorPath = avatorPath;
     }
 }

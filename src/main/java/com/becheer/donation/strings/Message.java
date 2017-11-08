@@ -110,6 +110,10 @@ public class Message {
 
     public static final String MEMBER_UPDATE_ERROR="保存失败";
 
+    public static final String MEMBER_AVATOR_UPLOAD_ERROR="上传失败";
+
+    public static final String MEMBER_AVATOR_UPLOAD_SUCCESS="上传成功";
+
 
     /**
      * 我的消息页面

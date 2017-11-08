@@ -17,6 +17,8 @@ public class MemberSessionExtension {
 
     public int validation;
 
+    public String avator;
+
     public long getMemberId() {
         return memberId;
     }
@@ -55,5 +57,13 @@ public class MemberSessionExtension {
 
     public void setValidation(int validation) {
         this.validation = validation;
+    }
+
+    public String getAvator() {
+        return avator;
+    }
+
+    public void setAvator(String avator) {
+        this.avator = avator;
     }
 }

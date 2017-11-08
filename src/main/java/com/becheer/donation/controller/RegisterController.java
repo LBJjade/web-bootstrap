@@ -69,6 +69,7 @@ public class RegisterController extends BaseController {
             memberSessionExtension.setMobile(member.getMobile());
             memberSessionExtension.setRole(member.getRole());
             memberSessionExtension.setValidation(member.getValidation());
+            memberSessionExtension.setAvator("image/avator/default.jpg");
             request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
         }
         return result;

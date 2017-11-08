@@ -20,11 +20,12 @@
         }
         .table_member_content td{
             border-bottom: 1px #ccc dashed;
+            width: 20px;
         }
 
         #textarea_apply{
             margin-top: 20px;
-            width: 300px;
+            width: 695px;
             height: 150px;
         }
 
@@ -58,7 +59,7 @@
             <table class="table_member_content">
                 <tr><td>捐赠项目类别</td><td><th:block th:text="${apply.getProjectTypeName()}"/></td></tr>
                 <tr th:if="${apply.getProjectName()}!=null"><td>捐赠项目</td><td><th:block th:text="${apply.getProjectName()}"/></td></tr>
-                <tr><td>捐赠金额</td><td><th:block th:text="${apply.getIntentionAmount()}"/></td></tr>
+                <tr><td>捐赠金额</td><td><th:block th:text="${apply.getIntentionAmount()!=0?apply.getIntentionAmount()/100:0}"/>元</td></tr>
                 <tr><td>申请时间</td><td><th:block th:text="${apply.getCreateTime()}"/></td></tr>
                 <tr><td>状态</td><td><th:block th:text="${apply.getStatus()}"/></td></tr>
                 <tr><td>备注</td><td><th:block th:text="${apply.getRemark()}"/></td></tr>
@@ -73,7 +74,7 @@
                     <td>{{item.title}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="2" style="border: none;">
                         <textarea id="textarea_apply" class="form-control"></textarea>
                         <button class="btn btn-success" v-on:click="add()">提交意见</button>
                     </td>

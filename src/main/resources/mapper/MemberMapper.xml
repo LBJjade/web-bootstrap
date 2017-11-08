@@ -88,4 +88,13 @@
      UPDATE dnt_member set `password` = #{param1} where mobile = #{param2}
     </update>
 
+    <update id="updateAvator">
+        UPDATE
+          dnt_member
+        SET
+            update_time = now(),
+            avator_img=#{param1}
+        WHERE id_ = #{param2}
+    </update>
+
 </mapper>

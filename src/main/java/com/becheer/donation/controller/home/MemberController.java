@@ -8,11 +8,14 @@ import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.OssUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Decoder;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 /*
 * MemberController
@@ -49,9 +52,20 @@ public class MemberController extends BaseController {
     }
 
     @Access(authorities="member")
-    @GetMapping(value = "/upload")
-    public String upload(HttpServletRequest request) {
+    @GetMapping(value = "/avator")
+    public String avatorUpload(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
+        request.setAttribute("member",GetCurrentUser(request));
         return this.render("home/avator_upload");
+    }
+
+    @PostMapping("/upload")
+    @ResponseBody
+    public ResponseDto uploadAvator(HttpServletRequest request,@RequestParam String imgStr) {
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        return memberService.uploadAvator(currentMember.getMemberId(),imgStr);
     }
 }

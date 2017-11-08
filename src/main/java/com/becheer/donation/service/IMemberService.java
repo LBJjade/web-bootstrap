@@ -26,4 +26,6 @@ public interface IMemberService {
     ResponseDto UpdateMemberInfo(MemberInfoExtension memberInfoExtensions);
 
     int UpdatePw(String newPw,String mobile);
+
+    ResponseDto uploadAvator(long memberId,String fileStr);
 }

@@ -108,7 +108,7 @@
                     <img :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
                     <br/>
                     <br/>
-                    <button class="info_button">更换头像</button>
+                    <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
                 </div>
                 <div id="div_content_info">
                     <table class="table_content_info" v-cloak>
@@ -214,6 +214,17 @@
         } else {
             $(".complete").hide();
         }
+    }
+
+    function f_uploadAvator(){
+        layer.open({
+            type: 2,
+            title: '上传头像',
+            shadeClose: true,
+            shade: 0.6,
+            area: ['800px', '600px'],
+            content: '/home/member/avator'
+        });
     }
 
     /*]]>*/

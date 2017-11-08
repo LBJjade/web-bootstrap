@@ -41,7 +41,7 @@ public class MessageServiceImpl implements IMessageService {
 
     @Override
     public int GetMemberMessagesNum(long memberId) {
-        return messageMapper.GetMemberMessagesNum(memberId);
+        return messageMapper.GetMemberMessagesNum( memberId);
     }
 
     @Override
