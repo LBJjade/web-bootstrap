@@ -18,4 +18,6 @@ public interface MemberMapper {
     Member SelectMemberById(Long memberId);
 
     int UpdateMember(Member member);
+
+    int UpdatePw(String newPw,String mobile);
 }

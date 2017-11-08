@@ -24,4 +24,6 @@ public interface IMemberService {
     MemberInfoExtension GetMemberExtensionById(long memberId);
 
     ResponseDto UpdateMemberInfo(MemberInfoExtension memberInfoExtensions);
+
+    int UpdatePw(String newPw,String mobile);
 }
