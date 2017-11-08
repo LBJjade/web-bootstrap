@@ -40,13 +40,13 @@ public class LoginController extends BaseController {
     @PostMapping("/submit")
     @ResponseBody
     public ResponseDto Submit(HttpServletRequest request, HttpServletResponse response, @RequestParam String code, @RequestParam String mobile, @RequestParam String pwd, @RequestParam boolean autoLogin){
-            if (code==null||code.length()==0){
+        if (code==null||code.length()==0){
             return new ResponseDto(400,Message.LOGIN_CODE_NULL);
         }
         if (!RegExUtil.checkMobile(mobile)){
             return new ResponseDto(401,Message.LOGIN_MOBILE_ERROR);
         }
-        if (pwd==null||pwd.trim().length()<6){
+        if (pwd==null||pwd.trim().length()<8){
             return new ResponseDto(402,Message.LOGIN_PASSWORD_ERROR);
         }
         Object objCode=request.getSession().getAttribute(ConstString.LOGIN_VERIFY_CODE);

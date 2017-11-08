@@ -87,10 +87,6 @@
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 
-    <update id="UpdatePw">
-     UPDATE dnt_member set `password` = #{param1} where mobile = #{param2}
-    </update>
-
     <update id="updateAvator">
         UPDATE
           dnt_member

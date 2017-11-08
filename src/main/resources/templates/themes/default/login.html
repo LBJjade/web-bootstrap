@@ -7,7 +7,6 @@
     <meta name="renderer" content="webkit" />
 
     <title>login</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
 
@@ -79,9 +78,9 @@
                 <tr>
                     <td>登录密码</td>
                     <td style="margin-right: 250px;display: block;">
-                        <input type="password" class="input_text ipt_pwd" id="ipt_pwd" placeholder="请输入6位密码"/>
+                        <input type="password" class="input_text ipt_pwd" id="ipt_pwd" placeholder="请输入8位密码"/>
                         <div class="pw_error error"  style="margin-right: 210px;">密码不能为空</div>
-                        <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于6位</div>
+                        <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于8位</div>
                     </td>
                 </tr>
                 <tr>
@@ -94,14 +93,11 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center">
-                        <input type="checkbox" id="ipt_cookie" style="margin-left: -150px;"/>下次自动登录
+                        <input type="checkbox" id="ipt_cookie"/>下次自动登录
                     </td>
                 </tr>
                 <tr>
-
                     <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
-                        <span><a th:href="@{/resetpw}">忘记密码?</a></span>
-                        <span><a th:href="@{/changepw}">修改密码?</a></span>
                         <button class="btn btn-info btn_login" style="margin-right: 200px;width: 80px;padding-left: 4px">登录</button>
                     </td>
                 </tr>
@@ -169,7 +165,7 @@
             $(".pw_error").show();
         }else{
             $(".pw_error").hide();
-            if($(".ipt_pwd").val().length < 6){
+            if($(".ipt_pwd").val().length < 8){
                 $(".pw_error_0").show();
             }else{
                 $(".pw_error_0").hide();

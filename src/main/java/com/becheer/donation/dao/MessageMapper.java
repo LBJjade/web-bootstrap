@@ -16,6 +16,6 @@ import java.util.List;
 @Component
 public interface MessageMapper {
     List<MessageExtension> SelectByCondition(MessageCondition condition);
-    int GetMemberMessagesNum(long memberId);
+    int GetMemberMessagesNum(Long memberId);
     int ChangeStatus(MessageExtension extension);
 }

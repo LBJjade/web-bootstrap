@@ -8,89 +8,59 @@
 <div class="container-fluid div-shadown-3-5" id="div_header">
     <div class="center-block" style="width: 1200px;">
         <div class="row">
-            <div class="col-sm-5">
+            <div class="col-sm-9">
                 <div class="ibox float-e-margins">
                     我们将认真对待每一笔捐赠，将您的爱心传递到每一位需要帮助的人手中。
                 </div>
             </div>
-            <div class="col-sm-7" style="float: right;">
-                <ul class="ul_login" id="ul_login" style="margin-top: 0;margin-bottom: 0;">
-                    <li>您好,欢迎参与世纪爱心慈善</li>
-                    <li></li>
-                    <li><a th:href="@{/login}">登录</a></li>
-                    <li>|</li>
-                    <li><a th:href="@{/register}">注册</a></li>
-                </ul>
-                <ul class="ul_login" id="ul_logined" style="display: none; margin-top: 0;margin-bottom: 0;">
-                    <li></li>
-                    <li></li>
-                    <li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>
-                    <li>|</li>
-                    <li><a th:href="@{/home}">个人中心</a></li>
-                    <li>|</li>
-                    <li><a href="javascript:f_logout()">退出</a></li>
-                </ul>
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins"  id="div_header_link">
+                    <a href="#"><span>关注微博</span></a>
+                    <span>&nbsp; | &nbsp;</span>
+                    <a href="#"><span>关于我们</span></a>
+                    <span> &nbsp;| &nbsp;</span>
+                    <a href="#"><span>联系我们</span></a>
+                </div>
             </div>
-            <!--<div class="col-sm-3">-->
-            <!--<div class="ibox float-e-margins" id="div_header_link">-->
-            <!--<a href="http://weibo.com" target="_blank"><span>关注微博</span></a>-->
-            <!--<span>&nbsp; | &nbsp;</span>-->
-            <!--<a href="http://www.sjaxjjh.com/nav/9.html"><span>关于我们</span></a>-->
-            <!--<span> &nbsp;| &nbsp;</span>-->
-            <!--<a href="http://www.sjaxjjh.com/nav/16.html"><span>联系我们</span></a>-->
-            <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
 </div>
 <div class="center-block" style="width: 1200px; height: 150px;">
     <div class="row">
-        <div class="col-sm-12">
-            <img id="img_logo" th:src="@{~/image/logo/1200x280.gif}"/>
+        <div class="col-sm-6">
+            <img id="img_logo" th:src="@{~/image/logo/375x100.png}"/>
         </div>
-        <!--<div class="col-sm-6" style="height: 80px">-->
-        <!--<ul class="ul_login" id="ul_login">-->
-        <!--<li>您好,欢迎参与世纪爱心慈善</li>-->
-        <!--<li></li>-->
-        <!--<li><a th:href="@{/login}">登录</a></li>-->
-        <!--<li>|</li>-->
-        <!--<li><a th:href="@{/register}">注册</a></li>-->
-        <!--</ul>-->
-        <!--<ul class="ul_login" id="ul_logined" style="display: none">-->
-        <!--<li></li>-->
-        <!--<li></li>-->
-        <!--<li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>-->
-        <!--<li>|</li>-->
-        <!--<li><a th:href="@{/home}">个人中心</a></li>-->
-        <!--<li>|</li>-->
-        <!--<li><a href="javascript:f_logout()">退出</a></li>-->
-        <!--</ul>-->
-        <!--</div>-->
+        <div class="col-sm-6" style="height: 80px">
+            <ul class="ul_login" id="ul_login">
+                <li>您好,欢迎您!</li>
+                <li></li>
+                <li><a th:href="@{/login}">登录</a></li>
+                <li>|</li>
+                <li><a th:href="@{/register}">注册</a></li>
+            </ul>
+            <ul class="ul_login" id="ul_logined" style="display: none">
+                <li></li>
+                <li></li>
+                <li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>
+                <li>|</li>
+                <li><a th:href="@{/home}">个人中心</a></li>
+                <li>|</li>
+                <li><a href="javascript:f_logout()">退出</a></li>
+            </ul>
+        </div>
     </div>
     <div class="row">
-        <div class="col-sm-12" style="margin-top: -10px;">
+        <div class="col-sm-12">
             <div id="div_main_menu">
                 <ul id="ul_menu">
-                    <!--<li class="li_meun"><a th:href="@{~/index}">首页</a></li>-->
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/">首页</a></li>
+                    <li class="li_meun"><a th:href="@{~/index}">首页</a></li>
                     <li class="li_split"></li>
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/9.html">关于我们</a></li>
-                    <li class="li_split"></li>
-                    <li class="li_meun"><a th:href="@{~/project}">慈善项目</a></li>
+                    <li class="li_meun"><a th:href="@{~/about_us.html}">关于我们</a></li>
                     <li class="li_split"></li>
                     <li class="li_meun"><a th:href="@{~/publicity}">信息公开</a></li>
                     <li class="li_split"></li>
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/12.html">我们在行动</a></li>
+                    <li class="li_meun"><a th:href="@{~/project}">慈善项目</a></li>
                     <li class="li_split"></li>
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/13.html">活动纪实</a></li>
-                    <li class="li_split"></li>
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/14.html">法律法规</a></li>
-                    <li class="li_split"></li>
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/15.html">捐献指南</a></li>
-                    <li class="li_split"></li>
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/16.html">秘书长邮箱</a></li>
-                    <li class="li_split"></li>
-                    <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/17.html">手机APP</a></li>
                 </ul>
             </div>
         </div>
@@ -103,41 +73,48 @@
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var imgRoot = /*[[${config.getImageRoot()}]]*/;
-    var docRoot = /*[[${config.getDocRoot()}]]*/;
-    var memberInfo =/*[[${session.member==null?null:session.member}]]*/;
+    var fileRoot=/*[[${config.getFileRoot()}]]*/;
+    var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
 
-    if (memberInfo != null) {
-        $("#ul_login").hide();
-        $("#ul_logined").show();
-        $("#ul_logined").children().first().html((memberInfo.memberName == "" ? memberInfo.mobile : memberInfo.memberName) + ",欢迎参与世纪爱心慈善");
-    } else {
-        var userCookie = getCookie("member");
-        if (userCookie != null) {
-            $.ajax({
-                url: '/login/autoLogin',
-                type: 'post',
-                data: {memberId: userCookie.split('|')[0], cookie: userCookie.split('|')[1]},
-                dataType: 'json',
-                success: function (data) {
-                    if (data.code === 200) {
-                        memberInfo = data.result;
-                        $("#ul_login").hide();
-                        $("#ul_logined").show();
-                        $("#ul_logined").children().first().html((memberInfo.memberName == "" ? memberInfo.mobile : memberInfo.memberName) + ",欢迎参与世纪爱心慈善");
-                        window.location.href = "/";
+    $(document).ready(function() {
+        f_autoLogin();
+    });
+
+    function f_autoLogin() {
+        if (memberInfo!=null){
+            f_getMemberNum();
+            $("#ul_login").hide();
+            $("#ul_logined").show();
+            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+        }else{
+            var userCookie=getCookie("member");
+            if(userCookie!=null){
+                $.ajax({
+                    url: '/login/autoLogin',
+                    type: 'post',
+                    data:{memberId:userCookie.split('|')[0],cookie:userCookie.split('|')[1]},
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.code===200){
+                            memberInfo=data.result;
+                            $("#ul_login").hide();
+                            $("#ul_logined").show();
+                            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+                            f_getMemberNum();
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
-    function getCookie(name) {
-        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-        if (arr = document.cookie.match(reg)) {
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg)){
             return unescape(arr[2]);
         }
-        else {
+        else{
             return null;
         }
     }
@@ -149,9 +126,9 @@
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    if (data.code === 200) {
-                        window.location.href = "/";
-                    } else {
+                    if(data.code===200){
+                        window.location.href="/";
+                    }else{
                         layer.alert(data.msg);
                     }
                 }
@@ -159,13 +136,8 @@
         }
     }
 
-    $(document).ready(function () {
-        if (memberInfo != null) {
-            f_getMemberNum();
-        }
-    });
 
-    function f_getMemberNum() {
+    function  f_getMemberNum() {
         $.ajax({
             url: '/home/message/number',
             type: 'post',
@@ -175,7 +147,6 @@
             }
         });
     }
-
     /*]]>*/
 </script>
 </body>

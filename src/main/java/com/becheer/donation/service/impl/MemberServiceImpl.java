@@ -210,10 +210,4 @@ public class MemberServiceImpl implements IMemberService {
     public Member GetMember(long memberId) {
         return memberMapper.SelectMemberById(memberId);
     }
-
-    @Override
-    public int UpdatePw(String newPw, String mobile) {
-        int result = memberMapper.UpdatePw(newPw,mobile);
-        return result;
-    }
 }

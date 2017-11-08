@@ -7,7 +7,6 @@
     <meta name="renderer" content="webkit" />
 
     <title>register</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link rel="stylesheet" th:href="@{/plugin/step/step.css}" />
@@ -97,7 +96,7 @@
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">2</span>
-                                <span class="ui-step-cont-text">输入密码</span>
+                                <span class="ui-step-cont-text">输入基本信息</span>
                             </div>
                         </li>
                         <li class="step-end">
@@ -163,7 +162,7 @@
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">2</span>
-                                <span class="ui-step-cont-text">输入密码</span>
+                                <span class="ui-step-cont-text">输入基本信息</span>
                             </div>
                         </li>
                         <li class="step-end">
@@ -181,9 +180,9 @@
                 <tr>
                     <td>登录密码</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入6位密码"/>
+                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入8位密码"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
-                        <p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于6位</p>
+                        <p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于8位</p>
                     </td>
                 </tr>
                 <tr>
@@ -217,7 +216,7 @@
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">2</span>
-                                <span class="ui-step-cont-text">输入密码</span>
+                                <span class="ui-step-cont-text">输入基本信息</span>
                             </div>
                         </li>
                         <li class="step-finish">
@@ -348,7 +347,7 @@
             $(".pw_error").show();
         }else{
             $(".pw_error").hide();
-            if($(".input_pw").val().length < 6){
+            if($(".input_pw").val().length < 8){
                 $(".pw_error_0").show();
             }else{
                 $(".pw_error_0").hide();
