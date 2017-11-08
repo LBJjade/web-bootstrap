@@ -42,7 +42,7 @@
         }
 
         #div_project_info {
-            border:1px;
+            border: 1px;
             float: right;
             width: 300px;
             height: auto;
@@ -62,7 +62,7 @@
             /*border-left: 1px #ddd solid;*/
         }
 
-        #div_tab_detail{
+        #div_tab_detail {
             font-size: 14pt;
             color: rgb(101, 101, 101);
         }
@@ -81,31 +81,31 @@
             float: left;
         }
 
-        .info_fs{
+        .info_fs {
             color: #1E1E1E;
-            font-size:20px;
+            font-size: 20px;
             font-weight: bold;
             margin: 15px;
             text-align: center;
         }
 
-        .info{
-            display:block;
+        .info {
+            display: block;
             color: #656565;
             line-height: 25px;
-            font-size:16px;
+            font-size: 16px;
             margin-left: 16px;
         }
 
-        .info_ma{
+        .info_ma {
             margin: 5px;
         }
 
-        .Content{
+        .Content {
             color: #00a0e9;
         }
 
-        .recommend_item{
+        .recommend_item {
             height: 40px;
             padding-bottom: 45px;
             padding-top: 7px;
@@ -116,18 +116,19 @@
             border-bottom: 1px solid #E4E4E4;
         }
 
-        .recommend_item:hover{
-            background-color:#EFF8F8;
+        .recommend_item:hover {
+            background-color: #EFF8F8;
         }
 
-        .recommend_item_word{
+        .recommend_item_word {
             padding-left: 45px;
         }
 
-        .recommend_item_info{
+        .recommend_item_info {
             padding-left: 10px;
             display: inline-block;
-            *display: inline;*zoom: 1;
+            *display: inline;
+            *zoom: 1;
             width: 140px;
             height: 20px;
             line-height: 20px;
@@ -138,7 +139,7 @@
             white-space: nowrap;
         }
 
-        .project_block{
+        .project_block {
             margin-bottom: 60px;
             height: 300px;
         }
@@ -155,14 +156,14 @@
             display: block;
         }
 
-        .info_name{
+        .info_name {
             width: 80px;
             display: inline-block;
             text-align: left;
         }
 
-        .info_number{
-            color:#d9534f;
+        .info_number {
+            color: #d9534f;
             font-family: Arial;
             font-size: 25px;
             display: inline-block;
@@ -208,7 +209,7 @@
             border: 2px #e41620 solid;
         }
 
-        .donate_msg{
+        .donate_msg {
             font-family: 微软雅黑;
             margin: 38px;
             color: #403c3d;
@@ -217,8 +218,7 @@
             line-height: 63px;
         }
 
-
-        .donate_msg span{
+        .donate_msg span {
             font-family: 微软雅黑;
             color: #e4393c;
             font-size: 17px;
@@ -226,7 +226,7 @@
             line-height: 63px;
         }
 
-        .code_time{
+        .code_time {
             font-family: 微软雅黑;
             margin: 38px;
             color: #403c3d;
@@ -234,7 +234,6 @@
             font-weight: 600;
             margin-bottom: -16px;
         }
-
 
         .close:focus, .close:hover {
             color: #000;
@@ -251,6 +250,7 @@
             background: 0 0;
             border: 0;
         }
+
         .close_qr {
             float: right;
             font-size: 21px;
@@ -261,31 +261,32 @@
             filter: alpha(opacity=20);
             opacity: 0.2;
         }
-        .close_qr:hover{
-            color:#000;
+
+        .close_qr:hover {
+            color: #000;
         }
 
-        .fresh{
+        .fresh {
             position: absolute;
             left: 60px;
-            top:3px;
+            top: 3px;
             z-index: -1;
         }
 
-        #fushImage{
+        #fushImage {
             height: auto;
             width: auto;
         }
 
-        .code_lost{
-            color:#272323;
+        .code_lost {
+            color: #272323;
             font-size: 10px;
             font-weight: 600;
         }
 
-        .qrCodeImageId{
-            filter:alpha(Opacity=80);
-            -moz-opacity:0.5;
+        .qrCodeImageId {
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
             opacity: 0.2;
         }
 
@@ -323,28 +324,38 @@
                 </ul>
             </div>
             <div class="project_block">
-            <div id="div_project">
-                <img th:src='${config.getProjectImgRoot()+project.getThumbImg()+"?x-oss-process=image/resize,m_fill,h_300,w_560"}'/>
-            </div>
-            <div id="div_project_info">
-                <div class="div_title">
-                    <h2 class="h2_title">公益详情</h2>
+                <div id="div_project">
+                    <img th:src='${config.getFileRoot()+project.getThumbImg()+"?x-oss-process=image/resize,m_fill,h_300,w_560"}'/>
                 </div>
-                <p class="info_fs">
-                    <th:block th:text="${project.getProjectName()}"/>
-                </p>
-                <div class="info_ma">
-                    <p class="info" style="font-size: 15px;"><span class="info_name">项 目 时 间</span>：
-                        <th:block th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
+                <div id="div_project_info">
+                    <div class="div_title">
+                        <h2 class="h2_title">公益详情</h2>
+                    </div>
+                    <p class="info_fs">
+                        <th:block th:text="${project.getProjectName()}"/>
                     </p>
-                    <div class="center">
-                        <p class="info"> <span class="info_name">目&nbsp;标&nbsp;金&nbsp;额</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getProjectTargetAmount()}"/></span>&nbsp;元</p>
-                            <p class="info"> <span class="info_name">已募集金额</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getAcceptedAmount()}"/></span>&nbsp;元</p>
-                        <p class="info"> <span class="info_name">已参与人数</span>：&nbsp;<span class="info_number"> 0</span>&nbsp;人</p>
+                    <div class="info_ma">
+                        <p class="info" style="font-size: 15px;"><span class="info_name">项 目 时 间</span>：
+                            <th:block
+                                    th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
+                        </p>
+                        <div class="center">
+                            <p class="info"><span class="info_name">目&nbsp;标&nbsp;金&nbsp;额</span>：&nbsp;<span
+                                    class="info_number"><th:block th:text="${project.getProjectTargetAmount()}"/></span>&nbsp;元
+                            </p>
+                            <p class="info"><span class="info_name">已募集金额</span>：&nbsp;<span class="info_number"><th:block
+                                    th:text="${project.getAcceptedAmount()}"/></span>&nbsp;元
+                            </p>
+                            <p class="info"><span class="info_name">已参与人数</span>：&nbsp;<span
+                                    class="info_number"> 0</span>&nbsp;人</p>
+                        </div>
+                    </div>
+                    <div style="width: 100%;">
+                        <button class="donate_button" data-toggle="model" data-target="#div_qr_donate"
+                                data-dismiss="model">我要捐赠
+                        </button>
                     </div>
                 </div>
-                <div style="width: 100%;"><button class="donate_button" data-toggle="model" data-target="#div_qr_donate" data-dismiss="model">我要捐赠</button></div>
-            </div>
             </div>
             <div id="div_project_content" style="min-height: 600px">
                 <ul class="nav nav-tabs">
@@ -366,11 +377,13 @@
                                                     <div id="vertical-timeline"
                                                          class="vertical-container light-timeline">
 
-                                                        <div class="vertical-timeline-block" v-for="item in items" v-cloak>
+                                                        <div class="vertical-timeline-block" v-for="item in items"
+                                                             v-cloak>
                                                             <div :class="'vertical-timeline-icon '+item.backgroundClass">
                                                                 <i :class="'fa '+item.iconClass"></i>
                                                             </div>
-                                                            <div class="vertical-timeline-content" style="color: #656565;">
+                                                            <div class="vertical-timeline-content"
+                                                                 style="color: #656565;">
                                                                 <h2>{{item.title}}</h2>
                                                                 <div v-html="item.content">
                                                                 </div>
@@ -384,7 +397,9 @@
                                                     </div>
                                                 </div>
                                                 <div style="width: 100%;text-align: center">
-                                                    <button class="btn btn-primary btn_show_more" onclick="f_GetMoreProgress()">加载更多</button>
+                                                    <button class="btn btn-primary btn_show_more"
+                                                            onclick="f_GetMoreProgress()">加载更多
+                                                    </button>
                                                     <p id="p_no_data" style="line-height: 200px;display: none">暂无数据</p>
                                                 </div>
                                             </div>
@@ -402,43 +417,33 @@
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
 
-                        <ul v-for="item in items" class="recommend_item" v-cloak>
-                            <!--<div class="recommend_item" >-->
-                            <li><img :src="avatorRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" /></li>
-                            <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount|format}}元</li>
-                            <!--</div>-->
-                        </ul>
+                    <ul v-for="item in items" class="recommend_item" v-cloak>
+                        <!--<div class="recommend_item" >-->
+                        <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
+                        <li class="recommend_item_info">{{item.memberName}}捐赠本项目{{item.amount}}元</li>
+                        <!--</div>-->
+                    </ul>
                 </div>
             </div>
 
             <div class="right_panel" id="div_relative">
                 <div class="div_title">
                     <h2 class="h2_title">相关项目</h2>
-                    <div class="recommend_item"  v-for="item in items" v-cloak>
+                    <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
-                            <li><img :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'" /></li>
-                            <li class="recommend_item_word"><a href="project.html" target="_blank">{{item.projectName}}</a></li>
+                            <li><img :alt="item.projectName"
+                                     :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/>
+                            </li>
+                            <li class="recommend_item_word"><a href="project.html"
+                                                               target="_blank">{{item.projectName}}</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-
-            <!--<div class="right_panel" id="div_question">-->
-            <!--<div class="div_title">-->
-            <!--<h2 class="h2_title">常见问题</h2>-->
-            <!--<p>1.捐赠流程是什么</p>-->
-            <!--<p>2.如何查询自己捐赠的善款使用情况</p>-->
-            <!--<p>3.是否支持匿名捐赠</p>-->
-            <!--<p>4.个人可以发起捐赠项目吗</p>-->
-            <!--<p>5.世纪爱心慈善基金会是一个怎样的组织</p>-->
-            <!--</div>-->
-            <!--</div>-->
-
         </div>
     </div>
 </div>
 <div th:replace="themes/default/footer::footer"></div>
-
 
 
 <!--直接捐赠弹出层-->
@@ -451,33 +456,20 @@
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;">
-                    向基金会捐赠
+                    向<span style="font-weight: 600;display: inline-block;margin-left: 10px;margin-right: 10px; "><th:block
+                        th:text="${project.getProjectName()}"/></span>捐赠
                 </h4>
             </div>
 
-            <div class="model-body" style="text-align: center">
-                <div style="float:left;margin-top: 10px;margin-left: 80px;">请选择项目类别：
-                    <select id="sel_project_type" onchange="f_GetProject()">
-                        <option value="0">请选择项目类别</option>
-                        <option  v-for="item in items" id="name" :value="item.id">{{item.name}}</option>
-                    </select>
-                    <!--<input type="hidden" :value="item.name">-->
-                </div>
-                <div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">
-                    请&nbsp;&nbsp;选&nbsp;&nbsp;择&nbsp;&nbsp;项&nbsp;&nbsp;目:&nbsp;
-                    <select id="sel_project" style="width: 124px;">
-                        <option value="0">请选择项目</option>
-                        <option  v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
-                    </select>
-                </div>
+            <div class="model-body" style="text-align: center;margin-top: -15px;">
                 <div id="span_money" style="clear: both;">
                     <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
                     <div style="margin-bottom:10px;">
-                        <span id="span_0" class="money span_donation money_1" >&yen;1</span>
-                        <span id="span_1" class="money span_donation money_1" >&yen;5</span>
-                        <span id="span_2" class="money span_donation money_1" >&yen;10</span>
-                        <span id="span_3" class="money span_donation money_1" >&yen;20</span>
-                        <span id="span_4" class="money span_donation money_1" >&yen;50</span>
+                        <span id="span_0" class="money span_donation money_1">&yen;1</span>
+                        <span id="span_1" class="money span_donation money_1">&yen;5</span>
+                        <span id="span_2" class="money span_donation money_1">&yen;10</span>
+                        <span id="span_3" class="money span_donation money_1">&yen;20</span>
+                        <span id="span_4" class="money span_donation money_1">&yen;50</span>
                         <br/>
                         <span id="span_5" class="money span_donation money_1">&yen;100</span>
 
@@ -513,7 +505,7 @@
     <div class="model-dialog" style="margin-top:100px">
         <div class="model-content" style="width: 600px">
             <div class="model-header">
-                <button type="button" class="close_qr" >
+                <button type="button" class="close_qr">
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;">
@@ -521,10 +513,11 @@
                 </h4>
             </div>
 
-            <div class="play" >
+            <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
                     <span class="donate_msg" style="font-family: 微软雅黑;">你已提交捐款,订单号为：</span>
-                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span class="order_fund" style=""></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
+                            class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span class="time" style="color: red"></span>秒</div>
                 <div class="model-body" style="text-align: center">
@@ -532,17 +525,21 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" onerror="this.onerror=null;this.src='/image/error.jpg'"/>
+                                <img id="qrCodeImageId" height="200" width="200"
+                                     onerror="this.onerror=null;this.src='/image/error.jpg'"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
                                 </div>
                             </div>
-                            <div><img id="CodeImage" th:src="@{~/image/wxsm.png}" /></div>
+                            <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
                         </div>
                         <div class="col-sm-6">
-                            <img id="qr_logo" th:src="@{~/image/sm.jpg}"  alt="hjaksfh" style="height:205px; width:265px;display: none;" />
-                            <div class="orderMoney" style="margin-top: 33px;">打开手机 <span style="color: red;">微信扫一扫</span>，扫描二维码</div>
+                            <img id="qr_logo" th:src="@{~/image/sm.jpg}" alt="hjaksfh"
+                                 style="height:205px; width:265px;display: none;"/>
+                            <div class="orderMoney" style="margin-top: 33px;">打开手机 <span
+                                    style="color: red;">微信扫一扫</span>，扫描二维码
+                            </div>
                         </div>
                     </div>
 
@@ -554,12 +551,12 @@
             </div>
             <!--支付成功-->
             <div class="play_success" style="display: none">
-                <div class="model-header" >
+                <div class="model-header">
                     <h4 class="model-title" style="width: 100%;text-align: center;">
                         支付成功
                     </h4>
                     <div class="model-body" style="text-align: center">
-                        <img th:src="@{~/image/play.png}" style="width: 200px;" />
+                        <img th:src="@{~/image/play.png}" style="width: 200px;"/>
                     </div>
                 </div>
                 <div class="model-footer" style="text-align: center">
@@ -577,7 +574,7 @@
     <div class="model-dialog" style="margin-top:100px">
         <div class="model-content" style="width: 450px">
             <div class="model-header">
-                <button type="button" class="close" data-dismiss="model"  aria-hidden="true">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;">
@@ -599,85 +596,6 @@
     </div>
 </div>
 
-<!--扫码成功弹出层-->
-
-<!--<div class="model fade" id="div_cf_donate_success" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"-->
-<!--aria-hidden="true" data-backdrop='static'>-->
-<!--<div class="model-dialog" style="margin-top:100px">-->
-<!--<div class="model-content" style="width: 600px">-->
-<!--<div class="model-header">-->
-<!--<button type="button" class="close_qr" >-->
-<!--&times;-->
-<!--</button>-->
-<!--<h4 class="model-title" style="width: 100%;text-align: center;">-->
-<!--扫码成功-->
-<!--</h4>-->
-<!--</div>-->
-
-
-<!--&lt;!&ndash;<img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>&ndash;&gt;-->
-<!--<div class="model-footer" style="text-align: center">-->
-<!--使用微信扫码捐赠-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;捐赠弹出层&ndash;&gt;-->
-<!--<div class="modal fade" id="div_donate" tabindex="-1" role="dialog" aria-labelledby="lable_donate" aria-hidden="true">-->
-<!--<div class="modal-dialog" style="margin-top:100px">-->
-<!--<div class="modal-content" style="width: 450px">-->
-<!--<div class="modal-header">-->
-<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
-<!--&times;-->
-<!--</button>-->
-<!--<h6 class="modal-title">-->
-<!--感谢您对广东世纪爱心慈善基金会的支持,<br/>-->
-<!--您提交捐赠申请后,工作人员会主动联系您确认捐赠意向.-->
-<!--</h6>-->
-<!--</div>-->
-<!--<div class="modal-body" style="text-align: center">-->
-<!--捐赠金额:<input type="text" />-->
-<!--<br/>-->
-<!--<br/>-->
-<!--联系方式:<input type="text" />-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<input type="checkbox" />使用个人信息里的联系方式-->
-<!--</div>-->
-<!--<div class="modal-footer" style="text-align: center">-->
-<!--<button type="button" class="btn btn-primary" data-dismiss="modal">提交-->
-<!--</button>-->
-<!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#div_qr_donate"  data-dismiss="modal">-->
-<!--我要直接捐赠-->
-<!--</button>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;直接捐赠弹出层&ndash;&gt;-->
-<!--<div class="modal fade" id="div_qr_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true">-->
-<!--<div class="modal-dialog" style="margin-top:100px">-->
-<!--<div class="modal-content" style="width: 450px">-->
-<!--<div class="modal-header">-->
-<!--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">-->
-<!--&times;-->
-<!--</button>-->
-<!--<h6 class="modal-title" style="width: 100%;text-align: center;">-->
-<!--扫描二维码,捐赠本项目-->
-<!--</h6>-->
-<!--</div>-->
-<!--<div class="modal-body" style="text-align: center">-->
-<!--<img src="content/image/qr_code.png" height="200" width="200"/></div>-->
-<!--<div class="modal-footer" style="text-align: center">-->
-<!--支持微信,支付宝扫码捐赠-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-
 <!--全局JS-->
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
@@ -686,18 +604,20 @@
 <script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var projectId=/*[[${project.getId()}]]*/;
-    var projectTypeId=/*[[${project.getProjectTypeId()}]]*/;
-    var pageSize=4;
-    var pageNum=1;
-    var totalPage=0;
+    var projectId =/*[[${project.getId()}]]*/;
+    var projectTypeId =/*[[${project.getProjectTypeId()}]]*/;
+    var pageSize = 4;
+    var pageNum = 1;
+    var totalPage = 0;
     var vueProgress;
     var vueProject;
 
-    var flag=0;
+    var flag = 0;
     var span_money;
 
 
+    var projectName =/*[[${project.getProjectName()}]]*/;
+    var projectType =/*[[${project.getProjectTypeName()}]]*/;
 
     $(document).ready(function () {
         f_GetProjectProgress();
@@ -711,10 +631,7 @@
     });
 
 
-
     $(".btn_submit").click(function () {
-        var projectTypeId = $("#sel_project_type").val();
-        var projectId = $("#sel_project").val();
         var amount = $("#ipt_dnt_amount").val();
         var mobile = $("#ipt_dnt_mobile").val();
         $.ajax({
@@ -787,10 +704,9 @@
     }
 
 
-
     //获取更多按钮点击事件
     function f_GetMoreProgress() {
-        if(pageNum>=totalPage){
+        if (pageNum >= totalPage) {
             layer.alert("没有更多数据了")
         }
         pageNum++;
@@ -800,14 +716,14 @@
     //获取项目进展
     function f_GetProjectProgress() {
         $.ajax({
-            url:'/progress/list',
-            type:'post',
-            data:{projectId:projectId,pageSize:pageSize,pageNum:pageNum},
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
-                    totalPage=data.result.pages;
-                    if (data.result.list.length===0){
+            url: '/progress/list',
+            type: 'post',
+            data: {projectId: projectId, pageSize: pageSize, pageNum: pageNum},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    totalPage = data.result.pages;
+                    if (data.result.list.length === 0) {
                         $(".btn_show_more").hide();
                         $("#p_no_data").show();
                     }
@@ -851,80 +767,28 @@
                     items: data.result.list
                 }
             });
-        }else{
-            var currentNum=pageSize*(pageNum-1);
-            for (var i = 0; i<data.result.list.length; i++) {
-                Vue.set(vueProgress.items, currentNum+i, data.result.list[i]);
+        } else {
+            var currentNum = pageSize * (pageNum - 1);
+            for (var i = 0; i < data.result.list.length; i++) {
+                Vue.set(vueProgress.items, currentNum + i, data.result.list[i]);
             }
-            vueProgress.items.splice(currentNum+data.result.list.length);
+            vueProgress.items.splice(currentNum + data.result.list.length);
         }
     }
 
     //获取项目最近捐赠
     function f_GetRecentDonate() {
         $.ajax({
-            url:'/donate/project',
-            type:'post',
-            data:{projectId:projectId,num:7},
-            dataType:'json',
-            success:function (data) {
-                if (data.code===200){
+            url: '/donate/project',
+            type: 'post',
+            data: {projectId: projectId, num: 7},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     new Vue({
-                        el:"#div_recent",
-                        data:{
-                            items:data.result,
-                            imgUrl:imgRoot
-                        },
-                        filters: {
-                            format: function (value) {
-                                value=value/100;
-                                var str = value.toString();
-                                var spot = str.split(".")[1];
-                                str = str.split(".")[0];
-//                                var str = value;
-                                str=parseInt(str);
-                                str=str;
-                                str=str.toString();
-                                var length = str.length;
-                                var get, lost;
-                                var num = new Array();
-                                var num = "";
-                                for (var i = 0; i < length; i + 3) {
-                                    if (length > 3) {
-                                        get = str.substring(length - 4, length - 1);
-                                        lost = str.substring(0, length - 3);
-                                        str = lost;
-                                        if (num == "") {
-                                            num = get;
-                                        } else {
-                                            num = get + "," + num;
-                                        }
-                                        var before = num;
-                                        length = length - 3;
-                                    } else {
-                                        if (lost == undefined) {
-                                            num = str;
-                                        } else {
-                                            num = lost + "," + before;
-                                        }
-                                        break;
-                                    }
-                                }
-                                //num=parseFloat(num).toFixed(2);
-                                if (spot == undefined) {
-                                    num = num + ".00";
-                                } else {
-                                    if (spot.length > 2) {
-                                        spot = spot.substring(0, 2);
-                                        num = num + "." + spot;
-                                    } else if (spot.length == 2) {
-                                        num = num + "." + spot;
-                                    } else {
-                                        num = num + "." + spot + "0";
-                                    }
-                                }
-                                return num;
-                            }
+                        el: "#div_recent",
+                        data: {
+                            items: data.result
                         }
                     });
                 }
@@ -935,18 +799,17 @@
     //获取相关项目
     function f_GetRelative() {
         $.ajax({
-            url:'/project/relative',
-            type:'post',
-            data:{tid:projectTypeId,pid:projectId,nums:8},
-            dataType:'json',
-            success:function (data) {
-//                alert(JSON.stringify(data));
-                if (data.code===200){
+            url: '/project/relative',
+            type: 'post',
+            data: {tid: projectTypeId, pid: projectId, nums: 8},
+            dataType: 'json',
+            success: function (data) {
+                //                alert(JSON.stringify(data));
+                if (data.code === 200) {
                     new Vue({
-                        el:'#div_relative',
-                        data:{
-                            items:data.result,
-                            imgUrl:imgRoot
+                        el: '#div_relative',
+                        data: {
+                            items: data.result
                         }
                     });
                 }
@@ -959,11 +822,11 @@
     $(".span_donation").click(function () {
         $(".money_2").removeClass("money_2");
         $(this).addClass("money_2");
-        flag=1;
-        var str=$(this).html();
+        flag = 1;
+        var str = $(this).html();
         var reg = /\d+/g;
         var ms = str.match(reg);
-        span_money=ms;
+        span_money = ms;
     })
 
 
@@ -974,31 +837,12 @@
 
 
     function f_Donate() {
-//        if (memberInfo === null) {
-//            var msg = "没有登录";
-//            layer.alert(msg, function () {
-//                window.location.href = "/login";
-//            });
-//            setTimeout(function () {
-//                window.location.href = "/login";
-//            }, 3000);
-//        } else
-        var projectType =$("#sel_project_type").find("option:selected").text();
-        var projectName =$("#sel_project").find("option:selected").text();
-        if(projectType == "请选择项目类别"){
-            alert("你还没有选择项目");
-//            layer.closeAll();
-//            layer.alert("你还没有选择项目",function(){
-//                window.location.href = "/index";
-//            },3000);
-        } else if(flag == 0){
-            alert("你还没有选择金额");
+        if (projectType == "请选择项目类别") {
+            layer.alert("你还没有选择项目");
+        } else if (flag == 0) {
+            layer.alert("你还没有选择金额");
         } else {
             $("#div_cf_donate").model('show');
-            var projectTypeId = $("#sel_project_type").val();
-            var projectId = $("#sel_project").val();
-            // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
-            // amount = math.eval(amount * 100);
             var amount = span_money * 100;
             $(".order_fund").html(span_money);
             $.ajax({
@@ -1017,57 +861,50 @@
                         }
                     }
             });
-            var timer =60;
+            var timer = 60;
+
             function Countdown() {
                 if (timer >= 1) {
                     timer -= 1;
-                    t=setTimeout(function() {
+                    t = setTimeout(function () {
                         Countdown();
                     }, 1000);
                     $(".time").html(timer);
-                }else{
-//                    alert("二维码过期");
-//                    $("#div_cf_donate").model('hide');
-//                    $("#qrCodeImageId").removeAttrs("src");
+                } else {
                     $("#qrCodeImageId").attr("src", "");
-                    $(".fresh").css("z-index","3");
-//                    $("#qrCodeImageId").attr("class","qrCodeImageId");
+                    $(".fresh").css("z-index", "3");
                     $(".code_time").html("二维码已经失效，请刷新！");
                 }
             }
+
             Countdown();
         }
     }
 
 
-    $(".code_img").mouseover(function(){
+    $(".code_img").mouseover(function () {
         $("#qr_logo").fadeIn(2000);
     })
 
 
-    $(".close_qr").click(function(){
+    $(".close_qr").click(function () {
         $("#div_cf_donate").model('hide');
         $("#qrCodeImageId").attr("src", "");
         stopCount();
     })
 
     //关闭函数
-    function stopCount()
-    {
+    function stopCount() {
         clearTimeout(t);
     }
 
     //刷新二维码
-    $(".fresh").click(function(){
+    $(".fresh").click(function () {
         $(".code_time").html("距离二维码过期还有<span class=\"time\" style=\"color: red\"></span>秒");
-        $(".fresh").css("z-index","-1");
+        $(".fresh").css("z-index", "-1");
         $("#qrCodeImageId").removeClass("qrCodeImageId");
-        var projectTypeId = $("#sel_project_type").val();
-        var projectId = $("#sel_project").val();
-        // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
-        // amount = math.eval(amount * 100);
         var amount = span_money * 100;
-        $(".order_fund").html(amount/100);
+        $(".order_fund").html(amount / 100);
         $.ajax({
             url: '/donate/donate',
             type: 'post',
@@ -1084,27 +921,25 @@
                     }
                 }
         });
-        var timer =60;
+        var timer = 60;
+
         function Countdown() {
             if (timer >= 1) {
                 timer -= 1;
-                t=setTimeout(function() {
+                t = setTimeout(function () {
                     Countdown();
                 }, 1000);
                 $(".time").html(timer);
-            }else{
-//                    alert("二维码过期");
-//                    $("#div_cf_donate").model('hide');
+            } else {
                 $("#qrCodeImageId").attr("src", "");
-                $(".fresh").css("z-index","3");
-                $("#qrCodeImageId").attr("class","qrCodeImageId");
+                $(".fresh").css("z-index", "3");
+                $("#qrCodeImageId").attr("class", "qrCodeImageId");
                 $(".code_time").html("二维码已经失效，请刷新！");
             }
         }
+
         Countdown();
     })
-
-
 
 
     /*]]>*/

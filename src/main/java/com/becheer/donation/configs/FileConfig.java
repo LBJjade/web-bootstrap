@@ -15,6 +15,8 @@ public class FileConfig {
 
     public String avatorRoot;
 
+    public String fileRoot;
+
     public String getImageRoot() {
         return imageRoot;
     }
@@ -45,5 +47,13 @@ public class FileConfig {
 
     public void setAvatorRoot(String avatorRoot) {
         this.avatorRoot = avatorRoot;
+    }
+
+    public String getFileRoot() {
+        return fileRoot;
+    }
+
+    public void setFileRoot(String fileRoot) {
+        this.fileRoot = fileRoot;
     }
 }

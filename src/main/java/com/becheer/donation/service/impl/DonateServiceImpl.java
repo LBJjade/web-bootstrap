@@ -107,7 +107,9 @@ public class DonateServiceImpl implements IDonateService {
         // TODO 增加容错处理
         paymentPlanService.insert(dntPaymentPlan);
 
-        return payService.pay(orderNo, dntPaymentPlan.getId().toString(), amount);
+        Map<String, String> map = payService.pay(orderNo, dntPaymentPlan.getId().toString(), amount);
+        map.put("orderNo", orderNo);
+        return map;
     }
 }
 

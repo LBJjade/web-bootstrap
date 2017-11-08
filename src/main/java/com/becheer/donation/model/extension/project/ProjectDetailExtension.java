@@ -6,14 +6,19 @@ package com.becheer.donation.model.extension.project;
 * Date : 2017-09-25
 */
 
+import com.becheer.donation.configs.FileConfig;
+import com.becheer.donation.service.SpringContextUtil;
+import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.StringUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 public class ProjectDetailExtension {
+
     private long id;
 
     private long projectTypeId;
@@ -37,6 +42,16 @@ public class ProjectDetailExtension {
     private long acceptedAmount;
 
     private String thumbImg;
+
+    private String projectTypeName;
+
+    public String getProjectTypeName() {
+        return projectTypeName;
+    }
+
+    public void setProjectTypeName(String projectTypeName) {
+        this.projectTypeName = projectTypeName;
+    }
 
     public long getId() {
         return id;
@@ -86,10 +101,8 @@ public class ProjectDetailExtension {
         this.longTerm = longTerm;
     }
 
-    public String getProjectTargetAmount() throws Exception {
-        StringUtil s=new StringUtil();
-        String num=String.valueOf(projectTargetAmount/100);
-        return s.formatCurrency(num);
+    public String getProjectTargetAmount(){
+        return StringUtil.formatMoney(projectTargetAmount);
     }
 
     public void setProjectTargetAmount(long projectTargetAmount) {
@@ -97,7 +110,7 @@ public class ProjectDetailExtension {
     }
 
     public String getContent() {
-        return content;
+        return content.replaceAll(Message.REPLACE_HOLDER_PROJECT_CONTENT,((FileConfig) SpringContextUtil.getBean("fileConfig")).getFileRoot());
     }
 
     public void setContent(String content) {
@@ -105,9 +118,7 @@ public class ProjectDetailExtension {
     }
 
     public String getAcceptedAmount() {
-        StringUtil s=new StringUtil();
-        String num=String.valueOf(acceptedAmount/100);
-        return s.formatCurrency(num);
+        return StringUtil.formatMoney(acceptedAmount);
     }
 
     public void setAcceptedAmount(long acceptedAmount) {

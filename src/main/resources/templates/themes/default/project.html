@@ -169,7 +169,7 @@
             <br/>
             <div id="div_content" style="min-height: 800px">
                 <div v-for="item in items" class="div_project_item"  v-cloak>
-                    <img class="div_project_item_img" :alt="item.projectName" :src="projectImgRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"/>
+                    <img class="div_project_item_img" :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"/>
                     <div class="div_project_item_content">
                         <div class="project_name">
                             <span>>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{{item.projectName}}</span>
@@ -259,8 +259,7 @@
                         vueContent = new Vue({
                             el: '#div_content',
                             data: {
-                                items: data.result.list,
-                                imgUrl: imgRoot
+                                items: data.result.list
                             }
                         });
                     } else {

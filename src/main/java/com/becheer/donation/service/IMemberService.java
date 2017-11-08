@@ -24,4 +24,6 @@ public interface IMemberService {
     MemberInfoExtension GetMemberExtensionById(long memberId);
 
     ResponseDto UpdateMemberInfo(MemberInfoExtension memberInfoExtensions);
+
+    ResponseDto uploadAvator(long memberId,String fileStr);
 }

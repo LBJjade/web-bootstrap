@@ -50,4 +50,9 @@ public class PayWxUnifiedOrderServiceImpl implements IPayWxUnifiedOrderService {
         return mapper.getPayWxUnifiedOrderByOutTradeNo(outTradeNo);
     }
 
+    @Override
+    public Map status(String orderNo) {
+        return mapper.status(orderNo);
+    }
+
 }

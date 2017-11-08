@@ -104,6 +104,10 @@ public class Message {
 
     public static final String MEMBER_UPDATE_ERROR="保存失败";
 
+    public static final String MEMBER_AVATOR_UPLOAD_ERROR="上传失败";
+
+    public static final String MEMBER_AVATOR_UPLOAD_SUCCESS="上传成功";
+
 
     /**
      * 我的消息页面
@@ -185,4 +189,18 @@ public class Message {
     public static final String DONATE_PROJECT_TYPE_ID_BAD_REQUEST = "无效的请求(项目类型)";
     public static final String DONATE_AMOUNT_BAD_REQUEST = "无效的请求(捐赠金额)";
     public static final String DONATE_PROJECT_ID_BAD_REQUEST = "无效的请求(项目)";
+
+    /**
+     * 阿里OSS服务器根目录占位符
+     */
+    public static final String REPLACE_HOLDER_PROJECT_CONTENT = "\\$ImageRoot\\$";
+    public static final String WXPAY_GET_STATUS_SUCCESS = "支付状态获取成功";
+    public static final String WXPAY_GET_STATUS_ORDER_NO_NO_EXISTS = "支付状态获取成功";
+    public static final String WXPAY_GET_STATUS_UNPAID = "未支付";
+
+    /**
+     * 合同签订
+     */
+    public static final String CONTRACT_SIGN_SUCCESS="合同签订成功";
+    public static final String CONTRACT_SIGN_FAILED="合同签订失败";
 }

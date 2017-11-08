@@ -65,12 +65,13 @@ public class LoginController extends BaseController {
             memberSessionExtension.setMobile(result.getResult().getMobile());
             memberSessionExtension.setRole(result.getResult().getRole());
             memberSessionExtension.setValidation(result.getResult().getValidation());
-
+            memberSessionExtension.setAvator(result.getResult().getAvatorImg());
             request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
             //自动登录，设置cookie
             if (autoLogin){
                 Cookie cookie = new Cookie("member", memberSessionExtension.getMemberId()+"|"+GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
                 cookie.setMaxAge(2592000); //设置cookie的过期时间是10s
+                cookie.setPath("/");
                 response.addCookie(cookie);
             }
         }
@@ -87,6 +88,7 @@ public class LoginController extends BaseController {
             request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
             Cookie cookie = new Cookie("member", null);
             cookie.setMaxAge(0);
+            cookie.setPath("/");
             response.addCookie(cookie);
             return new ResponseDto(200,Message.LOGINOUT_SUCCESS);
         }
@@ -105,6 +107,7 @@ public class LoginController extends BaseController {
                 memberSessionExtension.setMobile(member.getMobile());
                 memberSessionExtension.setRole(member.getRole());
                 memberSessionExtension.setValidation(member.getValidation());
+                memberSessionExtension.setAvator(member.getAvatorImg());
                 request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
                 return new ResponseDto(200,Message.LOGIN_SUCCESS,memberSessionExtension);
             }

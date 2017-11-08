@@ -36,6 +36,7 @@ public class HttpUtil {
         result.setValidation(sessionObject.getIntValue("validation"));
         result.setMemberName(sessionObject.getString("memberName"));
         result.setRole(sessionObject.getIntValue("role"));
+        result.setAvator(sessionObject.getString("avator"));
         return result;
     }
 

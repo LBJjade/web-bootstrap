@@ -91,9 +91,10 @@
                     <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.appealTitle}}<span>{{item.createTime}}</span></h4></div>
                 </div>
                 <div class="div_message_content">
-                    <p>申诉项目:{{item.projectName}}</p>
-                    <p>申诉合同:{{item.contractName}}</p>
-                    <p>申诉类型:{{item.appealMethod}}<a :href="'appeal/'+item.id" target="_blank"><button class=" info_button"  >查看详情</button></a></p>
+                    <p>申诉项目 ：{{item.projectName}}</p>
+                    <p>申诉合同 ：{{item.contractName}}</p>
+                    <p>申诉状态 ：{{item.statusText}}</p>
+                    <p>申诉类型 ：{{item.appealMethod}}<a :href="'appeal/'+item.id" target="_blank"><button class=" info_button">查看详情</button></a></p>
                 </div>
             </div>
             <p class="p_no_data">暂无消息</p>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+    <script th:src="@{/plugin/layer/layer.js}"></script>
+    <title>
+        合同明细
+    </title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font: 12px/1.5 "\5b8b\4f53";
+            color: #333
+        }
+
+        .w {
+            width: 990px;
+            padding-top: 15px;
+            margin: 0 auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .m {
+            margin-bottom: 20px;
+        }
+
+        .al {
+            text-align: left;
+        }
+
+        .ar {
+            text-align: right;
+        }
+
+        .clr {
+            clear: both;
+        }
+
+        em {
+            font-style: normal;
+        }
+
+        .m1 {
+            padding: 0 20px 20px;
+            border-style: solid;
+            border-width: 2px 1px 1px;
+            border-color: #aaa #eee #eee;
+        }
+
+        .m1 .tb1 td {
+            height: 1.1cm;
+            line-height: 1.1cm;
+            border-bottom: 1px solid #f5f5f5;
+        }
+
+        .tb1 .t1 {
+            width: 50%;
+        }
+
+        .tb1 .t2 {
+            width: 50%;
+            text-align: right;
+        }
+
+        .tb2 td {
+            height: 0.8cm;
+            line-height: 0.8cm;
+        }
+
+        .tb2 .t1 {
+            width: 2cm;
+        }
+
+        .m2 {
+            border: 1px solid #eee;
+        }
+
+        .tb4 th {
+            background: #f9f9f9;
+            height: 1.1cm;
+            line-height: 1.1cm;
+            font-weight: normal;
+        }
+
+        .logo {
+            padding: 10px
+        }
+
+        .v-h {
+            margin: 10px 0;
+            border-top: 2px solid #ededed;
+            text-align: right
+        }
+
+        .print-btn {
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            width: 76px;
+            height: 40px;
+            line-height: 40px;
+            background: #439fe4;
+            color: #fff;
+            font-family: 'Microsoft YaHei';
+            font-size: 18px;
+            font-weight: bold;
+            border: 0;
+        }
+
+        .m2 {
+            padding-left: 1px
+        }
+
+        * html
+        .goods-total {
+            height: 1%
+        }
+
+        * + html
+        .goods-total {
+            min-height: 1%
+        }
+
+        .goods-total ul {
+            float: right
+        }
+
+        .goods-total li {
+            display: inline-block;
+            display: block;
+            line-height: 28px
+        }
+
+        .goods-total li:after {
+            content: ".";
+            display: block;
+            height: 0;
+            clear: both;
+            visibility: hidden
+        }
+
+        * html
+        .goods-total li {
+            height: 1%
+        }
+
+        * + html
+        .goods-total li {
+            min-height: 1%
+        }
+
+        .goods-total .label {
+            float: left;
+            width: 500px;
+            text-align: right
+        }
+
+        .goods-total .w-label {
+            width: 420px;
+            float: left;
+            text-align: right;
+            color: #999
+        }
+
+        .goods-total .wy-label {
+            width: 80px
+        }
+
+        .goods-total .txt {
+            float: left;
+            width: 130px;
+            text-align: right;
+            font-family: verdana
+        }
+
+        .goods-total .txt .help-tips {
+            padding-right: 3px
+        }
+
+        .goods-total .count {
+            font-size: 18px;
+            font-weight: 700
+        }
+
+        .root61 .goods-list .col-goods {
+            width: 500px
+        }
+
+        .root61 .goods-list td {
+            padding: 17px 0 20px
+        }
+
+        .root61 .goods-list td.grap {
+            padding: 0
+        }
+
+        .root61 .goods-list .p-info {
+            width: 355px
+        }
+
+        .info_button {
+            font-size: 12px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+        }
+
+        .d3{
+            float: right;
+            padding-top: 10px;
+        }
+    </style>
+    <style type="text/css" media="print">
+        .v-h {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="w">
+        <div class="logo">
+            <img th:src="@{~/image/logo/375x100.png}"/>
+        </div>
+        <div class="m m1">
+            <table class="tb1">
+                <tr>
+                    <td class="t1">合同编号：&nbsp;&nbsp;&nbsp;&nbsp;<th:block th:text="${contract.getContractNo()}"></th:block></td>
+                    <td class="t2">合同周期：<th:block th:text="${contract.getBeginTime()}"></th:block> ~ <th:block th:text="${contract.getEndTime()}"></th:block></td>
+                </tr>
+            </table>
+            <table class="tb2">
+                <colgroup>
+                    <col class="t1">
+                    <col class="t2">
+                </colgroup>
+                <tr>
+                    <td>合同名称:</td>
+                    <td><th:block th:text="${contract.getContractName()}"></th:block></td>
+                </tr>
+                <tr>
+                    <td>合同状态:</td>
+                    <td><th:block th:text="${contract.getStatusText()}"></th:block></td>
+                </tr>
+                <tr>
+                    <td>合同金额:</td>
+                    <td><th:block th:text="${contract.getContractAmount()}"></th:block></td>
+                </tr>
+            </table>
+        </div>
+        <div class="m m2" style="margin-bottom: 50px;">
+            <div style="min-height: 450px">
+                <table class="tb4">
+                    <tr>
+                        <th>合同内容</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <th:block th:utext="${contract.getContent()}"></th:block>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div th:if="${contract.getStatus()==5||contract.getStatus()==6}" id="div_agree" class="d3">
+                <input type="checkbox" id="ipt_agree" onclick="f_ruleClick()" />我已详细阅读并同意合同条款
+                <button class="info_button" id="btn_sign" onclick="f_sign()">签订</button>
+            </div>
+        </div>
+    </div>
+        <div class="v-h">
+            <div class="w">
+                <button class="print-btn" onclick="f_export()">导出</button>
+                <button class="print-btn" onclick="javascript:window.print();">打印</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var contractId =/*[[${contract.getId()}]]*/;
+
+    function f_sign() {
+        if (!$("#ipt_agree").get(0).checked) {
+            layer.alert("请先仔细阅读并勾选'我已详细阅读并同意合同条款'");
+        } else {
+            layer.confirm("确定签订合同？", function () {
+                    $.ajax({
+                        url: '/home/contract/sign',
+                        type: 'post',
+                        data: {contractId: contractId},
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.code === 200) {
+                                layer.alert(data.msg);
+                                $("#div_agree").hidden();
+                            } else {
+                                layer.alert(data.msg);
+                            }
+                            layer.closeAll();
+                        }
+                    });
+                }, function () {
+                    layer.closeAll();
+                }
+            );
+        }
+    }
+
+    function f_export() {
+        alert("导出功能正在完善");
+    }
+
+    /*]]>*/
+</script>
+</html>

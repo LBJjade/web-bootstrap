@@ -1,6 +1,7 @@
 package com.becheer.donation.model.extension.payment;
 
 import com.becheer.donation.utils.DateUtils;
+import com.becheer.donation.utils.StringUtil;
 
 import java.util.Date;
 
@@ -52,16 +53,16 @@ public class PaymentPlanExtension {
         this.paymentDate = paymentDate;
     }
 
-    public long getAmount() {
-        return amount;
+    public String getAmount() {
+        return StringUtil.formatMoney(amount);
     }
 
     public void setAmount(long amount) {
         this.amount = amount;
     }
 
-    public long getReceivedAmount() {
-        return receivedAmount;
+    public String getReceivedAmount() {
+        return StringUtil.formatMoney(receivedAmount);
     }
 
     public void setReceivedAmount(long receivedAmount) {

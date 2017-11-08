@@ -33,10 +33,6 @@
             color: #fff;
         }
 
-        /*#div_project_list {*/
-            /*min-height: 600px;*/
-        /*}*/
-
         .div_project_detail {
             width: 302px;
             height: 325px;
@@ -112,22 +108,22 @@
             <div id="div_project_list">
                 <div v-for="item in items" class="div_project_detail" v-cloak>
                     <a :href="'project/'+item.id" target="_blank" >
-                        <img :src="projectImgRoot+item.thumbImg+'?x-oss-process=image/resize,m_fill,h_200,w_300'"/>
+                        <img style="height: 200px;width: 300px" :src="fileRoot+item.thumbImg+'?x-oss-process=image/resize,m_fill,h_200,w_300'"/>
                     </a>
                     <p class="projectName">{{item.projectName}}</p>
                     <p style="margin:0px 0px 0px 9px;">
                         <a style="color: #afafaf;">目标金额 : </a>
-                        <span style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount|format}}</span>
+                        <span style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount}}</span>
                         <a style="color: #afafaf;">&nbsp;元</a>
                         <span style=" display: block">
                             <a  style="color: #afafaf;">已筹:</a>
                         <span style="color: #ff5a43;font-size: 16px;font-weight:bold;">
-                            {{item.acceptedAmount|format}}
+                            {{item.acceptedAmount}}
                         </span>
                         <a  style="color: #afafaf;">&nbsp;元</a></span></p>
                     <p style="margin:0px 0px 0px 9px;">
                         <a  style="color: #afafaf;">我捐赠的金额 : </a>
-                        <span style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount|format}}</span>
+                        <span style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount}}</span>
                         <a  style="color: #afafaf;">&nbsp;元</a>
                         <a :href="'project/'+item.id" target="_blank">
                             <button class="info_button" >查看详情</button>
@@ -155,7 +151,7 @@
 
     $(document).ready(function () {
         f_GetProject();
-    })
+    });
 
 
     function f_GetProject() {
@@ -177,56 +173,7 @@
                         vueContent = new Vue({
                             el: '#div_project_list',
                             data: {
-                                items: data.result.list,
-                                imgUrl: imgRoot
-                            },
-                            filters:{
-                                format:function(value) {
-                                    value=value/100;
-                                    value=value.toString();
-                                    var spot=value.split(".")[1];
-                                    var str=value.split(".")[0];
-//                                var str = value;
-                                    var length = str.length;
-                                    var get, lost;
-                                    var num = new Array();
-                                    var num = "";
-                                    for (var i = 0; i < length; i + 3) {
-                                        if (length > 3) {
-                                            get = str.substring(length - 4, length - 1);
-                                            lost = str.substring(0, length - 3);
-                                            str = lost;
-                                            if (num == "") {
-                                                num = get;
-                                            } else {
-                                                num = get + "," + num;
-                                            }
-                                            var before = num;
-                                            length = length - 3;
-                                        } else {
-                                            if (lost == undefined) {
-                                                num = str;
-                                            } else {
-                                                num = lost + "," + before;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                    //num=parseFloat(num).toFixed(2);
-                                    if(spot == undefined){
-                                        num=num+".00";
-                                    }else{
-                                        if(spot.length > 2) {
-                                            spot = spot.substring(0,2);
-                                            num=num+"."+spot;
-                                        }else if(spot.length == 2){
-                                            num=num+"."+spot;
-                                        }else{
-                                            num=num+"."+spot+"0";
-                                        }
-                                    }
-                                    return num;
-                                }
+                                items: data.result.list
                             }
                         });
                         if (data.result.list.length === 0) {

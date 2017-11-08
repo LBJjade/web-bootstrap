@@ -8,6 +8,7 @@ package com.becheer.donation.service;
 import com.becheer.donation.model.DntPaymentPlan;
 
 import java.util.Date;
+import java.util.Map;
 
 public interface IDntPaymentPlanService {
 
@@ -16,5 +17,7 @@ public interface IDntPaymentPlanService {
     int update(DntPaymentPlan model);
 
     int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount);
+
+    Map updateDonate(String orderNo);
 
 }

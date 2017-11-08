@@ -1,6 +1,7 @@
 package com.becheer.donation.model.extension.intention;
 
 import com.becheer.donation.utils.DateUtils;
+import com.becheer.donation.utils.StringUtil;
 
 import java.util.Date;
 
@@ -52,8 +53,8 @@ public class IntentionExtension {
         this.projectTypeName = projectTypeName;
     }
 
-    public long getIntentionAmount() {
-        return intentionAmount;
+    public String getIntentionAmount() {
+        return StringUtil.formatMoney(intentionAmount);
     }
 
     public void setIntentionAmount(long intentionAmount) {

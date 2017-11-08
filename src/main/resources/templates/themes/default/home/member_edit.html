@@ -76,10 +76,10 @@
             </div>
             <div id="div_content">
                 <div id="div_avator">
-                    <img th:src="${config.getAvatorRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                    <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
                     <br/>
                     <br/>
-                    <button class="btn btn-info">更换头像</button>
+                    <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
                 </div>
                 <div id="div_content_info">
                     <table id="table_content_info">
@@ -162,6 +162,17 @@
             }
         });
     });
+
+    function f_uploadAvator(){
+        layer.open({
+            type: 2,
+            title: '上传头像',
+            shadeClose: true,
+            shade: 0.6,
+            area: ['800px', '600px'],
+            content: '/home/member/avator'
+        });
+    }
     /*]]>*/
 </script>
 </body>

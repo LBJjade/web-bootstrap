@@ -179,7 +179,7 @@
                         <td style="text-align:center;line-height: 51px;">{{item.title}}</td>
                         <td style="text-align:center;line-height: 51px;">{{item.createTime}}</td>
                         <td style="text-align:center;line-height: 51px;">
-                            <a :href="docUrl+item.attachmentUrl" target="_blank">
+                            <a :href="fileRoot+item.attachmentUrl" target="_blank">
                                 <button class="btn btn-primary">查看</button>
                             </a>
                             <!--<button class="btn btn-primary">下载</button>-->
@@ -261,8 +261,7 @@
                         vueContent = new Vue({
                             el: "#div_content",
                             data: {
-                                items: data.result.list,
-                                docUrl: docRoot
+                                items: data.result.list
                             }
                         });
                     } else {

@@ -84,12 +84,12 @@
                             <tr><td>申诉项目</td><td>	<th:block th:text="${appeal.getProjectName()}"/></td></tr>
                             <tr><td>申诉合同</td><td><th:block th:text="${appeal.getContractName()}"/></td></tr>
                             <tr><td>申诉类型</td><td><th:block th:text="${appeal.getMethod()}"/></td></tr>
-                            <tr><td>申述状态</td><td><th:block th:text="${appeal.getStatus()}"/></td></tr>
+                            <tr><td>申述状态</td><td><th:block th:text="${appeal.getStatusText()}"/></td></tr>
                             <tr><td>发起时间</td><td><th:block th:text="${appeal.getCreateTime()}"/></td></tr>
                             <tr>
                                 <td>申诉内容</td>
                                 <td>
-                                    <textarea  readonly="readonly" class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px" rows="5"><th:block th:text="${appeal.getContent()}"/></textarea>
+                                    <textarea  readonly="readonly" id="taContent" class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px" rows="5"></textarea>
                                 </td>
                             </tr>
                         </table>
@@ -114,6 +114,8 @@
     /*<![CDATA[*/
 
     var appealId=/*[[${appeal.getId()}]]*/;
+    var appealContent=/*[[${appeal.getContent()}]]*/;
+    $("#taContent").val(appealContent);
     var vueContent;
 
     $(document).ready(function () {
@@ -134,24 +136,6 @@
                         data: {
                             items: data.result
                         }
-//                        methods:{
-//                            add:function () {
-//                                var content=$("#textarea_apply").val();
-//                                $.ajax({
-//                                    url:'/home/apply/add',
-//                                    data:{applyId:applyId,content:content},
-//                                    type:'post',
-//                                    dataType:'json',
-//                                    success:function (data) {
-//                                        layer.alert(data.msg);
-//                                        if(data.code===200){
-//                                            $("#textarea_apply").val("");
-//                                            vueContent.items.push({title:content,createTime:f_GetCurrentTime()});
-//                                        }
-//                                    }
-//                                });
-//                            }
-//                        }
                     });
                 }
             }
