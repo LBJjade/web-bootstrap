@@ -7,7 +7,7 @@
     <meta name="renderer" content="webkit"/>
 
     <title>message</title>
-
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.7.0}" rel="stylesheet"/>
@@ -79,24 +79,24 @@
                 <div class="div_message" v-for="item in items">
                     <div class="div_message_title ">
                         <div v-if="item.status === 0">
-                            <i style="color:#00a0ea;float: left;padding-right: 10px;" id="close"
+                            <i style="color:#00a0ea;float: left;padding-right: 10px;"
                                class="fa fa-envelope"></i>
                             <h4 style="font-weight: 900;">
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                                 {{item.title}}
                                 <span style="font-weight: normal;">
-                                    2017-06-30 15:08:21
+                                    {{item.createTime}}
                                 </span>
                             </h4>
                         </div>
                         <div v-else="item.status === 1">
-                            <i style="color:#00a0ea;float: left;padding-right: 10px;" id="open"
+                            <i style="color:#00a0ea;float: left;padding-right: 10px;"
                                class="fa fa-envelope-open-o"></i>
                             <h4>
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                                 {{item.title}}
                                 <span>
-                                    2017-06-30 15:08:21
+                                     {{item.createTime}}
                                 </span>
                             </h4>
                         </div>
