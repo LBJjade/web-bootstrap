@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>index</title>
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -24,7 +25,7 @@
         }
 
         #table_content thead {
-            background-color: #f5f5f6;
+            background-color: #00a0ea;
         }
 
         #table_content td {
@@ -75,24 +76,22 @@
                     <table class="table table-bordered" id="table_content">
                         <thead>
                         <tr>
-                            <th class="text-center">项目类别</th>
-                            <th class="text-center">项目名称</th>
-                            <th class="text-center">捐赠金额</th>
-                            <th class="text-center">申请时间</th>
-                            <th class="text-center">备注</th>
-                            <th class="text-center">状态</th>
-                            <th class="text-center">操作</th>
+                            <th class="text-center" style="color: #FFFFFF">项目类别</th>
+                            <th class="text-center" style="color: #FFFFFF">项目名称</th>
+                            <th class="text-center" style="color: #FFFFFF">捐赠金额(元)</th>
+                            <th class="text-center" style="color: #FFFFFF">申请时间</th>
+                            <th class="text-center" style="color: #FFFFFF">状态</th>
+                            <th class="text-center" style="color: #FFFFFF">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in items" v-cloak>
-                            <td class="text-left">{{item.projectTypeName}}</td>
+                            <td class="text-left" style="width: 160px;">{{item.projectTypeName}}</td>
                             <td class="text-left">{{item.projectName}}</td>
                             <td class="text-right">{{item.intentionAmount|format}}</td>
                             <td class="text-center">{{item.createTime}}</td>
-                            <td class="text-left">{{item.remark}}</td>
                             <td class="text-center">{{item.statusText}}</td>
-                            <td class="text-center">
+                            <td class="text-center" style="width: 120px">
                                 <a :href="'/home/apply/'+item.id" target="_blank">
                                     <button class="info_button">查看</button>
                                 </a>
@@ -148,12 +147,12 @@
                             data: {
                                 items: data.result.list
                             },
-                            filters:{
-                                format:function(value) {
-                                    value=value/100;
-                                 var str = value.toString();
-                                 var spot=str.split(".")[1];
-                                 str=str.split(".")[0];
+                            filters: {
+                                format: function (value) {
+                                    value = value / 100;
+                                    var str = value.toString();
+                                    var spot = str.split(".")[1];
+                                    str = str.split(".")[0];
 //                                var str = value;
                                     var length = str.length;
                                     var get, lost;
@@ -181,16 +180,16 @@
                                         }
                                     }
                                     //num=parseFloat(num).toFixed(2);
-                                    if(spot == undefined){
-                                        num=num+".00";
-                                    }else{
-                                        if(spot.length > 2) {
-                                            spot = spot.substring(0,2);
-                                            num=num+"."+spot;
-                                        }else if(spot.length == 2){
-                                            num=num+"."+spot;
-                                        }else{
-                                            num=num+"."+spot+"0";
+                                    if (spot == undefined) {
+                                        num = num + ".00";
+                                    } else {
+                                        if (spot.length > 2) {
+                                            spot = spot.substring(0, 2);
+                                            num = num + "." + spot;
+                                        } else if (spot.length == 2) {
+                                            num = num + "." + spot;
+                                        } else {
+                                            num = num + "." + spot + "0";
                                         }
                                     }
                                     return num;
@@ -215,7 +214,7 @@
 
     function f_FormatData(items) {
         $.each(items, function (i, item) {
-            item.createTime = f_FormatDateTime(item.createTime);
+            item.createTime = f_FormatTime(item.createTime);
             switch (item.enable) {
                 case -1:
                     item.enable = "已作废";
@@ -244,6 +243,17 @@
         pageNum = newPage;
         f_GetApply();
     }
+
+    //格式化时间只保留年月日
+    function f_FormatTime(inputTime) {
+        var date = new Date(inputTime);
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        return y + '-' + m + '-' + d;
+    };
 
     /*]]>*/
 </script>
