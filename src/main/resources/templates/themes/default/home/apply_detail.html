@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
-
-    <title>index</title>
+    <title>捐赠详情</title>
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -19,11 +19,12 @@
         }
         .table_member_content td{
             border-bottom: 1px #ccc dashed;
+            width: 20px;
         }
 
         #textarea_apply{
             margin-top: 20px;
-            width: 300px;
+            width: 695px;
             height: 150px;
         }
 
@@ -72,7 +73,7 @@
                     <td>{{item.title}}</td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="2" style="border: none;padding-bottom: 60px;">
                         <textarea id="textarea_apply" class="form-control"></textarea>
                         <button class="btn btn-success" v-on:click="add()">提交意见</button>
                     </td>
