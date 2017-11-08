@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
+
+    <title>修改密码</title>
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/plugin/step/step.css}" />
+
+    <style type="text/css">
+        #div_menu a{
+            display: block;
+            margin: 10px;
+        }
+        #div_menu span{
+            float: left;
+            font-size: 20px;
+        }
+        #div_menu ul{
+            margin-left: 30px;
+            display: none;
+        }
+        .table_member_content{
+            width: 60%;
+            margin-left: 20%;
+            text-align: center;
+            line-height: 60px;
+        }
+        .table_member_content input{
+            line-height: 28px;
+            width: 280px;
+        }
+        .table_member_content td{
+            border-bottom: 1px #ccc dashed;
+        }
+
+        .ipt_mobile{
+            width: 330px;
+        }
+
+        .input_code{
+            width: 234px;
+        }
+
+        .div_register_content{
+            height: 500px;
+            padding-top: 50px;
+            display: none;
+        }
+
+        .error{
+            color:red;
+            display: none;
+            height: 42px;
+            margin-top: -23px;
+            margin-right: 110px;
+        }
+
+        .error_1{
+            color:red;
+            display: none;
+            height: 19px;
+            margin-top: 7px;
+            margin-right: 54px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="div_navbar" style="margin-top: 10px">
+                <ul>
+                    <li><a href="#">修改密码</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-sm-12 div_register_content" id="div_step1" style="display: block">
+            <div style="padding-left: 15%;padding-right: 15%">
+                <div class="ui-step-wrap">
+                    <ol class="ui-step ui-step-light-blue ui-step-3">
+                        <li class="step-active">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">1</span>
+                                <span class="ui-step-cont-text">填写账号</span>
+                            </div>
+                        </li>
+                        <li class="step-middle">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">2</span>
+                                <span class="ui-step-cont-text">身份验证</span>
+                            </div>
+                        </li>
+                        <li class="step-end">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">3</span>
+                                <span class="ui-step-cont-text">设置新密码</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <br/>
+            <table class="table_member_content">
+
+                <tr>
+                    <td>手机号码</td>
+                    <td>
+                        <input class="ipt_mobile" type="text" id="ipt_mobile" style="width: 300px;" placeholder="请输入11位手机号码"/>
+                        <p class="mobile_error error">手机号码格式不正确</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>验证码</td>
+                    <td>
+                        <input type="text" class="input_code" style="width: 210px;" placeholder="请输入验证码"/>
+                        <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
+                        <p class="code_error error" style="margin-right: 132px;">验证码不能为空</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
+                        <button class="btn btn-info btn_checkSms" style="width: 80px;padding-left: 4px">下一步</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-12 div_register_content" id="div_step2">
+            <div style="padding-left: 15%;padding-right: 15%">
+                <div class="ui-step-wrap">
+                    <ol class="ui-step ui-step-light-blue ui-step-3">
+                        <li class="step-done">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">1</span>
+                                <span class="ui-step-cont-text">填写账号</span>
+                            </div>
+                        </li>
+                        <li class="step-active">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">2</span>
+                                <span class="ui-step-cont-text">身份验证</span>
+                            </div>
+                        </li>
+                        <li class="step-end">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">3</span>
+                                <span class="ui-step-cont-text">设置新密码</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <br/>
+            <table class="table_member_content">
+                <tr>
+                    <td>请输入新密码</td>
+                    <td style="line-height: 20px">
+                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入6位新密码"/>
+                        <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
+                        <p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于6位</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>再次输入新密码</td>
+                    <td style="line-height: 20px">
+                        <input type="password" id="ipt_pwd" class="input_pwd" placeholder="请输入确认新密码" style="margin-top: 5px;"/>
+                        <p class="pwd_error error_1" >密码不能为空</p>
+                        <p class="p_error error_1" >两次密码不一致</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center">
+                        <button class="btn btn-info btn_pwd" style="width: 80px;padding-left: 4px">下一步</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-12 div_register_content" id="div_step3">
+            <div style="padding-left: 15%;padding-right: 15%">
+                <div class="ui-step-wrap">
+                    <ol class="ui-step ui-step-light-blue ui-step-3">
+                        <li class="step-done">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">1</span>
+                                <span class="ui-step-cont-text">填写账号</span>
+                            </div>
+                        </li>
+                        <li class="step-done">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">2</span>
+                                <span class="ui-step-cont-text">身份验证</span>
+                            </div>
+                        </li>
+                        <li class="step-finish">
+                            <div class="ui-step-line"></div>
+                            <div class="ui-step-cont">
+                                <span class="ui-step-cont-number">3</span>
+                                <span class="ui-step-cont-text">设置新密码</span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+            <br/>
+            <table class="table_member_content">
+                <tr>
+                    <td style="collapse: 2"><h4>设置新密码!<a href="/index">即将跳转</a> </h4></td>
+                </tr>
+                <!--<tr>-->
+                <!--<td colspan="2" style="text-align: center">-->
+                <!--<a href="../login"><button class="btn btn-info" style="width: 80px;padding-left: 4px">登录</button></a>-->
+                <!--</td>-->
+                <!--</tr>-->
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="themes/default/footer::footer"></div>
+
+<!--全局JS-->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/plugin/layer/layer.js}"></script>
+<script type="text/javascript"  th:inline="javascript">
+    /*<![CDATA[*/
+    var mobile;
+    var newPw;
+
+
+    $(".verify_code").click(function () {
+        $(this).attr("src","Verify/code.jpg?t="+Math.random());
+    });
+
+
+    //发送短信验证码
+    $(".btn_send").click(function () {
+        var mobile = $("#ipt_mobile").val();
+        $.ajax({
+            url:'/register/SendSms',
+            type:'post',
+            data:{mobile:mobile,tid:"1"},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    layer.alert("验证码发送成功");
+                }else{
+                    layer.alert(data.msg);
+                }
+            }
+        })
+    });
+
+    $(".btn_checkSms").click(function () {
+        var code=$(".input_code").val();
+        mobile = $("#ipt_mobile").val();
+        $.ajax({
+            url:'/resetpw/validate',
+            type:'post',
+            data:{mobile:mobile,code:code},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    $("#div_step1").hide();
+                    $("#div_step2").show();
+                }else if(data.code==403){
+                    layer.alert("验证码错误");
+                }else{
+                    layer.alert("验证码错误");
+                }
+            }
+        })
+    });
+
+    $(".btn_pwd").click(function () {
+        var pwd=$("#ipt_pwd").val();
+        newPw=pwd;
+        $.ajax({
+            url:'/resetpw/submit',
+            type:'post',
+            data:{newPw:newPw,mobile:mobile},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    $("#div_step2").hide();
+                    $("#div_step3").show();
+                    layer.alert(data.msg,function () {
+                        window.location.href = "/index";
+                    });
+                    setTimeout(function(){
+                        window.location.href = "/index";
+                    },3000);
+                }else{
+                    layer.alert("修改失败，请重试");
+                }
+            }
+        })
+    });
+
+
+    //手机
+    $(".ipt_mobile").blur(function(){
+        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        if(!mobile.test($(".ipt_mobile").val())){
+            $(".mobile_error").show();
+        }else{
+            $(".mobile_error").hide();
+        }
+    })
+
+    //验证码
+    $(".input_code").blur(function(){
+        if($(".input_code").val() == ""){
+            $(".code_error").show();
+        }else{
+            $(".code_error").hide();
+        }
+    })
+
+    //密码
+    $(".input_pw").blur(function(){
+        if($(".input_pw").val() == ""){
+            $(".pw_error_0").hide();
+            $(".pw_error").show();
+        }else{
+            $(".pw_error").hide();
+            if($(".input_pw").val().length < 6){
+                $(".pw_error_0").show();
+            }else{
+                $(".pw_error_0").hide();
+            }
+        }
+    })
+
+
+
+    $(".input_pwd").blur(function(){
+        if($("#ipt_pwd").val() == ""){
+            $(".p_error").hide();
+            $(".pwd_error").show();
+        }else{
+            $(".pwd_error").hide();
+            if($("#ipt_pw").val() !== $("#ipt_pwd").val()){
+                $(".p_error").show();
+            }else{
+                $(".p_error").hide();
+            }
+        }
+    })
+
+
+    /*]]>*/
+
+
+</script>
+</body>
+</html>
