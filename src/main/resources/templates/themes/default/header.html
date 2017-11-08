@@ -2,8 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="header">
 <head>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/bootstrap.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/bootstrapValidator.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
@@ -16,32 +14,31 @@
                 </div>
             </div>
             <div class="col-sm-7" style="float: right;">
-            <ul class="ul_login" id="ul_login" style="margin-top: 0;margin-bottom: 0;">
-                <li>您好,欢迎参与世纪爱心慈善</li>
-                <li></li>
-                <li><a th:href="@{/login}">登录</a></li>
-                <!--<li><span data-toggle="model" data-target="#myModal" data-dismiss="model">登录</span></li>-->
-                <li>|</li>
-                <li><a th:href="@{/register}">注册</a></li>
-            </ul>
-            <ul class="ul_login" id="ul_logined" style="display: none; margin-top: 0;margin-bottom: 0;">
-                <li></li>
-                <li></li>
-                <li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>
-                <li>|</li>
-                <li><a th:href="@{/home}">个人中心</a></li>
-                <li>|</li>
-                <li><a href="javascript:f_logout()">退出</a></li>
-            </ul>
+                <ul class="ul_login" id="ul_login" style="margin-top: 0;margin-bottom: 0;">
+                    <li>您好,欢迎参与世纪爱心慈善</li>
+                    <li></li>
+                    <li><a th:href="@{/login}">登录</a></li>
+                    <li>|</li>
+                    <li><a th:href="@{/register}">注册</a></li>
+                </ul>
+                <ul class="ul_login" id="ul_logined" style="display: none; margin-top: 0;margin-bottom: 0;">
+                    <li></li>
+                    <li></li>
+                    <li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>
+                    <li>|</li>
+                    <li><a th:href="@{/home}">个人中心</a></li>
+                    <li>|</li>
+                    <li><a href="javascript:f_logout()">退出</a></li>
+                </ul>
             </div>
             <!--<div class="col-sm-3">-->
-                <!--<div class="ibox float-e-margins" id="div_header_link">-->
-                    <!--<a href="http://weibo.com" target="_blank"><span>关注微博</span></a>-->
-                    <!--<span>&nbsp; | &nbsp;</span>-->
-                    <!--<a href="http://www.sjaxjjh.com/nav/9.html"><span>关于我们</span></a>-->
-                    <!--<span> &nbsp;| &nbsp;</span>-->
-                    <!--<a href="http://www.sjaxjjh.com/nav/16.html"><span>联系我们</span></a>-->
-                <!--</div>-->
+            <!--<div class="ibox float-e-margins" id="div_header_link">-->
+            <!--<a href="http://weibo.com" target="_blank"><span>关注微博</span></a>-->
+            <!--<span>&nbsp; | &nbsp;</span>-->
+            <!--<a href="http://www.sjaxjjh.com/nav/9.html"><span>关于我们</span></a>-->
+            <!--<span> &nbsp;| &nbsp;</span>-->
+            <!--<a href="http://www.sjaxjjh.com/nav/16.html"><span>联系我们</span></a>-->
+            <!--</div>-->
             <!--</div>-->
         </div>
     </div>
@@ -52,29 +49,30 @@
             <img id="img_logo" th:src="@{~/image/logo/1200x280.gif}"/>
         </div>
         <!--<div class="col-sm-6" style="height: 80px">-->
-            <!--<ul class="ul_login" id="ul_login">-->
-                <!--<li>您好,欢迎参与世纪爱心慈善</li>-->
-                <!--<li></li>-->
-                <!--<li><a th:href="@{/login}">登录</a></li>-->
-                <!--<li>|</li>-->
-                <!--<li><a th:href="@{/register}">注册</a></li>-->
-            <!--</ul>-->
-            <!--<ul class="ul_login" id="ul_logined" style="display: none">-->
-                <!--<li></li>-->
-                <!--<li></li>-->
-                <!--<li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>-->
-                <!--<li>|</li>-->
-                <!--<li><a th:href="@{/home}">个人中心</a></li>-->
-                <!--<li>|</li>-->
-                <!--<li><a href="javascript:f_logout()">退出</a></li>-->
-            <!--</ul>-->
+        <!--<ul class="ul_login" id="ul_login">-->
+        <!--<li>您好,欢迎参与世纪爱心慈善</li>-->
+        <!--<li></li>-->
+        <!--<li><a th:href="@{/login}">登录</a></li>-->
+        <!--<li>|</li>-->
+        <!--<li><a th:href="@{/register}">注册</a></li>-->
+        <!--</ul>-->
+        <!--<ul class="ul_login" id="ul_logined" style="display: none">-->
+        <!--<li></li>-->
+        <!--<li></li>-->
+        <!--<li><a th:href="@{/home/message}">消息(<a id="message" th:href="@{/home/message}"></a>)</a></li>-->
+        <!--<li>|</li>-->
+        <!--<li><a th:href="@{/home}">个人中心</a></li>-->
+        <!--<li>|</li>-->
+        <!--<li><a href="javascript:f_logout()">退出</a></li>-->
+        <!--</ul>-->
         <!--</div>-->
     </div>
     <div class="row">
         <div class="col-sm-12" style="margin-top: -10px;">
             <div id="div_main_menu">
                 <ul id="ul_menu">
-                    <li class="li_meun"><a th:href="@{~/index}">首页</a></li>
+                    <!--<li class="li_meun"><a th:href="@{~/index}">首页</a></li>-->
+                    <li class="li_meun"><a href="http://www.sjaxjjh.com/">首页</a></li>
                     <li class="li_split"></li>
                     <li class="li_meun"><a href="http://www.sjaxjjh.com/nav/9.html">关于我们</a></li>
                     <li class="li_split"></li>
@@ -99,87 +97,8 @@
     </div>
 </div>
 
-
-
-<!--登陆弹出层-->
-<div class="model fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="model-dialog" style="margin-top:100px">
-        <div class="model-content" style="width: auto">
-            <div class="model-header">
-                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
-                    &times;
-                </button>
-                <h4 class="model-title" style="width: 100%;text-align: center;">
-                    登陆
-                </h4>
-            </div>
-
-
-            <div class="model-body" style="text-align: center">
-                <form id="defaultForm"class="form-horizontal" >
-                    <!--<div class="form-group">-->
-                        <!--<label class="col-lg-3 control-label">手机号码</label>-->
-                        <!--<div class="col-lg-5">-->
-                            <!--<input type="text" class="form-control" name="firstName" placeholder="请输入手机号码" />-->
-                            <!--<span class="help-block" id="firstNameMessage">-->
-
-                                <!--</span>-->
-                        <!--</div>-->
-                        <!--&lt;!&ndash;<div class="col-lg-4">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<input type="text" class="form-control" name="lastName" placeholder="Last name" />&ndash;&gt;-->
-                            <!--&lt;!&ndash;<span class="help-block lastNameMessage"></span>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                    <!--</div>-->
-
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">手机号码</label>
-                        <div class="col-lg-7">
-                            <input type="text" id="phone" class="form-control" name="phone" placeholder="请输入手机号码" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">登录密码</label>
-                        <div class="col-lg-7">
-                            <input type="text" id="pw" class="form-control" name="pw" placeholder="请输入密码"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-lg-3 control-label">验证码</label>
-                        <div class="col-lg-7">
-                            <input type="text" id="code" class="form-control" name="code" placeholder="请输入验证码"/>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
-                    </div>
-
-                    <div class="form-group">
-                    <input type="checkbox" id="ipt_cookie" style="margin-left: -150px;"/>下次自动登录
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-lg-11 col-lg-offset-1">
-                            <button type="button" id="btn_login" class="btn btn-primary">登陆</button>
-                            <span><a th:href="@{/resetpw}">忘记密码?</a></span>
-                            <span><a th:href="@{/resetpw}">修改密码?</a></span>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
-<script th:src="@{/js/jquery.js}"></script>
-<script th:src="@{/js/jquery.validate.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/bootstrapValidator.js}"></script>
 <script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
@@ -210,46 +129,9 @@
                     }
                 }
             });
-//    $(document).ready(function() {
-//        f_autoLogin();
-//    });
-
-    function f_autoLogin() {
-        if (memberInfo!=null){
-            f_getMemberNum();
-            $("#ul_login").hide();
-            $("#ul_logined").show();
-            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
-        }else{
-            var userCookie=getCookie("member");
-            if(userCookie!=null){
-                $.ajax({
-                    url: '/login/autoLogin',
-                    type: 'post',
-                    data:{memberId:userCookie.split('|')[0],cookie:userCookie.split('|')[1]},
-                    dataType: 'json',
-                    success: function (data) {
-                        if(data.code===200){
-                            memberInfo=data.result;
-                            $("#ul_login").hide();
-                            $("#ul_logined").show();
-                            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
-                            f_getMemberNum();
-                        }
-                    }
-                });
-            }
         }
     }
 
-    $(".verify_code").click(function () {
-        $(this).attr("src","Verify/code.jpg?t="+Math.random());
-    });
-
-    function getCookie(name)
-    {
-        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-        if(arr=document.cookie.match(reg)){
     function getCookie(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
         if (arr = document.cookie.match(reg)) {
@@ -277,8 +159,13 @@
         }
     }
 
+    $(document).ready(function () {
+        if (memberInfo != null) {
+            f_getMemberNum();
+        }
+    });
 
-    function  f_getMemberNum() {
+    function f_getMemberNum() {
         $.ajax({
             url: '/home/message/number',
             type: 'post',
@@ -288,110 +175,6 @@
             }
         });
     }
-
-
-    $(document).ready(function() {
-        f_autoLogin();
-        $('#defaultForm').bootstrapValidator({
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                phone: {
-                    message: 'The phone is not valid',
-                    validators: {
-                        notEmpty: {
-                            message: '手机号码不能为空'
-                        },
-                        regexp:{
-                            regexp : /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
-                            message: '手机号码格式不正确'
-                        }
-                    }
-                },
-                pw: {
-//                    container: '#firstNameMessage',
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        },
-                        stringLength: {
-                            min: 6,
-                            message: '密码不能少于6位'
-                        }
-                    }
-                },
-                code: {
-//                    container: '.lastNameMessage',
-                    validators: {
-                        notEmpty: {
-                            message: '验证码不能为空'
-                        },
-                        stringLength: {
-                            min: 4,
-                            max: 4,
-                            message: '验证码格式不正确'
-                        }
-                    }
-                }
-
-            }
-        });
-        $("#btn_login").click(function () {
-            var bv = $('#defaultForm').data('bootstrapValidator');
-            bv.validate();
-            if (bv.isValid()) {
-                var mobile = $("#phone").val();
-                var pwd = $("#pw").val();
-                var code = $("#code").val();
-                var autoLogin = $("#ipt_cookie").is(':checked');
-                $.ajax({
-                    url: "/login/submit",
-                    data: {mobile: mobile, code: code, pwd: pwd, autoLogin: autoLogin},
-                    type: 'post',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.code === 407) {
-                            window.location.href = "/home";
-                        } else {
-                            layer.alert(data.msg);
-                        }
-                    }
-                });
-            }
-        });
-
-    });
-
-    //login
-//    $("#btn_login").click(function () {
-//        var mobile=$("#phone").val();
-//        var pwd=$("#pw").val();
-//        var code=$("#code").val();
-//        alert(mobile);
-//        alert(pwd);
-//        alert(code);
-//        var autoLogin=$("#ipt_cookie").is(':checked');
-//        alert(autoLogin);
-//        $.ajax({
-//            url:"/login/submit",
-//            data:{mobile:mobile,code:code,pwd:pwd,autoLogin:autoLogin},
-//            type:'post',
-//            dataType:'json',
-//            success:function (data) {
-//                if (data.code===407){
-//                    alert(1);
-//                }else{
-//                    layer.alert(data.msg);
-//                }
-//            }
-//        });
-//    });
-
-
 
     /*]]>*/
 </script>
