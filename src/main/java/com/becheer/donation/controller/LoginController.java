@@ -46,7 +46,7 @@ public class LoginController extends BaseController {
         if (!RegExUtil.checkMobile(mobile)){
             return new ResponseDto(401,Message.LOGIN_MOBILE_ERROR);
         }
-        if (pwd==null||pwd.trim().length()<8){
+        if (pwd==null||pwd.trim().length()<6){
             return new ResponseDto(402,Message.LOGIN_PASSWORD_ERROR);
         }
         Object objCode=request.getSession().getAttribute(ConstString.LOGIN_VERIFY_CODE);

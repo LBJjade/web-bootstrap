@@ -68,14 +68,7 @@
 <div class="center-block" style="width: 1200px;">
     <div class="row">
         <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li><i class="fa fa-angle-right" aria-hidden="true"
-                           style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a href="#">个人中心</a></li>
-                </ul>
-            </div>
+
         </div>
     </div>
     <div class="row">
@@ -84,9 +77,16 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p style="line-height: 30px;margin: -5px;"><span style="line-height: 40px">我的信息</span>
-
-
+                <div id="div_navbar" style="margin-top: 10px">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">我的信息</a></li>
+                    </ul>
                     <a href="home/edit" id="a_edit" style="display: none;">
                         <button class="info_button" style="float: right">编辑</button>
                         <span class="complete"
@@ -94,7 +94,11 @@
                                 th:src="@{~/image/vector.png}"
                                 style="float: right;width: 27px;margin-right: 7px;"></span>
                     </a></p>
-                <hr/>
+                </div>
+                <!--<p style="line-height: 30px;margin: -5px;"><span style="line-height: 40px">我的信息</span>-->
+
+
+
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">

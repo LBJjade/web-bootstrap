@@ -56,18 +56,18 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public ResponseDto Login(String mobile,String pwd) {
-         Member member = memberMapper.SelectMemberByMobile(mobile);
-         if (member==null){
-             return new ResponseDto(404, Message.LOGIN_MOBILE_NOT_EXIST);
-         }
-         if (member.getEnable()==0){
-             return new ResponseDto(405,Message.LOGIN_ACCOUNT_DISABLED);
-         }
-         if (!member.getPassword().equals(HashUtil.GetPassword(pwd))){
-             return new ResponseDto(406,Message.LOGIN_PASSWORD_ERROR);
-         }else{
-             return new ResponseDto(407,Message.LOGIN_SUCCESS,member);
-         }
+        Member member = memberMapper.SelectMemberByMobile(mobile);
+        if (member==null){
+            return new ResponseDto(404, Message.LOGIN_MOBILE_NOT_EXIST);
+        }
+        if (member.getEnable()==0){
+            return new ResponseDto(405,Message.LOGIN_ACCOUNT_DISABLED);
+        }
+        if (!member.getPassword().equals(HashUtil.GetPassword(pwd))){
+            return new ResponseDto(406,Message.LOGIN_PASSWORD_ERROR);
+        }else{
+            return new ResponseDto(407,Message.LOGIN_SUCCESS,member);
+        }
     }
 
     @Override
@@ -209,5 +209,11 @@ public class MemberServiceImpl implements IMemberService {
     @Override
     public Member GetMember(long memberId) {
         return memberMapper.SelectMemberById(memberId);
+    }
+
+    @Override
+    public int UpdatePw(String newPw, String mobile) {
+        int result = memberMapper.UpdatePw(newPw,mobile);
+        return result;
     }
 }

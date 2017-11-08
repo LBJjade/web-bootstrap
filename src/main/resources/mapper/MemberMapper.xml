@@ -71,20 +71,24 @@
     <update id="UpdateMember" parameterType="com.becheer.donation.model.Member">
         UPDATE dnt_member
         SET
-          member_name=#{memberName,jdbcType=VARCHAR},
-          id_card=#{idCard,jdbcType=VARCHAR},
-          sex=#{sex,jdbcType=INTEGER},
-          birthday=#{birthday,jdbcType=TIMESTAMP},
-          project=#{project,jdbcType=VARCHAR},
-          summary=#{summary,jdbcType=VARCHAR},
-          organization_type=#{organizationType,jdbcType=VARCHAR},
-          organization_code=#{organizationCode,jdbcType=VARCHAR},
-          update_time = now(),
-          <if test="idCardFrontImg!=null">id_card_front_img=#{idCardFrontImg},</if>
-          <if test="idCardBackImg!=null">id_card_back_img=#{idCardBackImg},</if>
-          <if test="license!=null">license=#{license},</if>
-          validation=#{validation,jdbcType=INTEGER}
+        member_name=#{memberName,jdbcType=VARCHAR},
+        id_card=#{idCard,jdbcType=VARCHAR},
+        sex=#{sex,jdbcType=INTEGER},
+        birthday=#{birthday,jdbcType=TIMESTAMP},
+        project=#{project,jdbcType=VARCHAR},
+        summary=#{summary,jdbcType=VARCHAR},
+        organization_type=#{organizationType,jdbcType=VARCHAR},
+        organization_code=#{organizationCode,jdbcType=VARCHAR},
+        update_time = now(),
+        <if test="idCardFrontImg!=null">id_card_front_img=#{idCardFrontImg},</if>
+        <if test="idCardBackImg!=null">id_card_back_img=#{idCardBackImg},</if>
+        <if test="license!=null">license=#{license},</if>
+        validation=#{validation,jdbcType=INTEGER}
         WHERE id_ = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="UpdatePw">
+        UPDATE dnt_member set `password` = #{param1} where mobile = #{param2}
     </update>
 
     <update id="updateAvator">

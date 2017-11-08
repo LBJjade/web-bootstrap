@@ -7,6 +7,7 @@
     <meta name="renderer" content="webkit" />
 
     <title>contract_list</title>
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -62,14 +63,7 @@
 <div class="center-block" style="width: 1200px;">
     <div class="row">
         <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">个人中心</a></li>
-                    <li><i class="fa fa-angle-right" aria-hidden="true"
-                           style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a href="#">我的合同</a></li>
-                </ul>
-            </div>
+
         </div>
     </div>
     <div class="row">
@@ -78,86 +72,97 @@
         </div>
         <div class="col-sm-10"  id="div_contract_content">
             <div class="div_member_title">
-                <p>我的合同</p>
-                <hr/>
+                <div id="div_navbar" style="margin-top: 10px">
+                    <ul>
+                        <li><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">我的合同</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">我的合同</a></li>
+                    </ul>
+                </div>
+                <!--<p>我的合同</p>-->
+                <!--<hr/>-->
             </div>
             <div style="min-height: 450px">
-            <div v-for="item in items" v-cloak>
-                <div class="div_message_title">
-                    <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.contractName}}</h4></div>
+                <div v-for="item in items" v-cloak>
+                    <div class="div_message_title">
+                        <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.contractName}}</h4></div>
+                    </div>
+                    <div class="div_message_content">
+                        <p>合同名称 ：{{item.contractName}}</p>
+                        <p>签订日期 ：{{item.signTime===null?"未签订":item.signTime}}</p>
+                        <p class="contractAmount">合同金额 ：{{item.contractAmount}}</p>
+                        <p>合同状态 ：{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a></p>
+                    </div>
                 </div>
-                <div class="div_message_content">
-                    <p>合同名称 ：{{item.contractName}}</p>
-                    <p>签订日期 ：{{item.signTime===null?"未签订":item.signTime}}</p>
-                    <p class="contractAmount">合同金额 ：{{item.contractAmount}}</p>
-                    <p>合同状态 ：{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a></p>
-                </div>
+                <p class="p_no_data">暂无消息</p>
             </div>
-            <p class="p_no_data">暂无消息</p>
-        </div>
-        <div   id="div_page">
+            <div   id="div_page">
+            </div>
         </div>
     </div>
-</div>
-<div th:replace="themes/default/footer::footer"></div>
-<!--全局JS-->
-<script th:src="@{/plugin/pagination/pagination.js}"></script>
-<script th:src="@{/js/date.js}"></script>
-<script type="text/javascript">
-    /*<![CDATA[*/
-    var pageSize=5;
-    var pageNum=1;
-    var pageCount;
-    var vueContent;
+    <div th:replace="themes/default/footer::footer"></div>
+    <!--全局JS-->
+    <script th:src="@{/plugin/pagination/pagination.js}"></script>
+    <script th:src="@{/js/date.js}"></script>
+    <script type="text/javascript">
+        /*<![CDATA[*/
+        var pageSize=5;
+        var pageNum=1;
+        var pageCount;
+        var vueContent;
 
-    $(document).ready(function () {
-        f_GetContract();
-    });
+        $(document).ready(function () {
+            f_GetContract();
+        });
 
 
-    function f_GetContract() {
-        $.ajax({
-            url:'/home/contract/list',
-            data:{pageNum:pageNum,pageSize:pageSize},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
-                    $.each(data.result.list, function (i, item) {
-                        item.signTime = f_FormatDateTime(item.signTime);
-                    });
-                    pageCount=data.result.pages;
-                    pageNum=data.result.pageNum;
-                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
-                    f_InitPagination($("#div_page"));
-                    if (vueContent==undefined) {
-                        vueContent=new Vue({
-                            el: '#div_contract_content',
-                            data: {
-                                items: data.result.list
-                            }
+        function f_GetContract() {
+            $.ajax({
+                url:'/home/contract/list',
+                data:{pageNum:pageNum,pageSize:pageSize},
+                type:'post',
+                dataType:'json',
+                success:function (data) {
+                    if(data.code===200){
+                        $.each(data.result.list, function (i, item) {
+                            item.signTime = f_FormatDateTime(item.signTime);
                         });
-                        if (data.result.list.length===0){
-                            $(".p_no_data").show();
+                        pageCount=data.result.pages;
+                        pageNum=data.result.pageNum;
+                        $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+                        f_InitPagination($("#div_page"));
+                        if (vueContent==undefined) {
+                            vueContent=new Vue({
+                                el: '#div_contract_content',
+                                data: {
+                                    items: data.result.list
+                                }
+                            });
+                            if (data.result.list.length===0){
+                                $(".p_no_data").show();
+                            }
+                        }else{
+                            for (var i = 0; i<data.result.list.length; i++) {
+                                Vue.set(vueContent.items, i, data.result.list[i]);
+                            }
+                            vueContent.items.splice(data.result.list.length);
+                            scrollTo(0,0);
                         }
-                    }else{
-                        for (var i = 0; i<data.result.list.length; i++) {
-                            Vue.set(vueContent.items, i, data.result.list[i]);
-                        }
-                        vueContent.items.splice(data.result.list.length);
-                        scrollTo(0,0);
                     }
                 }
-            }
-        });
-    }
+            });
+        }
 
-    //翻页回调函数
-    function f_PageCallBack(newPage) {
-        pageNum=newPage;
-        f_GetContract();
-    }
-    /*]]>*/
-</script>
+        //翻页回调函数
+        function f_PageCallBack(newPage) {
+            pageNum=newPage;
+            f_GetContract();
+        }
+        /*]]>*/
+    </script>
 </body>
 </html>

@@ -7,6 +7,7 @@
     <meta name="renderer" content="webkit"/>
 
     <title>project</title>
+    <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -84,14 +85,7 @@
 <div class="center-block" style="width: 1200px;">
     <div class="row">
         <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li><i class="fa fa-angle-right" aria-hidden="true"
-                            style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a  href="#">个人中心</a></li>
-                </ul>
-            </div>
+
         </div>
     </div>
     <div class="row">
@@ -100,37 +94,48 @@
         </div>
         <div class="col-sm-10" >
             <div class="div_member_title">
-                <p>我参与的项目</p>
-                <hr/>
+                <div id="div_navbar" style="margin-top: 10px">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a  href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">我参与的项目</a></li>
+                    </ul>
+                </div>
+                <!--<p>我参与的项目</p>-->
+                <!--<hr/>-->
             </div>
             <div style="min-height: 450px;">
-            <div id="div_project_list">
-                <div v-for="item in items" class="div_project_detail" v-cloak>
-                    <a :href="'project/'+item.id" target="_blank" >
-                        <img style="height: 200px;width: 300px" :src="fileRoot+item.thumbImg+'?x-oss-process=image/resize,m_fill,h_200,w_300'"/>
-                    </a>
-                    <p class="projectName">{{item.projectName}}</p>
-                    <p style="margin:0px 0px 0px 9px;">
-                        <a style="color: #afafaf;">目标金额 : </a>
-                        <span style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount}}</span>
-                        <a style="color: #afafaf;">&nbsp;元</a>
-                        <span style=" display: block">
+                <div id="div_project_list">
+                    <div v-for="item in items" class="div_project_detail" v-cloak>
+                        <a :href="'project/'+item.id" target="_blank" >
+                            <img style="height: 200px;width: 300px" :src="fileRoot+item.thumbImg+'?x-oss-process=image/resize,m_fill,h_200,w_300'"/>
+                        </a>
+                        <p class="projectName">{{item.projectName}}</p>
+                        <p style="margin:0px 0px 0px 9px;">
+                            <a style="color: #afafaf;">目标金额 : </a>
+                            <span style="color: #ff5a43;font-weight:bold;font-size: 16px;">{{item.projectTargetAmount}}</span>
+                            <a style="color: #afafaf;">&nbsp;元</a>
+                            <span style=" display: block">
                             <a  style="color: #afafaf;">已筹:</a>
                         <span style="color: #ff5a43;font-size: 16px;font-weight:bold;">
                             {{item.acceptedAmount}}
                         </span>
                         <a  style="color: #afafaf;">&nbsp;元</a></span></p>
-                    <p style="margin:0px 0px 0px 9px;">
-                        <a  style="color: #afafaf;">我捐赠的金额 : </a>
-                        <span style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount}}</span>
-                        <a  style="color: #afafaf;">&nbsp;元</a>
-                        <a :href="'project/'+item.id" target="_blank">
-                            <button class="info_button" >查看详情</button>
-                        </a>
-                    </p>
+                        <p style="margin:0px 0px 0px 9px;">
+                            <a  style="color: #afafaf;">我捐赠的金额 : </a>
+                            <span style="font-size: 16px;color:#ff5a43;font-weight:bold;">{{item.donatedAmount}}</span>
+                            <a  style="color: #afafaf;">&nbsp;元</a>
+                            <a :href="'project/'+item.id" target="_blank">
+                                <button class="info_button" >查看详情</button>
+                            </a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <p class="p_no_data">暂无消息</p>
+                <p class="p_no_data">暂无消息</p>
             </div>
             <div  id="div_page">
             </div>
