@@ -49,11 +49,17 @@ public class Message {
 
     public static final String LOGIN_CODE_ERROE="验证码错误";
 
+    public static final String LOGIN_CODE_SUCCESS="验证码正确";
+
     public static final String LOGIN_MOBILE_ERROR="手机号格式错误";
 
     public static final String LOGINOUT_SUCCESS="注销成功";
 
     public static final String LOGIN_COOKIE_FAILED="登录失败";
+
+    public static final String PASSWORD_CHANG_SUCCESS="修改密码成功";
+
+    public static final String PASSWORD_CHANG_ERROR="修改密码失败";
 
     /*
      *信息公开
