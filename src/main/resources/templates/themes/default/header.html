@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="ibox float-e-margins"  id="div_header_link">
+                <div class="ibox float-e-margins" id="div_header_link">
                     <a href="http://weibo.com" target="_blank"><span>关注微博</span></a>
                     <span>&nbsp; | &nbsp;</span>
                     <a href="http://www.sjaxjjh.com/nav/9.html"><span>关于我们</span></a>
@@ -84,42 +84,41 @@
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var imgRoot= /*[[${config.getImageRoot()}]]*/;
-    var docRoot= /*[[${config.getDocRoot()}]]*/;
-    var memberInfo=/*[[${session.member==null?null:session.member}]]*/;
+    var imgRoot = /*[[${config.getImageRoot()}]]*/;
+    var docRoot = /*[[${config.getDocRoot()}]]*/;
+    var memberInfo =/*[[${session.member==null?null:session.member}]]*/;
 
-    if (memberInfo!=null){
+    if (memberInfo != null) {
         $("#ul_login").hide();
         $("#ul_logined").show();
-        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎参与世纪爱心慈善");
-    }else{
-        var userCookie=getCookie("member");
-        if(userCookie!=null){
+        $("#ul_logined").children().first().html((memberInfo.memberName == "" ? memberInfo.mobile : memberInfo.memberName) + ",欢迎参与世纪爱心慈善");
+    } else {
+        var userCookie = getCookie("member");
+        if (userCookie != null) {
             $.ajax({
                 url: '/login/autoLogin',
                 type: 'post',
-                data:{memberId:userCookie.split('|')[0],cookie:userCookie.split('|')[1]},
+                data: {memberId: userCookie.split('|')[0], cookie: userCookie.split('|')[1]},
                 dataType: 'json',
                 success: function (data) {
-                    if(data.code===200){
-                        memberInfo=data.result;
+                    if (data.code === 200) {
+                        memberInfo = data.result;
                         $("#ul_login").hide();
                         $("#ul_logined").show();
-                        $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎参与世纪爱心慈善");
-                        window.location.href="/";
+                        $("#ul_logined").children().first().html((memberInfo.memberName == "" ? memberInfo.mobile : memberInfo.memberName) + ",欢迎参与世纪爱心慈善");
+                        window.location.href = "/";
                     }
                 }
             });
         }
     }
 
-    function getCookie(name)
-    {
-        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-        if(arr=document.cookie.match(reg)){
+    function getCookie(name) {
+        var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+        if (arr = document.cookie.match(reg)) {
             return unescape(arr[2]);
         }
-        else{
+        else {
             return null;
         }
     }
@@ -131,9 +130,9 @@
                 type: 'post',
                 dataType: 'json',
                 success: function (data) {
-                    if(data.code===200){
-                        window.location.href="/";
-                    }else{
+                    if (data.code === 200) {
+                        window.location.href = "/";
+                    } else {
                         layer.alert(data.msg);
                     }
                 }
@@ -141,13 +140,13 @@
         }
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (memberInfo != null) {
             f_getMemberNum();
         }
     });
 
-    function  f_getMemberNum() {
+    function f_getMemberNum() {
         $.ajax({
             url: '/home/message/number',
             type: 'post',
@@ -157,6 +156,7 @@
             }
         });
     }
+
     /*]]>*/
 </script>
 </body>
