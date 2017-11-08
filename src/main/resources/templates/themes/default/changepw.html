@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
 
-    <title>register</title>
+    <title>修改密码</title>
     <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
@@ -33,9 +33,14 @@
         }
         .table_member_content input{
             line-height: 28px;
+            width: 280px;
         }
         .table_member_content td{
             border-bottom: 1px #ccc dashed;
+        }
+
+        .ipt_mobile{
+            width: 330px;
         }
 
         .input_code{
@@ -75,7 +80,7 @@
         <div class="col-sm-12">
             <div id="div_navbar" style="margin-top: 10px">
                 <ul>
-                    <li><a href="#">注册</a></li>
+                    <li><a href="#">修改密码</a></li>
                 </ul>
             </div>
         </div>
@@ -90,21 +95,21 @@
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">1</span>
-                                <span class="ui-step-cont-text">验证手机</span>
+                                <span class="ui-step-cont-text">填写账号</span>
                             </div>
                         </li>
                         <li class="step-middle">
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">2</span>
-                                <span class="ui-step-cont-text">输入密码</span>
+                                <span class="ui-step-cont-text">身份验证</span>
                             </div>
                         </li>
                         <li class="step-end">
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">3</span>
-                                <span class="ui-step-cont-text">注册成功</span>
+                                <span class="ui-step-cont-text">设置新密码</span>
                             </div>
                         </li>
                     </ol>
@@ -112,36 +117,24 @@
             </div>
             <br/>
             <table class="table_member_content">
-                <tr>
-                    <td>注册类型</td>
-                    <td style="line-height: 20px">
-                        <label class="radio-inline">
-                            <input type="radio" value="1" name="input_register_type" checked="checked" />个人
-                        </label>
-                        <label class="radio-inline" style="margin-left: 60px">
-                            <input type="radio" value="2" name="input_register_type" />公司或社会组织
-                        </label>
-                    </td>
-                </tr>
+
                 <tr>
                     <td>手机号码</td>
                     <td>
-                        <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入11位手机号码"/>
-                        <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">发送验证码</button>
+                        <input class="ipt_mobile" type="text" id="ipt_mobile" style="width: 300px;" placeholder="请输入11位手机号码"/>
                         <p class="mobile_error error">手机号码格式不正确</p>
                     </td>
                 </tr>
                 <tr>
                     <td>验证码</td>
                     <td>
-                        <input type="text" class="input_code" placeholder="请输入验证码"/>
-                    <p class="code_error error" style="margin-right: 132px;">验证码不能为空</p>
+                        <input type="text" class="input_code" style="width: 210px;" placeholder="请输入验证码"/>
+                        <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
+                        <p class="code_error error" style="margin-right: 132px;">验证码不能为空</p>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
-                        <label class="radio-inline">
-                            <input type="radio" /><a href="#">同意网站服务条款</a></label>
                         <button class="btn btn-info btn_checkSms" style="width: 80px;padding-left: 4px">下一步</button>
                     </td>
                 </tr>
@@ -156,21 +149,21 @@
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">1</span>
-                                <span class="ui-step-cont-text">验证手机</span>
+                                <span class="ui-step-cont-text">填写账号</span>
                             </div>
                         </li>
                         <li class="step-active">
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">2</span>
-                                <span class="ui-step-cont-text">输入密码</span>
+                                <span class="ui-step-cont-text">身份验证</span>
                             </div>
                         </li>
                         <li class="step-end">
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">3</span>
-                                <span class="ui-step-cont-text">注册成功</span>
+                                <span class="ui-step-cont-text">设置新密码</span>
                             </div>
                         </li>
                     </ol>
@@ -179,17 +172,17 @@
             <br/>
             <table class="table_member_content">
                 <tr>
-                    <td>登录密码</td>
+                    <td>请输入新密码</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入6位密码"/>
+                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入6位新密码"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
                         <p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于6位</p>
                     </td>
                 </tr>
                 <tr>
-                    <td>确认密码</td>
+                    <td>再次输入新密码</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pwd" class="input_pwd" placeholder="请输入确认密码" style="margin-top: 5px;"/>
+                        <input type="password" id="ipt_pwd" class="input_pwd" placeholder="请输入确认新密码" style="margin-top: 5px;"/>
                         <p class="pwd_error error_1" >密码不能为空</p>
                         <p class="p_error error_1" >两次密码不一致</p>
                     </td>
@@ -210,21 +203,21 @@
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">1</span>
-                                <span class="ui-step-cont-text">验证手机</span>
+                                <span class="ui-step-cont-text">填写账号</span>
                             </div>
                         </li>
                         <li class="step-done">
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">2</span>
-                                <span class="ui-step-cont-text">输入密码</span>
+                                <span class="ui-step-cont-text">身份验证</span>
                             </div>
                         </li>
                         <li class="step-finish">
                             <div class="ui-step-line"></div>
                             <div class="ui-step-cont">
                                 <span class="ui-step-cont-number">3</span>
-                                <span class="ui-step-cont-text">注册成功</span>
+                                <span class="ui-step-cont-text">设置新密码</span>
                             </div>
                         </li>
                     </ol>
@@ -233,7 +226,7 @@
             <br/>
             <table class="table_member_content">
                 <tr>
-                    <td style="collapse: 2"><h4>注册成功!<a href="/index">即将跳转</a> </h4></td>
+                    <td style="collapse: 2"><h4>设置新密码!<a href="/index">即将跳转</a> </h4></td>
                 </tr>
                 <!--<tr>-->
                 <!--<td colspan="2" style="text-align: center">-->
@@ -253,7 +246,14 @@
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript"  th:inline="javascript">
     /*<![CDATA[*/
-    var registerType;
+    var mobile;
+    var newPw;
+
+
+    $(".verify_code").click(function () {
+        $(this).attr("src","Verify/code.jpg?t="+Math.random());
+    });
+
 
     //发送短信验证码
     $(".btn_send").click(function () {
@@ -274,20 +274,17 @@
     });
 
     $(".btn_checkSms").click(function () {
-        var smsCode=$(".input_code").val();
-        var mobile = $("#ipt_mobile").val();
-        registerType=$("input[name='input_register_type']:checked").val();
+        var code=$(".input_code").val();
+        mobile = $("#ipt_mobile").val();
         $.ajax({
-            url:'/Sms/CheckSms',
+            url:'/resetpw/validate',
             type:'post',
-            data:{mobile:mobile,code:smsCode,registerType:registerType},
+            data:{mobile:mobile,code:code},
             dataType:'json',
             success:function (data) {
                 if(data.code===200){
                     $("#div_step1").hide();
                     $("#div_step2").show();
-                }else if (data.code==402){
-                    layer.alert("验证码已过期，请重新获取");
                 }else if(data.code==403){
                     layer.alert("验证码错误");
                 }else{
@@ -299,10 +296,11 @@
 
     $(".btn_pwd").click(function () {
         var pwd=$("#ipt_pwd").val();
+        newPw=pwd;
         $.ajax({
-            url:'/register/submit',
+            url:'/resetpw/submit',
             type:'post',
-            data:{pwd:pwd},
+            data:{newPw:newPw,mobile:mobile},
             dataType:'json',
             success:function (data) {
                 if(data.code===200){
@@ -315,7 +313,7 @@
                         window.location.href = "/index";
                     },3000);
                 }else{
-                    layer.alert("注册失败，请重试");
+                    layer.alert("修改失败，请重试");
                 }
             }
         })
@@ -374,10 +372,6 @@
 
 
     /*]]>*/
-
-
-
-
 
 
 </script>

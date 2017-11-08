@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.WxPlayLogMapper">
+    <resultMap id="IndexReportResultMap" type="com.becheer.donation.model.report.IndexReport">
+        <result column="received_amount" jdbcType="BIGINT" property="receivedAmount" />
+        <result column="donate_time" jdbcType="BIGINT" property="donateTime" />
+        <result column="benefit_amount" jdbcType="BIGINT" property="benefitAmount" />
+        <result column="benefit_group" jdbcType="BIGINT" property="benefitGroup" />
+    </resultMap>
+
+    <select id="selectWxPayLogById" resultMap="IndexReportResultMap">
+        select
+        *
+        from dnt_paylog_weixin
+
+    </select>
+</mapper>

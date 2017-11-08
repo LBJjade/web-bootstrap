@@ -19,5 +19,7 @@ public interface MemberMapper {
 
     int UpdateMember(Member member);
 
+    int UpdatePw(String newPw,String mobile);
+
     int updateAvator(String avatorUrl,long memberId);
 }
