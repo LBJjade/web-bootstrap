@@ -40,7 +40,7 @@ a:visited,a:focus,a:hover{
 }
 
 .li_meun{
-    width: 100px;
+    width: 111px;
 }
 .li_meun:hover{
     background-color: #01823a;
@@ -63,10 +63,10 @@ a:visited,a:focus,a:hover{
 }
 
 #img_logo{
-    height: 80px;
-    width: 300px;
-    margin-left: 10px;
-    margin-top: 10px;
+    /*height: 80px;*/
+    /*width: 300px;*/
+    /*margin-left: 10px;*/
+    margin-top: 14px;
 }
 
 #div_bottom{
@@ -98,7 +98,7 @@ a:visited,a:focus,a:hover{
 .ul_login li{
     float: left;
     font-weight: 300;
-    font-size: 14px;
+    font-size: 12px;
     color: #444;
     margin-left: 10px;
 }
