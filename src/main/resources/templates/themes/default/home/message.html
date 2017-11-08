@@ -5,10 +5,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
-
-    <title>message</title>
+    <title>我的消息</title>
     <link rel="shortcut icon" href="image/favicon.jpg"/>
-
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.7.0}" rel="stylesheet"/>
@@ -90,7 +88,7 @@
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                                 {{item.title}}
                                 <span style="font-weight: normal;">
-                                    2017-06-30 15:08:21
+                                    {{item.createTime}}
                                 </span>
                             </h4>
                         </div>
@@ -101,7 +99,7 @@
                                 <span class="glyphicon glyphicon-chevron-down"></span>
                                 {{item.title}}
                                 <span>
-                                    2017-06-30 15:08:21
+                                    {{item.createTime}}
                                 </span>
                             </h4>
                         </div>

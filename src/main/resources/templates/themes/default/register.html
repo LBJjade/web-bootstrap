@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
 
-    <title>register</title>
+    <title>注册</title>
     <link rel="shortcut icon" href="image/favicon.jpg"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
@@ -348,7 +348,7 @@
             $(".pw_error").show();
         }else{
             $(".pw_error").hide();
-            if($(".input_pw").val().length < 6){
+            if($(".input_pw").val().length < 8){
                 $(".pw_error_0").show();
             }else{
                 $(".pw_error_0").hide();
