@@ -17,6 +17,7 @@ import com.becheer.donation.model.extension.progress.ProgressExtension;
 import com.becheer.donation.service.IIntentionService;
 import com.becheer.donation.service.IProgressService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,6 +111,16 @@ public class HomeApplyController extends BaseController {
             return MemberAuthFailed();
         }
         try {
+            if (StringUtil.isNull(content)){
+                return new ResponseDto(200,Message.MEMBER_INTENTION_PROGRESS_CONTENT_NULL);
+            }
+            IntentionExtension intention = intentionService.GetIntention(applyId);
+            if (intention==null){
+                return MemberAuthFailed();
+            }
+            if (intention.getMemberId()!=currentMember.getMemberId()){
+                return MemberAuthFailed();
+            }
             long result=progressService.AddProgress(content,content,"dnt_intention",applyId,currentMember.getMemberId(),1);
             if (result>0){
                 return new ResponseDto(200,Message.MEMBER_INTENTION_PROGRESS_ADD_SUCCESS);

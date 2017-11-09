@@ -23,6 +23,8 @@ public class MemberContractExtension {
 
     private int status;
 
+    private long memberId;
+
     public long getId() {
         return id;
     }
@@ -99,5 +101,13 @@ public class MemberContractExtension {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 }

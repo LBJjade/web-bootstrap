@@ -4,10 +4,12 @@ import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.ProjectProgress;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;
+import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IProgressService;
 import com.becheer.donation.service.IProjectProgressService;
 import com.becheer.donation.service.IProjectService;
@@ -40,6 +42,9 @@ public class HomeProjectController extends BaseController {
     IProgressService progressService;
 
     @Resource
+    IContractService contractService;
+
+    @Resource
     IProjectProgressService projectProgressService;
 
     @Access(authorities="member")
@@ -54,7 +59,12 @@ public class HomeProjectController extends BaseController {
     public String GetProjectDetail(HttpServletRequest request,@PathVariable long contractProjectId){
         request.setAttribute("config", fileConfig);
         try {
+            MemberContractDetailExtension contract =contractService.getContractByContractProjectId(contractProjectId);
+            if (contract==null){
+                render_404();
+            }
             MemberProjectDetailExtension memberProjectDetailExtension=projectService.GetMemberProjectDetail(contractProjectId);
+
             if (memberProjectDetailExtension==null){
                 return render_404();
             }else{
@@ -95,6 +105,10 @@ public class HomeProjectController extends BaseController {
     public ResponseDto GetAllprogress(HttpServletRequest request, @RequestParam long contractProjectId){
         MemberSessionExtension currentMember=GetCurrentUser(request);
         if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        MemberContractDetailExtension contract =contractService.getContractByContractProjectId(contractProjectId);
+        if (contract==null){
             return MemberAuthFailed();
         }
         try {

@@ -155,6 +155,8 @@ public class Message {
 
     public static final String MEMBER_INTENTION_PROGRESS_ADD_FAILED="提交失败";
 
+    public static final String MEMBER_INTENTION_PROGRESS_CONTENT_NULL="请输入意见内容";
+
     /**
      * 申诉
      */
@@ -193,6 +195,10 @@ public class Message {
      */
     public static final String SUBMIT_APPEAL_SUCCESS="申诉提交成功";
     public static final String SUBMIT_APPEAL_FAILED="申诉提交失败";
+    public static final String SUBMIT_APPEAL_TITLE_NULL="请输入申诉主题";
+    public static final String SUBMIT_APPEAL_METHOD_NULL="请选择申诉类型";
+    public static final String SUBMIT_APPEAL_CONTENT_NULL="请输入申诉内容";
+    public static final String SUBMIT_APPEAL_ID_NULL="参数错误";
 
     public static final String DONATE_PROJECT_TYPE_ID_IS_EMPTY = "请选择项目类别";
     public static final String DONATE_AMOUNT_IS_EMPTY = "请选择捐赠金额";

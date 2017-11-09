@@ -32,6 +32,8 @@ public class MemberContractDetailExtension {
 
     private String contractNo;
 
+    private long memberId;
+
     public long getId() {
         return id;
     }
@@ -144,5 +146,13 @@ public class MemberContractDetailExtension {
 
     public void setContractNo(String contractNo) {
         this.contractNo = contractNo;
+    }
+
+    public long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 }

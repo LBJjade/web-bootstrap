@@ -4,6 +4,7 @@
 
     <resultMap id="ListResultMap" type="com.becheer.donation.model.extension.intention.IntentionExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="VARCHAR" property="memberId" />
         <result column="project_name" jdbcType="VARCHAR" property="projectName" />
         <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName" />
         <result column="intention_amount" jdbcType="BIGINT" property="intentionAmount" />
@@ -75,6 +76,7 @@
     <select id="SelectIntentionById" parameterType="java.lang.Long" resultMap="ListResultMap">
         SELECT
         i.id_,
+        i.member_id,
         p.project_name,
         t.project_type_name,
         i.intention_amount,

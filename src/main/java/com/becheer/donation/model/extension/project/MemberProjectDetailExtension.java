@@ -44,6 +44,8 @@ public class MemberProjectDetailExtension {
 
     private Date signTime;
 
+    private long memberId;
+
     public long getId() {
         return id;
     }
@@ -180,5 +182,13 @@ public class MemberProjectDetailExtension {
             default:
                 return "";
         }
+    }
+
+    public long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 }
