@@ -61,6 +61,9 @@ public class Message {
 
     public static final String PASSWORD_CHANG_ERROR="修改密码失败";
 
+    public static final String MEMBER_UNENABLE="无效账户,账户已删除";
+
+
     /*
      *信息公开
      */
