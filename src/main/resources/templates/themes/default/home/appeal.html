@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
     <title>我的申诉</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -66,11 +66,6 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-12">
-
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
@@ -78,9 +73,9 @@
             <div class="div_member_title">
                 <div id="div_navbar" style="margin-top: 10px">
                     <ul>
-                        <li><a href="#">个人中心</a></li>
+                        <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">我的申诉</a></li>
+                        <li class="active"><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i></li>
                         <li class="active"><a href="#">我的申诉</a></li>
                     </ul>
@@ -94,10 +89,10 @@
                         <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.appealTitle}}<span>{{item.createTime}}</span></h4></div>
                     </div>
                     <div class="div_message_content">
-                        <p>申诉项目 ：{{item.projectName}}</p>
-                        <p>申诉合同 ：{{item.contractName}}</p>
-                        <p>申诉状态 ：{{item.statusText}}</p>
-                        <p>申诉类型 ：{{item.appealMethod}}<a :href="'appeal/'+item.id" target="_blank"><button class=" info_button">查看详情</button></a></p>
+                        <p>申诉项目：{{item.projectName}}</p>
+                        <p>申诉合同：{{item.contractName}}</p>
+                        <p>申诉状态：{{item.statusText}}</p>
+                        <p>申诉类型：{{item.appealMethod}}<a :href="'appeal/'+item.id" target="_blank"><button class=" info_button">查看详情</button></a></p>
                     </div>
                 </div>
                 <p class="p_no_data">暂无消息</p>

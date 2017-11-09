@@ -8,6 +8,7 @@
     <title>
         合同明细
     </title>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <style type="text/css">
         * {
             margin: 0;
@@ -242,7 +243,7 @@
         <div class="m m1">
             <table class="tb1">
                 <tr>
-                    <td class="t1">合同编号：&nbsp;&nbsp;&nbsp;&nbsp;<th:block th:text="${contract.getContractNo()}"></th:block></td>
+                    <td class="t1">合同编号：&nbsp; <th:block th:text="${contract.getContractNo()}"></th:block></td>
                     <td class="t2">合同周期：<th:block th:text="${contract.getBeginTime()}"></th:block> ~ <th:block th:text="${contract.getEndTime()}"></th:block></td>
                 </tr>
             </table>
@@ -252,15 +253,15 @@
                     <col class="t2">
                 </colgroup>
                 <tr>
-                    <td>合同名称:</td>
+                    <td>合同名称：</td>
                     <td><th:block th:text="${contract.getContractName()}"></th:block></td>
                 </tr>
                 <tr>
-                    <td>合同状态:</td>
+                    <td>合同状态：</td>
                     <td><th:block th:text="${contract.getStatusText()}"></th:block></td>
                 </tr>
                 <tr>
-                    <td>合同金额:</td>
+                    <td>合同金额：</td>
                     <td><th:block th:text="${contract.getContractAmount()}"></th:block></td>
                 </tr>
             </table>

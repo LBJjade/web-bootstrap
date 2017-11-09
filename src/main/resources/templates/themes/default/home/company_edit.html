@@ -7,6 +7,7 @@
     <meta name="renderer" content="webkit"/>
 
     <title>信息编辑</title>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <style type="text/css">
@@ -63,24 +64,25 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li>><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">个人中心</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p>编辑信息</p>
-                <hr/>
+                <div id="div_navbar"  style="margin-top: 10px;margin-bottom: 17px;">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="/home">我的信息</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">编辑公司信息</a></li>
+                    </ul>
+                </div>
             </div>
             <div id="div_content">
                 <div id="div_avator">
@@ -93,15 +95,15 @@
                 <div id="div_content_info">
                     <table id="table_content_info">
                         <tr>
-                            <td>公司名称</td>
+                            <td>公司名称：</td>
                             <td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td>
                         </tr>
                         <tr>
-                            <td>组织机构代码</td>
+                            <td>组织机构代码：</td>
                             <td><input type="text" id="ipt_code" th:value="${member.getOrganizationCode()}"/></td>
                         </tr>
                         <tr>
-                            <td>公司属性</td>
+                            <td>公司属性：</td>
                             <td>
                                 <select id="ipt_type" class="form-control">
                                     <option value="0">请选择</option>
@@ -115,7 +117,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>营业执照</td>
+                            <td>营业执照：</td>
                             <td>
                                 <input type="file" id="ipt_license" class="input_img" onchange="f_preImg()" accept="image/png,image/jpeg"/>
                                 <img id="img_license"
@@ -124,12 +126,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>曾参与的公益项目</td>
+                            <td>曾参与的公益项目：</td>
                             <td><textarea id="ipt_project" class="form-control" rows="5"
                                           style="margin: 10px 0px 10px 0px;"></textarea></td>
                         </tr>
                         <tr>
-                            <td>公司简介</td>
+                            <td>公司简介：</td>
                             <td><textarea id="ipt_summary" class="form-control" rows="5"
                                           style="margin: 10px 0px 10px 0px;"></textarea></td>
                         </tr>

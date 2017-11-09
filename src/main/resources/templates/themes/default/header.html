@@ -115,7 +115,7 @@
             f_getMemberNum();
             $("#ul_login").hide();
             $("#ul_logined").show();
-            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎参与世纪爱心慈善");
         }else{
             var userCookie=getCookie("member");
             if(userCookie!=null){
@@ -129,7 +129,7 @@
                             memberInfo=data.result;
                             $("#ul_login").hide();
                             $("#ul_logined").show();
-                            $("#ul_logined").children().first().html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎您！");
+                            $("#ul_logined").children().first(2).html((memberInfo.memberName==""?memberInfo.mobile:memberInfo.memberName)+",欢迎参与世纪爱心慈善");
                             f_getMemberNum();
                         }
                     }

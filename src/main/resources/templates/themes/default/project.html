@@ -5,9 +5,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
-
     <title>慈善项目_慈善项目_广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
@@ -150,7 +149,7 @@
             <div id="div_navbar">
                 <ul>
                     <li>
-                        <a href="#">首页</a>
+                        <a href="#"><i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px;"></i>首页</a>
                     </li>
                     <li>>
                         <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
@@ -172,13 +171,14 @@
                     <img class="div_project_item_img" :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"/>
                     <div class="div_project_item_content">
                         <div class="project_name">
-                            <span>>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{{item.projectName}}</span>
+                            <span><i class="fa fa-angle-right" aria-hidden="true"
+                                     style="font-size: 25px;color: #999999;margin-right: 10px;"></i></span><span>{{item.projectName}}<i class="fa fa-picture-o" aria-hidden="true" style="font-size:18px;color: #037270;margin-left: 5px;"></i></span>
                             <span style="float: right ;color: #c8c8c8;">{{item.createTime}}</span>
                             <span style="color: #c8c8c8;float: right">
-                            <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间 :&nbsp;</span>
+                            <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间：&nbsp;</span>
                         </div>
                         <br/>
-                        <span style="color:#969696;">摘要:</span>
+                        <span style="color:#969696;">摘要：</span>
                         <span style="color:#666666;">{{item.summary}}</span>
                         <br/>
                         <a :href="'project/'+item.projectId">

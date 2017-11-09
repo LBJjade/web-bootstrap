@@ -138,7 +138,7 @@ public class HomeAppealController extends BaseController {
                 return MemberAuthFailed();
             }
             long memberId=currentMember.memberId;
-            appealService.add(title,method,content,contractProjectId,projectId,memberId);
+            appealService.InsertAppeal(title,method,content,contractProjectId,projectId,memberId);
             return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
         }catch(Exception ex){
             return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
