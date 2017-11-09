@@ -5,8 +5,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
-    <title>广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <title>我的信息</title>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -67,17 +67,12 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-12">
-
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <div id="div_navbar" style="margin-top: 10px">
+                <div id="div_navbar" style="margin-top: 10px;margin-bottom: 17px;">
                     <ul>
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
@@ -110,51 +105,51 @@
                 <div id="div_content_info">
                     <table class="table_content_info" v-cloak>
                         <tr>
-                            <td v-if="member.role===1">真实姓名</td>
-                            <td v-if="member.role===2">公司名称</td>
+                            <td v-if="member.role===1">真实姓名：</td>
+                            <td v-if="member.role===2">公司名称：</td>
                             <td>{{member.name}}</td>
                         </tr>
                         <tr>
-                            <td>手机号码</td>
+                            <td>手机号码：</td>
                             <td>{{member.mobile}}</td>
                         </tr>
                         <tr v-if="member.role===1">
-                            <td>身份证号</td>
+                            <td>身份证号：</td>
                             <td>{{member.idCard}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>组织机构代码</td>
+                            <td>组织机构代码：</td>
                             <td>{{member.organizationCode}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>公司性质</td>
+                            <td>公司性质：</td>
                             <td>{{member.organizationType}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>营业执照</td>
+                            <td>营业执照：</td>
                             <td><a href="javascript:f_showLicense()">点击查看</a></td>
                         </tr>
                         <tr v-if="member.role===1">
-                            <td>性别</td>
+                            <td>性别：</td>
                             <td v-if="member.sex===0">保密</td>
                             <td v-if="member.sex===1">男</td>
                             <td v-if="member.sex===2">女</td>
                         </tr>
                         <tr v-if="member.role===1">
-                            <td>生日</td>
+                            <td>生日：</td>
                             <td>{{member.birthday}}</td>
                         </tr>
                         <tr>
-                            <td>曾参与的公益项目</td>
+                            <td>曾参与的公益项目：</td>
                             <td>{{member.project}}</td>
                         </tr>
                         <tr v-if="member.role===1">
-                            <td v-if="member.role===1">个人说明</td>
-                            <td v-if="member.role===2">公司简介</td>
+                            <td v-if="member.role===1">个人说明：</td>
+                            <td v-if="member.role===2">公司简介：</td>
                             <td>{{member.summary}}</td>
                         </tr>
                         <tr>
-                            <td>认证状态</td>
+                            <td>认证状态：</td>
                             <td v-if="member.validation===1">未认证</td>
                             <td v-if="member.validation===2">审核中</td>
                             <td v-if="member.validation===3">已认证</td>

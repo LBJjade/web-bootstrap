@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
     <title>合同详情</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -28,33 +28,33 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">个人中心</a></li>
-                    <li><i class="fa fa-angle-right" aria-hidden="true"
-                           style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a href="#">合同详情</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p>合同详情</p>
-                <hr/>
+                <div id="div_navbar" style="margin-top: 10px">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="/home/contract">我的合同</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">合同详情</a></li>
+                    </ul>
+                </div>
             </div>
             <table class="table_member_content">
-                <tr><td>合同名称</td><td><th:block th:text="${contract.getContractName()}"></th:block></td></tr>
-                <tr><td>合同金额</td><td><th:block th:text="${contract.getContractAmount()}"></th:block></td></tr>
-                <tr><td>已捐金额</td><td><th:block th:text="${contract.getDonatedAmount()}"></th:block></td></tr>
-                <tr><td>合同周期</td><td><th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block></td></tr>
-                <tr><td>合同状态</td><td><th:block th:text="${contract.getStatusText()}"></th:block></td></tr>
-                <tr><td>合同内容</td><td><a href="javascript:f_openContent()">点击查看</a></td></tr>
+                <tr><td>合同名称：</td><td><th:block th:text="${contract.getContractName()}"></th:block></td></tr>
+                <tr><td>合同金额：</td><td><th:block th:text="${contract.getContractAmount()}"></th:block></td></tr>
+                <tr><td>已捐金额：</td><td><th:block th:text="${contract.getDonatedAmount()}"></th:block></td></tr>
+                <tr><td>合同周期：</td><td><th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block></td></tr>
+                <tr><td>合同状态：</td><td><th:block th:text="${contract.getStatusText()}"></th:block></td></tr>
+                <tr><td>合同内容：</td><td><a href="javascript:f_openContent()">点击查看</a></td></tr>
             </table>
             <div class="div_member_title">
                 <p>合同捐赠详情</p>
@@ -63,12 +63,12 @@
             <table class="table_member_content" ID="table_donate_plan">
                 <thead>
                 <tr>
-                    <td>账单名称</td>
-                    <td>善款金额</td>
-                    <td>捐赠截止日期</td>
-                    <td>捐赠日期</td>
-                    <td>捐赠状态</td>
-                    <td>操作</td>
+                    <td>账单名称：</td>
+                    <td>善款金额：</td>
+                    <td>捐赠截止日期：</td>
+                    <td>捐赠日期：</td>
+                    <td>捐赠状态：</td>
+                    <td>操作：</td>
                 </tr>
                 </thead>
                 <tr v-for="item in items" v-cloak>

@@ -57,7 +57,7 @@
         AND a.member_id= #{param2}
     </select>
 
-    <insert id="add" parameterType="com.becheer.donation.model.extension.appeal.AppealDetailExtension">
+    <insert id="InsertAppeal" parameterType="com.becheer.donation.model.extension.appeal.AppealDetailExtension">
         INSERT INTO dnt_appeal
          (
           member_id,

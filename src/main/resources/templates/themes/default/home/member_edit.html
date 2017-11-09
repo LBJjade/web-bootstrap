@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
     <title>编辑个人信息</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
@@ -74,24 +74,25 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li>><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">个人中心</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p>编辑个人信息</p>
-                <hr />
+                <div id="div_navbar"  style="margin-top: 10px;margin-bottom: 17px;">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="/home">我的信息</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">编辑个人信息</a></li>
+                    </ul>
+                </div>
             </div>
             <div id="div_content">
                 <div id="div_avator">
@@ -102,10 +103,10 @@
                 </div>
                 <div id="div_content_info">
                     <table id="table_content_info">
-                        <tr><td>手机号码</td><td><input type="text" readonly="readonly" id="ipt_mobile" th:value="${member.getMobile()}"/></td></tr>
-                        <tr><td>真实姓名</td><td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td></tr>
-                        <tr><td>身份证号</td><td><input type="text" id="ipt_id_card" th:value="${member.getIdCard()}"/></td></tr>
-                        <tr><td style="border: none">身份证</td>
+                        <tr><td>手机号码：</td><td><input type="text" readonly="readonly" id="ipt_mobile" th:value="${member.getMobile()}"/></td></tr>
+                        <tr><td>真实姓名：</td><td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td></tr>
+                        <tr><td>身份证号：</td><td><input type="text" id="ipt_id_card" th:value="${member.getIdCard()}"/></td></tr>
+                        <tr><td style="border: none">身份证：</td>
                             <td style="border: none">
                                 <span>正面</span><span style="margin-left: 95px">背面</span>
                             </td>
@@ -121,7 +122,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>性别</td>
+                            <td>性别：</td>
                             <td>
                                 <select class ="form-control" id="ipt_sex">
                                     <option value="0">请选择</option>
@@ -131,9 +132,9 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr><td>生日</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/></td></tr>
-                        <tr><td>曾参与的公益项目</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
-                        <tr><td>个人说明</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
+                        <tr><td>生日：</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/></td></tr>
+                        <tr><td>曾参与的公益项目：</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
+                        <tr><td>个人说明：</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
                     </table>
                     <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
                 </div>

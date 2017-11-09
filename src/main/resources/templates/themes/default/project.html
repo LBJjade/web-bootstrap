@@ -5,9 +5,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
-
     <title>慈善项目_慈善项目_广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
@@ -141,16 +140,23 @@
                         <li><a v-on:click="f_SetProjectType(item)" target="_blank">{{item.name}}</a></li>
                     </ul>
                 </div>
+                <div>
+                    <ul class="all" style="margin-left: 38px;">
+                        <li><a onclick="f_GetAllProject()">全部项目</a></li>
+                    </ul>
+
+                </div>
             </div>
             <!--<div th:replace="themes/default/details::details"></div>-->
             <div th:replace="themes/default/section::section"></div>
 
         </div>
+
         <div class="col-sm-10">
             <div id="div_navbar">
                 <ul>
                     <li>
-                        <a href="#">首页</a>
+                        <a href="#"><i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px;"></i>首页</a>
                     </li>
                     <li>>
                         <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
@@ -167,18 +173,26 @@
                 </ul>
             </div>
             <br/>
+
+            <div id="div_none" class="col-sm-10" style="margin-left: 40%;margin-top: 80px;display: none;">
+                <div class="font" style="font-size: 18px;font-weight: 600;"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示</div>
+            </div>
+
+
             <div id="div_content" style="min-height: 800px">
                 <div v-for="item in items" class="div_project_item"  v-cloak>
-                    <img class="div_project_item_img" :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"/>
+                    <a :href="'project/'+item.projectId"><img class="div_project_item_img" :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"/></a>
                     <div class="div_project_item_content">
                         <div class="project_name">
-                            <span>>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{{item.projectName}}</span>
+                            <a :href="'project/'+item.projectId"><span>>&nbsp;&nbsp;&nbsp;&nbsp;</span><span>{{item.projectName}}</span></a>
+                            <span><i class="fa fa-angle-right" aria-hidden="true"
+                                     style="font-size: 25px;color: #999999;margin-right: 10px;"></i></span><span>{{item.projectName}}<i class="fa fa-picture-o" aria-hidden="true" style="font-size:18px;color: #037270;margin-left: 5px;"></i></span>
                             <span style="float: right ;color: #c8c8c8;">{{item.createTime}}</span>
                             <span style="color: #c8c8c8;float: right">
-                            <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间 :&nbsp;</span>
+                            <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间：&nbsp;</span>
                         </div>
                         <br/>
-                        <span style="color:#969696;">摘要:</span>
+                        <span style="color:#969696;">摘要：</span>
                         <span style="color:#666666;">{{item.summary}}</span>
                         <br/>
                         <a :href="'project/'+item.projectId">
@@ -196,6 +210,7 @@
 
 
 
+
 <div th:replace="themes/default/footer::footer"></div>
 
 <!--全局JS-->
@@ -206,11 +221,13 @@
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var pageSize = 2;
+    var pageSize = 4;
     var pageNum = 1;
     var pageCount;
     var vueContent;
     var typeItem;
+
+    var isall = 1;
 
     $(document).ready(function () {
         f_GetProjectType();
@@ -237,6 +254,45 @@
         });
     }
 
+    //获取全部项目
+    function f_GetAllProject() {
+        isall = 0;
+        $.ajax({
+            url: '/project/project',
+            type: 'post',
+            data: {pageSize: pageSize, pageNum: pageNum},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    $("#b_title").html("全部项目");
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
+                    f_InitPagination($("#div_page"));
+                    if(data.result.size == 0){
+                        $("#div_none").show();
+                    }else{
+                        $("#div_none").hide();
+                    }
+                    if (vueContent == undefined) {
+                        vueContent = new Vue({
+                            el: '#div_content',
+                            data: {
+                                items: data.result.list
+                            }
+                        });
+                    } else {
+                        for (var i = 0; i < data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0, 0);
+                    }
+                }
+            }
+        });
+    }
+
     function f_SetProjectType(item) {
         typeItem=item;
         f_GetProject();
@@ -255,6 +311,11 @@
                     pageNum = data.result.pageNum;
                     $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
                     f_InitPagination($("#div_page"));
+                    if(data.result.size == 0){
+                        $("#div_none").show();
+                    }else{
+                        $("#div_none").hide();
+                    }
                     if (vueContent == undefined) {
                         vueContent = new Vue({
                             el: '#div_content',
@@ -277,7 +338,12 @@
     //翻页回调函数
     function f_PageCallBack(newPage) {
         pageNum = newPage;
-        f_GetProject();
+        if(isall == 1){
+            f_GetProject();
+        }else{
+            f_GetAllProject();
+        }
+
     }
 
     /*]]>*/

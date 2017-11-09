@@ -105,4 +105,35 @@ public class SmsServiceImpl implements ISmsService {
         }
     }
 
+
+    //检查验证码是否有效
+    @Override
+    public ResponseDto CheckCode(String mobile,String code,long templateId) {
+        Sms tempSms=new Sms();
+        tempSms.setMobile(mobile);
+        tempSms.setSmsTemplateId(templateId);
+        Sms resultSms=smsMapper.selectSmsByMobile(tempSms);
+        if (resultSms==null){
+            return new ResponseDto(400,"individual request");
+        }
+        if (resultSms.getEnable()==0){
+            return new ResponseDto(401,"invalid sms");
+        }
+        if (resultSms.getInvalidTime().getTime()<new Date().getTime()){
+            return new ResponseDto(402,"sms is expired");
+        }
+        if (!resultSms.getCode().equals(code)){
+            return new ResponseDto(403,"code error");
+        }else{
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    resultSms.setEnable(0);
+                    smsMapper.updateSmsStatus(resultSms);
+                }
+            }).start();
+            return new ResponseDto(200,"success");
+        }
+    }
+
 }
