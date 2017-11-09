@@ -11,6 +11,8 @@
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
+    <!--<link th:href="@{/css/index/index.css}" rel="stylesheet" type="text/css"/>-->
+
     <style type="text/css">
         * {
             font-family: 微软雅黑;
@@ -137,6 +139,13 @@
             border: 2px #d0c4c4 solid;
         }
 
+        #other_2 {
+            margin: 2px;
+            padding: 4px;
+            margin-top: 20px;
+            border: 2px #d0c4c4 solid;
+        }
+
         .ipt_money {
             outline: none;
             border: none;
@@ -229,6 +238,16 @@
 
         .money_2 {
             border: 2px #e41620 solid;
+        }
+
+        .money_da{
+            margin: 3px;
+            padding: 2px;
+            margin-bottom: 13px;
+            line-height: 24px;
+            width: 39px;
+            height: 30px;
+            display: inline-block;
         }
 
         .donate_msg {
@@ -530,6 +549,10 @@
 
             <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
+
+
+
+
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
                     <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount" class="order_fund" style=""></span></span>
@@ -598,11 +621,111 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="text" id="ipt_dnt_mobile"/></div>
-                <div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;
-                    <input type="number" id="ipt_dnt_amount"/>
+
+                <div  style="clear: both;">
+                    <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
+                    <div style="margin-bottom:10px;">
+                        <span class="money_da span_donation money_1">&yen;1千</span>
+                        <span class="money_da span_donation money_1">&yen;2千</span>
+                        <span class="money_da span_donation money_1">&yen;5千</span>
+                        <span class="money_da span_donation money_1">&yen;8千</span>
+                        <span class="money_da span_donation money_1">&yen;1万</span>
+                        <br/>
+                        <span  class="money_da span_donation money_1">&yen;2万</span>
+
+                        <span id="other_2" class="span_donation money_1"><span>其他：</span>
+                            <input type="text" class="tx_yuan"
+                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 132px"
+                                   value=""/></span>
+                    </div>
                 </div>
+
+                <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                    <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
+                <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
+                    <!--<input type="number" id="ipt_dnt_amount"/>-->
+                <!--</div>-->
+                <div style="margin-top:10px;clear: both;">
+                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step2" data-dismiss="model">下一步</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--大额捐赠弹出层第二步-->
+<div class="model fade" id="div_de_donate_step2" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
+     aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: 450px">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" style="width: 100%;text-align: center;">
+                    请输入您的联系方式
+                </h4>
+            </div>
+
+            <div class="model-body" style="text-align: center">
+
+                <div  style="clear: both;">
+                    <div class="row">
+                        <span class="col_sm_4" style="">手机：
+                        </span>
+
+                        <span class="col_sm_6">
+                            <input type="text" id="ipt_dnt_mobile"/>
+                        </span>
+
+                        <span class="col_sm_2">
+                            <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">发送验证码</button>
+                        </span>
+                    </div>
+
+                    <div style="width:100%;margin-top:20px;">验证码：&nbsp;
+                    <input type="number" id="ipt_dnt_amount"/>
+                    </div>
+                </div>
+
+                <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
+                <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
+                <!--<input type="number" id="ipt_dnt_amount"/>-->
+                <!--</div>-->
+                <div style="margin-top:10px;clear: both;">
+                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step3" data-dismiss="model">下一步</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--大额捐赠弹出层第三步-->
+<div class="model fade" id="div_de_donate_step3" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
+     aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: 450px">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" style="width: 100%;text-align: center;">
+                    请输入您的联系方式
+                </h4>
+            </div>
+
+            <div class="model-body" style="text-align: center">
+
+                <div  style="clear: both;">
+
+                </div>
+
+                <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
+                <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
+                <!--<input type="number" id="ipt_dnt_amount"/>-->
+                <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
                     <button class="btn_submit button">确认捐赠</button>
                 </div>
@@ -610,6 +733,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 <!--扫码成功弹出层-->
 
@@ -640,6 +766,9 @@
 <!--全局JS-->
 <script th:src="@{/plugin/banner/js.js}"></script>
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
+
+<!--&lt;!&ndash;捐赠js&ndash;&gt;-->
+<!--<script th:src="@{/js/donate/donate.js}"></script>-->
 <!--页面JS-->
 <!--##IMPORTANT 此处加上th:inline是为了在JS中使用模板引擎-->
 <script type="text/javascript" th:inline="javascript">
@@ -667,17 +796,19 @@
             $("#ipt_dnt_mobile").val(memberInfo.mobile);
         }
 
-        if (window.WebSocket) {
-            console.log('This browser supports WebSocket');
-        } else {
-            console.log('This browser does not supports WebSocket');
-        }
+//        if (window.WebSocket) {
+//            console.log('This browser supports WebSocket');
+//        } else {
+//            console.log('This browser does not supports WebSocket');
+//        }
+//
+//        if (window.SocketJs) {
+//            console.log('This browser supports SocketJs');
+//        } else {
+//            console.log('This browser does not supports SocketJs');
+//        }
 
-        if (window.SocketJs) {
-            console.log('This browser supports SocketJs');
-        } else {
-            console.log('This browser does not supports SocketJs');
-        }
+//        f_loginValidate();
 
     });
 
@@ -1071,6 +1202,8 @@
         }
         Countdown();
     })
+
+
     /*]]>*/
 </script>
 </body>

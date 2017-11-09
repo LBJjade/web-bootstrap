@@ -213,6 +213,7 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public int UpdatePw(String newPw, String mobile) {
+        newPw = HashUtil.GetPassword(newPw);
         int result = memberMapper.UpdatePw(newPw,mobile);
         return result;
     }

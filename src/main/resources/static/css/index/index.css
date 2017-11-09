@@ -1,0 +1,316 @@
+* {
+    font-family: 微软雅黑;
+}
+
+#div_total {
+    height: 400px;
+    margin-top: 10px;
+    border: 1px #e9e9e9 solid;
+}
+
+#ul_total {
+    list-style: none;
+}
+
+.left_item {
+    width: 900px;
+}
+
+.div_project {
+    height: 145px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.hr_10 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.right_panel {
+    margin-top: 10px;
+    border: 1px #e9e9e9 solid;
+}
+
+#div_recent {
+    height: 402px;
+}
+
+#div_recent img {
+    float: left;
+}
+
+#div_project {
+    height: 349px;
+}
+
+#div_project img {
+    height: 40px;
+    width: 40px;
+    float: left;
+}
+
+#div_question {
+    height: 200px;
+}
+
+.recommend_item {
+    height: 40px;
+    padding-bottom: 45px;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 40px;
+    margin-bottom: 0px;
+    border-bottom: 1px solid #E4E4E4;
+}
+
+.recommend_item a {
+    color: #000000;
+}
+
+.recommend_item:hover {
+    background-color: #EFF8F8;
+}
+
+.recommend_item_word {
+    padding-left: 45px;
+}
+
+.recommend_item_info {
+    padding-left: 10px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 140px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    height: auto;
+    white-space: normal;
+}
+
+#ul_total input {
+    border: 1px solid;
+    width: 215px;
+    font-size: 24px;
+    color: #ffa701;
+    text-align: right;
+    padding-right: 5px;
+}
+
+#ul_total p {
+    font-size: 15px;
+}
+
+#ul_total li {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+#div_question p {
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+#other {
+    margin: 2px;
+    padding: 2px;
+    margin-top: 20px;
+    border: 2px #d0c4c4 solid;
+}
+
+#other_2 {
+    margin: 2px;
+    padding: 4px;
+    margin-top: 20px;
+    border: 2px #d0c4c4 solid;
+}
+
+.ipt_money {
+    outline: none;
+    border: none;
+    text-align: right;
+    width: 150px
+}
+
+.item_time {
+    float: right;
+    color: #969696;
+    font-size: 12px;
+}
+
+.projectName {
+    margin-left: 15px;
+}
+
+.item_projectName {
+    color: #000000;
+}
+
+.info_button {
+    font-size: 12px;
+    text-align: center;
+    background-color: #fcfcfc;
+    border-color: #f0f0f0;
+    border-radius: 0px;
+    border-style: solid;
+    border-width: 1px;
+    color: #00a0e9;
+    min-width: 86px;
+    height: 30px;
+}
+
+.item_summary {
+    padding-top: 8px;
+    padding-bottom: 10px;
+    margin-left: 255px;
+    color: #969696;
+}
+
+.donate_button {
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100px;
+    height: 35px;
+    background-color: #e41620;
+    color: #FFFFFF;
+    border: none;
+    margin-top: 13px;
+}
+
+/*去掉输入框中的加减符号*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0;
+}
+
+.donate {
+    margin: 2px;
+    padding: 2px;
+    border: 2px #d0c4c4 solid;
+}
+
+.button {
+    border-radius: 5px;
+    font-size: 16px;
+    width: 100px;
+    height: 35px;
+    background-color: #e41620;
+    color: #FFFFFF;
+    border: none;
+    margin-top: 10px;
+}
+
+.money {
+    margin: 2px;
+    padding: 2px;
+    margin-bottom: 13px;
+    line-height: 20px;
+    width: 39px;
+    height: 26px;
+    display: inline-block;
+}
+
+.money_1 {
+    border: 2px #d0c4c4 solid;
+}
+
+.money_2 {
+    border: 2px #e41620 solid;
+}
+
+.money_da{
+    margin: 3px;
+    padding: 2px;
+    margin-bottom: 13px;
+    line-height: 24px;
+    width: 39px;
+    height: 30px;
+    display: inline-block;
+}
+
+.donate_msg {
+    font-family: 微软雅黑;
+    margin: 38px;
+    color: #403c3d;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 63px;
+}
+
+.donate_msg span {
+    font-family: 微软雅黑;
+    color: #e4393c;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 63px;
+}
+
+.code_time {
+    font-family: 微软雅黑;
+    margin: 38px;
+    color: #403c3d;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: -16px;
+}
+
+.close:focus, .close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+button.close_qr {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0;
+}
+
+.close_qr {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #928080;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: 0.2;
+}
+
+.close_qr:hover {
+    color: #000;
+}
+
+.fresh {
+    position: absolute;
+    left: 60px;
+    top: 3px;
+    z-index: -1;
+}
+
+#fushImage {
+    height: auto;
+    width: auto;
+}
+
+.code_lost {
+    color: #272323;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.qrCodeImageId {
+    filter: alpha(Opacity=80);
+    -moz-opacity: 0.5;
+    opacity: 0.2;
+}

@@ -96,6 +96,21 @@ public class ProjectController extends BaseController {
         }
     }
 
+    /**
+     * 获取全部项目列表
+     */
+    @PostMapping(value = "/project")
+    @ResponseBody
+    public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageNum, @RequestParam int pageSize) {
+        if (pageNum<=0){
+            pageNum=1;
+        }
+        if (pageSize>50||pageSize<=0){
+            pageSize=10;
+        }
+        return ResponseDto.GetResponse(200,"success",projectService.GetProjectList(pageNum,pageSize));
+    }
+
     @PostMapping("/relative")
     @ResponseBody
     public ResponseDto GetRelativeProject(HttpServletRequest request,@RequestParam long tid,@RequestParam int nums,@RequestParam long pid){
