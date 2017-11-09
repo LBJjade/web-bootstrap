@@ -39,6 +39,7 @@
 
   <resultMap id="MemberProjectDetailMap" type="com.becheer.donation.model.extension.project.MemberProjectDetailExtension">
     <id column="id_" jdbcType="BIGINT" property="id" />
+    <result column="member_id" jdbcType="BIGINT" property="memberId" />
     <result column="project_name" jdbcType="VARCHAR" property="projectName" />
     <result column="project_id" jdbcType="BIGINT" property="projectId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
@@ -178,14 +179,14 @@
       c.begin_time,
       c.end_time,
       c.status,
-      c.a_sign_time
+      c.a_sign_time,
+      c.member_id
     FROM
     dnt_contract_project cp
     LEFT JOIN dnt_project p ON cp.project_id = p.id_
     LEFT JOIN dnt_contract c on cp.contract_id = c.id_
      WHERE
     cp.enable_=1 AND cp.id_=#{contractProjectId,jdbcType=BIGINT}
-
   </select>
 
 </mapper>

@@ -81,17 +81,12 @@ public class LoginController extends BaseController {
     @PostMapping("/logout")
     @ResponseBody
     public ResponseDto Logout(HttpServletRequest request,HttpServletResponse response){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
-            return MemberAuthFailed();
-        }else{
-            request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
-            Cookie cookie = new Cookie("member", null);
-            cookie.setMaxAge(0);
-            cookie.setPath("/");
-            response.addCookie(cookie);
-            return new ResponseDto(200,Message.LOGINOUT_SUCCESS);
-        }
+        request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
+        Cookie cookie = new Cookie("member", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        return new ResponseDto(200,Message.LOGINOUT_SUCCESS);
     }
 
     @PostMapping("/autoLogin")

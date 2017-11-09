@@ -16,7 +16,9 @@ import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IProgressService;
 import com.becheer.donation.service.IProjectService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -60,6 +62,8 @@ public class HomeAppealController extends BaseController {
         try {
             MemberProjectDetailExtension memberProjectDetailExtension=projectService.GetMemberProjectDetail(contractProjectId);
             if (memberProjectDetailExtension==null){
+                return render_404();
+            }else if(memberProjectDetailExtension.getMemberId()!=GetCurrentUser(request).getMemberId()) {
                 return render_404();
             }else{
                 request.setAttribute("project",memberProjectDetailExtension);
@@ -120,6 +124,10 @@ public class HomeAppealController extends BaseController {
             return MemberAuthFailed();
         }
         try {
+            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
+            if (appeal==null){
+                return MemberAuthFailed();
+            }
             List<ProgressExtension> result=progressService.GetAllProgress(appealId,"dnt_appeal");
             return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_SUCCESS,result);
         }catch(Exception ex){
@@ -137,6 +145,19 @@ public class HomeAppealController extends BaseController {
             if (currentMember==null){
                 return MemberAuthFailed();
             }
+            if (StringUtil.isNull(title)){
+                return new ResponseDto(400, Message.SUBMIT_APPEAL_TITLE_NULL);
+            }
+            if (StringUtil.isNull(method)){
+                return new ResponseDto(400, Message.SUBMIT_APPEAL_METHOD_NULL);
+            }
+            if (StringUtil.isNull(content)){
+                return new ResponseDto(400, Message.SUBMIT_APPEAL_CONTENT_NULL);
+            }
+            if (contractProjectId==0||projectId==0){
+                return new ResponseDto(400,Message.SUBMIT_APPEAL_ID_NULL);
+            }
+            //TODO 还需要检查合同是否属于该会员，合同项目是否属于该会员
             long memberId=currentMember.memberId;
             appealService.add(title,method,content,contractProjectId,projectId,memberId);
             return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);

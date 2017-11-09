@@ -73,6 +73,10 @@ public class HomeContractController extends BaseController {
         request.setAttribute("config", fileConfig);
         try{
             MemberContractDetailExtension memberContractDetailExtension=contractService.GetMemberContractDetail(contractId);
+            MemberSessionExtension currentMember=GetCurrentUser(request);
+            if (memberContractDetailExtension.getMemberId()!=currentMember.getMemberId()){
+                return render_404();
+            }
             if (memberContractDetailExtension==null){
                 return render_404();
             }else{
@@ -93,6 +97,10 @@ public class HomeContractController extends BaseController {
             return MemberAuthFailed();
         }
         try {
+            MemberContractContentExtension contract=contractService.GetContractContent(contractId);
+            if (contract.getMemberId()!=currentMember.getMemberId()){
+                return MemberAuthFailed();
+            }
             List<PaymentPlanExtension> result=paymentPlanService.GetPaymentPlan(contractId);
             return new ResponseDto(200, Message.MEMBER_GET_PAYMENT_PLAN_SUCCESS,result);
         }catch(Exception ex){
@@ -105,7 +113,11 @@ public class HomeContractController extends BaseController {
     @GetMapping(value = "/content/{contractId}")
     public String GetContractContent(HttpServletRequest request,@PathVariable long contractId) {
         try{
+            MemberSessionExtension currentMember=GetCurrentUser(request);
             MemberContractContentExtension result=contractService.GetContractContent(contractId);
+            if (result.getMemberId()!=currentMember.getMemberId()){
+                return render_404();
+            }
             if (result==null){
                 return render_404();
             }else{
@@ -123,6 +135,10 @@ public class HomeContractController extends BaseController {
     public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId){
         MemberSessionExtension currentMember=GetCurrentUser(request);
         if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        MemberContractContentExtension contract=contractService.GetContractContent(contractId);
+        if (contract.getMemberId()!=currentMember.getMemberId()){
             return MemberAuthFailed();
         }
         try {
