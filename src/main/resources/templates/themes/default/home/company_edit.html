@@ -21,26 +21,11 @@
             text-align: center;
         }
 
+
         #div_avator {
-            width: 250px;
-            height: 300px;
             border-right: 1px #ccc dashed;
-            text-align: center;
-            float: left;
         }
 
-        #div_content_info {
-            width: 700px;
-            float: left;
-            padding-top: 20px;
-        }
-
-        #table_content_info {
-            width: 70%;
-            text-align: left;
-            margin-left: 120px;
-            line-height: 50px;
-        }
 
         #table_content_info td {
             border-bottom: 1px #ccc dashed;
@@ -57,6 +42,13 @@
             height: 120px !important;
             position: absolute;
         }
+
+        .div_head {
+            height: 300px;
+            border: 1px solid #e4eef7;
+            width: 286px;
+        }
+
     </style>
 </head>
 <body>
@@ -85,27 +77,37 @@
                 </div>
             </div>
             <div id="div_content">
-                <div id="div_avator">
-                    <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
-                    <br/>
-                    <br/>
-                    <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
-                </div>
+                <form id="defaultForm_2" method="post" class="form-horizontal">
+                    <div id="div_avator" class="col-sm-6">
+                        <div class="div_head form-group" style="margin-left: 120px;">
+                            <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                            <br/>
+                            <br/>
+                            <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
+                        </div>
 
-                <div id="div_content_info">
-                    <table id="table_content_info">
-                        <tr>
-                            <td>公司名称：</td>
-                            <td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td>
-                        </tr>
-                        <tr>
-                            <td>组织机构代码：</td>
-                            <td><input type="text" id="ipt_code" th:value="${member.getOrganizationCode()}"/></td>
-                        </tr>
-                        <tr>
-                            <td>公司属性：</td>
-                            <td>
-                                <select id="ipt_type" class="form-control">
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">公司名称：</label>
+                            <div class="col-lg-8">
+                                <input type="text" ireadonly="readonly" id="ipt_name" th:value="${member.getName()}"
+                                       class="form-control" name="ipt_name" placeholder="公司名称"/>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">组织机构代码：</label>
+                            <div class="col-lg-8">
+                                <input type="text" id="ipt_code" th:value="${member.getOrganizationCode()}" class="form-control" name="ipt_code" placeholder="组织机构代码"/>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">公司属性：</label>
+                            <div class="col-lg-8">
+                                <select class=" form-control" id="ipt_sex">
                                     <option value="0">请选择</option>
                                     <option value="国有企业" th:selected='${member.getOrganizationType()=="国有企业"}'>国有企业
                                     </option>
@@ -114,30 +116,44 @@
                                     <option value="合资企业" th:selected='${member.getOrganizationType()=="合资企业"}'>合资企业
                                     </option>
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>营业执照：</td>
-                            <td>
-                                <input type="file" id="ipt_license" class="input_img" onchange="f_preImg()" accept="image/png,image/jpeg"/>
-                                <img id="img_license"
-                                     th:src="${config.getFileRoot()+(member.getLicense()==null?'image/license/license.png':member.getLicense())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
-                                     height="120" width="120" style="margin-bottom: 10px"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>曾参与的公益项目：</td>
-                            <td><textarea id="ipt_project" class="form-control" rows="5"
-                                          style="margin: 10px 0px 10px 0px;"></textarea></td>
-                        </tr>
-                        <tr>
-                            <td>公司简介：</td>
-                            <td><textarea id="ipt_summary" class="form-control" rows="5"
-                                          style="margin: 10px 0px 10px 0px;"></textarea></td>
-                        </tr>
-                    </table>
-                    <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
-                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="div_content_info" class="col-sm-6">
+                            <div class="form-group">
+                                <div>
+                                    <label class="col-lg-3 control-label">营业执照：</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="div_img col-lg-8 col-lg-offset-2">
+                                    <label for="ipt_license"class="col-lg-3 btn btn-info">上传</label>
+                                    <div class="col-lg-8">
+                                        <<input type="file" id="ipt_license" name="ipt_license" class="input_img" onchange="f_preImg()" accept="image/png,image/jpeg"/>
+                                        <img id="img_license"
+                                             th:src="${config.getFileRoot()+(member.getLicense()==null?'image/license/license.png':member.getLicense())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
+                                             height="120" width="120" style="margin-bottom: 10px"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">曾参与的公益项目：</label>
+                                <div class="col-lg-8">
+                                <textarea id="ipt_project" class="form-control col-lg-8" rows="5"
+                                          style="margin: 10px 0px 10px 0px;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-lg-3 control-label">公司简介：</label>
+                                <div class="col-lg-8">
+                                <textarea id="ipt_summary" class="form-control" rows="5"
+                                          style="margin: 10px 0px 10px 0px;"></textarea>
+                                </div>
+                            </div>
+                        <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -160,6 +176,44 @@
     $("#ipt_summary").val(memberSummary);
 
     var license = "";
+
+
+    //表单验证
+    $(document).ready(function() {
+        $('#defaultForm_2').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                ipt_name: {
+                    message: 'The phone is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '公司名称不能为空'
+                        }
+                    }
+                },
+                ipt_code: {
+                    validators: {
+                        notEmpty: {
+                            message: '组织机构代码不能为空'
+                        }
+                    }
+                },
+                ipt_sex: {
+                    validators: {
+                        notEmpty: {
+                            message: '公司属性不能为空'
+                        }
+                    }
+                }
+            }
+        });
+    });
+
 
     /**
      * 图片预览

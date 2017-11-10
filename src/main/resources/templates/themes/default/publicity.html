@@ -199,10 +199,6 @@
 <div th:replace="themes/default/footer::footer"></div>
 
 <!--全局JS-->
-<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/plugin/layer/layer.js}"></script>
-<script th:src="@{/plugin/vue/vue.min.js}"></script>
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
@@ -214,6 +210,54 @@
 
     $(document).ready(function () {
         f_getArticleType();
+        $('#defaultForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                phone: {
+                    message: 'The phone is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: '手机号码不能为空'
+                        },
+                        regexp:{
+                            regexp : /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
+                            message: '手机号码格式不正确'
+                        }
+                    }
+                },
+                pw: {
+//                    container: '#firstNameMessage',
+                    validators: {
+                        notEmpty: {
+                            message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            message: '密码不能少于6位'
+                        }
+                    }
+                },
+                code: {
+//                    container: '.lastNameMessage',
+                    validators: {
+                        notEmpty: {
+                            message: '验证码不能为空'
+                        },
+                        stringLength: {
+                            min: 4,
+                            max: 4,
+                            message: '验证码格式不正确'
+                        }
+                    }
+                }
+
+            }
+        });
     });
 
     function f_setArticleType(item) {
