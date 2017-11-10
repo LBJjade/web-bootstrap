@@ -55,6 +55,7 @@ public class StringUtil {
         }
     }
 
+    //检查字符串是否为 NULL ,"","    "
     public static boolean isNull(String str){
         if (str==null){
             return true;
@@ -66,6 +67,25 @@ public class StringUtil {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 检查将文件转换为Base64字符串后，文件是否大于限定大小
+     * @param fileStr Base64字符串
+     * @param size 文件最大大小 单位B 非 byte
+     * @return
+     */
+    public static boolean checkBase64FileSize(String fileStr,int size){
+        fileStr=fileStr.substring(22);
+        int equalIndex= fileStr.indexOf('=');
+        if(fileStr.indexOf('=')>0)
+        {
+            fileStr=fileStr.substring(0, equalIndex);
+
+        }
+        int strLength=fileStr.length();
+        int fileLength=strLength-(strLength/8)*2;
+        return fileLength>size;
     }
 
 }

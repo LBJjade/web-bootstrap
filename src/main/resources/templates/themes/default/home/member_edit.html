@@ -119,6 +119,7 @@
                                 </div>
                                 <img id="img_f" th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
                                 <img id="img_b" th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
+                            <p>请选择身份证照片,单张图片照片过2M</p>
                             </td>
                         </tr>
                         <tr>
@@ -157,18 +158,25 @@
     var memberSummary= /*[[${member.getSummary()}]]*/;
     $("#ipt_project").val(memberProject);
     $("#ipt_summary").val(memberSummary);
+    var fileSize=2*1024*1024;
 
     var imgB="";
     var imgF="";
 
     function f_getFileUrl(sourceId) {
         var url;
-        if (navigator.userAgent.indexOf("MSIE")>=1) {
-            // IE
-            url = $('#'+sourceId).val();
-        } else {
-            //其他浏览器
-            url = window.URL.createObjectURL($("#"+sourceId).prop('files')[0]);
+
+        if ($("#" + sourceId).prop('files')[0].size > fileSize) {
+            layer.alert("请选择2M以内的图片");
+            url = ""
+        }else {
+            if (navigator.userAgent.indexOf("MSIE") >= 1) {
+                // IE
+                url = $('#' + sourceId).val();
+            } else {
+                //其他浏览器
+                url = window.URL.createObjectURL($("#" + sourceId).prop('files')[0]);
+            }
         }
         return url;
     }
@@ -178,8 +186,10 @@
      */
     function f_preImg(sourceId, targetId) {
         var url = f_getFileUrl(sourceId);
-        f_readAsDataURL(sourceId);
-        $('#'+targetId).attr("src",url);
+        if(url!=""){
+            f_readAsDataURL(sourceId);
+            $('#'+targetId).attr("src",url);
+        }
     }
 
     $(".btn_save").click(function () {

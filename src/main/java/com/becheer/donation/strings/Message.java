@@ -119,6 +119,8 @@ public class Message {
 
     public static final String MEMBER_AVATOR_NULL="请先选择头像";
 
+    public static final String MEMBER_IMG_OVERLIMIT="请选择2M以内的图片";
+
     /**
      * 我的消息页面
      */
