@@ -81,6 +81,15 @@ public class MemberInfoExtension implements Serializable {
     }
 
     public String getIdCard() {
+//        隐藏身份证号
+//        String changeIdCardFirst,changeIdCardSecond;
+//        changeIdCardFirst=idCard.substring(0,2);
+//        changeIdCardSecond=idCard.substring(idCard.length()-2,idCard.length());
+//        String s="*";
+//        for (int i=0;i<;i++){
+//           s=s+s;
+//        }
+//        idCard= changeIdCardFirst+s+changeIdCardSecond;
         return idCard;
     }
 

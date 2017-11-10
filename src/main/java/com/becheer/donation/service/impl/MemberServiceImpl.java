@@ -92,7 +92,16 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setMobile(member.getMobile());
         if (member.getRole()==1){
             //个人
-            memberInfoExtension.setIdCard(member.getIdCard());
+
+            String before=memberMapper.SelectIdCardBeforeById(memberId);
+            String after=memberMapper.SelectIdCardAfterById(memberId);
+            String result="";
+            String code= "*";
+            for(int i=1;i<13;i++){
+                result=result+code;
+            }
+            result=before+result+after;
+            memberInfoExtension.setIdCard(result);
             memberInfoExtension.setSex(member.getSex());
             memberInfoExtension.setBirthday(member.getBirthday());
         }else if (member.getRole()==2){

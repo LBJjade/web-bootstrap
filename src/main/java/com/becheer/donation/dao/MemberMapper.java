@@ -22,4 +22,8 @@ public interface MemberMapper {
     int UpdatePw(String newPw,String mobile);
 
     int updateAvator(String avatorUrl,long memberId);
+
+    String SelectIdCardBeforeById(Long memberId);
+
+    String SelectIdCardAfterById(Long memberId);
 }

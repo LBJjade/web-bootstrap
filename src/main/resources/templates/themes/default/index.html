@@ -4,10 +4,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
-
     <title>广东省世纪爱心慈善基金会</title>
     <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
@@ -165,6 +163,7 @@
 
         .item_projectName {
             color: #000000;
+            font-size: 30px;
         }
 
         .info_button {
@@ -409,9 +408,10 @@
                     </a>
                     <span class="projectName">
                         <i class="fa fa-angle-right" aria-hidden="true"
-                           style="font-size: 30px;color: #999999;margin-right: 10px"/>
+                           style="font-size: 30px;color: #999999;margin-right: 10px"></i>
                         <a class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a>
                     </span>
+                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size:18px;color: #037270;margin-left: 5px;"></i>
                     <span class="item_time">
                         <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>
                         <span style="color:#c8c8c8;margin-right: 10px;">发布时间 ：</span>{{item.createTime}}</span>

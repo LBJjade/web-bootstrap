@@ -13,6 +13,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
+
         #div_menu {
             width: 200px;
             height: auto;
@@ -121,6 +122,10 @@
             float: right;
         }
 
+        .item_projectName {
+            color: #000000;
+            font-size: 30px;
+        }
     </style>
 </head>
 <body>
@@ -156,7 +161,7 @@
             <div id="div_navbar">
                 <ul>
                     <li>
-                        <a href="#"><i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px;"></i>首页</a>
+                        <a href=""><i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px;"></i>首页</a>
                     </li>
                     <li>>
                         <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
@@ -185,7 +190,9 @@
                     <div class="div_project_item_content">
                         <div class="project_name">
                             <span><i class="fa fa-angle-right" aria-hidden="true"
-                                     style="font-size: 25px;color: #999999;margin-right: 10px;"></i></span><span>{{item.projectName}}<i class="fa fa-picture-o" aria-hidden="true" style="font-size:18px;color: #037270;margin-left: 5px;"></i></span>
+                                     style="font-size: 30px;color: #999999;margin-right: 10px;"></i>
+                                  <a class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a>
+                            </span><i class="fa fa-picture-o" aria-hidden="true" style="font-size:18px;color: #037270;margin-left: 5px;"></i>
                             <span style="float: right ;color: #c8c8c8;">{{item.createTime}}</span>
                             <span style="color: #c8c8c8;float: right">
                             <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间：&nbsp;</span>
