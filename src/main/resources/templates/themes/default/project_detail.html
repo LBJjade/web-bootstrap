@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>项目详情_广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
@@ -174,7 +174,7 @@
         .info_name {
             width: 80px;
             display: inline-block;
-            text-align: left;
+            text-align: right;
         }
 
         .info_number {
@@ -379,12 +379,12 @@
                         <th:block th:text="${project.getProjectName()}"/>
                     </p>
                     <div class="info_ma">
-                        <p class="info" style="font-size: 15px;"><span class="info_name">项 目 时 间</span>：
+                        <p class="info" style="font-size: 15px;"><span class="info_name">项目时间</span>：
                             <th:block
                                     th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
                         </p>
                         <div class="center">
-                            <p class="info"><span class="info_name">目&nbsp;标&nbsp;金&nbsp;额</span>：&nbsp;<span
+                            <p class="info"><span class="info_name">目标金额</span>：&nbsp;<span
                                     class="info_number"><th:block th:text="${project.getProjectTargetAmount()}"/></span>&nbsp;元
                             </p>
                             <p class="info"><span class="info_name">已募集金额</span>：&nbsp;<span class="info_number"><th:block

@@ -4,6 +4,7 @@
 
     <resultMap id="MemberContractResultMap" type="com.becheer.donation.model.extension.contract.MemberContractExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
         <result column="a_sign_time" jdbcType="TIMESTAMP" property="signTime" />
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
@@ -13,6 +14,7 @@
 
     <resultMap id="MemberContractDetailResultMap" type="com.becheer.donation.model.extension.contract.MemberContractDetailExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
         <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
@@ -24,6 +26,7 @@
 
     <resultMap id="MemberContractContentResultMap" type="com.becheer.donation.model.extension.contract.MemberContractContentExtension">
         <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
         <result column="contract_no" jdbcType="VARCHAR" property="contractNo"/>
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
@@ -39,6 +42,7 @@
     <select id="SelectContractByMemberId" parameterType="java.lang.Long" resultMap="MemberContractResultMap">
         SELECT
             id_,
+            member_id,
             contract_name,
             a_sign_time,
             contract_amount,
@@ -51,6 +55,7 @@
     <select id="SelectContractDetail" parameterType="java.lang.Long" resultMap="MemberContractDetailResultMap">
         SELECT
             id_,
+            member_id,
             contract_name,
             contract_amount,
             donated_amount,
@@ -66,6 +71,7 @@
     <select id="SelectContractContent" parameterType="java.lang.Long" resultMap="MemberContractContentResultMap">
         SELECT
         id_,
+        member_id,
         contract_name,
         contract_amount,
         donated_amount,
@@ -89,4 +95,21 @@
             a_sign_time=NOW()
         WHERE id_=#{param1} AND member_id=#{param2} and `status` IN (5,6);
     </update>
+    
+    <select id="selectContractByContractProjectId" parameterType="java.lang.Long" resultMap="MemberContractDetailResultMap">
+        SELECT
+            id_,
+            member_id,
+            contract_name,
+            contract_amount,
+            donated_amount,
+            begin_time,
+            end_time,
+            a_sign_time,
+            enable_,
+            status
+        FROM dnt_contract
+        WHERE id_=(SELECT contract_id FROM dnt_contract_project WHERE id_ = #{contractProjectId,jdbcType=BIGINT} AND enable_ = 1)
+         AND enable_ = 1 AND status >= 5
+    </select>
 </mapper>

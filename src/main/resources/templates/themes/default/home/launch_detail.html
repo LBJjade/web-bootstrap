@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>发起申诉</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
@@ -32,40 +32,44 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">个人中心</a></li>
-                    <li><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">发起申诉</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p>发起申诉</p>
-                <hr/>
+                <div id="div_navbar" style="margin-top: 10px;margin-bottom: 17px;">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a  href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="/home/project">我参与的项目</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">项目详情</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">发起申诉</a></li>
+                    </ul>
+                </div>
             </div>
             <table class="table_member_content">
                 <tr>
-                    <td>申诉主题</td>
+                    <td>申诉主题：</td>
                     <td><input id="theme" type="text" class="form-control" style="width: 250px;height: 30px"/></td>
                 </tr>
                 <tr>
-                    <td>申诉项目</td>
+                    <td>申诉项目：</td>
                     <td><th:block th:text="${project.getProjectName()}"></th:block></td>
                 </tr>
                 <tr>
-                    <td>申诉合同</td>
+                    <td>申诉合同：</td>
                     <td><th:block th:text="${project.getContractName()}"></th:block></td>
                 </tr>
                 <tr>
-                    <td>申诉类型</td>
+                    <td>申诉类型：</td>
                     <td>
                         <select id="type" class="form-control" style="width: 250px;height: 32px">
                             <option>资金使用申诉</option>
@@ -75,7 +79,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>申诉内容</td>
+                    <td>申诉内容：</td>
                     <td>
                         <textarea id="main" class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px"
                                   rows="5"></textarea>

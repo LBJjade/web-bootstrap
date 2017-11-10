@@ -38,7 +38,7 @@ public class AppealServiceImpl implements IAppealService {
     }
 
     @Override
-    public  void add(String title,String method, String content,long contractProjectId,long projectId,long memberId) {
+    public  void InsertAppeal(String title,String method, String content,long contractProjectId,long projectId,long memberId) {
         AppealDetailExtension appealdetail=new AppealDetailExtension();
         appealdetail.setAppealTitle(title);
         appealdetail.setAppealMethod(method);
@@ -46,6 +46,6 @@ public class AppealServiceImpl implements IAppealService {
         appealdetail.setContractId(contractProjectId);
         appealdetail.setProjectId(projectId);
         appealdetail.setMemberId(memberId);
-        appealMapper.add(appealdetail);
+        appealMapper.InsertAppeal(appealdetail);
     }
 }

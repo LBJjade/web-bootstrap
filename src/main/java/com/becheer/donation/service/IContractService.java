@@ -23,4 +23,6 @@ public interface IContractService {
     MemberContractContentExtension GetContractContent(long contractId);
 
     ResponseDto UpdateContractStatuas(long contractId,long memberId);
+
+    MemberContractDetailExtension getContractByContractProjectId(long contractProjectId);
 }

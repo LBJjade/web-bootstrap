@@ -6,7 +6,7 @@
     <meta name="renderer" content="webkit"/>
 
     <title>广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
 
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -414,8 +414,8 @@
                     </span>
                     <span class="item_time">
                         <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>
-                        <span style="color:#c8c8c8;margin-right: 10px;">发布时间 :</span>{{item.createTime}}</span>
-                    <p class="item_summary"><span>摘要 : </span><span style=" color:#666666">{{item.summary}}</span></p>
+                        <span style="color:#c8c8c8;margin-right: 10px;">发布时间 ：</span>{{item.createTime}}</span>
+                    <p class="item_summary"><span>摘要 ： </span><span style=" color:#666666">{{item.summary}}</span></p>
                     <a style="float: right;" :href="'project/'+item.projectId" target="_blank">
                         <button class=" info_button">查看详情</button>
                     </a>
@@ -483,7 +483,7 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="float:left;margin-top: 10px;margin-left: 80px;">请选择项目类别：
+                <div style="float:left;margin-top: 10px;margin-left: 80px;"><span style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>
                     <select id="sel_project_type" onchange="f_GetProject()">
                         <option value="0">请选择项目类别</option>
                         <option v-for="item in items" id="name" :value="item.id">{{item.name}}</option>
@@ -491,7 +491,7 @@
                     <!--<input type="hidden" :value="item.name">-->
                 </div>
                 <div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">
-                    请&nbsp;&nbsp;选&nbsp;&nbsp;择&nbsp;&nbsp;项&nbsp;&nbsp;目:&nbsp;
+                    <span style="width:115px; display: inline-block; text-align: right;">请选择项目：</span>
                     <select id="sel_project" style="width: 124px;">
                         <option value="0">请选择项目类别</option>
                         <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>

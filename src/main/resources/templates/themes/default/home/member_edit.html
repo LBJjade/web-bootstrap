@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>编辑个人信息</title>
-    <link rel="shortcut icon" href="image/favicon.jpg"/>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
         #div_content {
             width: 985px;
@@ -93,24 +93,25 @@
 
 <div class="center-block" style="width: 1200px;">
     <div class="row">
-        <div class="col-sm-12">
-            <div id="div_navbar" style="margin-top: 10px">
-                <ul>
-                    <li><a href="#">首页</a></li>
-                    <li>><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">个人中心</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <p>编辑个人信息</p>
-                <hr/>
+                <div id="div_navbar"  style="margin-top: 10px;margin-bottom: 17px;">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="/home">我的信息</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="active"><a href="#">编辑个人信息</a></li>
+                    </ul>
+                </div>
             </div>
             <div id="div_content">
                 <form id="defaultForm_2" method="post" class="form-horizontal">

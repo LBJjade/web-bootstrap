@@ -29,6 +29,8 @@ public class IntentionExtension {
 
     private String remark;
 
+    private long memberId;
+
     public long getId() {
         return id;
     }
@@ -110,5 +112,13 @@ public class IntentionExtension {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(long memberId) {
+        this.memberId = memberId;
     }
 }

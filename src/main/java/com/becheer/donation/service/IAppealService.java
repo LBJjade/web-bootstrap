@@ -17,5 +17,5 @@ public interface IAppealService {
 
     MemberAppealDetailExtension GetMemberAppealDetail(long appealId,long memberId);
 
-    void add(String title,String method, String content,long contractProjectId,long projectId,long memberId);
+    void InsertAppeal(String title,String method, String content,long contractProjectId,long projectId,long memberId);
 }
