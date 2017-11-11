@@ -2,50 +2,54 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
     <title>申诉详情</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
     <style type="text/css">
-        .div_member_title p{
+        .div_member_title p {
             width: 100%;
         }
 
-        .div_member_title button{
+        .div_member_title button {
             float: right;
             margin-top: -8px;
         }
 
-        #div_appeal_content{
+        #div_appeal_content {
             margin-left: 20px;
             border-top: none;
         }
 
-        #table_content_info{
+        #table_content_info {
             width: 70%;
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
         }
-        #table_content_info td{
+
+        #table_content_info td {
             border-bottom: 1px #ccc dashed;
         }
 
-        #table_personal_info{
+        #table_personal_info {
             width: 70%;
             text-align: left;
             line-height: 35px;
             margin-left: 120px;
+            margin-bottom: 50px;
         }
-        #table_personal_info td{
+
+        #table_personal_info td {
             border-bottom: 1px #ccc dashed;
         }
-        #table_doc td{
+
+        #table_doc td {
             width: 250px;
         }
     </style>
@@ -60,7 +64,7 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <div id="div_navbar"  style="margin-top: 10px">
+                <div id="div_navbar" style="margin-top: 10px">
                     <ul>
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
@@ -79,24 +83,64 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="div_tab_info">
                         <table id="table_content_info">
-                            <tr><td>申诉主题：</td><td><th:block th:text="${appeal.getTitle()}"/></td></tr>
-                            <tr><td>申诉项目：</td><td>	<th:block th:text="${appeal.getProjectName()}"/></td></tr>
-                            <tr><td>申诉合同：</td><td><th:block th:text="${appeal.getContractName()}"/></td></tr>
-                            <tr><td>申诉类型：</td><td><th:block th:text="${appeal.getMethod()}"/></td></tr>
-                            <tr><td>申述状态：</td><td><th:block th:text="${appeal.getStatusText()}"/></td></tr>
-                            <tr><td>发起时间：</td><td><th:block th:text="${appeal.getCreateTime()}"/></td></tr>
+                            <tr>
+                                <td>申诉主题：</td>
+                                <td>
+                                    <th:block th:text="${appeal.getTitle()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>申诉项目：</td>
+                                <td>
+                                    <th:block th:text="${appeal.getProjectName()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>申诉合同：</td>
+                                <td>
+                                    <th:block th:text="${appeal.getContractName()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>申诉类型：</td>
+                                <td>
+                                    <th:block th:text="${appeal.getMethod()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>申述状态：</td>
+                                <td>
+                                    <th:block th:text="${appeal.getStatusText()}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>发起时间：</td>
+                                <td>
+                                    <th:block th:text="${appeal.getCreateTime()}"/>
+                                </td>
+                            </tr>
                             <tr>
                                 <td>申诉内容：</td>
                                 <td>
-                                    <textarea  readonly="readonly" id="taContent" class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px" rows="5"></textarea>
+                                    <textarea readonly="readonly" id="taContent" class="form-control"
+                                              style="margin-top: 10px;margin-bottom: 10px; width: 250px"
+                                              rows="5"></textarea>
                                 </td>
                             </tr>
                         </table>
                         <hr/>
                         <span style="margin-left: 20px">申诉进度：</span>
                         <table id="table_personal_info">
-                            <tr v-for="item in items"><td>{{item.createTime}}</td><td>{{item.title}}</td></tr>
-                            <tr><td colspan="2" style="padding-top: 10px;padding-bottom: 10px"><button style="margin-left: 120px" class="btn btn-info" id="btn_remind">催办</button><button class="btn btn-info" id="btn_cancel" style="margin-left: 40px">撤销申诉</button></td></tr>
+                            <tr v-for="item in items">
+                                <td>{{item.createTime}}</td>
+                                <td>{{item.title}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding-top: 10px;padding-bottom: 10px">
+                                    <button style="margin-left: 120px" class="btn btn-info" id="btn_remind">催办</button>
+                                    <button class="btn btn-info" id="btn_cancel" style="margin-left: 40px">撤销申诉</button>
+                                </td>
+                            </tr>
                         </table>
                         <hr/>
                     </div>
@@ -109,11 +153,11 @@
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
-<script type="text/javascript"  th:inline="javascript">
+<script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
 
-    var appealId=/*[[${appeal.getId()}]]*/;
-    var appealContent=/*[[${appeal.getContent()}]]*/;
+    var appealId =/*[[${appeal.getId()}]]*/;
+    var appealContent =/*[[${appeal.getContent()}]]*/;
     $("#taContent").val(appealContent);
     var vueContent;
 
@@ -124,13 +168,13 @@
 
     function f_GetProgress() {
         $.ajax({
-            url:'/home/appeal/progress',
-            data:{appealId:appealId},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
-                    vueContent=new Vue({
+            url: '/home/appeal/progress',
+            data: {appealId: appealId},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    vueContent = new Vue({
                         el: '#table_personal_info',
                         data: {
                             items: data.result
@@ -140,6 +184,7 @@
             }
         });
     }
+
     /*]]>*/
 </script>
 </body>
