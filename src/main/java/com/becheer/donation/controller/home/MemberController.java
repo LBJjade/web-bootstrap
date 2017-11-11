@@ -37,6 +37,7 @@ public class MemberController extends BaseController {
         if (currentMember==null){
             return MemberAuthFailed();
         }
+
         return memberService.GetMemberById(memberId);
     }
 
