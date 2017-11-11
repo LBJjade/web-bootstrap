@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
     <title>编辑个人信息</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
         #div_content{
             width: 985px;
-            height: 850px;
+            height: 1100px;
             border: 1px #eee solid;
             margin-left: 10px;
             padding-top: 30px;
@@ -42,6 +42,7 @@
         }
         #table_content_info td{
             border-bottom: 1px #ccc dashed;
+            padding: 9px;
         }
         #table_content_info input{
             height: 25px;
@@ -67,6 +68,15 @@
             /*position: absolute;*/
             /*left: 120px;*/
         }
+
+        .error {
+            color: red;
+            display: none;
+            margin-top: -7px;
+            margin-right: 173px;
+            margin-bottom: -10px;
+        }
+
     </style>
 </head>
 <body>
@@ -102,41 +112,88 @@
                     <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
                 </div>
                 <div id="div_content_info">
-                    <table id="table_content_info">
-                        <tr><td>手机号码：</td><td><input type="text" readonly="readonly" id="ipt_mobile" th:value="${member.getMobile()}"/></td></tr>
-                        <tr><td>真实姓名：</td><td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td></tr>
-                        <tr><td>身份证号：</td><td><input type="text" id="ipt_id_card" th:value="${member.getIdCard()}"/></td></tr>
-                        <tr><td style="border: none">身份证：</td>
-                            <td style="border: none">
-                                <span>正面</span><span style="margin-left: 95px">背面</span>
-                            </td>
-                        </tr>
-                        <tr><td></td>
-                            <td>
-                                <div class="div_img">
-                                    <input type="file" id="ipt_f" class="input_img" onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg" />
-                                    <input type="file" id="ipf_b" class="input_img input_img2" onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg" />
-                                </div>
-                                <img id="img_f" th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
-                                <img id="img_b" th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
-                                <p>请选择身份证照片,单张图片照片过2M</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>性别：</td>
-                            <td>
-                                <select class ="form-control" id="ipt_sex">
-                                    <option value="0">请选择</option>
-                                    <option value="1" th:selected="${member.getSex()==1}">男</option>
-                                    <option value="2" th:selected="${member.getSex()==2}">女</option>
-                                    <option value="3" th:selected="${member.getSex()==3}">保密</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr><td>生日：</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/></td></tr>
-                        <tr><td>曾参与的公益项目：</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
-                        <tr><td>个人说明：</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
-                    </table>
+                    <form id="defaultForm_2" method="post" class="form-horizontal">
+                        <table id="table_content_info">
+                            <tr>
+                                <td>手机号码：</td>
+                                <td>
+                                    <input type="text"  id="ipt_mobile" name="ipt_mobile"
+                                           th:value="${member.getMobile()}"/>
+                                    <div class="mobile_error error" style="margin-top: -18px;">手机号码格式不正确</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>真实姓名：</td>
+                                <td>
+                                    <input type="text" id="ipt_name" class="form-control" name="ipt_name"
+                                           th:value="${member.getName()}"/>
+                                    <div class="name_error error">真实姓名不能为空</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>身份证号：</td>
+                                <td>
+                                    <input type="text" id="ipt_id_card" class="form-control" name="ipt_id_card"
+                                           th:value="${member.getIdCard()}"/>
+                                    <div class="id_card_error error" style="margin-right: 210px;">身份证号不能为空</div>
+                                    <div class="id_card_error_0 error" style="margin-right: 193px;">身份证号格式错误</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">身份证：</td>
+                                <td style="border: none">
+                                    <span>正面</span><span style="margin-left: 95px">背面</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <div class="div_img">
+                                        <input type="file" id="ipt_f" class="input_img"
+                                               onchange="f_preImg(this.id,'img_f')"
+                                               accept="image/png,image/jpeg"/>
+                                        <input type="file" id="ipf_b" class="input_img input_img2"
+                                               onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg"/>
+                                    </div>
+                                    <img id="img_f"
+                                         th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
+                                         height="120" width="120" style="margin-bottom: 10px"/>
+                                    <img id="img_b"
+                                         th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
+                                         height="120" width="120" style="margin-bottom: 10px"/>
+                                    <p>请选择身份证照片,单张图片照片过2M</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>性别：</td>
+                                <td>
+                                    <select class="form-control" id="ipt_sex">
+                                        <option value="0">请选择</option>
+                                        <option value="1" th:selected="${member.getSex()==1}">男</option>
+                                        <option value="2" th:selected="${member.getSex()==2}">女</option>
+                                        <option value="3" th:selected="${member.getSex()==3}">保密</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>生日：</td>
+                                <td><input type="text" id="ipt_birthday" class="form-control"
+                                           style="height: 34px;width: 100%"
+                                           th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>曾参与的公益项目：</td>
+                                <td><textarea id="ipt_project" class="form-control" rows="5"
+                                              style="margin: 10px 0px 10px 0px;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>个人说明：</td>
+                                <td><textarea id="ipt_summary" class="form-control" rows="5"
+                                              style="margin: 10px 0px 10px 0px;"></textarea></td>
+                            </tr>
+                        </table>
+                    </form>
                     <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
                 </div>
             </div>
@@ -186,27 +243,108 @@
      */
     function f_preImg(sourceId, targetId) {
         var url = f_getFileUrl(sourceId);
-        f_readAsDataURL(sourceId);
-        $('#' + targetId).attr("src", url);
+        if(url!=""){
+            f_readAsDataURL(sourceId);
+            $('#'+targetId).attr("src",url);
+        }
     }
 
+    //    $(document).ready(function () {
+    //        $('#defaultForm_2').bootstrapValidator({
+    //            message: 'This value is not valid',
+    //            feedbackIcons: {
+    //                valid: 'glyphicon glyphicon-ok',
+    //                invalid: 'glyphicon glyphicon-remove',
+    //                validating: 'glyphicon glyphicon-refresh'
+    //            },
+    //            fields: {
+    //                ipt_name: {
+    //                    message: 'The phone is not valid',
+    //                    validators: {
+    //                        notEmpty: {
+    //                            message: '姓名不能为空'
+    //                        }
+    //                    }
+    //                },
+    //                ipt_id_card: {
+    //                    validators: {
+    //                        notEmpty: {
+    //                            message: '身份证号码不能为空'
+    //                        },
+    //                        regexp: {
+    //                            regexp: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+    //                            message: '身份证格式不正确'
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //        });
+    //    });
+
+
+    //手机号码
+    $("#ipt_mobile").blur(function () {
+        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        if (!mobile.test($(".ipt_mobile").val())) {
+            $(".mobile_error").show();
+        } else {
+            $(".mobile_error").hide();
+        }
+    })
+
+    //身份证号
+    $("#ipt_id_card").blur(function () {
+        var id_card = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if ($("#ipt_id_card").val() == "") {
+            $(".id_card_error_0").hide();
+            $(".id_card_error").show();
+        } else {
+            $(".id_card_error").hide();
+            if (!id_card.test($("#ipt_id_card").val())) {
+                $(".id_card_error_0").show();
+            } else {
+                $(".id_card_error_0").hide();
+            }
+        }
+    })
+
+    //真实姓名
+    $("#ipt_name").blur(function () {
+        if ($("#ipt_name").val() == "") {
+            $(".name_error").show();
+        } else {
+            $(".name_error").hide();
+        }
+    })
+
+
     $(".btn_save").click(function () {
-        var memberName=$("#ipt_name").val();
-        var mobile=$("#ipt_mobile").val();
-        var idCard=$("#ipt_id_card").val();
-        var sex=$("#ipt_sex").val();
-        var birthday=$("#ipt_birthday").val();
-        var project=$("#ipt_project").val();
-        var summary=$("#ipt_summary").val();
+        var memberName = $("#ipt_name").val();
+        var mobile = $("#ipt_mobile").val();
+        var idCard = $("#ipt_id_card").val();
+        var sex = $("#ipt_sex").val();
+        var birthday = $("#ipt_birthday").val();
+        var project = $("#ipt_project").val();
+        var summary = $("#ipt_summary").val();
 
         $.ajax({
-            url:'/home/member/submit',
-            data:{name:memberName,mobile:mobile,idCard:idCard,sex:sex,birthday:birthday,project:project,summary:summary,idCardFront:imgF,idCardBack:imgB},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if (data.code===200){
-                    layer.alert(data.msg,function () {
+            url: '/home/member/submit',
+            data: {
+                name: memberName,
+                mobile: mobile,
+                idCard: idCard,
+                sex: sex,
+                birthday: birthday,
+                project: project,
+                summary: summary,
+                idCardFront: imgF,
+                idCardBack: imgB
+            },
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    layer.alert(data.msg, function () {
                         window.location.href = "/home";
                     });
                     setTimeout(function(){

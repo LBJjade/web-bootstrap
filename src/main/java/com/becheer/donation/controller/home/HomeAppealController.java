@@ -48,28 +48,28 @@ public class HomeAppealController extends BaseController {
     @Resource
     IProjectService projectService;
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping("")
-    public String View(HttpServletRequest request){
+    public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
         return this.render("/home/appeal");
     }
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping("/add/{contractProjectId}")
-    public String ViewDetail(HttpServletRequest request,@PathVariable long contractProjectId){
+    public String ViewDetail(HttpServletRequest request, @PathVariable long contractProjectId) {
         request.setAttribute("config", fileConfig);
         try {
-            MemberProjectDetailExtension memberProjectDetailExtension=projectService.GetMemberProjectDetail(contractProjectId);
-            if (memberProjectDetailExtension==null){
+            MemberProjectDetailExtension memberProjectDetailExtension = projectService.GetMemberProjectDetail(contractProjectId);
+            if (memberProjectDetailExtension == null) {
                 return render_404();
-            }else if(memberProjectDetailExtension.getMemberId()!=GetCurrentUser(request).getMemberId()) {
+            } else if (memberProjectDetailExtension.getMemberId() != GetCurrentUser(request).getMemberId()) {
                 return render_404();
-            }else{
-                request.setAttribute("project",memberProjectDetailExtension);
-                return this.render("/home/launch_detail");
+            } else {
+                request.setAttribute("project", memberProjectDetailExtension);
+                return this.render("/home/appeal_edit");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("ViewDetail", ex);
             return render_500();
         }
@@ -77,40 +77,40 @@ public class HomeAppealController extends BaseController {
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseDto GetAppealList(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetAppealList(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        if (pageSize<1||pageSize>50){
-            pageSize=5;
+        if (pageSize < 1 || pageSize > 50) {
+            pageSize = 5;
         }
-        if (pageNum<1){
-            pageNum=1;
+        if (pageNum < 1) {
+            pageNum = 1;
         }
         try {
-            PageInfo<MemberAppealExtension> result=appealService.GetMemberAppeal(currentMember.getMemberId(),pageNum,pageSize);
-            return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS,result);
-        }catch(Exception ex){
+            PageInfo<MemberAppealExtension> result = appealService.GetMemberAppeal(currentMember.getMemberId(), pageNum, pageSize);
+            return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetAppealList", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping(value = "/{appealId}")
-    public String GetAppealDetail(HttpServletRequest request,@PathVariable long appealId) {
+    public String GetAppealDetail(HttpServletRequest request, @PathVariable long appealId) {
         request.setAttribute("config", fileConfig);
-        try{
-            MemberSessionExtension currentMember=GetCurrentUser(request);
-            MemberAppealDetailExtension  memberAppealDetailExtension=appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
-            if (memberAppealDetailExtension==null){
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            MemberAppealDetailExtension memberAppealDetailExtension = appealService.GetMemberAppealDetail(appealId, currentMember.getMemberId());
+            if (memberAppealDetailExtension == null) {
                 return render_404();
-            }else{
-                request.setAttribute("appeal",memberAppealDetailExtension);
+            } else {
+                request.setAttribute("appeal", memberAppealDetailExtension);
                 return render("home/appeal_detail");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("GetAppealDetail", ex);
             return render_500();
         }
@@ -118,19 +118,19 @@ public class HomeAppealController extends BaseController {
 
     @PostMapping("/progress")
     @ResponseBody
-    public ResponseDto GetAllProgress(HttpServletRequest request, @RequestParam long appealId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetAllProgress(HttpServletRequest request, @RequestParam long appealId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
         try {
-            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
-            if (appeal==null){
+            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId, currentMember.getMemberId());
+            if (appeal == null) {
                 return MemberAuthFailed();
             }
-            List<ProgressExtension> result=progressService.GetAllProgress(appealId,"dnt_appeal");
-            return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_SUCCESS,result);
-        }catch(Exception ex){
+            List<ProgressExtension> result = progressService.GetAllProgress(appealId, "dnt_appeal");
+            return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetAllProgress", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -139,33 +139,30 @@ public class HomeAppealController extends BaseController {
 
     @PostMapping("/add")
     @ResponseBody
-    public  ResponseDto add(HttpServletRequest request,@RequestParam String title,@RequestParam String method,@RequestParam String content,@RequestParam long contractProjectId,@RequestParam long projectId){
+    public ResponseDto add(HttpServletRequest request, @RequestParam String title, @RequestParam String method, @RequestParam String content, @RequestParam long contractProjectId, @RequestParam long projectId) {
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
-            if (currentMember==null){
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
                 return MemberAuthFailed();
             }
-            if (StringUtil.isNull(title)){
+            if (StringUtil.isNull(title)) {
                 return new ResponseDto(400, Message.SUBMIT_APPEAL_TITLE_NULL);
             }
-            if (StringUtil.isNull(method)){
+            if (StringUtil.isNull(method)) {
                 return new ResponseDto(400, Message.SUBMIT_APPEAL_METHOD_NULL);
             }
-            if (StringUtil.isNull(content)){
+            if (StringUtil.isNull(content)) {
                 return new ResponseDto(400, Message.SUBMIT_APPEAL_CONTENT_NULL);
             }
-            if (contractProjectId==0||projectId==0){
-                return new ResponseDto(400,Message.SUBMIT_APPEAL_ID_NULL);
+            if (contractProjectId == 0 || projectId == 0) {
+                return new ResponseDto(400, Message.SUBMIT_APPEAL_ID_NULL);
             }
             //TODO 还需要检查合同是否属于该会员，合同项目是否属于该会员
-            long memberId=currentMember.memberId;
-            appealService.InsertAppeal(title,method,content,contractProjectId,projectId,memberId);
+            long memberId = currentMember.memberId;
+            appealService.InsertAppeal(title, method, content, contractProjectId, projectId, memberId);
             return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
         }
     }
-
-
-
 }

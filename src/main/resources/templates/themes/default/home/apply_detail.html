@@ -2,28 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="renderer" content="webkit"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
     <title>捐赠详情</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
-        .table_member_content {
+        .table_member_content{
             width: 70%;
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
         }
-
-        .table_member_content td {
+        .table_member_content td{
             border-bottom: 1px #ccc dashed;
             width: 20px;
         }
 
-        #textarea_apply {
+        #textarea_apply{
             margin-top: 20px;
             width: 695px;
             height: 150px;
@@ -57,42 +56,12 @@
                 </div>
             </div>
             <table class="table_member_content">
-                <tr>
-                    <td>捐赠项目类别：</td>
-                    <td>
-                        <th:block th:text="${apply.getProjectTypeName()}"/>
-                    </td>
-                </tr>
-                <tr th:if="${apply.getProjectName()}!=null">
-                    <td>捐赠项目：</td>
-                    <td>
-                        <th:block th:text="${apply.getProjectName()}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>捐赠金额：</td>
-                    <td>
-                        <th:block th:text="${apply.getIntentionAmount()}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>申请时间：</td>
-                    <td>
-                        <th:block th:text="${apply.getCreateTime()}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>状态：</td>
-                    <td>
-                        <th:block th:text="${apply.getStatus()}"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>备注：</td>
-                    <td>
-                        <th:block th:text="${apply.getRemark()}"/>
-                    </td>
-                </tr>
+                <tr><td>捐赠项目类别：</td><td><th:block th:text="${apply.getProjectTypeName()}"/></td></tr>
+                <tr th:if="${apply.getProjectName()}!=null"><td>捐赠项目：</td><td><th:block th:text="${apply.getProjectName()}"/></td></tr>
+                <tr><td>捐赠金额：</td><td><th:block th:text="${apply.getIntentionAmount()}"/></td></tr>
+                <tr><td>申请时间：</td><td><th:block th:text="${apply.getCreateTime()}"/></td></tr>
+                <tr><td>状态：</td><td><th:block th:text="${apply.getStatus()}"/></td></tr>
+                <tr><td>备注：</td><td><th:block th:text="${apply.getRemark()}"/></td></tr>
             </table>
             <div class="div_member_title">
                 <p>捐赠申请进度</p>
@@ -116,10 +85,10 @@
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
-<script type="text/javascript" th:inline="javascript">
+<script type="text/javascript"  th:inline="javascript">
     /*<![CDATA[*/
 
-    var applyId =/*[[${apply.getId()}]]*/;
+    var applyId=/*[[${apply.getId()}]]*/;
     var vueContent;
 
     $(document).ready(function () {
@@ -129,33 +98,33 @@
 
     function f_GetProgress() {
         $.ajax({
-            url: '/home/apply/progress',
-            data: {applyId: applyId},
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 200) {
+            url:'/home/apply/progress',
+            data:{applyId:applyId},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
                     $.each(data.result, function (i, item) {
                         item.createTime = f_FormatDateTime(item.createTime);
                     });
-                    vueContent = new Vue({
+                    vueContent=new Vue({
                         el: '#table_member_content',
                         data: {
                             items: data.result
                         },
-                        methods: {
-                            add: function () {
-                                var content = $("#textarea_apply").val();
+                        methods:{
+                            add:function () {
+                                var content=$("#textarea_apply").val();
                                 $.ajax({
-                                    url: '/home/apply/add',
-                                    data: {applyId: applyId, content: content},
-                                    type: 'post',
-                                    dataType: 'json',
-                                    success: function (data) {
+                                    url:'/home/apply/add',
+                                    data:{applyId:applyId,content:content},
+                                    type:'post',
+                                    dataType:'json',
+                                    success:function (data) {
                                         layer.alert(data.msg);
-                                        if (data.code === 200) {
+                                        if(data.code===200){
                                             $("#textarea_apply").val("");
-                                            vueContent.items.push({title: content, createTime: f_GetCurrentTime()});
+                                            vueContent.items.push({title:content,createTime:f_GetCurrentTime()});
                                         }
                                     }
                                 });
@@ -166,7 +135,6 @@
             }
         });
     }
-
     /*]]>*/
 </script>
 </body>

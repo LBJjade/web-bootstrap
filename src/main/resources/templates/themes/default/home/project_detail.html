@@ -2,78 +2,71 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="renderer" content="webkit"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
     <title>我参与的项目详情</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/common.css}" />
     <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
     <style type="text/css">
 
-        .div_member_title p {
+        .div_member_title p{
             width: 100%;
         }
 
-        .div_member_title button {
+        .div_member_title button{
             float: right;
             margin-top: -8px;
         }
 
-        #div_project_content {
+        #div_project_content{
             margin-left: 20px;
             border: 1px solid #ddd;
             border-top: none;
             min-height: 450px;
         }
 
-        #table_content_info {
+        #table_content_info{
             width: 70%;
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
         }
-
-        #table_content_info td {
+        #table_content_info td{
             border-bottom: 1px #ccc dashed;
         }
-
-        #ul_tab {
+        #ul_tab{
             margin-left: 20px;
             margin-top: 20px;
         }
-
-        #table_personal_info {
+        #table_personal_info{
             width: 70%;
             text-align: left;
             line-height: 35px;
             margin-left: 120px;
         }
-
-        #table_personal_info td {
+        #table_personal_info td{
             border-bottom: 1px #ccc dashed;
         }
-
-        #table_doc {
+        #table_doc{
             width: 70%;
             text-align: left;
             line-height: 35px;
             margin-left: 120px;
             margin-bottom: 30px;
         }
-
-        #table_doc {
+        #table_doc{
             width: 70%;
             text-align: left;
             line-height: 35px;
             margin-left: 120px;
             margin-bottom: 30px;
         }
-
-        #table_doc td {
+        #table_doc td{
             width: 250px;
         }
 
@@ -86,7 +79,7 @@
             color: #00a0e9;
             min-width: 86px;
             height: 30px;
-            float: right;
+            float:right;
             margin-top: -5px;
             margin-left: 600px;
         }
@@ -142,9 +135,9 @@
                             </tr>
                             <tr>
                                 <td>合同名称：</td>
-                                <td>
+                                <td><a th:href="${'/home/contract/'+project.getProjectId()}" target="_blank">
                                     <th:block th:text="${project.getContractName()}"></th:block>
-                                </td>
+                                </a></td>
                             </tr>
                             <tr>
                                 <td>合同状态：</td>
@@ -244,12 +237,12 @@
 <script th:src="@{/js/date.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var contractProjectId =/*[[${project.getId()}]]*/;
-    var projectId =/*[[${project.getProjectId()}]]*/;
+    var contractProjectId=/*[[${project.getId()}]]*/;
+    var projectId=/*[[${project.getProjectId()}]]*/;
 
-    var pageSize = 10;
-    var pageNum = 1;
-    var totalPage = 0;
+    var pageSize=10;
+    var pageNum=1;
+    var totalPage=0;
     var vueProgress;
 
     $(document).ready(function () {
@@ -259,16 +252,16 @@
 
     function f_GetProgress() {
         $.ajax({
-            url: '/home/project/progress',
-            data: {contractProjectId: contractProjectId},
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 200) {
+            url:'/home/project/progress',
+            data:{contractProjectId:contractProjectId},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
                     $.each(data.result, function (i, item) {
                         item.createTime = f_FormatDateTime(item.createTime);
                     });
-                    vueContent = new Vue({
+                    vueContent=new Vue({
                         el: '#table_personal_info',
                         data: {
                             items: data.result
@@ -281,7 +274,7 @@
 
     //获取更多按钮点击事件
     function f_GetMoreProgress() {
-        if (pageNum >= totalPage) {
+        if(pageNum>=totalPage){
             layer.alert("没有更多数据了")
         }
         pageNum++;
@@ -291,14 +284,14 @@
     //获取项目进展
     function f_GetProjectProgress() {
         $.ajax({
-            url: '/home/project/projectProgress',
-            type: 'post',
-            data: {projectId: projectId, pageSize: pageSize, pageNum: pageNum},
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 200) {
-                    totalPage = data.result.pages;
-                    if (data.result.list.length === 0) {
+            url:'/home/project/projectProgress',
+            type:'post',
+            data:{projectId:projectId,pageSize:pageSize,pageNum:pageNum},
+            dataType:'json',
+            success:function (data) {
+                if(data.code===200){
+                    totalPage=data.result.pages;
+                    if (data.result.list.length===0){
                         $(".btn_show_more").hide();
                         $("#p_no_data").show();
                     }
@@ -342,15 +335,14 @@
                     items: data.result.list
                 }
             });
-        } else {
-            var currentNum = pageSize * (pageNum - 1);
-            for (var i = 0; i < data.result.list.length; i++) {
-                Vue.set(vueProgress.items, currentNum + i, data.result.list[i]);
+        }else{
+            var currentNum=pageSize*(pageNum-1);
+            for (var i = 0; i<data.result.list.length; i++) {
+                Vue.set(vueProgress.items, currentNum+i, data.result.list[i]);
             }
-            vueProgress.items.splice(currentNum + data.result.list.length);
+            vueProgress.items.splice(currentNum+data.result.list.length);
         }
     }
-
     /*]]>*/
 </script>
 </body>
