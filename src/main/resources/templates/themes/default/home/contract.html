@@ -82,12 +82,13 @@
             <div style="min-height: 450px">
                 <div v-for="item in items" v-cloak>
                     <div class="div_message_title">
-                        <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.contractName}}</h4></div>
+                        <div><h4><span class="glyphicon glyphicon-chevron-up"></span>{{item.contractName}}</h4></div>
                     </div>
                     <div class="div_message_content">
                         <p>合同名称：{{item.contractName}}</p>
-                        <p>签订日期：{{item.signTime===null?"未签订":item.signTime}}</p>
+                        <p></p>
                         <p class="contractAmount">合同金额：{{item.contractAmount}}</p>
+                        <p>签订日期：{{item.signTime===null?"未签订":item.signTime}}</p>
                         <p>合同状态：{{item.status}}<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a></p>
                     </div>
                 </div>
@@ -113,6 +114,23 @@
             f_GetContract();
         });
 
+        $("body").on("click", ".div_message_title", function () {
+            var id = $(this).find(".getid").val();
+            if ($(this).next().css("display") === "none") {
+                $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-up");
+                $(this).next().show();
+                if ($(this).children().find("i").hasClass("fa-envelope")) {
+                    f_change(id);
+                    num = $("#message").html();
+                    num = num - 1;
+                    $("#message").html(num);
+                }
+                currentItem = $(this);
+            } else {
+                $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-down");
+                $(this).next().hide();
+            }
+        });
 
         function f_GetContract() {
             $.ajax({

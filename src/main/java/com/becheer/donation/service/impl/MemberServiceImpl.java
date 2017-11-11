@@ -166,6 +166,9 @@ public class MemberServiceImpl implements IMemberService {
         member.setOrganizationCode(memberInfoExtension.getOrganizationCode());
         member.setOrganizationType(memberInfoExtension.getOrganizationType());
         if (!StringUtils.isEmpty(memberInfoExtension.getIdCardFront())){
+            if (StringUtil.checkBase64FileSize(memberInfoExtension.getIdCardFront(),2*1024*1024)){
+                return new ResponseDto(500,Message.MEMBER_IMG_OVERLIMIT);
+            }
             byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardFront());
             String fileName = "fImg"+memberInfoExtension.getId();
             fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
@@ -174,6 +177,9 @@ public class MemberServiceImpl implements IMemberService {
             member.setIdCardFrontImg(fileName);
         }
         if (!StringUtils.isEmpty(memberInfoExtension.getLicense())){
+            if (StringUtil.checkBase64FileSize(memberInfoExtension.getLicense(),2*1024*1024)){
+                return new ResponseDto(500,Message.MEMBER_IMG_OVERLIMIT);
+            }
             byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getLicense());
             String fileName = "lImg"+memberInfoExtension.getId();
             fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
@@ -182,6 +188,9 @@ public class MemberServiceImpl implements IMemberService {
             member.setLicense(fileName);
         }
         if (!StringUtils.isEmpty(memberInfoExtension.getIdCardBack())){
+            if (StringUtil.checkBase64FileSize(memberInfoExtension.getIdCardBack(),2*1024*1024)){
+                return new ResponseDto(500,Message.MEMBER_IMG_OVERLIMIT);
+            }
             byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardBack());
             String fileName = "bImg"+memberInfoExtension.getId();
             fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
