@@ -69,11 +69,11 @@
     </select>
 
     <select id="SelectIdCardBeforeById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT SUBSTR(id_card,1,2) from dnt_member WHERE id_=#{memberId,jdbcType=BIGINT}
+        SELECT SUBSTR(id_card,1,2),SUBSTR(id_card,17) from dnt_member WHERE id_ = #{memberId,jdbcType=BIGINT}
     </select>
 
     <select id="SelectIdCardAfterById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT SUBSTR(id_card,17) from dnt_member where id_ = 65
+        SELECT SUBSTR(id_card,17) from dnt_member where id_ = #{memberId,jdbcType=BIGINT}
     </select>
 
     <update id="UpdateMember" parameterType="com.becheer.donation.model.Member">

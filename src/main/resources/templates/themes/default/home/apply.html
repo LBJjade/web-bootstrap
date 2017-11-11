@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>我的捐赠意向</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -61,10 +61,10 @@
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a  href="#">个人中心</a></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">我的捐赠意向</a></li>
+                        <li class="div_navbar_item"><a href="#">我的捐赠意向</a></li>
                     </ul>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                             <td class="text-right">{{item.intentionAmount}}</td>
                             <td class="text-center">{{item.createTime}}</td>
                             <td class="text-center">{{item.statusText}}</td>
-                            <td class="text-center"  style="width: 115px">
+                            <td class="text-center" style="width: 115px">
                                 <a :href="'/home/apply/'+item.id" target="_blank">
                                     <button class="info_button">查看</button>
                                 </a>

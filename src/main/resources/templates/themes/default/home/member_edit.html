@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>编辑个人信息</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <style type="text/css">
         #div_content {
             width: 985px;
-            height:750px;
+            height: 750px;
             border: 1px #eee solid;
             margin-left: 10px;
             padding-top: 30px;
@@ -98,18 +98,18 @@
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
-                <div id="div_navbar"  style="margin-top: 10px;margin-bottom: 17px;">
+                <div id="div_navbar" style="margin-top: 10px;margin-bottom: 17px;">
                     <ul>
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">个人中心</a></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="/home">我的信息</a></li>
+                        <li class="div_navbar_item"><a href="/home">我的信息</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">编辑个人信息</a></li>
+                        <li class="div_navbar_item"><a href="#">编辑个人信息</a></li>
                     </ul>
                 </div>
             </div>
@@ -151,7 +151,9 @@
                         <div class="form-group">
                             <label class="col-lg-3 control-label">生日：</label>
                             <div class="col-lg-8">
-                                <input type="text" id="ipt_birthday" readonly="true" class="form-control " th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}" name="ipt_birthday" placeholder="生日"/>
+                                <input type="text" id="ipt_birthday" readonly="true" class="form-control "
+                                       th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"
+                                       name="ipt_birthday" placeholder="生日"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -175,18 +177,20 @@
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">正面：</label>
                                 <div class="div_img col-lg-8">
-                                    <label for="ipt_f"class="col-lg-3 btn btn-info">上传</label>
+                                    <label for="ipt_f" class="col-lg-3 btn btn-info">上传</label>
                                     <div class="col-lg-8">
-                                    <input type="file" id="ipt_f" class="input_img"
-                                           onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg"/>
-                                        <img id="img_f" th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px;"/>
+                                        <input type="file" id="ipt_f" class="input_img"
+                                               onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg"/>
+                                        <img id="img_f"
+                                             th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
+                                             height="120" width="120" style="margin-bottom: 10px;"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-lg-3 control-label">背面：</label>
                                 <div class="div_img col-lg-8">
-                                    <label for="ipf_b"class="col-lg-3 btn btn-info">上传</label>
+                                    <label for="ipf_b" class="col-lg-3 btn btn-info">上传</label>
                                     <div class="col-lg-8">
                                         <input type="file" id="ipf_b" class="input_img input_img2"
                                                onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg"/>
@@ -241,7 +245,7 @@
 
 
     //表单验证
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#defaultForm_2').bootstrapValidator({
             message: 'This value is not valid',
             feedbackIcons: {
@@ -256,8 +260,8 @@
                         notEmpty: {
                             message: '手机号码不能为空'
                         },
-                        regexp:{
-                            regexp : /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
+                        regexp: {
+                            regexp: /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
                             message: '手机号码格式不正确'
                         }
                     }
@@ -281,8 +285,8 @@
                         notEmpty: {
                             message: '身份证号码不能为空'
                         },
-                        regexp:{
-                            regexp : /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
+                        regexp: {
+                            regexp: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
                             message: '身份证号码格式不正确'
                         }
 
@@ -382,7 +386,6 @@
             content: '/home/member/avator'
         });
     }
-
 
 
     /*]]>*/

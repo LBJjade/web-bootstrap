@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>项目详情_广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
@@ -79,7 +79,7 @@
         /*margin-bottom: 10px;*/
         /*}*/
         /*#div_recent{*/
-            /*height: auto;*/
+        /*height: auto;*/
         /*}*/
 
         .right_panel {
@@ -362,9 +362,15 @@
         <div class="col-sm-9">
             <div id="div_navbar">
                 <ul>
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#">&gt;</a></li>
-                    <li class="active"><a href="#">项目详情</a></li>
+                    <li>
+                        <a href="#"><i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px;"></i>首页</a>
+                    </li>
+                    <li>>
+                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                    </li>
+                    <li class="div_navbar_item">
+                        <a href="#">项目详情</a>
+                    </li>
                 </ul>
             </div>
             <div class="project_block">
@@ -379,7 +385,7 @@
                         <th:block th:text="${project.getProjectName()}"/>
                     </p>
                     <div class="info_ma">
-                        <p class="info" style="font-size: 15px;"><span class="info_name">项目时间</span>：
+                        <p class="info"><span class="info_name">项目时间</span>：
                             <th:block
                                     th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
                         </p>

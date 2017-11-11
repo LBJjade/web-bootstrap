@@ -2,24 +2,24 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
     <title>我的申诉</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
-        .div_message_title{
+        .div_message_title {
             padding: 15px;
             height: 50px;
-            margin:15px 0px 0px 25px;
+            margin: 15px 0px 0px 25px;
             border: 1px solid #dbdbdb;
             background-color: #fbfbfb;
         }
 
-        .div_message_content{
+        .div_message_content {
             padding: 15px;
             margin-left: 25px;
             border: 1px solid #dbdbdb;
@@ -27,7 +27,7 @@
             /*display: none;*/
         }
 
-        .div_message_title h4{
+        .div_message_title h4 {
             font-weight: 400;
             color: #666;
             font-size: 14px;
@@ -35,12 +35,12 @@
             margin: 0px;
         }
 
-        .div_message_title span{
+        .div_message_title span {
             margin-right: 10px;
             float: right;
         }
 
-        .p_no_data{
+        .p_no_data {
             line-height: 100px;
             text-align: center;
             display: none;
@@ -69,15 +69,17 @@
         <div class="col-sm-2">
             <div th:replace="themes/default/home/menu::menu"></div>
         </div>
-        <div class="col-sm-10"  id="div_appeal_item" >
+        <div class="col-sm-10" id="div_appeal_item">
             <div class="div_member_title">
                 <div id="div_navbar" style="margin-top: 10px">
                     <ul>
                         <li><a href="#">首页</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">个人中心</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">我的申诉</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="div_navbar_item"><a href="#">我的申诉</a></li>
                     </ul>
                 </div>
                 <!--<p></p>-->
@@ -86,18 +88,21 @@
             <div style="min-height: 450px;">
                 <div v-for="item in items" v-cloak>
                     <div class="div_message_title">
-                        <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.appealTitle}}<span>{{item.createTime}}</span></h4></div>
+                        <div><h4><span class="glyphicon glyphicon-chevron-down"></span>{{item.appealTitle}}<span>{{item.createTime}}</span>
+                        </h4></div>
                     </div>
                     <div class="div_message_content">
                         <p>申诉项目：{{item.projectName}}</p>
                         <p>申诉合同：{{item.contractName}}</p>
                         <p>申诉状态：{{item.statusText}}</p>
-                        <p>申诉类型：{{item.appealMethod}}<a :href="'appeal/'+item.id" target="_blank"><button class=" info_button">查看详情</button></a></p>
+                        <p>申诉类型：{{item.appealMethod}}<a :href="'appeal/'+item.id" target="_blank">
+                            <button class=" info_button">查看详情</button>
+                        </a></p>
                     </div>
                 </div>
                 <p class="p_no_data">暂无消息</p>
             </div>
-            <div  id="div_page">
+            <div id="div_page">
             </div>
         </div>
     </div>
@@ -110,8 +115,8 @@
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
-    var pageSize=5;
-    var pageNum=1;
+    var pageSize = 5;
+    var pageNum = 1;
     var pageCount;
     var vueContent;
 
@@ -122,32 +127,32 @@
 
     function f_GetAppeal() {
         $.ajax({
-            url:'/home/appeal/list',
-            data:{pageNum:pageNum,pageSize:pageSize},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
-                    pageCount=data.result.pages;
-                    pageNum=data.result.pageNum;
-                    $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
+            url: '/home/appeal/list',
+            data: {pageNum: pageNum, pageSize: pageSize},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
                     f_InitPagination($("#div_page"));
-                    if (vueContent==undefined) {
-                        vueContent=new Vue({
+                    if (vueContent == undefined) {
+                        vueContent = new Vue({
                             el: '#div_appeal_item',
                             data: {
                                 items: data.result.list
                             }
                         });
-                        if (data.result.list.length===0){
+                        if (data.result.list.length === 0) {
                             $(".p_no_data").show();
                         }
-                    }else{
-                        for (var i = 0; i<data.result.list.length; i++) {
+                    } else {
+                        for (var i = 0; i < data.result.list.length; i++) {
                             Vue.set(vueContent.items, i, data.result.list[i]);
                         }
                         vueContent.items.splice(data.result.list.length);
-                        scrollTo(0,0);
+                        scrollTo(0, 0);
                     }
                 }
             }
@@ -156,9 +161,10 @@
 
     //翻页回调函数
     function f_PageCallBack(newPage) {
-        pageNum=newPage;
+        pageNum = newPage;
         f_GetAppeal();
     }
+
     /*]]>*/
 </script>
 </body>

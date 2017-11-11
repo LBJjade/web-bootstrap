@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>信息公开_信息公开_广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
@@ -139,13 +139,13 @@
                     <li><a href="#">首页</a></li>
                     <li>><i class="fa fa-angle-right" aria-hidden="true"
                             style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active nav_icon "><a href="#">信息公开
+                    <li class="div_navbar_item nav_icon "><a href="#">信息公开
                         <!--<div class="glyphicon glyphicon-chevron-down icon1"></div>-->
                         <!--<div class="glyphicon glyphicon-chevron-up icon2" style="display:none"></div>-->
                     </a></li>
                     <li>><i class="fa fa-angle-right" aria-hidden="true"
                             style="font-size: 20px;color: #999999; "></i></li>
-                    <li class="active"><a href="#" id="a_title"></a></li>
+                    <li class="div_navbar_item"><a href="#" id="a_title"></a></li>
                 </ul>
             </div>
             <div class="components" style="display:none">
@@ -224,8 +224,8 @@
                         notEmpty: {
                             message: '手机号码不能为空'
                         },
-                        regexp:{
-                            regexp : /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
+                        regexp: {
+                            regexp: /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
                             message: '手机号码格式不正确'
                         }
                     }
@@ -261,7 +261,7 @@
     });
 
     function f_setArticleType(item) {
-        typeItem=item;
+        typeItem = item;
         f_getArticle();
     }
 
@@ -279,7 +279,7 @@
                         }
                     });
                     if (data.result != null) {
-                        typeItem=data.result[0];
+                        typeItem = data.result[0];
                         f_getArticle();
                     }
                 }
@@ -324,6 +324,7 @@
         pageNum = newPage;
         f_getArticle();
     }
+
     /*]]>*/
 
 </script>

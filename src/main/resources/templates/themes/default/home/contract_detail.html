@@ -2,22 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
     <title>合同详情</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
-        .table_member_content{
+        .table_member_content {
             width: 70%;
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
         }
-        .table_member_content td{
+
+        .table_member_content td {
             border-bottom: 1px #ccc dashed;
         }
 
@@ -38,23 +39,51 @@
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">个人中心</a></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="/home/contract">我的合同</a></li>
+                        <li class="div_navbar_item"><a href="/home/contract">我的合同</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">合同详情</a></li>
+                        <li class="div_navbar_item"><a href="#">合同详情</a></li>
                     </ul>
                 </div>
             </div>
             <table class="table_member_content">
-                <tr><td>合同名称：</td><td><th:block th:text="${contract.getContractName()}"></th:block></td></tr>
-                <tr><td>合同金额：</td><td><th:block th:text="${contract.getContractAmount()}"></th:block></td></tr>
-                <tr><td>已捐金额：</td><td><th:block th:text="${contract.getDonatedAmount()}"></th:block></td></tr>
-                <tr><td>合同周期：</td><td><th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block></td></tr>
-                <tr><td>合同状态：</td><td><th:block th:text="${contract.getStatusText()}"></th:block></td></tr>
-                <tr><td>合同内容：</td><td><a href="javascript:f_openContent()">点击查看</a></td></tr>
+                <tr>
+                    <td>合同名称：</td>
+                    <td>
+                        <th:block th:text="${contract.getContractName()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同金额：</td>
+                    <td>
+                        <th:block th:text="${contract.getContractAmount()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>已捐金额：</td>
+                    <td>
+                        <th:block th:text="${contract.getDonatedAmount()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同周期：</td>
+                    <td>
+                        <th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同状态：</td>
+                    <td>
+                        <th:block th:text="${contract.getStatusText()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同内容：</td>
+                    <td><a href="javascript:f_openContent()">点击查看</a></td>
+                </tr>
             </table>
             <div class="div_member_title">
                 <p>合同捐赠详情</p>
@@ -77,7 +106,7 @@
                     <td>{{item.deadLine}}</td>
                     <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
                     <td>{{item.statusText}}</td>
-                    <td><a href="#">{{item.status==0?"捐赠":"账单"}}</a> </td>
+                    <td><a href="#">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
         </div>
@@ -88,7 +117,7 @@
 <script th:src="@{/js/date.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var contractId=/*[[${contract.getId()}]]*/;
+    var contractId =/*[[${contract.getId()}]]*/;
 
     $(document).ready(function () {
         f_GetDonatePlan();
@@ -96,12 +125,12 @@
 
     function f_GetDonatePlan() {
         $.ajax({
-            url:'/home/contract/payment',
-            data:{contractId:contractId},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
+            url: '/home/contract/payment',
+            data: {contractId: contractId},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     new Vue({
                         el: '#table_donate_plan',
                         data: {
@@ -112,7 +141,7 @@
             }
         });
     }
-    
+
     function f_openContent() {
         layer.open({
             type: 2,
@@ -120,9 +149,10 @@
             shadeClose: true,
             shade: 0.6,
             area: ['1100px', '90%'],
-            content: '/home/contract/content/'+contractId
+            content: '/home/contract/content/' + contractId
         });
     }
+
     /*]]>*/
 </script>
 </body>

@@ -2,71 +2,78 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
     <title>我参与的项目详情</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
     <style type="text/css">
 
-        .div_member_title p{
+        .div_member_title p {
             width: 100%;
         }
 
-        .div_member_title button{
+        .div_member_title button {
             float: right;
             margin-top: -8px;
         }
 
-        #div_project_content{
+        #div_project_content {
             margin-left: 20px;
             border: 1px solid #ddd;
             border-top: none;
             min-height: 450px;
         }
 
-        #table_content_info{
+        #table_content_info {
             width: 70%;
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
         }
-        #table_content_info td{
+
+        #table_content_info td {
             border-bottom: 1px #ccc dashed;
         }
-        #ul_tab{
+
+        #ul_tab {
             margin-left: 20px;
             margin-top: 20px;
         }
-        #table_personal_info{
+
+        #table_personal_info {
             width: 70%;
             text-align: left;
             line-height: 35px;
             margin-left: 120px;
         }
-        #table_personal_info td{
+
+        #table_personal_info td {
             border-bottom: 1px #ccc dashed;
         }
-        #table_doc{
+
+        #table_doc {
             width: 70%;
             text-align: left;
             line-height: 35px;
             margin-left: 120px;
             margin-bottom: 30px;
         }
-        #table_doc{
+
+        #table_doc {
             width: 70%;
             text-align: left;
             line-height: 35px;
             margin-left: 120px;
             margin-bottom: 30px;
         }
-        #table_doc td{
+
+        #table_doc td {
             width: 250px;
         }
 
@@ -79,7 +86,7 @@
             color: #00a0e9;
             min-width: 86px;
             height: 30px;
-            float:right;
+            float: right;
             margin-top: -5px;
             margin-left: 600px;
         }
@@ -100,13 +107,13 @@
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a  href="#">个人中心</a></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="/home/project">我参与的项目</a></li>
+                        <li class="div_navbar_item"><a href="/home/project">我参与的项目</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">项目详情</a></li>
+                        <li class="div_navbar_item"><a href="#">项目详情</a></li>
                     </ul>
                 </div>
                 <!--<p>我参与的项目</p>-->
@@ -116,29 +123,70 @@
                 <li class="active"><a href="#" data-target="#div_tab_info" data-toggle="tab">参与情况</a></li>
                 <li><a href="#" data-target="#div_tab_detail" data-toggle="tab">项目详情</a></li>
                 <li><a href="#" data-target="#div_tab_public" data-toggle="tab">善款公开</a></li>
-                <a th:href="@{'/home/appeal/add/'+${project.getId()}}" ><li> <button class="info_button" >我要申诉</button></li></a>
+                <a th:href="@{'/home/appeal/add/'+${project.getId()}}">
+                    <li>
+                        <button class="info_button">我要申诉</button>
+                    </li>
+                </a>
             </ul>
 
             <div id="div_project_content">
                 <div class="tab-content">
                     <div class="tab-pane active" id="div_tab_info">
                         <table id="table_content_info">
-                            <tr><td>项目名称：</td><td><th:block th:text="${project.getProjectName()}"></th:block></td></tr>
-                            <tr><td>合同名称：</td><td><th:block th:text="${project.getContractName()}"></th:block></td></tr>
-                            <tr><td>合同状态：</td><td><th:block th:text="${project.getStatusText()}"></th:block></td></tr>
-                            <tr><td>合同金额：</td><td><th:block th:text="${project.getContractAmount()}"></th:block></td></tr>
-                            <tr><td>已捐金额：</td><td><th:block th:text="${project.getDonatedAmount()}"></th:block></td></tr>
-                            <tr><td style="border-bottom: none">合同周期：</td><td style="border-bottom: none"><th:block th:text="${project.getBeginTime()+' ~ '+project.getEndTime()}"></th:block></td></tr>
+                            <tr>
+                                <td>项目名称：</td>
+                                <td>
+                                    <th:block th:text="${project.getProjectName()}"></th:block>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>合同名称：</td>
+                                <td>
+                                    <th:block th:text="${project.getContractName()}"></th:block>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>合同状态：</td>
+                                <td>
+                                    <th:block th:text="${project.getStatusText()}"></th:block>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>合同金额：</td>
+                                <td>
+                                    <th:block th:text="${project.getContractAmount()}"></th:block>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>已捐金额：</td>
+                                <td>
+                                    <th:block th:text="${project.getDonatedAmount()}"></th:block>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border-bottom: none">合同周期：</td>
+                                <td style="border-bottom: none">
+                                    <th:block th:text="${project.getBeginTime()+' ~ '+project.getEndTime()}"></th:block>
+                                </td>
+                            </tr>
                         </table>
                         <hr/>
                         <span style="margin-left: 20px">我的参与记录</span>
                         <table id="table_personal_info" v-cloak>
-                            <tr v-for="item in items"><td style="border-bottom: none">{{item.createTime}}</td><td style="border-bottom: none">{{item.title}}</td></tr>
+                            <tr v-for="item in items">
+                                <td style="border-bottom: none">{{item.createTime}}</td>
+                                <td style="border-bottom: none">{{item.title}}</td>
+                            </tr>
                         </table>
                         <hr/>
                         <span style="margin-left: 20px">文档附件</span>
                         <table id="table_doc">
-                            <tr><td>&lt;捐赠合同&gt;</td><td>2017-08-10</td><td><a href="#">下载</a> </td></tr>
+                            <tr>
+                                <td>&lt;捐赠合同&gt;</td>
+                                <td>2017-08-10</td>
+                                <td><a href="#">下载</a></td>
+                            </tr>
                         </table>
                     </div>
                     <div class="tab-pane" id="div_tab_detail">
@@ -155,7 +203,8 @@
                                                     <div id="vertical-timeline"
                                                          class="vertical-container light-timeline">
 
-                                                        <div class="vertical-timeline-block" v-for="item in items" v-cloak>
+                                                        <div class="vertical-timeline-block" v-for="item in items"
+                                                             v-cloak>
                                                             <div :class="'vertical-timeline-icon '+item.backgroundClass">
                                                                 <i :class="'fa '+item.iconClass"></i>
                                                             </div>
@@ -173,7 +222,9 @@
                                                     </div>
                                                 </div>
                                                 <div style="width: 100%;text-align: center">
-                                                    <button class="btn btn-primary btn_show_more" onclick="f_GetMoreProgress()">加载更多</button>
+                                                    <button class="btn btn-primary btn_show_more"
+                                                            onclick="f_GetMoreProgress()">加载更多
+                                                    </button>
                                                     <p id="p_no_data" style="line-height: 200px;display: none">暂无数据</p>
                                                 </div>
                                             </div>
@@ -193,12 +244,12 @@
 <script th:src="@{/js/date.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var contractProjectId=/*[[${project.getId()}]]*/;
-    var projectId=/*[[${project.getProjectId()}]]*/;
+    var contractProjectId =/*[[${project.getId()}]]*/;
+    var projectId =/*[[${project.getProjectId()}]]*/;
 
-    var pageSize=10;
-    var pageNum=1;
-    var totalPage=0;
+    var pageSize = 10;
+    var pageNum = 1;
+    var totalPage = 0;
     var vueProgress;
 
     $(document).ready(function () {
@@ -208,16 +259,16 @@
 
     function f_GetProgress() {
         $.ajax({
-            url:'/home/project/progress',
-            data:{contractProjectId:contractProjectId},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
+            url: '/home/project/progress',
+            data: {contractProjectId: contractProjectId},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     $.each(data.result, function (i, item) {
                         item.createTime = f_FormatDateTime(item.createTime);
                     });
-                    vueContent=new Vue({
+                    vueContent = new Vue({
                         el: '#table_personal_info',
                         data: {
                             items: data.result
@@ -230,7 +281,7 @@
 
     //获取更多按钮点击事件
     function f_GetMoreProgress() {
-        if(pageNum>=totalPage){
+        if (pageNum >= totalPage) {
             layer.alert("没有更多数据了")
         }
         pageNum++;
@@ -240,14 +291,14 @@
     //获取项目进展
     function f_GetProjectProgress() {
         $.ajax({
-            url:'/home/project/projectProgress',
-            type:'post',
-            data:{projectId:projectId,pageSize:pageSize,pageNum:pageNum},
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
-                    totalPage=data.result.pages;
-                    if (data.result.list.length===0){
+            url: '/home/project/projectProgress',
+            type: 'post',
+            data: {projectId: projectId, pageSize: pageSize, pageNum: pageNum},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    totalPage = data.result.pages;
+                    if (data.result.list.length === 0) {
                         $(".btn_show_more").hide();
                         $("#p_no_data").show();
                     }
@@ -291,14 +342,15 @@
                     items: data.result.list
                 }
             });
-        }else{
-            var currentNum=pageSize*(pageNum-1);
-            for (var i = 0; i<data.result.list.length; i++) {
-                Vue.set(vueProgress.items, currentNum+i, data.result.list[i]);
+        } else {
+            var currentNum = pageSize * (pageNum - 1);
+            for (var i = 0; i < data.result.list.length; i++) {
+                Vue.set(vueProgress.items, currentNum + i, data.result.list[i]);
             }
-            vueProgress.items.splice(currentNum+data.result.list.length);
+            vueProgress.items.splice(currentNum + data.result.list.length);
         }
     }
+
     /*]]>*/
 </script>
 </body>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>发起申诉</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
@@ -42,16 +42,16 @@
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a  href="#">个人中心</a></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="/home/project">我参与的项目</a></li>
+                        <li class="div_navbar_item"><a href="/home/project">我参与的项目</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">项目详情</a></li>
+                        <li class="div_navbar_item"><a href="#">项目详情</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a href="#">发起申诉</a></li>
+                        <li class="div_navbar_item"><a href="#">发起申诉</a></li>
                     </ul>
                 </div>
             </div>
@@ -62,11 +62,15 @@
                 </tr>
                 <tr>
                     <td>申诉项目：</td>
-                    <td><th:block th:text="${project.getProjectName()}"></th:block></td>
+                    <td>
+                        <th:block th:text="${project.getProjectName()}"></th:block>
+                    </td>
                 </tr>
                 <tr>
                     <td>申诉合同：</td>
-                    <td><th:block th:text="${project.getContractName()}"></th:block></td>
+                    <td>
+                        <th:block th:text="${project.getContractName()}"></th:block>
+                    </td>
                 </tr>
                 <tr>
                     <td>申诉类型：</td>
@@ -81,7 +85,8 @@
                 <tr>
                     <td>申诉内容：</td>
                     <td>
-                        <textarea id="main" class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px"
+                        <textarea id="main" class="form-control"
+                                  style="margin-top: 10px;margin-bottom: 10px; width: 250px"
                                   rows="5"></textarea>
                     </td>
                 </tr>
@@ -92,7 +97,7 @@
                 </tr>
             </table>
         </div>
-</div>
+    </div>
 </div>
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
@@ -103,19 +108,25 @@
 
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var contractProjectId=/*[[${project.getId()}]]*/;
-    var projectId=/*[[${project.getProjectId()}]]*/;
-    $("#btn_submit").click(function(){
-        var title= $("#theme").val();
-        var method=$("#type").find("option:selected").text();
-        var content=$("#main").val();
+    var contractProjectId =/*[[${project.getId()}]]*/;
+    var projectId =/*[[${project.getProjectId()}]]*/;
+    $("#btn_submit").click(function () {
+        var title = $("#theme").val();
+        var method = $("#type").find("option:selected").text();
+        var content = $("#main").val();
         $.ajax({
-            url:'/home/appeal/add',
-            data:{title:title,method:method,content:content,contractProjectId:contractProjectId,projectId:projectId},
-            type:'post',
-            dataType:'json',
-            success:function(){
-                    layer.alert("提交成功");
+            url: '/home/appeal/add',
+            data: {
+                title: title,
+                method: method,
+                content: content,
+                contractProjectId: contractProjectId,
+                projectId: projectId
+            },
+            type: 'post',
+            dataType: 'json',
+            success: function () {
+                layer.alert("提交成功");
             }
         })
     })
