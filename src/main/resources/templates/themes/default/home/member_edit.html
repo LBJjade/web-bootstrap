@@ -2,17 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="renderer" content="webkit"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="renderer" content="webkit" />
     <title>编辑个人信息</title>
     <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/common.css}" />
     <style type="text/css">
-        #div_content {
+        #div_content{
             width: 985px;
-            height:750px;
+            height: 850px;
             border: 1px #eee solid;
             margin-left: 10px;
             padding-top: 30px;
@@ -20,72 +20,53 @@
             text-align: center;
         }
 
-        /*#div_avator{*/
-        /*width: 250px;*/
-        /*height: 300px;*/
-        /*border-right: 1px #ccc dashed;*/
-        /*text-align: center;*/
-        /*float: left;*/
-        /*}*/
-
-        /*#div_content_info{*/
-        /*width: 700px;*/
-        /*float: left;*/
-        /*padding-top: 20px;*/
-        /*}*/
-
-        #div_avator {
+        #div_avator{
+            width: 250px;
+            height: 300px;
             border-right: 1px #ccc dashed;
+            text-align: center;
+            float: left;
         }
 
-        #table_content_info {
+        #div_content_info{
+            width: 700px;
+            float: left;
+            padding-top: 20px;
+        }
+
+        #table_content_info{
             width: 70%;
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
         }
-
-        #table_content_info td {
+        #table_content_info td{
             border-bottom: 1px #ccc dashed;
         }
-
-        #table_content_info input {
+        #table_content_info input{
             height: 25px;
             width: 220px;
         }
-
-        .div_img {
+        .div_img{
             height: 120px;
             position: absolute;
         }
-
-        .div_img input {
+        .div_img input{
             float: left;
         }
-
-        .input_img {
+        .input_img{
             opacity: 0;
-            width: 0px !important;
+            width: 120px !important;
             height: 120px !important;
             border: 1px solid;
             /*position: absolute;*/
         }
-
-        .input_img2 {
+        .input_img2{
             opacity: 0;
             margin-left: 5px;
             /*position: absolute;*/
             /*left: 120px;*/
-            /*float: left;*/
         }
-
-        .div_head {
-            height: 300px;
-            border: 1px solid #e4eef7;
-            width: 286px;
-        }
-
-
     </style>
 </head>
 <body>
@@ -114,194 +95,88 @@
                 </div>
             </div>
             <div id="div_content">
-                <form id="defaultForm_2" method="post" class="form-horizontal">
-                    <div id="div_avator" class="col-sm-6">
-                        <div class="div_head form-group" style="margin-left: 120px;">
-                            <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
-                            <br/>
-                            <br/>
-                            <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">手机号码：</label>
-                            <div class="col-lg-8">
-                                <input type="text" ireadonly="readonly" id="ipt_mobile" th:value="${member.getMobile()}"
-                                       class="form-control" name="ipt_mobile" placeholder="手机号码"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">真实姓名：</label>
-                            <div class="col-lg-8">
-                                <input type="text" id="ipt_name" class="form-control" th:value="${member.getName()}"
-                                       name="ipt_name" placeholder="真实姓名"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">性别：</label>
-                            <div class="col-lg-8">
-                                <select class=" form-control" id="ipt_sex">
+                <div id="div_avator">
+                    <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                    <br/>
+                    <br/>
+                    <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
+                </div>
+                <div id="div_content_info">
+                    <table id="table_content_info">
+                        <tr><td>手机号码：</td><td><input type="text" readonly="readonly" id="ipt_mobile" th:value="${member.getMobile()}"/></td></tr>
+                        <tr><td>真实姓名：</td><td><input type="text" id="ipt_name" th:value="${member.getName()}"/></td></tr>
+                        <tr><td>身份证号：</td><td><input type="text" id="ipt_id_card" th:value="${member.getIdCard()}"/></td></tr>
+                        <tr><td style="border: none">身份证：</td>
+                            <td style="border: none">
+                                <span>正面</span><span style="margin-left: 95px">背面</span>
+                            </td>
+                        </tr>
+                        <tr><td></td>
+                            <td>
+                                <div class="div_img">
+                                    <input type="file" id="ipt_f" class="input_img" onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg" />
+                                    <input type="file" id="ipf_b" class="input_img input_img2" onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg" />
+                                </div>
+                                <img id="img_f" th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
+                                <img id="img_b" th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
+                                <p>请选择身份证照片,单张图片照片过2M</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>性别：</td>
+                            <td>
+                                <select class ="form-control" id="ipt_sex">
                                     <option value="0">请选择</option>
                                     <option value="1" th:selected="${member.getSex()==1}">男</option>
                                     <option value="2" th:selected="${member.getSex()==2}">女</option>
                                     <option value="3" th:selected="${member.getSex()==3}">保密</option>
                                 </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">生日：</label>
-                            <div class="col-lg-8">
-                                <input type="text" id="ipt_birthday" readonly="true" class="form-control " th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}" name="ipt_birthday" placeholder="生日"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-3 control-label">身份证号：</label>
-                            <div class="col-lg-8">
-                                <input type="text" id="ipt_id_card" th:value="${member.getIdCard()}"
-                                       class="form-control" name="ipt_id_card" placeholder="身份证号"/>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div id="div_content_info" class="col-sm-6">
-                        <table id="table_content_info">
-
-                            <div class="form-group">
-                                <div>
-                                    <label class="col-lg-3 control-label">身份证照片：</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">正面：</label>
-                                <div class="div_img col-lg-8">
-                                    <label for="ipt_f"class="col-lg-3 btn btn-info">上传</label>
-                                    <div class="col-lg-8">
-                                    <input type="file" id="ipt_f" class="input_img"
-                                           onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg"/>
-                                        <img id="img_f" th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px;"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">背面：</label>
-                                <div class="div_img col-lg-8">
-                                    <label for="ipf_b"class="col-lg-3 btn btn-info">上传</label>
-                                    <div class="col-lg-8">
-                                        <input type="file" id="ipf_b" class="input_img input_img2"
-                                               onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg"/>
-                                        <img id="img_b"
-                                             th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
-                                             height="120" width="120" style="margin-bottom: 10px;"/>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">曾参与的公益项目：</label>
-                                <div class="col-lg-8">
-                                <textarea id="ipt_project" class="form-control col-lg-8" rows="5"
-                                          style="margin: 10px 0px 10px 0px;"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-lg-3 control-label">个人说明：</label>
-                                <div class="col-lg-8">
-                                <textarea id="ipt_summary" class="form-control" rows="5"
-                                          style="margin: 10px 0px 10px 0px;"></textarea>
-                                </div>
-                            </div>
-                        </table>
-                        <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
-                    </div>
-                </form>
+                            </td>
+                        </tr>
+                        <tr><td>生日：</td><td><input type="text" id="ipt_birthday" class="form-control" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/></td></tr>
+                        <tr><td>曾参与的公益项目：</td><td><textarea id="ipt_project" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
+                        <tr><td>个人说明：</td><td><textarea id="ipt_summary" class="form-control" rows="5" style="margin: 10px 0px 10px 0px;"></textarea></td></tr>
+                    </table>
+                    <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
-
+<script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/laydate/laydate.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     laydate.render({
         elem: '#ipt_birthday',
-        value: $("#ipt_birthday").val()
+        value:$("#ipt_birthday").val()
     });
 
-    var memberProject = /*[[${member.getProject()}]]*/;
-    var memberSummary = /*[[${member.getSummary()}]]*/;
+    var memberProject= /*[[${member.getProject()}]]*/;
+    var memberSummary= /*[[${member.getSummary()}]]*/;
     $("#ipt_project").val(memberProject);
     $("#ipt_summary").val(memberSummary);
+    var fileSize=2*1024*1024;
 
-    var imgB = "";
-    var imgF = "";
-
-
-    //表单验证
-    $(document).ready(function() {
-        $('#defaultForm_2').bootstrapValidator({
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                ipt_mobile: {
-                    message: 'The phone is not valid',
-                    validators: {
-                        notEmpty: {
-                            message: '手机号码不能为空'
-                        },
-                        regexp:{
-                            regexp : /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/,
-                            message: '手机号码格式不正确'
-                        }
-                    }
-                },
-                ipt_name: {
-                    validators: {
-                        notEmpty: {
-                            message: '姓名不能为空'
-                        }
-                    }
-                },
-                ipt_sex: {
-                    validators: {
-                        notEmpty: {
-                            message: '性别不能为空'
-                        }
-                    }
-                },
-                ipt_id_card: {
-                    validators: {
-                        notEmpty: {
-                            message: '身份证号码不能为空'
-                        },
-                        regexp:{
-                            regexp : /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
-                            message: '身份证号码格式不正确'
-                        }
-
-                    }
-                }
-
-            }
-        });
-    });
-
+    var imgB="";
+    var imgF="";
 
     function f_getFileUrl(sourceId) {
         var url;
-        if (navigator.userAgent.indexOf("MSIE") >= 1) {
-            // IE
-            url = $('#' + sourceId).val();
-        } else {
-            //其他浏览器
-            url = window.URL.createObjectURL($("#" + sourceId).prop('files')[0]);
+
+        if ($("#" + sourceId).prop('files')[0].size > fileSize) {
+            layer.alert("请选择2M以内的图片");
+            url = ""
+        }else {
+            if (navigator.userAgent.indexOf("MSIE") >= 1) {
+                // IE
+                url = $('#' + sourceId).val();
+            } else {
+                //其他浏览器
+                url = window.URL.createObjectURL($("#" + sourceId).prop('files')[0]);
+            }
         }
         return url;
     }
@@ -311,68 +186,60 @@
      */
     function f_preImg(sourceId, targetId) {
         var url = f_getFileUrl(sourceId);
-        f_readAsDataURL(sourceId);
-        $('#' + targetId).attr("src", url);
+        if(url!=""){
+            f_readAsDataURL(sourceId);
+            $('#'+targetId).attr("src",url);
+        }
     }
 
     $(".btn_save").click(function () {
-        var memberName = $("#ipt_name").val();
-        var mobile = $("#ipt_mobile").val();
-        var idCard = $("#ipt_id_card").val();
-        var sex = $("#ipt_sex").val();
-        var birthday = $("#ipt_birthday").val();
-        var project = $("#ipt_project").val();
-        var summary = $("#ipt_summary").val();
+        var memberName=$("#ipt_name").val();
+        var mobile=$("#ipt_mobile").val();
+        var idCard=$("#ipt_id_card").val();
+        var sex=$("#ipt_sex").val();
+        var birthday=$("#ipt_birthday").val();
+        var project=$("#ipt_project").val();
+        var summary=$("#ipt_summary").val();
 
         $.ajax({
-            url: '/home/member/submit',
-            data: {
-                name: memberName,
-                mobile: mobile,
-                idCard: idCard,
-                sex: sex,
-                birthday: birthday,
-                project: project,
-                summary: summary,
-                idCardFront: imgF,
-                idCardBack: imgB
-            },
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 200) {
-                    layer.alert(data.msg, function () {
+            url:'/home/member/submit',
+            data:{name:memberName,mobile:mobile,idCard:idCard,sex:sex,birthday:birthday,project:project,summary:summary,idCardFront:imgF,idCardBack:imgB},
+            type:'post',
+            dataType:'json',
+            success:function (data) {
+                if (data.code===200){
+                    layer.alert(data.msg,function () {
                         window.location.href = "/home";
                     });
-                    setTimeout(function () {
+                    setTimeout(function(){
                         window.location.href = "/home";
-                    }, 3000);
-                } else {
+                    },3000);
+                }else{
                     layer.alert(data.msg);
                 }
             }
         });
     });
 
-    function f_readAsDataURL(item) {
+    function f_readAsDataURL(item){
         //检验是否为图像文件
-        var file = $("#" + item).prop('files')[0];
-        if (!/image\/\w+/.test(file.type)) {
+        var file = $("#"+item).prop('files')[0];
+        if(!/image\/\w+/.test(file.type)){
             return "";
         }
         var reader = new FileReader();
         //将文件以Data URL形式读入页面
         reader.readAsDataURL(file);
         reader.onload = function (e) {
-            if (item === "ipt_f") {
-                imgF = this.result;
-            } else {
-                imgB = this.result;
+            if (item==="ipt_f"){
+                imgF=this.result;
+            }else{
+                imgB=this.result;
             }
         }
     }
 
-    function f_uploadAvator() {
+    function f_uploadAvator(){
         layer.open({
             type: 2,
             title: '上传头像',
@@ -382,9 +249,6 @@
             content: '/home/member/avator'
         });
     }
-
-
-
     /*]]>*/
 </script>
 </body>
