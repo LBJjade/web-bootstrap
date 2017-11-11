@@ -32,9 +32,9 @@ public class MemberController extends BaseController {
 
     @PostMapping("/info")
     @ResponseBody
-    public ResponseDto Submit(HttpServletRequest request, @RequestParam long memberId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto Submit(HttpServletRequest request, @RequestParam long memberId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
         return memberService.GetMemberById(memberId);
@@ -42,9 +42,9 @@ public class MemberController extends BaseController {
 
     @PostMapping("/submit")
     @ResponseBody
-    public ResponseDto UpdateMember(HttpServletRequest request, MemberInfoExtension memberInfoExtension){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto UpdateMember(HttpServletRequest request, MemberInfoExtension memberInfoExtension) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
         memberInfoExtension.setValidation(2);
@@ -52,24 +52,24 @@ public class MemberController extends BaseController {
         return memberService.UpdateMemberInfo(memberInfoExtension);
     }
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping(value = "/avator")
     public String avatorUpload(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
-        request.setAttribute("member",GetCurrentUser(request));
+        request.setAttribute("member", GetCurrentUser(request));
         return this.render("home/avator_upload");
     }
 
     @PostMapping("/upload")
     @ResponseBody
-    public ResponseDto uploadAvator(HttpServletRequest request,@RequestParam String imgStr) {
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto uploadAvator(HttpServletRequest request, @RequestParam String imgStr) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        if (StringUtils.isEmpty(imgStr)){
-            return new ResponseDto(400,Message.MEMBER_AVATOR_NULL);
+        if (StringUtils.isEmpty(imgStr)) {
+            return new ResponseDto(400, Message.MEMBER_AVATOR_NULL);
         }
-        return memberService.uploadAvator(currentMember.getMemberId(),imgStr);
+        return memberService.uploadAvator(currentMember.getMemberId(), imgStr);
     }
 }

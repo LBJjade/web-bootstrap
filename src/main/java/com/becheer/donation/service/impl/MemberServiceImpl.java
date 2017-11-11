@@ -10,6 +10,7 @@ import com.becheer.donation.configs.OssConfig;
 import com.becheer.donation.dao.MemberMapper;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.member.MemberIdCardExtension;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
@@ -72,6 +73,9 @@ public class MemberServiceImpl implements IMemberService {
 
     @Override
     public ResponseDto GetMemberById(long memberId) {
+
+        MemberIdCardExtension memberIdCardExtension=new MemberIdCardExtension();
+
         Member member = memberMapper.SelectMemberById(memberId);
         if (member==null){
             return new ResponseDto(400, Message.MEMBER_NOT_EXISTS);
@@ -92,15 +96,16 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setMobile(member.getMobile());
         if (member.getRole()==1){
             //个人
-
-            String before=memberMapper.SelectIdCardBeforeById(memberId);
-            String after=memberMapper.SelectIdCardAfterById(memberId);
+            MemberIdCardExtension idCardById=memberMapper.SelectIdCardById(memberId);
+            memberInfoExtension.setId_card_before(idCardById.getBefore());
+            memberInfoExtension.setId_card_after(idCardById.getAfter());
             String result="";
             String code= "*";
             for(int i=1;i<13;i++){
                 result=result+code;
             }
-            result=before+result+after;
+            result=memberInfoExtension.getId_card_before()+result+memberInfoExtension.getId_card_after();
+//            result=before+result+after;
             memberInfoExtension.setIdCard(result);
             memberInfoExtension.setSex(member.getSex());
             memberInfoExtension.setBirthday(member.getBirthday());
