@@ -9,16 +9,17 @@
             border-bottom: 1px dashed #028ece;
         }
 
-        .bottom_items span{
-            margin: 20px;
-        }
-
         .bottom_word{
             width: 1000px;
             height: 50px;
             margin: 0 auto;
             text-align: center;
             padding-top: 6px;
+        }
+
+        .bottom_items span{
+            display: inline-block;
+            width: 95px;
         }
     </style>
     <body>
@@ -27,20 +28,22 @@
                 <div class="col-sm-12" style="padding: 0px">
                     <div id="div_bottom">
                         <div class="container">
-                            <div class="bottom_word bottom_items"  >
-                                <span><a th:href="@{~/index}">首页</a></span>
-                                <span><a href="http://www.sjaxjjh.com/nav/9.html">关于我们</a></span>
-                                <span><a th:href="@{~/project}">慈善项目</a></span>
-                                <span><a th:href="@{~/publicity}">信息公开</a></span>
-                                <span><a href="http://www.sjaxjjh.com/nav/12.html">我们在行动</a></span>
-                                <span><a href="http://www.sjaxjjh.com/nav/13.html">活动纪实</a></span>
-                                <span><a href="http://www.sjaxjjh.com/nav/14.html">法律法规</a></span>
-                                <span><a href="http://www.sjaxjjh.com/nav/15.html">捐献指南</a></span>
-                                <span><a href="http://www.sjaxjjh.com/nav/16.html">秘书长邮箱</a></span>
-                                <span><a href="http://www.sjaxjjh.com/nav/17.html">手机APP</a></span>
+                            <div style="width: 100%">
+                                <div class="bottom_word bottom_items"  >
+                                    <span><a th:href="@{~/index}">首页</a></span>
+                                    <span><a href="http://www.sjaxjjh.com/nav/9.html">关于我们</a></span>
+                                    <span><a th:href="@{~/project}">慈善项目</a></span>
+                                    <span><a th:href="@{~/publicity}">信息公开</a></span>
+                                    <span><a href="http://www.sjaxjjh.com/nav/12.html">我们在行动</a></span>
+                                    <span><a href="http://www.sjaxjjh.com/nav/13.html">活动纪实</a></span>
+                                    <span><a href="http://www.sjaxjjh.com/nav/14.html">法律法规</a></span>
+                                    <span><a href="http://www.sjaxjjh.com/nav/15.html">捐献指南</a></span>
+                                    <span><a href="http://www.sjaxjjh.com/nav/16.html">秘书长邮箱</a></span>
+                                    <span><a href="http://www.sjaxjjh.com/nav/17.html">手机APP</a></span>
+                                </div>
                             </div>
                         </div>
-                        <span style="font-size: 12px;">Copyright  ©2017  广东省世纪爱心慈善基金会  All Rights reserved. <a href="http://www.miitbeian.gov.cn"> 粤ICP备14004079号-3</a>  <a href="http://www.300.cn">Technical support：300.CN</a></span>
+                        <div style="font-size: 12px;">Copyright  ©2017  广东省世纪爱心慈善基金会  All Rights reserved. <a href="http://www.miitbeian.gov.cn"> 粤ICP备14004079号-3</a>  <a href="http://www.300.cn">Technical support：300.CN</a></div>
                     </div>
                 </div>
             </div>
