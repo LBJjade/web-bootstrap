@@ -98,7 +98,7 @@
     </update>
 
     <update id="UpdatePw">
-        UPDATE dnt_member set `password` = #{param1} where mobile = #{param2}
+        UPDATE dnt_member set `password` = #{param1}, update_time = now() where mobile = #{param2}
     </update>
 
     <update id="updateAvator">

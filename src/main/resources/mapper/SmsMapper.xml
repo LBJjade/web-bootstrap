@@ -74,4 +74,9 @@
         #{createTime,jdbcType=TIMESTAMP}
         )
     </insert>
+
+    <select id="selectTimeByMobileAndTemTemplateId" resultType="java.util.Date">
+          select invalid_date_time from dnt_sms where mobile = #{param1} AND sms_template_id = #{param2} ORDER BY create_time DESC LIMIT 1
+    </select>
+
 </mapper>
