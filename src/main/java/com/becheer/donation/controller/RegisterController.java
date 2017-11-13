@@ -43,6 +43,15 @@ public class RegisterController extends BaseController {
     }
 
     /**
+     *
+     */
+    @GetMapping(value = "/clause")
+    public String clauseView(HttpServletRequest request) {
+        request.setAttribute("config", fileConfig);
+        return this.render("clause");
+    }
+
+    /**
      * 提交注册
      * @return
      */
@@ -88,6 +97,9 @@ public class RegisterController extends BaseController {
         if (member!=null){
             return new ResponseDto(401,Message.REGISTER_MOBILE_EXIST);
         }
+
         return smsService.SendSms(mobile,1);
     }
+
+
 }

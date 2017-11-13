@@ -32,6 +32,7 @@ public class Message {
     public static final String REGISTER_SMS_SEND_SUCCESS="短信发送成功";
     public static final String REGISTER_SMS_INDIVIDUAL_TEMPLATE="短信模板错误";
     public static final String REGISTER_SMS_USE_OUT="您本天的短信次数已用尽";
+    public static final String REGISTER_SMS_TIME_OUT="60秒还没过去";
 
 
     /*

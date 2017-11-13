@@ -10,6 +10,8 @@ import com.becheer.donation.model.Sms;
 import com.becheer.donation.model.extension.sms.SmsTemplateExtension;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public interface SmsMapper {
 
@@ -27,4 +29,7 @@ public interface SmsMapper {
 
     //更新短信状态
     int updateSmsStatus(Sms sms);
+
+    //
+    Date selectTimeByMobileAndTemTemplateId(String mobile,long smsTemplateId);
 }

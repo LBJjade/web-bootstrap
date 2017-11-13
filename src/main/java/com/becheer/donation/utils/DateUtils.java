@@ -75,6 +75,16 @@ public class DateUtils {
         }
     }
 
+    public static boolean compareTime(Date date1, Date date2) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd yyyy-MM-dd HH:mm:ss");
+        try {
+            return !date1.after(date2);
+        } catch (Exception var5) {
+            var5.printStackTrace();
+            return false;
+        }
+    }
+
     public static Date dateFormat(String date, String dateFormat) {
         if(date == null) {
             return null;
