@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.annotation.Resources;
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -34,7 +33,7 @@ public class RegisterController extends BaseController {
     private ISmsService smsService;
 
     /**
-     *注册页面
+     * 注册页面
      */
     @GetMapping(value = "")
     public String View(HttpServletRequest request) {
@@ -53,11 +52,11 @@ public class RegisterController extends BaseController {
 
     /**
      * 提交注册
-     * @return
+     *
      */
     @PostMapping(value = "/submit")
     @ResponseBody
-    public ResponseDto SendSms(HttpServletRequest request,  @RequestParam String pwd) {
+    public ResponseDto SendSms(HttpServletRequest request, @RequestParam String pwd) {
         MemberRegisterExtension memberRegisterExtension = (MemberRegisterExtension) request.getSession().getAttribute(ConstString.REGISTER_SMS_SESSION);
         if (memberRegisterExtension == null) {
             return new ResponseDto(401, "Bad Request");
@@ -67,7 +66,7 @@ public class RegisterController extends BaseController {
         }
         pwd = pwd.trim();
         ResponseDto result = memberService.SubmitRegister(memberRegisterExtension.getMobile(), pwd, memberRegisterExtension.getRole());
-        if (result.getCode() == 200) {
+        if (result != null && result.getCode() == 200) {
             //注册成功，删除Session
             request.getSession().removeAttribute(ConstString.REGISTER_SMS_SESSION);
             //用户Session
@@ -90,15 +89,15 @@ public class RegisterController extends BaseController {
     @PostMapping(value = "/SendSms")
     @ResponseBody
     public ResponseDto SendRegisterSms(HttpServletRequest request, @RequestParam String mobile) {
-        if (!RegExUtil.checkMobile(mobile)){
-            return new ResponseDto(400,Message.VALIDATION_MOBILE_FAILED);
+        if (!RegExUtil.checkMobile(mobile)) {
+            return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
         }
-        Member member=memberService.GetMemberByMobile(mobile);
-        if (member!=null){
-            return new ResponseDto(401,Message.REGISTER_MOBILE_EXIST);
+        Member member = memberService.GetMemberByMobile(mobile);
+        if (member != null) {
+            return new ResponseDto(401, Message.REGISTER_MOBILE_EXIST);
         }
 
-        return smsService.SendSms(mobile,1);
+        return smsService.SendSms(mobile, 1);
     }
 
 
