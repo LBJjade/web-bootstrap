@@ -88,4 +88,17 @@ public class StringUtil {
         return fileLength>size;
     }
 
+    /**
+     * 加密身份证号
+     * @param idCard
+     * @return
+     */
+    public static String getEncryptedIdCard(String idCard){
+        if (isNull(idCard)||idCard.length()!=18){
+            return "";
+        }else{
+            idCard=idCard.substring(0,2)+"*****"+idCard.substring(16);
+        }
+        return idCard;
+    }
 }

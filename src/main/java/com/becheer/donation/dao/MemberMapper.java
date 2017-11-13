@@ -7,7 +7,6 @@ package com.becheer.donation.dao;
 */
 
 import com.becheer.donation.model.Member;
-import com.becheer.donation.model.extension.member.MemberIdCardExtension;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,8 +22,4 @@ public interface MemberMapper {
     int UpdatePw(String newPw,String mobile);
 
     int updateAvator(String avatorUrl,long memberId);
-
-    MemberIdCardExtension SelectIdCardById(Long memberId);
-
-//    String SelectIdCardAfterById(Long memberId);
 }

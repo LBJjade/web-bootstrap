@@ -77,6 +77,19 @@
             margin-bottom: -10px;
         }
 
+        .info_button {
+            font-size: 14px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+        }
+
     </style>
 </head>
 <body>
@@ -106,10 +119,10 @@
             </div>
             <div id="div_content">
                 <div id="div_avator">
-                    <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                    <img id="img_avator" th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
                     <br/>
                     <br/>
-                    <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
+                    <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
                 </div>
                 <div id="div_content_info">
                     <form id="defaultForm_2" method="post" class="form-horizontal">
@@ -384,6 +397,10 @@
             area: ['800px', '600px'],
             content: '/home/member/avator'
         });
+    }
+
+    function f_refreshImg() {
+        $("#img_avator").attr("src", $("#img_avator").attr("src")+"&r="+Math.random()*4);
     }
     /*]]>*/
 </script>

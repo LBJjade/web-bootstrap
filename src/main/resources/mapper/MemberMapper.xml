@@ -35,11 +35,6 @@
         <result column="remark_" jdbcType="VARCHAR" property="remark" />
     </resultMap>
 
-    <resultMap id="IdCardResultMap" type="com.becheer.donation.model.extension.member.MemberIdCardExtension">
-        <result column="b" jdbcType="VARCHAR" property="before" />
-        <result column="a" jdbcType="VARCHAR" property="after" />
-    </resultMap>
-
     <insert id="insertMember" parameterType="com.becheer.donation.model.Member">
         INSERT INTO dnt_member
         (
@@ -71,13 +66,6 @@
     <select id="SelectMemberById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT * FROM dnt_member
         WHERE id_=#{memberId,jdbcType=BIGINT}
-    </select>
-
-    <select id="SelectIdCardById" parameterType="java.lang.Long" resultMap="IdCardResultMap">
-        SELECT
-         SUBSTR(id_card,1,2) as b,
-         SUBSTR(id_card,17) as a
-         from dnt_member WHERE id_ = #{memberId,jdbcType=BIGINT}
     </select>
 
     <update id="UpdateMember" parameterType="com.becheer.donation.model.Member">
