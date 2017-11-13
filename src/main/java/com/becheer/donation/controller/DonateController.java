@@ -103,7 +103,7 @@ public class DonateController extends BaseController {
 //                return new ResponseDto(400, Message.DONATE_AMOUNT_IS_EMPTY);
 //            }
 
-            String ip = IPUtil.getRealIp();
+            String ip = IPUtil.getIpAddress(request);
             Map<String, String> map = donateService.donate(donate, ip, memberName);
 
 
@@ -122,7 +122,6 @@ public class DonateController extends BaseController {
                 String orderNo = map.get("orderNo");
                 prepay.put("orderNo", orderNo);
             }
-
 
 
             return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);

@@ -11,9 +11,9 @@ import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 
 public interface IMemberService {
-    ResponseDto SubmitRegister(String mobile,String pwd,int role);
+    ResponseDto SubmitRegister(String mobile, String pwd, int role);
 
-    ResponseDto Login(String mobile,String pwd);
+    ResponseDto Login(String mobile, String pwd);
 
     ResponseDto GetMemberById(long memberId);
 
@@ -25,7 +25,9 @@ public interface IMemberService {
 
     ResponseDto UpdateMemberInfo(MemberInfoExtension memberInfoExtensions);
 
-    int UpdatePw(String newPw,String mobile);
+    int UpdatePw(String newPw, String mobile);
 
-    ResponseDto uploadAvator(long memberId,String fileStr);
+    ResponseDto uploadAvator(long memberId, String fileStr);
+
+    int updateLoginInfo(String ip, long memberId);
 }
