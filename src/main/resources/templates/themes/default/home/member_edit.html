@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="renderer" content="webkit" />
     <title>编辑个人信息</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <style type="text/css">
         #div_content{
             width: 985px;
-            height: 1100px;
+            min-height: 1055px;
             border: 1px #eee solid;
             margin-left: 10px;
             padding-top: 30px;
@@ -40,7 +40,8 @@
             margin-left: 120px;
             line-height: 50px;
         }
-        #table_content_info td{
+
+        #table_content_info td {
             border-bottom: 1px #ccc dashed;
             padding: 9px;
         }
@@ -128,6 +129,7 @@
                                     <input type="text" id="ipt_name" class="form-control" name="ipt_name"
                                            th:value="${member.getName()}"/>
                                     <div class="name_error error">真实姓名不能为空</div>
+                                    <div class="name_error_0 error">真实姓名格式错误</div>
                                 </td>
                             </tr>
                             <tr>
@@ -252,8 +254,9 @@
 
     //手机号码
     $("#ipt_mobile").blur(function () {
-        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
-        if (!mobile.test($(".ipt_mobile").val())) {
+//        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        var mobile =  /^1[3|4|5|7|8][0-9]{9}$/;
+        if (!mobile.test($("#ipt_mobile").val())) {
             $(".mobile_error").show();
         } else {
             $(".mobile_error").hide();
@@ -262,7 +265,8 @@
 
     //身份证号
     $("#ipt_id_card").blur(function () {
-        var id_card = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+//        现在公民身份证都是18位，15位身份证号码已失效
+        var id_card = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
         if ($("#ipt_id_card").val() == "") {
             $(".id_card_error_0").hide();
             $(".id_card_error").show();
@@ -278,22 +282,29 @@
 
     //真实姓名
     $("#ipt_name").blur(function () {
+        var name =  /^[\u4E00-\u9FA5]{2,4}$/;
         if ($("#ipt_name").val() == "") {
             $(".name_error").show();
         } else {
             $(".name_error").hide();
         }
+        if (!name.test($("#ipt_name").val())) {
+            $(".name_error_0").show();
+        } else {
+            $(".name_error_0").hide();
+        }
+
     })
 
 
     $(".btn_save").click(function () {
-        var memberName = $("#ipt_name").val();
-        var mobile = $("#ipt_mobile").val();
-        var idCard = $("#ipt_id_card").val();
-        var sex = $("#ipt_sex").val();
-        var birthday = $("#ipt_birthday").val();
-        var project = $("#ipt_project").val();
-        var summary = $("#ipt_summary").val();
+        var memberName=$("#ipt_name").val();
+        var mobile=$("#ipt_mobile").val();
+        var idCard=$("#ipt_id_card").val();
+        var sex=$("#ipt_sex").val();
+        var birthday=$("#ipt_birthday").val();
+        var project=$("#ipt_project").val();
+        var summary=$("#ipt_summary").val();
 
         $.ajax({
             url: '/home/member/submit',
@@ -353,6 +364,7 @@
             content: '/home/member/avator'
         });
     }
+
     /*]]>*/
 </script>
 </body>
