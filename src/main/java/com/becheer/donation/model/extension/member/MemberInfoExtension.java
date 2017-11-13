@@ -48,27 +48,6 @@ public class MemberInfoExtension implements Serializable {
 
     private String idCardBack;
 
-    //身份证
-    private String id_card_before;
-
-    private String id_card_after;
-
-    public String getId_card_before() {
-        return id_card_before;
-    }
-
-    public void setId_card_before(String id_card_before) {
-        this.id_card_before = id_card_before;
-    }
-
-    public String getId_card_after() {
-        return id_card_after;
-    }
-
-    public void setId_card_after(String id_card_after) {
-        this.id_card_after = id_card_after;
-    }
-
     public long getId() {
         return id;
     }
@@ -102,15 +81,6 @@ public class MemberInfoExtension implements Serializable {
     }
 
     public String getIdCard() {
-//        隐藏身份证号
-//        String changeIdCardFirst,changeIdCardSecond;
-//        changeIdCardFirst=idCard.substring(0,2);
-//        changeIdCardSecond=idCard.substring(idCard.length()-2,idCard.length());
-//        String s="*";
-//        for (int i=0;i<;i++){
-//           s=s+s;
-//        }
-//        idCard= changeIdCardFirst+s+changeIdCardSecond;
         return idCard;
     }
 

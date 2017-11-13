@@ -350,22 +350,26 @@
 
     //ajax上传
     function f_uploadAvator(imgStr) {
-        $.ajax({
-            url: '/home/member/upload',
-            data: {imgStr: imgStr},
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                if(data.code===200){
-                    layer.alert(data.msg,function () {
-                        parent.location.reload();
-//                        parent.layer.closeAll();
-                    });
-                }else{
-                    layer.alert(data.msg);
+        if (imgStr==="data:,"){
+            layer.alert("请先选择头像");
+        }else {
+            $.ajax({
+                url: '/home/member/upload',
+                data: {imgStr: imgStr},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 200) {
+                        layer.alert(data.msg, function () {
+                            parent.f_refreshImg();
+                            parent.layer.closeAll();
+                        });
+                    } else {
+                        layer.alert(data.msg);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     //绘制

@@ -33,12 +33,15 @@ public class MemberController extends BaseController {
     @PostMapping("/info")
     @ResponseBody
     public ResponseDto Submit(HttpServletRequest request, @RequestParam long memberId) {
-        MemberSessionExtension currentMember = GetCurrentUser(request);
-        if (currentMember == null) {
-            return MemberAuthFailed();
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                return MemberAuthFailed();
+            }
+            return memberService.GetMemberById(memberId);
+        }catch (Exception ex){
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-
-        return memberService.GetMemberById(memberId);
     }
 
     @PostMapping("/submit")

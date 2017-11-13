@@ -7,8 +7,12 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.Normalizer;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /*
@@ -25,12 +29,12 @@ public class HttpUtil {
         if (null == session) {
             return null;
         }
-        JSONObject sessionObject=(JSONObject)session.getAttribute(ConstString.MEMBER_SESSION_CODE);
-        if (sessionObject==null){
+        JSONObject sessionObject = (JSONObject) session.getAttribute(ConstString.MEMBER_SESSION_CODE);
+        if (sessionObject == null) {
             return null;
         }
-        String a=sessionObject.get("mobile").toString();
-        MemberSessionExtension result=new MemberSessionExtension();
+        String a = sessionObject.get("mobile").toString();
+        MemberSessionExtension result = new MemberSessionExtension();
         result.setMemberId(sessionObject.getIntValue("memberId"));
         result.setMobile(sessionObject.getString("mobile"));
         result.setValidation(sessionObject.getIntValue("validation"));
@@ -124,5 +128,60 @@ public class HttpUtil {
             cleanValue = scriptPattern.matcher(cleanValue).replaceAll("");
         }
         return cleanValue;
+    }
+
+    /**
+     * 发送请求
+     *
+     * @param urlStr   请求地址
+     * @param content  内容
+     * @param encoding 编码
+     * @param type     请求方式 GET/POST
+     * @param timeOut  连接超时时间
+     * @return
+     */
+    public static String sendRequest(String urlStr, String content, String encoding, String type, int timeOut) {
+        URL url = null;
+        HttpURLConnection connection = null;
+        try {
+            url = new URL(urlStr);
+            // 新建连接实例
+            connection = (HttpURLConnection) url.openConnection();
+            //设置连接超时时间
+            connection.setConnectTimeout(timeOut);
+            //打开输出流
+            connection.setDoOutput(true);// 是否打开输出流 true|false
+            //打开输入流
+            connection.setDoInput(true);// 是否打开输入流true|false
+            //提交方式
+            connection.setRequestMethod(type);// 提交方法POST|GET
+            //不缓存
+            connection.setUseCaches(false);// 是否缓存true|false
+            //打开连接
+            connection.connect();
+            DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+            out.writeBytes(content);
+            out.flush();
+            // 关闭输出流
+            out.close();
+            //读取服务端返回的数据
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    connection.getInputStream(), encoding));
+            StringBuffer buffer = new StringBuffer();
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                buffer.append(line);
+            }
+            reader.close();
+            return buffer.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                // 关闭连接
+                connection.disconnect();
+            }
+        }
+        return null;
     }
 }

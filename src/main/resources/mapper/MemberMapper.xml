@@ -35,11 +35,6 @@
         <result column="remark_" jdbcType="VARCHAR" property="remark"/>
     </resultMap>
 
-    <resultMap id="IdCardResultMap" type="com.becheer.donation.model.extension.member.MemberIdCardExtension">
-        <result column="b" jdbcType="VARCHAR" property="before"/>
-        <result column="a" jdbcType="VARCHAR" property="after"/>
-    </resultMap>
-
     <insert id="insertMember" parameterType="com.becheer.donation.model.Member">
         INSERT INTO dnt_member
         (
@@ -73,13 +68,6 @@
         WHERE id_=#{memberId,jdbcType=BIGINT}
     </select>
 
-    <select id="SelectIdCardById" parameterType="java.lang.Long" resultMap="IdCardResultMap">
-        SELECT
-         SUBSTR(id_card,1,2) as b,
-         SUBSTR(id_card,17) as a
-         from dnt_member WHERE id_ = #{memberId,jdbcType=BIGINT}
-    </select>
-
     <update id="UpdateMember" parameterType="com.becheer.donation.model.Member">
         UPDATE dnt_member
         SET
@@ -97,6 +85,16 @@
         <if test="license!=null">license=#{license},</if>
         validation=#{validation,jdbcType=INTEGER}
         WHERE id_ = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateLogin">
+        UPDATE
+          dnt_member
+        SET
+          login_ip = #{param1},
+          login_time = now(),
+          update_time = now()
+        WHERE id_ = #{param2}
     </update>
 
     <update id="UpdatePw">

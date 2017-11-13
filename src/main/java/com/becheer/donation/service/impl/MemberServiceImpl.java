@@ -10,7 +10,6 @@ import com.becheer.donation.configs.OssConfig;
 import com.becheer.donation.dao.MemberMapper;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.member.MemberIdCardExtension;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
@@ -47,44 +46,41 @@ public class MemberServiceImpl implements IMemberService {
         member.setPassword(HashUtil.GetPassword(pwd));
 //        member.setId(UUID.GetInt64UUID());
         int result = memberMapper.insertMember(member);
-        if (result>0){
-            member=memberMapper.SelectMemberByMobile(mobile);
-            return new ResponseDto(200,Message.REGISTER_REGISTER_SUCCESS,member);
-        }else{
-            return new ResponseDto(400,Message.SERVER_ERROR);
+        if (result > 0) {
+            member = memberMapper.SelectMemberByMobile(mobile);
+            return new ResponseDto(200, Message.REGISTER_REGISTER_SUCCESS, member);
+        } else {
+            return new ResponseDto(400, Message.SERVER_ERROR);
         }
     }
 
     @Override
-    public ResponseDto Login(String mobile,String pwd) {
+    public ResponseDto Login(String mobile, String pwd) {
         Member member = memberMapper.SelectMemberByMobile(mobile);
-        if (member==null){
+        if (member == null) {
             return new ResponseDto(404, Message.LOGIN_MOBILE_NOT_EXIST);
         }
-        if (member.getEnable()==0){
-            return new ResponseDto(405,Message.LOGIN_ACCOUNT_DISABLED);
+        if (member.getEnable() == 0) {
+            return new ResponseDto(405, Message.LOGIN_ACCOUNT_DISABLED);
         }
-        if (!member.getPassword().equals(HashUtil.GetPassword(pwd))){
-            return new ResponseDto(406,Message.LOGIN_PASSWORD_ERROR);
-        }else{
-            return new ResponseDto(407,Message.LOGIN_SUCCESS,member);
+        if (!member.getPassword().equals(HashUtil.GetPassword(pwd))) {
+            return new ResponseDto(406, Message.LOGIN_PASSWORD_ERROR);
+        } else {
+            return new ResponseDto(407, Message.LOGIN_SUCCESS, member);
         }
     }
 
     @Override
     public ResponseDto GetMemberById(long memberId) {
-
-        MemberIdCardExtension memberIdCardExtension=new MemberIdCardExtension();
-
         Member member = memberMapper.SelectMemberById(memberId);
-        if (member==null){
+        if (member == null) {
             return new ResponseDto(400, Message.MEMBER_NOT_EXISTS);
         }
-        if (member.getEnable()==0){
-            return new ResponseDto(401,Message.MEMBER_DISABLED);
+        if (member.getEnable() == 0) {
+            return new ResponseDto(401, Message.MEMBER_DISABLED);
         }
 
-        MemberInfoExtension memberInfoExtension=new MemberInfoExtension();
+        MemberInfoExtension memberInfoExtension = new MemberInfoExtension();
         memberInfoExtension.setId(member.getId());
         memberInfoExtension.setName(member.getMemberName());
         memberInfoExtension.setRole(member.getRole());
@@ -94,30 +90,20 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setAvator(member.getAvatorImg());
         memberInfoExtension.setBirthday(member.getBirthday());
         memberInfoExtension.setMobile(member.getMobile());
-        if (member.getRole()==1){
+        if (member.getRole() == 1) {
             //个人
-            MemberIdCardExtension idCardById=memberMapper.SelectIdCardById(memberId);
-            memberInfoExtension.setId_card_before(idCardById.getBefore());
-            memberInfoExtension.setId_card_after(idCardById.getAfter());
-            String result="";
-            String code= "*";
-            for(int i=1;i<13;i++){
-                result=result+code;
-            }
-            result=memberInfoExtension.getId_card_before()+result+memberInfoExtension.getId_card_after();
-//            result=before+result+after;
-            memberInfoExtension.setIdCard(result);
+            memberInfoExtension.setIdCard(StringUtil.getEncryptedIdCard(member.getIdCard()));
             memberInfoExtension.setSex(member.getSex());
             memberInfoExtension.setBirthday(member.getBirthday());
-        }else if (member.getRole()==2){
+        } else if (member.getRole() == 2) {
             //公司
             memberInfoExtension.setOrganizationType(member.getOrganizationType());
             memberInfoExtension.setOrganizationCode(member.getOrganizationCode());
             memberInfoExtension.setLicense(member.getLicense());
-        }else{
-            return new ResponseDto(404,Message.MEMBER_ROLE_ERROR);
+        } else {
+            return new ResponseDto(404, Message.MEMBER_ROLE_ERROR);
         }
-        return new ResponseDto(200,Message.MEMBER_GET_SUCCESS,memberInfoExtension);
+        return new ResponseDto(200, Message.MEMBER_GET_SUCCESS, memberInfoExtension);
     }
 
     @Override
@@ -128,10 +114,10 @@ public class MemberServiceImpl implements IMemberService {
     @Override
     public MemberInfoExtension GetMemberExtensionById(long memberId) {
         Member member = memberMapper.SelectMemberById(memberId);
-        if (member==null){
+        if (member == null) {
             return null;
         }
-        MemberInfoExtension memberInfoExtension=new MemberInfoExtension();
+        MemberInfoExtension memberInfoExtension = new MemberInfoExtension();
         memberInfoExtension.setId(member.getId());
         memberInfoExtension.setName(member.getMemberName());
         memberInfoExtension.setRole(member.getRole());
@@ -140,7 +126,7 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setValidation(member.getValidation());
         memberInfoExtension.setAvator(member.getAvatorImg());
         memberInfoExtension.setBirthday(member.getBirthday());
-        if (member.getRole()==1){
+        if (member.getRole() == 1) {
             //个人
             memberInfoExtension.setMobile(member.getMobile());
             memberInfoExtension.setIdCard(member.getIdCard());
@@ -148,7 +134,7 @@ public class MemberServiceImpl implements IMemberService {
             memberInfoExtension.setBirthday(member.getBirthday());
             memberInfoExtension.setIdCardFront(member.getIdCardFrontImg());
             memberInfoExtension.setIdCardBack(member.getIdCardBackImg());
-        }else if (member.getRole()==2){
+        } else if (member.getRole() == 2) {
             //公司
             memberInfoExtension.setOrganizationType(member.getOrganizationType());
             memberInfoExtension.setOrganizationCode(member.getOrganizationCode());
@@ -170,58 +156,58 @@ public class MemberServiceImpl implements IMemberService {
         member.setValidation(memberInfoExtension.getValidation());
         member.setOrganizationCode(memberInfoExtension.getOrganizationCode());
         member.setOrganizationType(memberInfoExtension.getOrganizationType());
-        if (!StringUtils.isEmpty(memberInfoExtension.getIdCardFront())){
-            if (StringUtil.checkBase64FileSize(memberInfoExtension.getIdCardFront(),2*1024*1024)){
-                return new ResponseDto(500,Message.MEMBER_IMG_OVERLIMIT);
+        if (!StringUtils.isEmpty(memberInfoExtension.getIdCardFront())) {
+            if (StringUtil.checkBase64FileSize(memberInfoExtension.getIdCardFront(), 2 * 1024 * 1024)) {
+                return new ResponseDto(500, Message.MEMBER_IMG_OVERLIMIT);
             }
-            byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardFront());
-            String fileName = "fImg"+memberInfoExtension.getId();
-            fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
-            fileName=ossConfig.getIdCardPath()+fileName;
-            OssUtil.addByteArray(bytes,fileName);
+            byte[] bytes = StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardFront());
+            String fileName = "fImg" + memberInfoExtension.getId();
+            fileName = HashUtil.getEncryptedFileName(fileName) + ".jpg";
+            fileName = ossConfig.getIdCardPath() + fileName;
+            OssUtil.addByteArray(bytes, fileName);
             member.setIdCardFrontImg(fileName);
         }
-        if (!StringUtils.isEmpty(memberInfoExtension.getLicense())){
-            if (StringUtil.checkBase64FileSize(memberInfoExtension.getLicense(),2*1024*1024)){
-                return new ResponseDto(500,Message.MEMBER_IMG_OVERLIMIT);
+        if (!StringUtils.isEmpty(memberInfoExtension.getLicense())) {
+            if (StringUtil.checkBase64FileSize(memberInfoExtension.getLicense(), 2 * 1024 * 1024)) {
+                return new ResponseDto(500, Message.MEMBER_IMG_OVERLIMIT);
             }
-            byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getLicense());
-            String fileName = "lImg"+memberInfoExtension.getId();
-            fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
-            fileName=ossConfig.getLicensePath()+fileName;
-            OssUtil.addByteArray(bytes,fileName);
+            byte[] bytes = StringUtil.base64ImgToByteArray(memberInfoExtension.getLicense());
+            String fileName = "lImg" + memberInfoExtension.getId();
+            fileName = HashUtil.getEncryptedFileName(fileName) + ".jpg";
+            fileName = ossConfig.getLicensePath() + fileName;
+            OssUtil.addByteArray(bytes, fileName);
             member.setLicense(fileName);
         }
-        if (!StringUtils.isEmpty(memberInfoExtension.getIdCardBack())){
-            if (StringUtil.checkBase64FileSize(memberInfoExtension.getIdCardBack(),2*1024*1024)){
-                return new ResponseDto(500,Message.MEMBER_IMG_OVERLIMIT);
+        if (!StringUtils.isEmpty(memberInfoExtension.getIdCardBack())) {
+            if (StringUtil.checkBase64FileSize(memberInfoExtension.getIdCardBack(), 2 * 1024 * 1024)) {
+                return new ResponseDto(500, Message.MEMBER_IMG_OVERLIMIT);
             }
-            byte[]bytes=StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardBack());
-            String fileName = "bImg"+memberInfoExtension.getId();
-            fileName=HashUtil.getEncryptedFileName(fileName)+".jpg";
-            fileName=ossConfig.getIdCardPath()+fileName;
-            OssUtil.addByteArray(bytes,fileName);
+            byte[] bytes = StringUtil.base64ImgToByteArray(memberInfoExtension.getIdCardBack());
+            String fileName = "bImg" + memberInfoExtension.getId();
+            fileName = HashUtil.getEncryptedFileName(fileName) + ".jpg";
+            fileName = ossConfig.getIdCardPath() + fileName;
+            OssUtil.addByteArray(bytes, fileName);
             member.setIdCardBackImg(fileName);
         }
         int result = memberMapper.UpdateMember(member);
-        if (result>0){
-            RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY+":"+ConstString.TABLE_MEMBER+":"+member.getId());
-            return new ResponseDto(200,Message.MEMBER_UPDATE_SUCCESS);
-        }else{
-            return new ResponseDto(500,Message.MEMBER_UPDATE_ERROR);
+        if (result > 0) {
+            RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_MEMBER + ":" + member.getId());
+            return new ResponseDto(200, Message.MEMBER_UPDATE_SUCCESS);
+        } else {
+            return new ResponseDto(500, Message.MEMBER_UPDATE_ERROR);
         }
     }
 
     @Override
     public ResponseDto uploadAvator(long memberId, String fileStr) {
         try {
-            byte[] bytes= StringUtil.base64ImgToByteArray(fileStr);
+            byte[] bytes = StringUtil.base64ImgToByteArray(fileStr);
             String fileName = ossConfig.getAvatorPath() + "a" + memberId + ".jpg";
             OssUtil.addByteArray(bytes, fileName);
-            int result=memberMapper.updateAvator(fileName,memberId);
-            if (result>0){
+            int result = memberMapper.updateAvator(fileName, memberId);
+            if (result > 0) {
                 return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS);
-            }else{
+            } else {
                 return new ResponseDto(500, Message.MEMBER_AVATOR_UPLOAD_ERROR);
             }
         } catch (Exception e) {
@@ -237,7 +223,12 @@ public class MemberServiceImpl implements IMemberService {
     @Override
     public int UpdatePw(String newPw, String mobile) {
         newPw = HashUtil.GetPassword(newPw);
-        int result = memberMapper.UpdatePw(newPw,mobile);
+        int result = memberMapper.UpdatePw(newPw, mobile);
         return result;
+    }
+
+    @Override
+    public int updateLoginInfo(String ip, long memberId) {
+        return memberMapper.updateLogin(ip, memberId);
     }
 }
