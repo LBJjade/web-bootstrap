@@ -3,15 +3,18 @@
 <mapper namespace="com.becheer.donation.dao.NoContractDonateMapper">
     <resultMap id="NoContractDonateMap" type="com.becheer.donation.model.extension.contract.NoContractDonateExtension">
         <id column="id_" jdbcType="BIGINT" property="id"/>
-        <result column="member_name" jdbcType="VARCHAR" property="memberName" />
-        <result column="donated_amount" jdbcType="BIGINT" property="amount" />
-        <result column="project_type_id" jdbcType="BIGINT" property="projectTypeId" />
-        <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName" />
-        <result column="project_id" jdbcType="BIGINT" property="projectId" />
-        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-        <result column="avator_img" jdbcType="VARCHAR" property="avator" />
-        <result column="ip" jdbcType="VARCHAR" property="ip" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="member_name" jdbcType="VARCHAR" property="memberName"/>
+        <result column="donated_amount" jdbcType="BIGINT" property="amount"/>
+        <result column="project_type_id" jdbcType="BIGINT" property="projectTypeId"/>
+        <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
+        <result column="ip" jdbcType="VARCHAR" property="ip"/>
+        <result column="ip_country" jdbcType="VARCHAR" property="country"/>
+        <result column="ip_region" jdbcType="VARCHAR" property="region"/>
+        <result column="ip_city" jdbcType="VARCHAR" property="city"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
 
 
@@ -26,6 +29,9 @@
         p.project_name,
         m.avator_img,
         d.ip,
+        d.ip_country,
+        d.ip_region,
+        d.ip_city,
         d.create_time
         FROM dnt_no_contract_donate d
         LEFT JOIN dnt_project p ON d.project_id=p.id_
@@ -47,6 +53,9 @@
         p.project_name,
         m.avator_img,
         d.ip,
+        d.ip_country,
+        d.ip_region,
+        d.ip_city,
         d.create_time
         FROM dnt_no_contract_donate d
         LEFT JOIN dnt_project p ON d.project_id=p.id_
@@ -56,5 +65,5 @@
         ORDER by d.create_time DESC
         LIMIT #{param2}
     </select>
-    
+
 </mapper>

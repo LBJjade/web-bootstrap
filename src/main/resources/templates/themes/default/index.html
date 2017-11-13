@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
@@ -239,7 +239,7 @@
             border: 2px #e41620 solid;
         }
 
-        .money_da{
+        .money_da {
             margin: 3px;
             padding: 2px;
             margin-bottom: 13px;
@@ -411,7 +411,8 @@
                            style="font-size: 30px;color: #999999;margin-right: 10px"></i>
                         <a class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a>
                     </span>
-                    <i class="fa fa-picture-o" aria-hidden="true" style="font-size:18px;color: #037270;margin-left: 5px;"></i>
+                    <i class="fa fa-picture-o" aria-hidden="true"
+                       style="font-size:18px;color: #037270;margin-left: 5px;"></i>
                     <span class="item_time">
                         <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>
                         <span style="color:#c8c8c8;margin-right: 10px;">发布时间 ：</span>{{item.createTime}}</span>
@@ -434,7 +435,8 @@
                         <ul class="recommend_item" v-for="item in items">
                             <li><img :src="fileRoot + item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/>
                             </li>
-                            <li class="recommend_item_info">{{item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount|format}}元
+                            <li class="recommend_item_info">
+                                {{item.memberName==null?item.location:item.memberName}}捐赠<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount|format}}元
                             </li>
                         </ul>
                     </div>
@@ -483,7 +485,8 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="float:left;margin-top: 10px;margin-left: 80px;"><span style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>
+                <div style="float:left;margin-top: 10px;margin-left: 80px;"><span
+                        style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>
                     <select id="sel_project_type" onchange="f_GetProject()">
                         <option value="0">请选择项目类别</option>
                         <option v-for="item in items" id="name" :value="item.id">{{item.name}}</option>
@@ -551,13 +554,12 @@
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
 
 
-
-
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
                     <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
-                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒</div>
+                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
+                </div>
                 <div class="model-body" style="text-align: center">
 
                     <div class="model-body code_img row" style="text-align: center">
@@ -622,7 +624,7 @@
 
             <div class="model-body" style="text-align: center">
 
-                <div  style="clear: both;">
+                <div style="clear: both;">
                     <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
                     <div style="margin-bottom:10px;">
                         <span class="money_da span_donation money_1">&yen;1千</span>
@@ -631,7 +633,7 @@
                         <span class="money_da span_donation money_1">&yen;8千</span>
                         <span class="money_da span_donation money_1">&yen;1万</span>
                         <br/>
-                        <span  class="money_da span_donation money_1">&yen;2万</span>
+                        <span class="money_da span_donation money_1">&yen;2万</span>
 
                         <span id="other_2" class="span_donation money_1"><span>其他：</span>
                             <input type="text" class="tx_yuan"
@@ -641,12 +643,14 @@
                 </div>
 
                 <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                    <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
+                <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
                 <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
-                    <!--<input type="number" id="ipt_dnt_amount"/>-->
+                <!--<input type="number" id="ipt_dnt_amount"/>-->
                 <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
-                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step2" data-dismiss="model">下一步</button>
+                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step2"
+                            data-dismiss="model">下一步
+                    </button>
                 </div>
             </div>
         </div>
@@ -669,7 +673,7 @@
 
             <div class="model-body" style="text-align: center">
 
-                <div  style="clear: both;">
+                <div style="clear: both;">
                     <div class="row">
                         <span class="col_sm_4" style="">手机：
                         </span>
@@ -684,7 +688,7 @@
                     </div>
 
                     <div style="width:100%;margin-top:20px;">验证码：&nbsp;
-                    <input type="number" id="ipt_dnt_amount"/>
+                        <input type="number" id="ipt_dnt_amount"/>
                     </div>
                 </div>
 
@@ -694,7 +698,9 @@
                 <!--<input type="number" id="ipt_dnt_amount"/>-->
                 <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
-                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step3" data-dismiss="model">下一步</button>
+                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step3"
+                            data-dismiss="model">下一步
+                    </button>
                 </div>
             </div>
         </div>
@@ -717,7 +723,7 @@
 
             <div class="model-body" style="text-align: center">
 
-                <div  style="clear: both;">
+                <div style="clear: both;">
 
                 </div>
 
@@ -733,8 +739,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!--扫码成功弹出层-->
@@ -1096,6 +1100,7 @@
                     $(".code_time").html("二维码已经失效，请刷新！");
                 }
             }
+
             Countdown();
         }
     }
@@ -1139,6 +1144,7 @@
     })
 
     var autoCloseTimeout = 5;
+
     function autoCloseAfterPaid() {
         if (autoCloseTimeout > 1) {
             autoCloseTimeout -= 1;
@@ -1200,6 +1206,7 @@
                 $(".code_time").html("二维码已经失效，请刷新！");
             }
         }
+
         Countdown();
     })
 

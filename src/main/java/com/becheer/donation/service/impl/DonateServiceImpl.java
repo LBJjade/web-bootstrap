@@ -1,15 +1,15 @@
 package com.becheer.donation.service.impl;
 
+import com.becheer.donation.model.AliIpDetail;
 import com.becheer.donation.model.DntNoContractDonate;
 import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.extension.donate.Donate;
-import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import com.becheer.donation.service.IDntNoContractDonateService;
 import com.becheer.donation.service.IDntPaymentPlanService;
 import com.becheer.donation.service.IDonateService;
 import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.utils.GenerateUtil;
-import com.becheer.donation.utils.UUID;
+import com.becheer.donation.utils.IPUtil;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +68,15 @@ public class DonateServiceImpl implements IDonateService {
         dntNoContractDonate.setIp(ip);
         dntNoContractDonate.setCreateTime(new Date());
 
+        //根据IP获取具体地址信息
+        AliIpDetail aliIpDetail = IPUtil.getIpLocation("ip=" + ip);
+        if (aliIpDetail != null) {
+            dntNoContractDonate.setIpCountry(aliIpDetail.getCountry());
+            dntNoContractDonate.setIpRegion(aliIpDetail.getRegion());
+            dntNoContractDonate.setIpArea(aliIpDetail.getArea());
+            dntNoContractDonate.setIpCity(aliIpDetail.getCity());
+            dntNoContractDonate.setIsp(aliIpDetail.getIsp());
+        }
         // TODO 增加容错处理
         noContractDonateService.insert(dntNoContractDonate);
 
@@ -75,7 +84,7 @@ public class DonateServiceImpl implements IDonateService {
         DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
 
 
-        String title = "捐赠了" +  String.valueOf(amount / 100.00) + "元";
+        String title = "捐赠了" + String.valueOf(amount / 100.00) + "元";
         if (!Strings.isNullOrEmpty(memberName)) {
             title = memberName + title;
         }

@@ -36,7 +36,12 @@
             enable_,
             create_time,
             create_by,
-            ip
+            ip,
+            ip_country,
+            ip_area,
+            ip_region,
+            ip_city,
+            isp
         )
         VALUES
         (
@@ -51,7 +56,12 @@
 	        1,
             now(),
 	        1,
-	        #{ip, jdbcType=VARCHAR}
+	        #{ip, jdbcType=VARCHAR},
+	        #{ipCountry, jdbcType=VARCHAR},
+            #{ipArea, jdbcType=VARCHAR},
+            #{ipRegion, jdbcType=VARCHAR},
+            #{ipCity, jdbcType=VARCHAR},
+            #{isp, jdbcType=VARCHAR}
         )
     </insert>
 

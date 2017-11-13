@@ -90,13 +90,10 @@
                                 style="display: none;float: right;width: 27px;margin-right: 7px;" ></span>
                     </a></p>
                 </div>
-                <!--<p style="line-height: 30px;margin: -5px;"><span style="line-height: 40px">我的信息</span>-->
-
-
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
+                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
                     <br/>
                     <br/>
                     <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
@@ -230,6 +227,10 @@
             area: ['800px', '600px'],
             content: '<div style="width:100%;height: 100%;text-align: center"><img src="'+fileRoot+licenseUrl+'" /></div>'
         });
+    }
+
+    function f_refreshImg() {
+        $("#img_avator").attr("src", $("#img_avator").attr("src")+"&r="+Math.random()*4);
     }
 
     /*]]>*/

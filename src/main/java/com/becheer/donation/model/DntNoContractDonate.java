@@ -22,6 +22,11 @@ public class DntNoContractDonate {
     private Integer updateBy;        // updateBy bigint null comment '修改人',
     private String ip;        // ip varchar(64) null comment 'ip',
     private Integer appropriationContractId;        // appropriationContractId bigint null comment '批资资金用途标识【,.*$(contractName)@(dntAppropriationContract)】'
+    private String ipCountry;
+    private String ipArea;
+    private String ipRegion;
+    private String ipCity;
+    private String isp;
 
     public Integer getId() {
         return id;
@@ -149,5 +154,45 @@ public class DntNoContractDonate {
 
     public void setAppropriationContractId(Integer appropriationContractId) {
         this.appropriationContractId = appropriationContractId;
+    }
+
+    public String getIpCountry() {
+        return ipCountry;
+    }
+
+    public void setIpCountry(String ipCountry) {
+        this.ipCountry = ipCountry;
+    }
+
+    public String getIpArea() {
+        return ipArea;
+    }
+
+    public void setIpArea(String ipArea) {
+        this.ipArea = ipArea;
+    }
+
+    public String getIpRegion() {
+        return ipRegion;
+    }
+
+    public void setIpRegion(String ipRegion) {
+        this.ipRegion = ipRegion;
+    }
+
+    public String getIpCity() {
+        return ipCity;
+    }
+
+    public void setIpCity(String ipCity) {
+        this.ipCity = ipCity;
+    }
+
+    public String getIsp() {
+        return isp;
+    }
+
+    public void setIsp(String isp) {
+        this.isp = isp;
     }
 }

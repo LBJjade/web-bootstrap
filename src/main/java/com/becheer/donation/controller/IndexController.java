@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * 首页控制器
  */
 @Controller
-@RequestMapping({"/index",""})
+@RequestMapping({"/index", ""})
 public class IndexController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
@@ -24,15 +24,16 @@ public class IndexController extends BaseController {
     @Resource
     private IProjectService projectService;
 
-    @Resource IReportDonateService reportDonateService;
+    @Resource
+    IReportDonateService reportDonateService;
 
     /**
      * 首页
+     *
      * @return
      */
     @GetMapping(value = "")
-    public String index(HttpServletRequest request)
-    {
+    public String index(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
         return this.render("index");
     }
@@ -43,13 +44,13 @@ public class IndexController extends BaseController {
     @PostMapping(value = "/project")
     @ResponseBody
     public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageNum, @RequestParam int pageSize) {
-        if (pageNum<=0){
-            pageNum=1;
+        if (pageNum <= 0) {
+            pageNum = 1;
         }
-        if (pageSize>50||pageSize<=0){
-            pageSize=10;
+        if (pageSize > 50 || pageSize <= 0) {
+            pageSize = 10;
         }
-        return ResponseDto.GetResponse(200,"success",projectService.GetProjectList(pageNum,pageSize));
+        return ResponseDto.GetResponse(200, "success", projectService.GetProjectList(pageNum, pageSize));
     }
 
     /**
@@ -59,9 +60,9 @@ public class IndexController extends BaseController {
     @ResponseBody
     public ResponseDto GetReport(HttpServletRequest request) {
         try {
-            IndexReport result=reportDonateService.GetIndexReport();
-            return ResponseDto.GetResponse(200,"success",result);
-        }catch(Exception ex){
+            IndexReport result = reportDonateService.GetIndexReport();
+            return ResponseDto.GetResponse(200, "success", result);
+        } catch (Exception ex) {
             LOGGER.error("GetReport", ex);
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
         }
