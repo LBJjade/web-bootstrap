@@ -119,10 +119,10 @@
             </div>
             <div id="div_content">
                 <div id="div_avator">
-                    <img id="img_avator" th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                    <img th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
                     <br/>
                     <br/>
-                    <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
+                    <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
                 </div>
                 <div id="div_content_info">
                     <form id="defaultForm_2" method="post" class="form-horizontal">
@@ -141,6 +141,7 @@
                                     <input type="text" id="ipt_name" class="form-control" name="ipt_name"
                                            th:value="${member.getName()}"/>
                                     <div class="name_error error">真实姓名不能为空</div>
+                                    <div class="name_error_0 error">真实姓名格式错误</div>
                                 </td>
                             </tr>
                             <tr>
@@ -265,8 +266,9 @@
 
     //手机号码
     $("#ipt_mobile").blur(function () {
-        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
-        if (!mobile.test($(".ipt_mobile").val())) {
+//        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        var mobile =  /^1[3|4|5|7|8][0-9]{9}$/;
+        if (!mobile.test($("#ipt_mobile").val())) {
             $(".mobile_error").show();
         } else {
             $(".mobile_error").hide();
@@ -275,7 +277,8 @@
 
     //身份证号
     $("#ipt_id_card").blur(function () {
-        var id_card = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+//        现在公民身份证都是18位，15位身份证号码已失效
+        var id_card = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
         if ($("#ipt_id_card").val() == "") {
             $(".id_card_error_0").hide();
             $(".id_card_error").show();
@@ -291,11 +294,18 @@
 
     //真实姓名
     $("#ipt_name").blur(function () {
+        var name =  /^[\u4E00-\u9FA5]{2,4}$/;
         if ($("#ipt_name").val() == "") {
             $(".name_error").show();
         } else {
             $(".name_error").hide();
         }
+        if (!name.test($("#ipt_name").val())) {
+            $(".name_error_0").show();
+        } else {
+            $(".name_error_0").hide();
+        }
+
     })
 
 
