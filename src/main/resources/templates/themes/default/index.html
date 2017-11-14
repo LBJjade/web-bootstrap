@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>广东省世纪爱心慈善基金会</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
@@ -219,6 +219,7 @@
             color: #FFFFFF;
             border: none;
             margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .money {
@@ -239,7 +240,7 @@
             border: 2px #e41620 solid;
         }
 
-        .money_da{
+        .money_da {
             margin: 3px;
             padding: 2px;
             margin-bottom: 13px;
@@ -330,6 +331,9 @@
             opacity: 0.2;
         }
 
+        #phone_da {
+            width: 70%;
+        }
     </style>
 
 </head>
@@ -478,13 +482,14 @@
                 <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="model-title" style="width: 100%;text-align: center;">
+                <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
                     向基金会捐赠
                 </h4>
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="float:left;margin-top: 10px;margin-left: 80px;"><span style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>
+                <div style="float:left;margin-top: 10px;margin-left: 80px;"><span
+                        style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>
                     <select id="sel_project_type" onchange="f_GetProject()">
                         <option value="0">请选择项目类别</option>
                         <option v-for="item in items" id="name" :value="item.id">{{item.name}}</option>
@@ -511,7 +516,7 @@
 
                         <span id="other" class="span_donation money_1"><span>其他捐赠金额：</span>
                             <input type="text" class="tx_yuan"
-                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 80px"
+                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 76px"
                                    value=""/></span>
                     </div>
                 </div>
@@ -523,8 +528,8 @@
                                 onclick="f_Donate();"
                                 data-dismiss="model">确认捐赠
                         </button>
-                        <button class="button" data-toggle="model" data-target="#div_de_donate"
-                                data-dismiss="model">大额捐赠
+                        <button class="button" data-toggle="model"
+                                data-dismiss="model" onclick="da_nadate()">大额捐赠
                         </button>
                     </form>
                 </div>
@@ -543,7 +548,7 @@
                 <button type="button" class="close_qr">
                     &times;
                 </button>
-                <h4 class="model-title" style="width: 100%;text-align: center;">
+                <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
                     扫描二维码,向基金会捐赠
                 </h4>
             </div>
@@ -552,13 +557,12 @@
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
 
 
-
-
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
                     <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
-                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒</div>
+                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
+                </div>
                 <div class="model-body" style="text-align: center">
 
                     <div class="model-body code_img row" style="text-align: center">
@@ -616,15 +620,31 @@
                 <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="model-title" style="width: 100%;text-align: center;">
-                    请输入您的联系方式
+                <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
+                    大额捐赠
                 </h4>
             </div>
 
-            <div class="model-body" style="text-align: center">
+            <div class="model-body" style="width: 100%;">
+                <div style="margin: auto;text-align: center;width: 60%;">
+                    <label for="phone_da" style="float: left;margin-top: 5px;">手机号码：</label>
+                    <input type="text" id="phone_da" readonly="readonly" class="form-control" name="phone_da"
+                           placeholder="请输入手机号码"/>
+                    <span>
+                            <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">发送验证码</button>
+                    </span>
+                </div>
+            </div>
 
-                <div  style="clear: both;">
-                    <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
+
+            <div class="model-body" style="text-align: center; padding: 0">
+
+                <div style="clear: both;">
+
+                    <div>
+                        <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
+                    </div>
+
                     <div style="margin-bottom:10px;">
                         <span class="money_da span_donation money_1">&yen;1千</span>
                         <span class="money_da span_donation money_1">&yen;2千</span>
@@ -632,22 +652,28 @@
                         <span class="money_da span_donation money_1">&yen;8千</span>
                         <span class="money_da span_donation money_1">&yen;1万</span>
                         <br/>
-                        <span  class="money_da span_donation money_1">&yen;2万</span>
+                        <span class="money_da span_donation money_1">&yen;2万</span>
 
                         <span id="other_2" class="span_donation money_1"><span>其他捐赠金额：</span>
                             <input type="text" class="tx_yuan"
-                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 80px"
+                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 76px"
                                    value=""/></span>
                     </div>
+
                 </div>
 
+
                 <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                    <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
+                <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
                 <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
-                    <!--<input type="number" id="ipt_dnt_amount"/>-->
+                <!--<input type="number" id="ipt_dnt_amount"/>-->
                 <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
-                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step2" data-dismiss="model">下一步</button>
+                    <button class="donateSubmit button" data-toggle="model" data-target="#div_qr_donate" data-dismiss="model">上一步
+                    </button>
+                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step2"
+                            data-dismiss="model">下一步
+                    </button>
                 </div>
             </div>
         </div>
@@ -663,16 +689,16 @@
                 <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="model-title" style="width: 100%;text-align: center;">
-                    请输入您的联系方式
+                <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
+                    大额捐赠
                 </h4>
             </div>
 
             <div class="model-body" style="text-align: center">
 
-                <div  style="clear: both;">
+                <div style="clear: both;">
                     <div class="row">
-                        <span class="col_sm_4" style="">手机：
+                        <span class="col_sm_4">手机：
                         </span>
 
                         <span class="col_sm_6">
@@ -685,7 +711,7 @@
                     </div>
 
                     <div style="width:100%;margin-top:20px;">验证码：&nbsp;
-                    <input type="number" id="ipt_dnt_amount"/>
+                        <input type="number" id="ipt_dnt_amount"/>
                     </div>
                 </div>
 
@@ -695,7 +721,9 @@
                 <!--<input type="number" id="ipt_dnt_amount"/>-->
                 <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
-                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step3" data-dismiss="model">下一步</button>
+                    <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step3"
+                            data-dismiss="model">下一步
+                    </button>
                 </div>
             </div>
         </div>
@@ -711,22 +739,17 @@
                 <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="model-title" style="width: 100%;text-align: center;">
-                    请输入您的联系方式
+                <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
+                    大额捐赠
                 </h4>
             </div>
 
             <div class="model-body" style="text-align: center">
 
-                <div  style="clear: both;">
+                <div style="clear: both;">
 
                 </div>
 
-                <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
-                <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
-                <!--<input type="number" id="ipt_dnt_amount"/>-->
-                <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
                     <button class="btn_submit button">确认捐赠</button>
                 </div>
@@ -734,8 +757,6 @@
         </div>
     </div>
 </div>
-
-
 
 
 <!--扫码成功弹出层-->
@@ -795,6 +816,7 @@
         f_GetProjectType();
         if (memberInfo != null) {
             $("#ipt_dnt_mobile").val(memberInfo.mobile);
+            $("#phone_da").val(memberInfo.mobile);
         }
 
 //        if (window.WebSocket) {
@@ -810,6 +832,8 @@
 //        }
 
 //        f_loginValidate();
+
+//        $("#phone").val();
 
     });
 
@@ -1097,6 +1121,7 @@
                     $(".code_time").html("二维码已经失效，请刷新！");
                 }
             }
+
             Countdown();
         }
     }
@@ -1140,6 +1165,7 @@
     })
 
     var autoCloseTimeout = 5;
+
     function autoCloseAfterPaid() {
         if (autoCloseTimeout > 1) {
             autoCloseTimeout -= 1;
@@ -1201,9 +1227,19 @@
                 $(".code_time").html("二维码已经失效，请刷新！");
             }
         }
+
         Countdown();
     })
 
+
+    function da_nadate() {
+        if (memberInfo != null) {
+            $("#div_de_donate").model('show');
+        } else {
+            alert("大额捐赠需要签订捐赠合同，请注册登录后进行大额捐赠，谢谢");
+//            $("#div_de_donate").model('show');
+        }
+    }
 
     /*]]>*/
 </script>

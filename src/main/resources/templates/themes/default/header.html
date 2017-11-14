@@ -19,8 +19,8 @@
                     <li>您好,欢迎参与世纪爱心慈善</li>
                     <li></li>
                     <!--<li><a th:href="@{/login}">登录</a></li>-->
-                    <li><a style="cursor: pointer;" data-toggle="model" data-target="#myModal" data-dismiss="model"
-                           onclick="f_loginValidate()">登录</a></li>
+                    <li><a class="login" style="cursor: pointer;" data-toggle="model" data-target="#myModal"
+                           data-dismiss="model">登录</a></li>
                     <li>|</li>
                     <li><a th:href="@{/register}">注册</a></li>
                 </ul>
@@ -138,7 +138,8 @@
                         <div class="col-lg-3">
                             <input type="text" id="code" class="form-control" name="code" placeholder="验证码"/>
                         </div>
-                        <img src="Verify/code.jpg" class="verify_code col-lg-3" height="30" width="90"/>
+                        <img class="login_code" th:src="@{/Verify/code.jpg}" class="verify_code col-lg-3" height="30"
+                             width="90"/>
                     </div>
 
                     <div class="form-group">
@@ -206,19 +207,13 @@
                     }
                 },
                 pw: {
-//                    container: '#firstNameMessage',
                     validators: {
                         notEmpty: {
                             message: '密码不能为空'
                         }
-//                        stringLength: {
-//                            min: 6,
-//                            message: '密码不能少于6位'
-//                        }
                     }
                 },
                 code: {
-//                    container: '.lastNameMessage',
                     validators: {
                         notEmpty: {
                             message: '验证码不能为空'
@@ -259,6 +254,14 @@
 
     });
 
+//    $(".login").click(function () {
+//        $(".login_code").attr("src", "Verify/code.jpg?t=" + Math.random());
+//    })
+
+    $(".login_code").click(function () {
+        $(this).attr("src", "Verify/code.jpg?t=" + Math.random());
+    });
+
     function f_autoLogin() {
         if (memberInfo != null) {
             f_getMemberNum();
@@ -287,9 +290,6 @@
         }
     }
 
-    $(".verify_code").click(function () {
-        $(this).attr("src", "Verify/code.jpg?t=" + Math.random());
-    });
 
     function getCookie(name) {
         var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
@@ -329,32 +329,6 @@
             }
         });
     }
-
-
-    //login
-    //    $("#btn_login").click(function () {
-    //        var mobile=$("#phone").val();
-    //        var pwd=$("#pw").val();
-    //        var code=$("#code").val();
-    //        alert(mobile);
-    //        alert(pwd);
-    //        alert(code);
-    //        var autoLogin=$("#ipt_cookie").is(':checked');
-    //        alert(autoLogin);
-    //        $.ajax({
-    //            url:"/login/submit",
-    //            data:{mobile:mobile,code:code,pwd:pwd,autoLogin:autoLogin},
-    //            type:'post',
-    //            dataType:'json',
-    //            success:function (data) {
-    //                if (data.code===407){
-    //                    alert(1);
-    //                }else{
-    //                    layer.alert(data.msg);
-    //                }
-    //            }
-    //        });
-    //    });
 
 
     /*]]>*/
