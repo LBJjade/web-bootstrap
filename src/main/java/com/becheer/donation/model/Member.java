@@ -245,6 +245,14 @@ public class Member {
     }
 
     public String getIdCard() {
+//        String result="";
+//        for(int i=1;i<13;i++){
+//            result=result+"*";
+//        }
+//        String str1 = idCard.substring(0,2);
+//        String str2 = idCard.substring(16,18);
+//        result=str1+result+str2;
+//        return result;
         return idCard;
     }
 

@@ -105,7 +105,6 @@ public class MemberServiceImpl implements IMemberService {
                 result=result+code;
             }
             result=memberInfoExtension.getId_card_before()+result+memberInfoExtension.getId_card_after();
-//            result=before+result+after;
             memberInfoExtension.setIdCard(result);
             memberInfoExtension.setSex(member.getSex());
             memberInfoExtension.setBirthday(member.getBirthday());
