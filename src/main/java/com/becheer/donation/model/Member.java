@@ -71,27 +71,6 @@ public class Member {
 
     private String remark;
 
-    //身份证
-    private String id_card_before;
-
-    private String id_card_after;
-
-    public String getId_card_before() {
-        return id_card_before;
-    }
-
-    public void setId_card_before(String id_card_before) {
-        this.id_card_before = id_card_before;
-    }
-
-    public String getId_card_after() {
-        return id_card_after;
-    }
-
-    public void setId_card_after(String id_card_after) {
-        this.id_card_after = id_card_after;
-    }
-
     public long getId() {
         return id;
     }

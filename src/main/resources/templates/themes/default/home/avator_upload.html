@@ -202,6 +202,7 @@
         #target{
             height: 200px;
             width: 200px;
+            visibility:hidden;
         }
     </style>
 
@@ -219,7 +220,7 @@
                         </div>
                     </div>
                     <div style="text-align: center">
-                        <img id="target" th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                        <img id="target"/>
                         <p class="p_current">当前头像</p>
                     </div>
                 </div>
@@ -240,7 +241,11 @@
 <script th:src="@{/plugin/jcrop/js/jquery.Jcrop.js}"></script>
 <script th:src="@{/plugin/jcrop/js/html2canvas.js}"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
+
+    var imgUrl=/*[[${config.getFileRoot()+member.getAvator()}]]*/+'?x-oss-process=image/resize,m_lfit,h_200,w_200';
+    imgUrl+="?r="+Math.random();
+    $("#target").attr("src",imgUrl).css("visibility","visible");
 
     //通过Jcrop插件实现，思路 选择图片后，预览图片，并在图片上添加选择框， 保存时，将选择框选中的图片转成字节码
     var jcrop_api;
@@ -342,6 +347,9 @@
 
     //生成截图
     $('#draw_button').on('click', function () {
+        loadShade = layer.load(1, {
+            shade: [0.1,'#fff']
+        });
         var oTarget = $('.jcrop-holder :first-child :first-child')[0];
         drawImage($pcnt, function (data) {
             f_uploadAvator(data);
@@ -352,6 +360,7 @@
     function f_uploadAvator(imgStr) {
         if (imgStr==="data:,"){
             layer.alert("请先选择头像");
+            layer.close(loadShade);
         }else {
             $.ajax({
                 url: '/home/member/upload',
@@ -366,6 +375,7 @@
                         });
                     } else {
                         layer.alert(data.msg);
+                        layer.close(loadShade);
                     }
                 }
             });
