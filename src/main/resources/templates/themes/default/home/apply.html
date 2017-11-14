@@ -48,6 +48,10 @@
         #table_content{
             border: 1px solid #00a0ea;
         }
+
+        .white{
+            color: #FFFFFF;
+        }
     </style>
 </head>
 <body>
@@ -77,19 +81,19 @@
                     <table class="table table-bordered" id="table_content">
                         <thead>
                         <tr>
-                            <th class="text-center" style="color: #FFFFFF">项目类别</th>
-                            <th class="text-center" style="color: #FFFFFF">项目名称</th>
-                            <th class="text-center" style="color: #FFFFFF">捐赠金额(元)</th>
-                            <th class="text-center" style="color: #FFFFFF">申请时间</th>
-                            <th class="text-center" style="color: #FFFFFF">状态</th>
-                            <th class="text-center" style="color: #FFFFFF">操作</th>
+                            <th class="text-center white">项目名称</th>
+                            <th class="text-center white">项目类别</th>
+                            <th class="text-right white">捐赠金额(元)</th>
+                            <th class="text-center white">申请时间</th>
+                            <th class="text-center white">状态</th>
+                            <th class="text-center white">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="item in items" v-cloak>
-                            <td class="text-left" style="width: 130px">{{item.projectTypeName}}</td>
                             <td class="text-left">{{item.projectName}}</td>
-                            <td class="text-right">{{item.intentionAmount}}</td>
+                            <td class="text-left" style="width: 130px">{{item.projectTypeName}}</td>
+                            <td class="text-right" style="text-align: right">{{item.intentionAmount}}</td>
                             <td class="text-center">{{item.createTime}}</td>
                             <td class="text-center">{{item.statusText}}</td>
                             <td class="text-center" style="width: 115px">
