@@ -66,7 +66,7 @@ public class SmsServiceImpl implements ISmsService {
         sms.setEnable(1);
         Date date = new Date();
         sms.setCreateTime(date);
-        sms.setInvalidTime(DateUtils.dateAdd(6, date, 1));
+        sms.setInvalidTime(DateUtils.dateAdd(6, date, 10));
         sms.setSmsTemplateId(templateId);
         sms.setMobile(mobile);
         sms.setCode(smsCode);

@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 */
 
 @Controller
-@RequestMapping("/reset")
-public class ResetController extends BaseController {
+@RequestMapping("/forget")
+public class ForgetController extends BaseController {
 
     @Resource
     private IMemberService memberService;
@@ -38,7 +38,7 @@ public class ResetController extends BaseController {
     @GetMapping(value = "")
     public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
-        return this.render("reset");
+        return this.render("forget");
     }
 
 //    /**
