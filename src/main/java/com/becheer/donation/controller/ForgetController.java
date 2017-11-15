@@ -71,6 +71,13 @@ public class ForgetController extends BaseController {
     @PostMapping(value = "/SendSms")
     @ResponseBody
     public ResponseDto SendSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam long tid) {
+        if (!RegExUtil.checkMobile(mobile)) {
+            return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
+        }
+        Member member = memberService.GetMemberByMobile(mobile);
+        if (member == null) {
+            return new ResponseDto(401, Message.REGISTER_NO_EXIST);
+        }
         return smsService.SendSms(mobile,tid);
     }
 

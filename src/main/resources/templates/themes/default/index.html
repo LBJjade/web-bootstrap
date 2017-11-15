@@ -331,9 +331,6 @@
             opacity: 0.2;
         }
 
-        #phone_da {
-            width: 70%;
-        }
     </style>
 
 </head>
@@ -557,28 +554,29 @@
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
 
 
-                    <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
+                    <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo_2"></span></span>
                     <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
-                            id="donateAmount" class="order_fund" style=""></span></span>
+                            id="donateAmount_2" class="order_fund" style=""></span></span>
                 </div>
-                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
+                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText_2" class="time" style="color: red"></span>秒
                 </div>
                 <div class="model-body" style="text-align: center">
 
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200"
+                                <img id="qrCodeImageId_2" height="200" width="200"
                                      onerror="this.onerror=null;this.src='/image/error.jpg'"/>
                                 <div class="fresh">
-                                    <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
+                                    <img id="fushImage_2" class="img-rounded panel-body"
+                                         th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
                                 </div>
                             </div>
-                            <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
+                            <div><img id="CodeImage_2" th:src="@{~/image/wxsm.png}"/></div>
                         </div>
                         <div class="col-sm-6">
-                            <img id="qr_logo" th:src="@{~/image/sm.jpg}" alt="hjaksfh"
+                            <img id="qr_logo_2" th:src="@{~/image/sm.jpg}" alt="hjaksfh"
                                  style="height:205px; width:265px;display: none;"/>
                             <div class="orderMoney" style="margin-top: 33px;">打开手机 <span
                                     style="color: red;">微信扫一扫</span>，扫描二维码
@@ -625,19 +623,23 @@
                 </h4>
             </div>
 
-            <div class="model-body" style="width: 100%;">
-                <div style="margin: auto;text-align: center;width: 60%;">
-                    <label for="phone_da" style="float: left;margin-top: 5px;">手机号码：</label>
-                    <input type="text" id="phone_da" readonly="readonly" class="form-control" name="phone_da"
-                           placeholder="请输入手机号码"/>
-                    <span>
-                            <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">发送验证码</button>
-                    </span>
-                </div>
-            </div>
-
 
             <div class="model-body" style="text-align: center; padding: 0">
+                <!--<div style="float:left;margin-top: 10px;margin-left: 80px;"><span-->
+                        <!--style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>-->
+                    <!--<select id="sel_project_type_2" onchange="f_GetProject()">-->
+                        <!--<option value="0">请选择项目类别</option>-->
+                        <!--<option v-for="item in items" id="name_2" :value="item.id">{{item.name}}</option>-->
+                    <!--</select>-->
+                    <!--&lt;!&ndash;<input type="hidden" :value="item.name">&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">-->
+                    <!--<span style="width:115px; display: inline-block; text-align: right;">请选择项目：</span>-->
+                    <!--<select id="sel_project_2" style="width: 124px;">-->
+                        <!--<option value="0">请选择项目类别</option>-->
+                        <!--<option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>-->
+                    <!--</select>-->
+                <!--</div>-->
 
                 <div style="clear: both;">
 
@@ -662,14 +664,9 @@
 
                 </div>
 
-
-                <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
-                <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
-                <!--<input type="number" id="ipt_dnt_amount"/>-->
-                <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
-                    <button class="donateSubmit button" data-toggle="model" data-target="#div_qr_donate" data-dismiss="model">上一步
+                    <button class="donateSubmit button" data-toggle="model" data-target="#div_qr_donate"
+                            data-dismiss="model">上一步
                     </button>
                     <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step2"
                             data-dismiss="model">下一步
@@ -715,14 +712,12 @@
                     </div>
                 </div>
 
-                <!--<div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                <!--<input type="text" id="ipt_dnt_mobile"/></div>-->
-                <!--<div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;-->
-                <!--<input type="number" id="ipt_dnt_amount"/>-->
-                <!--</div>-->
                 <div style="margin-top:10px;clear: both;">
+                    <button class="donateSubmit button" data-toggle="model" data-target="#div_de_donate"
+                            data-dismiss="model">上一步
+                    </button>
                     <button class="btn_submit button" data-toggle="model" data-target="#div_de_donate_step3"
-                            data-dismiss="model">下一步
+                            data-dismiss="model">确认捐赠
                     </button>
                 </div>
             </div>
@@ -732,57 +727,74 @@
 
 <!--大额捐赠弹出层第三步-->
 <div class="model fade" id="div_de_donate_step3" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
-     aria-hidden="true">
+     aria-hidden="true" data-backdrop='static'>
     <div class="model-dialog" style="margin-top:100px">
-        <div class="model-content" style="width: 450px">
+        <div class="model-content" style="width: 600px">
             <div class="model-header">
-                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                <button type="button" class="close_qr">
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
-                    大额捐赠
+                    扫描二维码,向基金会捐赠
                 </h4>
             </div>
 
-            <div class="model-body" style="text-align: center">
+            <div class="play">
+                <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
 
-                <div style="clear: both;">
 
+                    <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
+                            id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
+                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
+                </div>
+                <div class="model-body" style="text-align: center">
 
-                <div style="margin-top:10px;clear: both;">
-                    <button class="btn_submit button">确认捐赠</button>
+                    <div class="model-body code_img row" style="text-align: center">
+                        <div class="col-sm-6">
+                            <div>
+                                <img id="qrCodeImageId" height="200" width="200"
+                                     onerror="this.onerror=null;this.src='/image/error.jpg'"/>
+                                <div class="fresh">
+                                    <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
+                                    <div class="code_lost">点击刷新</div>
+                                </div>
+                            </div>
+                            <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
+                        </div>
+                        <div class="col-sm-6">
+                            <img id="qr_logo" th:src="@{~/image/sm.jpg}" alt="hjaksfh"
+                                 style="height:205px; width:265px;"/>
+                            <div class="orderMoney" style="margin-top: 33px;">打开手机 <span
+                                    style="color: red;">微信扫一扫</span>，扫描二维码
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>-->
+                    <div class="model-footer" style="text-align: center">
+                        使用微信扫码捐赠
+                    </div>
+                </div>
+            </div>
+            <!--支付成功-->
+            <div class="play_success" style="display: none">
+                <div class="model-header">
+                    <h4 class="model-title" style="width: 100%;text-align: center;">
+                        支付成功
+                    </h4>
+                    <div class="model-body" style="text-align: center">
+                        <img th:src="@{~/image/play.png}" style="width: 200px;"/>
+                    </div>
+                </div>
+                <div class="model-footer" style="text-align: center">
+                    使用微信捐赠成功
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-<!--扫码成功弹出层-->
-
-<!--<div class="model fade" id="div_cf_donate_success" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"-->
-<!--aria-hidden="true" data-backdrop='static'>-->
-<!--<div class="model-dialog" style="margin-top:100px">-->
-<!--<div class="model-content" style="width: 600px">-->
-<!--<div class="model-header">-->
-<!--<button type="button" class="close_qr" >-->
-<!--&times;-->
-<!--</button>-->
-<!--<h4 class="model-title" style="width: 100%;text-align: center;">-->
-<!--扫码成功-->
-<!--</h4>-->
-<!--</div>-->
-
-
-<!--&lt;!&ndash;<img th:src="@{/image/qr_code.png}" height="200" width="200"/></div>&ndash;&gt;-->
-<!--<div class="model-footer" style="text-align: center">-->
-<!--使用微信扫码捐赠-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
 
 
 <!--全局JS-->
@@ -816,7 +828,6 @@
         f_GetProjectType();
         if (memberInfo != null) {
             $("#ipt_dnt_mobile").val(memberInfo.mobile);
-            $("#phone_da").val(memberInfo.mobile);
         }
 
 //        if (window.WebSocket) {
@@ -1153,6 +1164,60 @@
         });
     }
 
+
+    //大额捐赠
+    function f_Donate() {
+//        var projectType = $("#sel_project_type").find("option:selected").text();
+//        var projectName = $("#sel_project").find("option:selected").text();
+//        if (projectType == "请选择项目类别") {
+//            alert("你还没有选择项目");
+//        } else
+        if (flag == 0) {
+            alert("你还没有选择金额");
+        } else {
+            $("#div_de_donate_step3").model('show');
+            var projectTypeId = $("#sel_project_type").val();
+            var projectId = $("#sel_project").val();
+            var amount = span_money * 100;
+            $("#donateAmount").html(span_money);
+            $.ajax({
+                url: '/donate/donate',
+                type: 'post',
+                data: {
+                    projectTypeId: projectTypeId,
+                    projectId: projectId,
+                    amount: amount
+                },
+                dataType: 'json',
+                success:
+                    function (data) {
+                        if (data.code === 200) {
+                            $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
+                            $("#orderNo").html(data.result.orderNo);
+                            checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
+                        }
+                    }
+            });
+            var timer = 120;
+
+            function Countdown() {
+                if (timer >= 1) {
+                    timer -= 1;
+                    t = setTimeout(function () {
+                        Countdown();
+                    }, 1000);
+                    $("#waitingPayTimerText").html(timer);
+                } else {
+                    $("#qrCodeImageId").attr("src", "");
+                    $(".fresh").css("z-index", "3");
+                    $(".code_time").html("二维码已经失效，请刷新！");
+                }
+            }
+
+            Countdown();
+        }
+    }
+
     $(".code_img").mouseover(function () {
         $("#qr_logo").fadeIn(2000);
     })
@@ -1191,8 +1256,6 @@
         $("#qrCodeImageId").removeClass("qrCodeImageId");
         var projectTypeId = $("#sel_project_type").val();
         var projectId = $("#sel_project").val();
-        // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
-        // amount = math.eval(amount * 100);
         var amount = span_money * 100;
         $(".order_fund").html(amount / 100);
         $.ajax({
@@ -1237,7 +1300,6 @@
             $("#div_de_donate").model('show');
         } else {
             alert("大额捐赠需要签订捐赠合同，请注册登录后进行大额捐赠，谢谢");
-//            $("#div_de_donate").model('show');
         }
     }
 

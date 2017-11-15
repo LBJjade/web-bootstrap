@@ -305,7 +305,6 @@
                     timer = 60;
                     Countdown();
                     $(".btn_send").attr("disabled", true);
-                    $(".ipt_mobile").focus();
                     $(".input_code").focus();
                 } else {
                     if (data.code != 502) {
@@ -317,24 +316,8 @@
         })
     });
 
-    //    function getNowFormatDate() {
-    //        var date = new Date();
-    //        var seperator1 = "-";
-    //        var seperator2 = ":";
-    //        var month = date.getMonth() + 1;
-    //        var strDate = date.getDate();
-    //        if (month >= 1 && month <= 9) {
-    //            month = "0" + month;
-    //        }
-    //        if (strDate >= 0 && strDate <= 9) {
-    //            strDate = "0" + strDate;
-    //        }
-    //        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-    //            + " " + date.getHours() + seperator2 + date.getMinutes()
-    //            + seperator2 + date.getSeconds();
-    //        return currentdate;
-    //    }
 
+    //倒计时
     function Countdown() {
         if (timer >= 1) {
             timer -= 1;

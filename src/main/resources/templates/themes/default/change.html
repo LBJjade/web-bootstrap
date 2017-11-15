@@ -69,6 +69,11 @@
             margin-right: 54px;
         }
 
+        .tr_skip{
+            margin-left: 91px;
+            display: block;
+        }
+
     </style>
 </head>
 <body>
@@ -174,9 +179,9 @@
                 <tr>
                     <td>请输入新密码：</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入6位新密码"/>
+                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入新密码"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
-                        <p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于6位</p>
+                        <!--<p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于6位</p>-->
                     </td>
                 </tr>
                 <tr>
@@ -257,7 +262,7 @@
     $(".btn_send").click(function () {
         var mobile = $("#ipt_mobile").val();
         $.ajax({
-            url:'/resetpw/SendSms',
+            url:'/forget/SendSms',
             type:'post',
             data:{mobile:mobile,tid:"2"},
             dataType:'json',
@@ -271,11 +276,26 @@
         })
     });
 
+    //倒计时
+    function Countdown() {
+        if (timer >= 1) {
+            timer -= 1;
+            t = setTimeout(function () {
+                Countdown();
+            }, 1000);
+            $(".btn_send").html(timer + "秒后可以重新获取");
+
+        } else {
+            $(".btn_send").attr("disabled", false);
+            $(".btn_send").html("重新获取");
+        }
+    }
+
     //    $(".btn_checkSms").click(function () {
     //        var code=$(".input_code").val();
     //        mobile = $("#ipt_mobile").val();
     //        $.ajax({
-    //            url:'/resetpw/validate',
+    //            url:'/forget/validate',
     //            type:'post',
     //            data:{mobile:mobile,code:code},
     //            dataType:'json',
@@ -298,7 +318,7 @@
 //        registerType=$("input[name='input_register_type']:checked").val();
         registerType=false;
         $.ajax({
-            url:'/resetpw/validate',
+            url:'/forget/validate',
             type:'post',
             data:{mobile:mobile,code:smsCode,tid:"2"},
             dataType:'json',
@@ -322,7 +342,7 @@
         var pwd=$("#ipt_pwd").val();
         newPw=pwd;
         $.ajax({
-            url:'/resetpw/submit',
+            url:'/forget/submit',
             type:'post',
             data:{newPw:newPw,mobile:mobile},
             dataType:'json',
@@ -370,11 +390,11 @@
             $(".pw_error").show();
         }else{
             $(".pw_error").hide();
-            if($(".input_pw").val().length < 6){
-                $(".pw_error_0").show();
-            }else{
-                $(".pw_error_0").hide();
-            }
+//            if($(".input_pw").val().length < 6){
+//                $(".pw_error_0").show();
+//            }else{
+//                $(".pw_error_0").hide();
+//            }
         }
     })
 
