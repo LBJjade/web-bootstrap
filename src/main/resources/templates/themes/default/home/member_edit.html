@@ -310,6 +310,9 @@
 
 
     $(".btn_save").click(function () {
+        loadShade = layer.load(1, {
+            shade: [0.1,'#fff']
+        });
         var memberName = $("#ipt_name").val();
         var mobile = $("#ipt_mobile").val();
         var idCard = $("#ipt_id_card").val();
@@ -334,6 +337,7 @@
             type: 'post',
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     layer.alert(data.msg, function () {
                         window.location.href = "/home";

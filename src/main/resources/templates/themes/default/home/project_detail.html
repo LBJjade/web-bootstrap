@@ -288,12 +288,16 @@
 
     //获取项目进展
     function f_GetProjectProgress() {
+        loadShade = layer.load(1, {
+            shade: [0.1,'#fff']
+        });
         $.ajax({
             url:'/home/project/projectProgress',
             type:'post',
             data:{projectId:projectId,pageSize:pageSize,pageNum:pageNum},
             dataType:'json',
             success:function (data) {
+                layer.close(loadShade);
                 if(data.code===200){
                     totalPage=data.result.pages;
                     if (data.result.list.length===0){

@@ -53,6 +53,7 @@
             color: #00a0e9;
             min-width: 86px;
             height: 30px;
+            margin-top: -8px;
         }
 
         .table_content_info td {
@@ -93,7 +94,7 @@
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
+                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'+r"/>
                     <br/>
                     <br/>
                     <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
@@ -190,7 +191,8 @@
                     new Vue({
                         el: "#div_member",
                         data: {
-                            member: data.result
+                            member: data.result,
+                            r:"&r="+Math.random()
                         }
                     });
                 } else {
