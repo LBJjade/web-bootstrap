@@ -107,7 +107,8 @@ public class MemberServiceImpl implements IMemberService {
             result=memberInfoExtension.getId_card_before()+result+memberInfoExtension.getId_card_after();
             memberInfoExtension.setIdCard(result);
             memberInfoExtension.setSex(member.getSex());
-            memberInfoExtension.setBirthday(member.getBirthday());
+            memberInfoExtension.setBirthday(idCardById.getbirthdayFromIdCard());
+//            memberInfoExtension.setBirthday(member.getBirthday());
         }else if (member.getRole()==2){
             //公司
             memberInfoExtension.setOrganizationType(member.getOrganizationType());

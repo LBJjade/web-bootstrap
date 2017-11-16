@@ -45,7 +45,9 @@ public class Member {
 
     private int validation;
 
-    private Date birthday;
+//    private Date birthday;
+
+    private String birthday;
 
     private String idCard;
 
@@ -236,11 +238,11 @@ public class Member {
         this.validation = validation;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

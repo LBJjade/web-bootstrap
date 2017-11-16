@@ -6,6 +6,16 @@ public class MemberIdCardExtension {
 
     private String after;
 
+    private String birthdayFromIdCard;
+
+    public String getbirthdayFromIdCard() {
+        return birthdayFromIdCard;
+    }
+
+    public void setbirthdayFromIdCard(String birthdayFromIdCard) {
+        this.birthdayFromIdCard = birthdayFromIdCard;
+    }
+
     public String getBefore() {
         return before;
     }

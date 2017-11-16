@@ -136,7 +136,7 @@
                         </tr>
                         <tr v-if="member.role===1">
                             <td>生日：</td>
-                            <td>{{member.birthday}}</td>
+                            <td id="birthday"></td>
                         </tr>
                         <tr>
                             <td>曾参与的公益项目：</td>
@@ -169,6 +169,8 @@
     var license;
     var licenseUrl;
 
+
+
     $(document).ready(function () {
         f_GetmemberInfo();
     });
@@ -199,6 +201,7 @@
                 } else {
                     layer.alert(data.msg);
                 }
+                f_formatBirthday(data.result.birthday);
             }
         });
     }
@@ -232,6 +235,11 @@
         });
     }
 
+//    格式化生日
+    function f_formatBirthday(birthday) {
+        var result = birthday.substr(0, 4)+ "-"+ birthday.substr(4, 2)+ "-"+ birthday.substr(6, 2);
+        $("#birthday").html(result);
+    }
     /*]]>*/
 </script>
 </body>

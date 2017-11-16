@@ -38,6 +38,7 @@
     <resultMap id="IdCardResultMap" type="com.becheer.donation.model.extension.member.MemberIdCardExtension">
         <result column="b" jdbcType="VARCHAR" property="before" />
         <result column="a" jdbcType="VARCHAR" property="after" />
+        <result column="c" jdbcType="VARCHAR" property="birthdayFromIdCard" />
     </resultMap>
 
     <insert id="insertMember" parameterType="com.becheer.donation.model.Member">
@@ -76,7 +77,8 @@
     <select id="SelectIdCardById" parameterType="java.lang.Long" resultMap="IdCardResultMap">
         SELECT
          SUBSTR(id_card,1,2) as b,
-         SUBSTR(id_card,17) as a
+         SUBSTR(id_card,17) as a,
+         SUBSTR(id_card,7,8) as c
          from dnt_member WHERE id_ = #{memberId,jdbcType=BIGINT}
     </select>
 
@@ -86,7 +88,7 @@
         member_name=#{memberName,jdbcType=VARCHAR},
         id_card=#{idCard,jdbcType=VARCHAR},
         sex=#{sex,jdbcType=INTEGER},
-        birthday=#{birthday,jdbcType=TIMESTAMP},
+        birthday= SUBSTR(id_card,7,8),
         project=#{project,jdbcType=VARCHAR},
         summary=#{summary,jdbcType=VARCHAR},
         organization_type=#{organizationType,jdbcType=VARCHAR},

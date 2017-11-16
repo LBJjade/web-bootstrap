@@ -28,7 +28,8 @@ public class MemberInfoExtension implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date birthday;
+//    private Date birthday;
+    private String birthday;
 
     private String project;
 
@@ -52,6 +53,16 @@ public class MemberInfoExtension implements Serializable {
     private String id_card_before;
 
     private String id_card_after;
+
+    private String id_card_birthday;
+
+    public String getid_card_birthday() {
+        return id_card_birthday;
+    }
+
+    public void setid_card_birthday(String id_card_birthday) {
+        this.id_card_birthday = id_card_birthday;
+    }
 
     public String getId_card_before() {
         return id_card_before;
@@ -102,15 +113,6 @@ public class MemberInfoExtension implements Serializable {
     }
 
     public String getIdCard() {
-//        隐藏身份证号
-//        String changeIdCardFirst,changeIdCardSecond;
-//        changeIdCardFirst=idCard.substring(0,2);
-//        changeIdCardSecond=idCard.substring(idCard.length()-2,idCard.length());
-//        String s="*";
-//        for (int i=0;i<;i++){
-//           s=s+s;
-//        }
-//        idCard= changeIdCardFirst+s+changeIdCardSecond;
         return idCard;
     }
 
@@ -126,11 +128,19 @@ public class MemberInfoExtension implements Serializable {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+//    public Date getBirthday() {
+//        return birthday;
+//    }
+//
+//    public void setBirthday(Date birthday) {
+//        this.birthday = birthday;
+//    }
+
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
