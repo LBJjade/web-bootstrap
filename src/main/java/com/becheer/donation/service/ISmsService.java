@@ -9,9 +9,9 @@ package com.becheer.donation.service;
 import com.becheer.donation.model.base.ResponseDto;
 
 public interface ISmsService {
-    ResponseDto SendSms(String mobile,long templateId);
+    ResponseDto SendSms(String mobile, long templateId);
 
-    ResponseDto CheckLoginCode(String mobile,String code);
+    ResponseDto CheckLoginCode(String mobile, String code);
 
-    ResponseDto CheckCode(String mobile,String code,long templateId);
+    ResponseDto CheckCode(String mobile, String code, long templateId);
 }

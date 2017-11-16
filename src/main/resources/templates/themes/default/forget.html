@@ -80,7 +80,7 @@
 
         }
 
-        .tr_skip{
+        .tr_skip {
             margin-left: 91px;
             display: block;
         }
@@ -195,7 +195,8 @@
                 <tr>
                     <td>请输入新密码：</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入新密码" style="margin-left: 89px;"/>
+                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入新密码"
+                               style="margin-left: 89px;"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
                     </td>
                 </tr>
@@ -318,7 +319,6 @@
     }
 
 
-
     $(".btn_checkSms").click(function () {
         var smsCode = $(".input_code").val();
         mobile = $("#ipt_mobile").val();
@@ -425,7 +425,7 @@
             t = setTimeout(function () {
                 f_skip();
             }, 1000);
-            $(".skip").html("注册成功。" + time + "秒后自动跳转到主页");
+            $(".skip").html("修改成功。" + time + "秒后自动跳转到主页");
         } else {
             window.location.href = "/index";
         }
