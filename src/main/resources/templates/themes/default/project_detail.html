@@ -65,6 +65,7 @@
         #div_tab_detail {
             font-size: 14pt;
             color: rgb(101, 101, 101);
+            padding: 10px;
         }
 
         #div_tab_public {
@@ -323,6 +324,17 @@
             border: 2px #d0c4c4 solid;
         }
 
+        #div_relative, #div_recent {
+            min-height: 400px;
+        }
+
+        .p_tab_empty {
+            line-height: 100px;
+            text-align: center;
+            width: 100%;
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -334,6 +346,7 @@
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
+                    <p class="p_tab_empty" id="p_no_recent">暂无爱心动态</p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
                             <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
@@ -347,13 +360,15 @@
             <div class="right_panel" id="div_relative">
                 <div class="div_title">
                     <h2 class="h2_title">相关项目</h2>
+                    <p class="p_tab_empty" id="p_no_relative">暂无相关项目</p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
-                            <li><img :alt="item.projectName"
-                                     :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/>
+                            <li>
+                                <img :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/>
                             </li>
-                            <li class="recommend_item_word"><a href="project.html"
-                                                               target="_blank">{{item.projectName}}</a></li>
+                            <li class="recommend_item_word">
+                                <a :href="'/project/'+item.projectId" target="_blank">{{item.projectName}}</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -495,23 +510,16 @@
                         <span id="span_4" class="money span_donation money_1">&yen;50</span>
                         <br/>
                         <span id="span_5" class="money span_donation money_1">&yen;100</span>
-
                         <span id="other" class="span_donation money_1"><span>其他：</span>
-                            <input type="text" class="tx_yuan"
-                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 132px"
-                                   value=""/></span>
+                            <input type="text" class="tx_yuan" style="outline:none;border:none;border-color:#e41620;text-align: right;width: 132px" value=""/></span>
                     </div>
                 </div>
 
                 <div>
                     <form action="">
-
-                        <button class="donateSubmit button"
-                                onclick="f_Donate();"
-                                data-dismiss="model">确认捐赠
-                        </button>
-                        <button class="button" data-toggle="model" data-target="#div_de_donate"
-                                data-dismiss="model">大额捐赠
+                        <button class="donateSubmit button" onclick="f_Donate();" data-dismiss="model">确认捐赠</button>
+                        <button class="button" data-toggle="model" data-target="#div_de_donate" data-dismiss="model">
+                            大额捐赠
                         </button>
                     </form>
                 </div>
@@ -606,8 +614,8 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"
-                                                                                        id="ipt_dnt_mobile"/></div>
+                <div style="">手机：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input type="text" id="ipt_dnt_mobile"/></div>
                 <div style="width:100%;margin-top:20px;">捐赠金额：&nbsp;
                     <input type="number" id="ipt_dnt_amount"/>
                 </div>
@@ -803,13 +811,17 @@
             data: {projectId: projectId, num: 7},
             dataType: 'json',
             success: function (data) {
-                if (data.code === 200) {
-                    new Vue({
-                        el: "#div_recent",
-                        data: {
-                            items: data.result
-                        }
-                    });
+                if (data.result.length === 0) {
+                    $("#p_no_recent").show();
+                } else {
+                    if (data.code === 200) {
+                        new Vue({
+                            el: "#div_recent",
+                            data: {
+                                items: data.result
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -823,14 +835,17 @@
             data: {tid: projectTypeId, pid: projectId, nums: 8},
             dataType: 'json',
             success: function (data) {
-                //                alert(JSON.stringify(data));
                 if (data.code === 200) {
-                    new Vue({
-                        el: '#div_relative',
-                        data: {
-                            items: data.result
-                        }
-                    });
+                    if (data.result.length === 0) {
+                        $("#p_no_relative").show();
+                    } else {
+                        new Vue({
+                            el: '#div_relative',
+                            data: {
+                                items: data.result
+                            }
+                        });
+                    }
                 }
             }
         });
