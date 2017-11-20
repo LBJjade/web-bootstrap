@@ -197,4 +197,33 @@ public class HomeAppealController extends BaseController {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
+
+    @PostMapping("/solve")
+    @ResponseBody
+    public ResponseDto solveProgress(HttpServletRequest request,@RequestParam long appealId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
+        if (appeal==null){
+            return MemberAuthFailed();
+        }
+        //已撤销
+        return appealService.UpdateAppealStatus(appealId,3);
+    }
+
+    @PostMapping("/withdraw")
+    public ResponseDto withdrawProgress(HttpServletRequest request,@RequestParam long appealId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
+        if (appeal==null){
+            return MemberAuthFailed();
+        }
+        //已处理
+        return appealService.UpdateAppealStatus(appealId,4);
+    }
 }

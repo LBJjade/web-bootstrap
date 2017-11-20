@@ -7,6 +7,7 @@ package com.becheer.donation.service.impl;
 */
 
 import com.becheer.donation.dao.AppealMapper;
+import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
 import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
@@ -47,5 +48,16 @@ public class AppealServiceImpl implements IAppealService {
         appealdetail.setProjectId(projectId);
         appealdetail.setMemberId(memberId);
         appealMapper.InsertAppeal(appealdetail);
+    }
+
+    @Override
+    public ResponseDto UpdateAppealStatus(long appealId, int status) {
+        int result = appealMapper.updateAppealStatus(appealId,status);
+        if (result>0){
+
+        }else{
+
+        }
+        return null;
     }
 }

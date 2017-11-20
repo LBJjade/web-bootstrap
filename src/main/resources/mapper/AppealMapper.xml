@@ -86,4 +86,14 @@
           )
     </insert>
 
+    <update id="updateAppealStatus">
+        UPDATE
+          dnt_appeal
+        SET
+          status = #{param1},
+          update_time = now()
+        WHERE
+          id_= #{param2}
+    </update>
+
 </mapper>
