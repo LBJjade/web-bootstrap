@@ -5,6 +5,7 @@ import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberRegisterExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.service.IArticleService;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.service.ISmsService;
 import com.becheer.donation.strings.ConstString;
@@ -31,6 +32,9 @@ public class RegisterController extends BaseController {
 
     @Resource
     private ISmsService smsService;
+
+    @Resource
+    private IArticleService articleService;
 
     /**
      * 注册页面
@@ -98,6 +102,16 @@ public class RegisterController extends BaseController {
         }
 
         return smsService.SendSms(mobile, 1);
+    }
+
+    /**
+     * 得到网络条款
+     */
+    @PostMapping(value = "/getClause")
+    @ResponseBody
+    public ResponseDto getClauseByTitle(HttpServletRequest request, @RequestParam String clause) {
+        String result = articleService.getClauseByTitle(clause);
+        return new ResponseDto(200, Message.CLAUSE_GET_SUCCESS,result);
     }
 
 

@@ -19,4 +19,6 @@ public interface IArticleService {
     List<ListArticleExtension>getAllArticle(long tid);
 
     ArticleDetailExtension getArticleDetail(long aid);
+
+    String getClauseByTitle(String clause);
 }

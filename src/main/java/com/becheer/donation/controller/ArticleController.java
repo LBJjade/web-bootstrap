@@ -51,4 +51,6 @@ public class ArticleController extends BaseController {
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
         }
     }
+
+
 }

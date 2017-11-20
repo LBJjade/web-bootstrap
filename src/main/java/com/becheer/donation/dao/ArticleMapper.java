@@ -20,4 +20,6 @@ public interface ArticleMapper {
     List<ListArticleExtension> selectListByExample(ArticleCondition condition);
 
     ArticleDetailExtension selectArticleDetail(long aid);
+
+    String getClauseByTitle(String clause);
 }

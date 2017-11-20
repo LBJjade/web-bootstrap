@@ -93,4 +93,8 @@
             enable_ = 1
     </select>
 
+    <select id="getClauseByTitle" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT content from dnt_article where title = #{clause}
+    </select>
+
 </mapper>
