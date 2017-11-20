@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
+    <title>广东省世纪爱心慈善基金会</title>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/plugin/banner/css.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
+    <style type="text/css">
+        #div_menu {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+            border-left: 1px #eee solid;
+            border-right: 1px #eee solid;
+            border-top: 2px #eee solid;
+            border-bottom: 3px #eee solid;
+        }
+
+        #div_menu span {
+            float: left;
+            font-size: 20px;
+        }
+
+        #div_menu ul {
+            margin-left: 28px;
+        }
+
+        #div_menu_name {
+            width: 200px;
+            height: 40px;
+            height: 40px;
+            background-color: #00a0ea;
+            margin-top: 30px;
+        }
+
+        #div_menu_name p {
+            margin-left: 15px;
+            line-height: 40px;
+            font-size: 18px;
+            color: #fff;
+        }
+
+        #div_project img {
+            width: 560px;
+            height: 370px;
+            margin: 10px;
+        }
+
+
+        .nav_item {
+            height: 40px;
+            padding-bottom: 30px;
+            padding-top: 2px;
+            padding-left: 10px;
+            padding-right: 10px;
+            line-height: 30px;
+            border-bottom: 1px solid #E4E4E4;
+            color: #1E1E1E;
+            font-size: 14px;
+        }
+
+        .nav_item:hover {
+            background-color: #EFF8F8;
+        }
+
+
+        #p_title{
+            margin-top: 5px;
+            margin-left: 10px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        #div_content{
+            border: 2px solid #eee;
+            min-height: 600px;
+            margin-left: 10px;
+            margin-top: 20px;
+        }
+
+        #p_main_title{
+            line-height: 40px;
+            font-size: 32px;
+            margin-top: 30px;
+            padding-left: 100px;
+            padding-right: 100px;
+        }
+
+        #div_summary{
+            height: 90px;
+            background-color: #FCFBFD;
+            border: 1px solid #eee;
+            margin-left: 25px;
+            margin-right: 25px;
+        }
+
+        #div_summary p{
+            font-size: 14px;
+            line-height: 26px;
+            color: #999;
+            padding: 6px 10px 0px 10px;
+        }
+
+        #div_text{
+            margin-top: 20px;
+            margin-left: 25px;
+            margin-right: 20px;
+        }
+
+        #div_menu a{
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            width: 130px;
+            height: 30px;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-2">
+
+            <div id="div_menu_name">
+                <p>捐赠流程</p>
+            </div>
+
+            <div id="div_menu" class="right_panel" v-cloak>
+                <div class=" nav_item" v-for="item in items">
+                    <ul>
+                        <li>
+                            <a :href="'/article/'+item.articleId">{{item.title}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <!--<div th:replace="themes/default/details::details"></div>-->
+            <div th:replace="themes/default/section::section"></div>
+
+        </div>
+
+        <div class="col-sm-10" id="div_main_content" style="min-height:600px; ">
+            <div id="div_navbar" style="margin-left: 10px; border-bottom: none;" v-cloak>
+                <ul>
+                    <li>
+                        <a href="#"><i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px;"></i>首页</a>
+                    </li>
+                    <li>>
+                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                    </li>
+                    <li class="div_navbar_item">
+                        <a href="#">捐赠流程</a>
+                    </li>
+                    <li>>
+                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                    </li>
+                    <li class="div_navbar_item">
+                        <a href="#" id="b_title"></a>
+                    </li>
+                </ul>
+            </div>
+            <p id="p_title" v-cloak>
+                {{title}}
+            </p>
+            <div id="div_content" v-cloak>
+                <p id="p_main_title">{{title}}</p>
+                <div id="div_summary">
+                    <p>【摘要】：{{summary}}</p>
+                </div>
+                <div id="div_text">
+                    {{content}}
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="themes/default/footer::footer"></div>
+
+<!--全局JS-->
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var tid = 10;
+    var aid= /*[[${aid}]]*/;
+
+    $(document).ready(function () {
+        f_getArticleList();
+        f_getArticleDetail();
+    });
+
+    function f_getArticleList() {
+        $.ajax({
+            url: '/article/list',
+            type: 'post',
+            data: {articleTypeId: tid},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    new Vue({
+                        el: '#div_menu',
+                        data: {
+                            items: data.result
+                        }
+                    });
+                }else{
+                    layer.alert(data.msg);
+                }
+            }
+        });
+    }
+
+
+
+    function f_getArticleDetail() {
+        $.ajax({
+            url: '/article/detail',
+            type: 'post',
+            data: {articleId: aid},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code===200){
+                    new Vue({
+                        el:'#div_main_content',
+                        data:data.result
+                    });
+                }else{
+                    layer.alert(data.msg);
+                }
+            }
+        });
+    }
+    /*]]>*/
+</script>
+</body>
+</html>
