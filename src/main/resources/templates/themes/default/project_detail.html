@@ -109,6 +109,14 @@
             color: #656565;
             line-height: 25px;
             font-size: 16px;
+            margin-left: 5px;
+        }
+
+        .info_time {
+            display: block;
+            color: #656565;
+            line-height: 25px;
+            font-size: 16px;
             margin-left: 16px;
         }
 
@@ -137,7 +145,15 @@
         }
 
         .recommend_item_word {
-            padding-left: 45px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 210px;
+            padding-left: 10px;
+        }
+
+        .recommend_item a {
+            color: #000000;
         }
 
         .recommend_item_info {
@@ -145,14 +161,11 @@
             display: inline-block;
             *display: inline;
             *zoom: 1;
-            width: 140px;
+            width: 220px;
             height: 20px;
             line-height: 20px;
             font-size: 15px;
-            overflow: hidden;
-            -ms-text-overflow: ellipsis;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            word-wrap: break-word;
         }
 
         .project_block {
@@ -183,10 +196,10 @@
             font-family: Arial;
             font-size: 25px;
             display: inline-block;
-            width: 135px;
+            width: 155px;
             text-align: right;
             border: 1px solid;
-            padding: 2px 6px;
+            padding: 2px 2px;
             vertical-align: -2px;
         }
 
@@ -350,7 +363,9 @@
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
                             <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
-                            <li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}捐赠本项目<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>{{item.amount|format}}元
+                            <!--<li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>&nbsp;{{item.amount|format}}元-->
+                            <!--</li>-->
+                            <li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;{{item.amount|format}}元
                             </li>
                         </ul>
                     </div>
@@ -401,7 +416,7 @@
                         <th:block th:text="${project.getProjectName()}"/>
                     </p>
                     <div class="info_ma">
-                        <p class="info"><span class="info_name">项目时间</span>：
+                        <p class="info_time"><span class="info_name">项目时间</span>：
                             <th:block
                                     th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
                         </p>
