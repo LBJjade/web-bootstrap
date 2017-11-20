@@ -191,13 +191,9 @@
                             </tr>
                             <tr>
                                 <td>生日：</td>
-                                <!--<td><input type="text" id="ipt_birthday" class="form-control"-->
-                                           <!--style="height: 34px;width: 100%"-->
-                                           <!--th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>-->
-                                <!--</td>-->
-                                <td><input type="text" id="ipt_birthday" class="form-control" disabled="disabled"
+                                <td><input type="text" id="ipt_birthday" class="form-control"
                                            style="height: 34px;width: 100%"
-                                           th:value="${member.getBirthday()}"/>
+                                           th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
                                 </td>
                             </tr>
                             <tr>
