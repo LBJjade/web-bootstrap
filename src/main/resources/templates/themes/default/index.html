@@ -561,7 +561,7 @@
 
 
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
+                    <span class="donate_msg orderMoney" style="margin-left: 60px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
@@ -754,11 +754,11 @@
                     <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount2" class="order_fund" style=""></span></span>
                 </div>
-                <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText2" class="time" style="color: red"></span>秒
+                <div class="code_time2">距离二维码过期还有<span id="waitingPayTimerText2" class="time" style="color: red"></span>秒
                 </div>
                 <div class="model-body" style="text-align: center">
 
-                    <div class="model-body code_img row" style="text-align: center">
+                    <div class="model-body code_img2 row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
                                 <img id="qrCodeImageId2" height="200" width="200"
@@ -1205,13 +1205,19 @@
     $(".code_img").mouseover(function () {
         $("#qr_logo").fadeIn(2000);
     })
+    $(".code_img2").mouseover(function () {
+        $("#qr_logo2").fadeIn(2000);
+    })
 
 
     $(".close_qr").click(function () {
         $("#div_cf_donate").model('hide');
+        $("#div_de_donate_step3").model('hide');
         $("#qrCodeImageId").attr("src", "");
         stopCount();
     })
+
+
 
     var autoCloseTimeout = 5;
 
@@ -1414,46 +1420,170 @@
 
     //大额捐赠第三步(确认捐赠部分)
 
-    function f_Donate2() {
-        var projectType = $("#sel_project_type2").find("option:selected").text();
-        var projectName = $("#sel_project2").find("option:selected").text();
-        if (projectType == "请选择项目类别") {
-            alert("你还没有选择项目");
-        } else if (flag == 0) {
-            alert("你还没有选择金额");
-        } else {
-            window.location.href = "/home/apply";
-        }
+//    function f_Donate2() {
+//        var projectType = $("#sel_project_type2").find("option:selected").text();
+//        var projectName = $("#sel_project2").find("option:selected").text();
+//        if (projectType == "请选择项目类别") {
+//            alert("你还没有选择项目");
+//        } else if (flag == 0) {
+//            alert("你还没有选择金额");
+//        } else {
+////            window.location.href = "/home/apply";
+////            layer.alert("提交捐赠意向成功！",3000,function(){window.location.href = "/home/apply"});
+//            $("#div_de_donate_step3").model('show');
+//            var projectTypeId = $("#sel_project_type2").val();
+//            var projectId = $("#sel_project2").val();
+//            var amount = span_money * 100;
+//            $("#donateAmount2").html(span_money);
+//            $.ajax({
+//                url: '/donate/donate',
+//                type: 'post',
+//                data: {
+//                    projectTypeId: projectTypeId,
+//                    projectId: projectId,
+//                    amount: amount
+//                },
+//                dataType: 'json',
+//                success:
+//                    function (data) {
+//                        if (data.code === 200) {
+//                            $("#qrCodeImageId2").attr("src", data.result.qrCodeImageBase64);
+//                            $("#orderNo2").html(data.result.orderNo);
+//                            checkPayStatusInterval = setInterval("checkPayStatus2()", 3000);
+//                        }
+//                    }
+//            });
+//            var timer = 120;
+//
+//            function Countdown2() {
+//                if (timer >= 1) {
+//                    timer -= 1;
+//                    t = setTimeout(function () {
+//                        Countdown2();
+//                    }, 1000);
+//                    $("#waitingPayTimerText2").html(timer);
+//                } else {
+//                    $("#qrCodeImageId2").attr("src", "");
+//                    $(".fresh2").css("z-index", "3");
+//                    $(".code_time2").html("二维码已经失效，请刷新！");
+//                }
+//            }
+//
+//            Countdown2();
+//        }
+//
+//
+//    }
+//
+//    function checkPayStatus2() {
+//        var orderNo = $("#orderNo2").html();
+//        $.ajax({
+//            url: '/wxpay/status',
+//            type: 'post',
+//            data: {
+//                orderNo: orderNo
+//            },
+//            dataType: 'json',
+//            success:
+//                function (data) {
+//                    if (data.code === 200) {
+//                        var returnCode = data.result.notify_return_code;
+//                        var resultCode = data.result.notify_result_code;
+//                        var errCodeDesc = data.result.notify_err_code_desc;
+//                        if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
+//                            $(".code_time2").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
+//                            stopCount();
+//                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
+//                        } else {
+//                            $(".code_time2").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
+//                        }
+//                    }
+//                }
+//        });
+//    }
 
+    function f_Donate2() {
+        if (donateType == 0) {
+            var projectType = $("#sel_project_type2").find("option:selected").text();
+            var projectName = $("#sel_project2").find("option:selected").text();
+            if (projectType == "请选择项目类别") {
+                alert("你还没有选择项目");
+            } else if (flag == 0) {
+                alert("你还没有选择金额");
+            } else {
+                $("#div_de_donate_step2").model('hide');
+                $("#div_cf_donate").model('show');
+                var projectTypeId = $("#sel_project_type2").val();
+                var projectId = $("#sel_project2").val();
+                var amount = span_money * 100000;
+                $("#donateAmount").html(span_money*1000);
+                $.ajax({
+                    url: '/donate/donate',
+                    type: 'post',
+                    data: {
+                        projectTypeId: projectTypeId,
+                        projectId: projectId,
+                        amount: amount
+                    },
+                    dataType: 'json',
+                    success:
+                        function (data) {
+                            if (data.code === 200) {
+                                $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
+                                $("#orderNo").html(data.result.orderNo);
+                                checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
+                            }
+                        }
+                });
+                var timer = 120;
+
+                function Countdown() {
+                    if (timer >= 1) {
+                        timer -= 1;
+                        t = setTimeout(function () {
+                            Countdown();
+                        }, 1000);
+                        $("#waitingPayTimerText").html(timer);
+                    } else {
+                        $("#qrCodeImageId").attr("src", "");
+                        $(".fresh").css("z-index", "3");
+                        $(".code_time").html("二维码已经失效，请刷新！");
+                    }
+                }
+
+                Countdown();
+            }
+        }
 
     }
 
-    //    function checkPayStatus() {
-    //        var orderNo = $("#orderNo2").html();
-    //        $.ajax({
-    //            url: '/wxpay/status',
-    //            type: 'post',
-    //            data: {
-    //                orderNo: orderNo
-    //            },
-    //            dataType: 'json',
-    //            success:
-    //                function (data) {
-    //                    if (data.code === 200) {
-    //                        var returnCode = data.result.notify_return_code;
-    //                        var resultCode = data.result.notify_result_code;
-    //                        var errCodeDesc = data.result.notify_err_code_desc;
-    //                        if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
-    //                            $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
-    //                            stopCount();
-    //                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
-    //                        } else {
-    //                            $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
-    //                        }
-    //                    }
-    //                }
-    //        });
-    //    }
+    function checkPayStatus() {
+        var orderNo = $("#orderNo").html();
+        $.ajax({
+            url: '/wxpay/status',
+            type: 'post',
+            data: {
+                orderNo: orderNo
+            },
+            dataType: 'json',
+            success:
+                function (data) {
+                    if (data.code === 200) {
+                        var returnCode = data.result.notify_return_code;
+                        var resultCode = data.result.notify_result_code;
+                        var errCodeDesc = data.result.notify_err_code_desc;
+                        if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
+                            $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
+                            stopCount();
+                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
+                        } else {
+                            $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
+                        }
+                    }
+                }
+        });
+    }
+
 
 
     /*]]>*/

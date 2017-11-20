@@ -1342,7 +1342,9 @@
         } else if (flag == 0) {
             alert("你还没有选择金额");
         } else {
-            window.location.href = "/home/apply";
+//            window.location.href = "/home/apply";
+            layer.alert("提交捐赠意向成功！",3000,function(){window.location.href = "/home/apply"});
+
         }
 
 
