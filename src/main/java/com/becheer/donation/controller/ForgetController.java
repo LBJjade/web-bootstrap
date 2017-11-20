@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 */
 
 @Controller
-@RequestMapping("/reset")
-public class ResetController extends BaseController {
+@RequestMapping("/forget")
+public class ForgetController extends BaseController {
 
     @Resource
     private IMemberService memberService;
@@ -33,12 +33,12 @@ public class ResetController extends BaseController {
     private ISmsService smsService;
 
     /**
-     *修改密码页面
+     * 修改密码页面
      */
     @GetMapping(value = "")
     public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
-        return this.render("reset");
+        return this.render("forget");
     }
 
 //    /**
@@ -71,9 +71,15 @@ public class ResetController extends BaseController {
     @PostMapping(value = "/SendSms")
     @ResponseBody
     public ResponseDto SendSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam long tid) {
-        return smsService.SendSms(mobile,tid);
+        if (!RegExUtil.checkMobile(mobile)) {
+            return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
+        }
+        Member member = memberService.GetMemberByMobile(mobile);
+        if (member == null) {
+            return new ResponseDto(401, Message.REGISTER_NO_EXIST);
+        }
+        return smsService.SendSms(mobile, tid);
     }
-
 
 
     /**
@@ -81,7 +87,7 @@ public class ResetController extends BaseController {
      */
     @PostMapping(value = "/validate")
     @ResponseBody
-    public ResponseDto CheckSms(HttpServletRequest request,@RequestParam String mobile,@RequestParam String code,@RequestParam Long tid){
+    public ResponseDto CheckSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam String code, @RequestParam Long tid) {
 //        ResponseDto result = smsService.CheckLoginCode(mobile,code);
 //        if (result.getCode()==200){
 //            MemberRegisterExtension memberRegisterExtension=new MemberRegisterExtension();
@@ -92,12 +98,12 @@ public class ResetController extends BaseController {
 //        return result;
         //根据手机验证账号
         Member member = memberService.GetMemberByMobile(mobile);
-        int enable=member.getEnable();
-        if(enable == 0){
+        int enable = member.getEnable();
+        if (enable == 0) {
             return new ResponseDto(402, Message.MEMBER_UNENABLE);
-        }else{
+        } else {
             //验证短信
-            ResponseDto result = smsService.CheckCode(mobile,code,tid);
+            ResponseDto result = smsService.CheckCode(mobile, code, tid);
             return result;
         }
 
@@ -110,15 +116,15 @@ public class ResetController extends BaseController {
     @PostMapping(value = "/submit")
     @ResponseBody
     public ResponseDto ChangePw(HttpServletRequest request, @RequestParam String newPw, @RequestParam String mobile) {
-        try{
+        try {
             if (newPw == null || newPw.trim().length() < 6) {
                 return new ResponseDto(403, "error pwd");
             }
             newPw = newPw.trim();
-            int result=memberService.UpdatePw(newPw,mobile);
-            return new ResponseDto(200,Message.PASSWORD_CHANG_SUCCESS,result);
-        }catch (Exception e){
-            return new ResponseDto(402,Message.PASSWORD_CHANG_ERROR);
+            int result = memberService.UpdatePw(newPw, mobile);
+            return new ResponseDto(200, Message.PASSWORD_CHANG_SUCCESS, result);
+        } catch (Exception e) {
+            return new ResponseDto(402, Message.PASSWORD_CHANG_ERROR);
         }
 
     }

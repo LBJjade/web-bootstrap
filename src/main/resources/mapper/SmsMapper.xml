@@ -3,31 +3,31 @@
 <mapper namespace="com.becheer.donation.dao.SmsMapper">
 
     <resultMap id="BaseResultMap" type="com.becheer.donation.model.Sms">
-        <id column="id_" jdbcType="BIGINT" property="id" />
-        <result column="sms_template_id" jdbcType="BIGINT" property="smsTemplateId" />
-        <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-        <result column="code" jdbcType="VARCHAR" property="code" />
-        <result column="text" jdbcType="VARCHAR" property="text" />
-        <result column="reply" jdbcType="VARCHAR" property="reply" />
-        <result column="sms_type" jdbcType="VARCHAR" property="smsType" />
-        <result column="send_date_time" jdbcType="DATE" property="sendTime" />
-        <result column="invalid_date_time" jdbcType="TIMESTAMP" property="invalidTime" />
-        <result column="send_status" jdbcType="VARCHAR" property="sendStatus" />
-        <result column="send_id" jdbcType="VARCHAR" property="sendId" />
-        <result column="sms_credits" jdbcType="VARCHAR" property="smsCredit" />
-        <result column="send_error_code" jdbcType="VARCHAR" property="sendErrorCode" />
-        <result column="send_error_message" jdbcType="VARCHAR" property="sendErrorMessage" />
-        <result column="enable_" jdbcType="INTEGER" property="enable" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="create_by" jdbcType="BIGINT" property="createBy" />
-        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-        <result column="update_by" jdbcType="BIGINT" property="updateBy" />
-        <result column="remark_" jdbcType="VARCHAR" property="remark" />
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="sms_template_id" jdbcType="BIGINT" property="smsTemplateId"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="text" jdbcType="VARCHAR" property="text"/>
+        <result column="reply" jdbcType="VARCHAR" property="reply"/>
+        <result column="sms_type" jdbcType="VARCHAR" property="smsType"/>
+        <result column="send_date_time" jdbcType="DATE" property="sendTime"/>
+        <result column="invalid_date_time" jdbcType="TIMESTAMP" property="invalidTime"/>
+        <result column="send_status" jdbcType="VARCHAR" property="sendStatus"/>
+        <result column="send_id" jdbcType="VARCHAR" property="sendId"/>
+        <result column="sms_credits" jdbcType="VARCHAR" property="smsCredit"/>
+        <result column="send_error_code" jdbcType="VARCHAR" property="sendErrorCode"/>
+        <result column="send_error_message" jdbcType="VARCHAR" property="sendErrorMessage"/>
+        <result column="enable_" jdbcType="INTEGER" property="enable"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_by" jdbcType="BIGINT" property="createBy"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
+        <result column="remark_" jdbcType="VARCHAR" property="remark"/>
     </resultMap>
 
     <resultMap id="ExtensionResultMap" type="com.becheer.donation.model.extension.sms.SmsTemplateExtension">
-        <id column="id_" jdbcType="BIGINT" property="templateId" />
-        <result column="content" jdbcType="VARCHAR" property="content" />
+        <id column="id_" jdbcType="BIGINT" property="templateId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
     </resultMap>
 
     <select id="selectSmsTemplateById" parameterType="java.lang.Long" resultMap="ExtensionResultMap">

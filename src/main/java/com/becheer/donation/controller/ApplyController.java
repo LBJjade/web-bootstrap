@@ -23,20 +23,20 @@ import static com.becheer.donation.utils.HttpUtil.GetCurrentUser;
 
 @Controller
 @RequestMapping("/apply")
-public class ApplyController extends BaseController{
+public class ApplyController extends BaseController {
     @Resource
     IIntentionService intentionService;
 
     @PostMapping("/submit")
     @ResponseBody
-    public ResponseDto AddApply(HttpServletRequest request, Intention intention){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto AddApply(HttpServletRequest request, Intention intention) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
         intention.setEnable(1);
         intention.setStatus(0);
-        intention.setIntentionAmount(intention.getIntentionAmount()*100);
+        intention.setIntentionAmount(intention.getIntentionAmount() * 100);
         return intentionService.AddIntention(intention);
     }
 }

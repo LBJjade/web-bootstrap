@@ -2,71 +2,87 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
 
     <title>忘记密码</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
-    <link rel="stylesheet" th:href="@{/plugin/step/step.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/plugin/step/step.css}"/>
 
     <style type="text/css">
-        #div_menu a{
+        #div_menu a {
             display: block;
             margin: 10px;
         }
-        #div_menu span{
+
+        #div_menu span {
             float: left;
             font-size: 20px;
         }
-        #div_menu ul{
+
+        #div_menu ul {
             margin-left: 30px;
             display: none;
         }
-        .table_member_content{
-            width: 60%;
-            margin-left: 20%;
+
+        .table_member_content {
+            /*width: 60%;*/
+            margin-left: 30%;
             text-align: center;
             line-height: 60px;
         }
-        .table_member_content input{
+
+        .table_member_content input {
             line-height: 28px;
-            width: 280px;
+            margin-left: 47px;
+            margin-right: 120px;
         }
-        .table_member_content td{
+
+        .table_member_content td {
             border-bottom: 1px #ccc dashed;
+            /*margin-right: 120px;*/
         }
 
-        .ipt_mobile{
-            width: 200px;
-        }
-
-        .input_code{
+        .input_code {
             width: 234px;
         }
 
-        .div_register_content{
+        .div_register_content {
             height: 500px;
             padding-top: 50px;
             display: none;
         }
 
-        .error{
-            color:red;
+        .error {
+            color: red;
             display: none;
             height: 42px;
             margin-top: -23px;
             margin-right: 110px;
         }
 
-        .error_1{
-            color:red;
+        .error_1 {
+            color: red;
             display: none;
             height: 19px;
             margin-top: 7px;
             margin-right: 54px;
+        }
+
+        .pw {
+            width: 200px;
+        }
+
+        .ipt_mobile {
+
+        }
+
+        .tr_skip {
+            margin-left: 91px;
+            display: block;
         }
 
     </style>
@@ -121,16 +137,21 @@
                 <tr>
                     <td>手机号码：</td>
                     <td>
-                        <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入11位手机号码" style="width: 200px;"/>
-                        <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">发送验证码</button>
-                        <p class="mobile_error error">手机号码格式不正确</p>
+                        <div style="margin-right: 32px">
+                            <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入手机号码"
+                                   style="width: 115px; margin-right: 9px;"/>
+                            <button class="btn btn-info btn_send" style="width: 140px;padding-left: 4px">获取验证码</button>
+                            <p class="mobile_error error">手机号码格式不正确</p>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>验证码：</td>
                     <td>
-                        <input type="text" class="input_code" placeholder="请输入验证码"/>
-                        <p class="code_error error" style="margin-right: 132px;">验证码不能为空</p>
+                        <div style="margin-left: 55px">
+                            <input type="text" class="input_code" placeholder="请输入验证码"/>
+                            <p class="code_error error" style="margin-right: 132px;">验证码不能为空</p>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -174,17 +195,18 @@
                 <tr>
                     <td>请输入新密码：</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入6位新密码"/>
+                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入新密码"
+                               style="margin-left: 89px;"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
-                        <p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于6位</p>
                     </td>
                 </tr>
                 <tr>
                     <td>再次输入新密码：</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pwd" class="input_pwd" placeholder="请输入确认新密码" style="margin-top: 5px;"/>
-                        <p class="pwd_error error_1" >密码不能为空</p>
-                        <p class="p_error error_1" >两次密码不一致</p>
+                        <input type="password" id="ipt_pwd" class="input_pwd" placeholder="请输入确认新密码"
+                               style="margin-top: 5px;margin-left: 89px;"/>
+                        <p class="pwd_error error_1">密码不能为空</p>
+                        <p class="p_error error_1">两次密码不一致</p>
                     </td>
                 </tr>
                 <tr>
@@ -225,8 +247,15 @@
             </div>
             <br/>
             <table class="table_member_content">
-                <tr>
-                    <td style="collapse: 2"><h4>设置新密码!<a href="/index">即将跳转</a> </h4></td>
+                <tr class="tr_skip">
+                    <td style="collapse: 2"><h4><a class="skip">修改成功。5秒后自动跳转到主页</a></h4></td>
+                </tr>
+                <tr class="tr_skip" style="margin-left: 192px;">
+                    <td style="collapse: 2">
+                        <h4><a href="/index">
+                            <button class="btn btn-info">立即跳转</button>
+                        </a></h4>
+                    </td>
                 </tr>
                 <!--<tr>-->
                 <!--<td colspan="2" style="text-align: center">-->
@@ -241,17 +270,15 @@
 <div th:replace="themes/default/footer::footer"></div>
 
 <!--全局JS-->
-<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
-<script type="text/javascript"  th:inline="javascript">
+<script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var mobile;
     var newPw;
 
 
     $(".verify_code").click(function () {
-        $(this).attr("src","Verify/code.jpg?t="+Math.random());
+        $(this).attr("src", "Verify/code.jpg?t=" + Math.random());
     });
 
 
@@ -259,60 +286,58 @@
     $(".btn_send").click(function () {
         var mobile = $("#ipt_mobile").val();
         $.ajax({
-            url:'/reset/SendSms',
-            type:'post',
-            data:{mobile:mobile,tid:"2"},
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
-                    layer.alert("验证码发送成功");
-                }else{
+            url: '/forget/SendSms',
+            type: 'post',
+            data: {mobile: mobile, tid: "2"},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    timer = 60;
+                    Countdown();
+                    $(".btn_send").attr("disabled", true);
+                    $(".input_code").focus();
+                } else {
                     layer.alert(data.msg);
                 }
             }
         })
     });
 
-//    $(".btn_checkSms").click(function () {
-//        var code=$(".input_code").val();
-//        mobile = $("#ipt_mobile").val();
-//        $.ajax({
-//            url:'/reset/validate',
-//            type:'post',
-//            data:{mobile:mobile,code:code},
-//            dataType:'json',
-//            success:function (data) {
-//                if(data.code===200){
-//                    $("#div_step1").hide();
-//                    $("#div_step2").show();
-//                }else if(data.code==403){
-//                    layer.alert("验证码错误");
-//                }else{
-//                    layer.alert("验证码错误");
-//                }
-//            }
-//        })
-//    });
+    //倒计时
+    function Countdown() {
+        if (timer >= 1) {
+            timer -= 1;
+            t = setTimeout(function () {
+                Countdown();
+            }, 1000);
+            $(".btn_send").html(timer + "秒后可以重新获取");
+
+        } else {
+            $(".btn_send").attr("disabled", false);
+            $(".btn_send").html("重新获取");
+        }
+    }
+
 
     $(".btn_checkSms").click(function () {
-        var smsCode=$(".input_code").val();
+        var smsCode = $(".input_code").val();
         mobile = $("#ipt_mobile").val();
 //        registerType=$("input[name='input_register_type']:checked").val();
-        registerType=false;
+        registerType = false;
         $.ajax({
-            url:'/reset/validate',
-            type:'post',
-            data:{mobile:mobile,code:smsCode,tid:"2"},
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
+            url: '/forget/validate',
+            type: 'post',
+            data: {mobile: mobile, code: smsCode, tid: "2"},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     $("#div_step1").hide();
                     $("#div_step2").show();
-                }else if (data.code==402){
+                } else if (data.code == 402) {
                     layer.alert("验证码已过期，请重新获取");
-                }else if(data.code==403){
+                } else if (data.code == 403) {
                     layer.alert("验证码错误");
-                }else{
+                } else {
                     layer.alert("验证码错误");
                 }
             }
@@ -321,24 +346,19 @@
 
 
     $(".btn_pwd").click(function () {
-        var pwd=$("#ipt_pwd").val();
-        newPw=pwd;
+        var pwd = $("#ipt_pwd").val();
+        newPw = pwd;
         $.ajax({
-            url:'/reset/submit',
-            type:'post',
-            data:{newPw:newPw,mobile:mobile},
-            dataType:'json',
-            success:function (data) {
-                if(data.code===200){
+            url: '/forget/submit',
+            type: 'post',
+            data: {newPw: newPw, mobile: mobile},
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
                     $("#div_step2").hide();
                     $("#div_step3").show();
-                    layer.alert(data.msg,function () {
-                        window.location.href = "/index";
-                    });
-                    setTimeout(function(){
-                        window.location.href = "/index";
-                    },3000);
-                }else{
+                    f_skip();
+                } else {
                     layer.alert("修改失败，请重试");
                 }
             }
@@ -347,61 +367,72 @@
 
 
     //手机
-    $(".ipt_mobile").blur(function(){
+    $(".ipt_mobile").blur(function () {
         var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
-        if(!mobile.test($(".ipt_mobile").val())){
+        if (!mobile.test($(".ipt_mobile").val())) {
             $(".mobile_error").show();
-        }else{
+        } else {
             $(".mobile_error").hide();
         }
     })
 
     //验证码
-    $(".input_code").blur(function(){
-        if($(".input_code").val() == ""){
+    $(".input_code").blur(function () {
+        if ($(".input_code").val() == "") {
             $(".code_error").show();
-        }else{
+        } else {
             $(".code_error").hide();
         }
     })
 
     //密码
-    $(".input_pw").blur(function(){
-        if($(".input_pw").val() == ""){
+    $(".input_pw").blur(function () {
+        if ($(".input_pw").val() == "") {
             $(".pw_error_0").hide();
             $(".pw_error").show();
-        }else{
+        } else {
             $(".pw_error").hide();
-            if($(".input_pw").val().length < 6){
-                $(".pw_error_0").show();
-            }else{
-                $(".pw_error_0").hide();
-            }
+//            if ($(".input_pw").val().length < 6) {
+//                $(".pw_error_0").show();
+//            } else {
+//                $(".pw_error_0").hide();
+//            }
         }
     })
 
 
-
-    $(".input_pwd").blur(function(){
-        if($("#ipt_pwd").val() == ""){
+    $(".input_pwd").blur(function () {
+        if ($("#ipt_pwd").val() == "") {
             $(".p_error").hide();
             $(".pwd_error").show();
-        }else{
+        } else {
             $(".pwd_error").hide();
-            if($("#ipt_pw").val() !== $("#ipt_pwd").val()){
+            if ($("#ipt_pw").val() !== $("#ipt_pwd").val()) {
                 $(".p_error").show();
-            }else{
+            } else {
                 $(".p_error").hide();
             }
         }
     })
 
 
+    //跳转
+    var time = 5;
+
+    function f_skip() {
+        if (time >= 1) {
+            time -= 1;
+            t = setTimeout(function () {
+                f_skip();
+            }, 1000);
+            $(".skip").html("修改成功。" + time + "秒后自动跳转到主页");
+        } else {
+            window.location.href = "/index";
+        }
+    }
+
+
     /*]]>*/
-
-
-
-
 
 
 </script>

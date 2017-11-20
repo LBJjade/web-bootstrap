@@ -3,15 +3,19 @@ package com.becheer.donation.controller;
 import com.becheer.core.support.pay.WxPayHelper;
 import com.becheer.core.util.ImageUtil;
 import com.becheer.core.util.QRCodeUtil;
+import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
 import com.becheer.donation.model.extension.donate.Donate;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import com.becheer.donation.service.IDonateService;
+import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.service.INoContractDonateService;
+import com.becheer.donation.service.ISmsService;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.IPUtil;
+import com.becheer.donation.utils.RegExUtil;
 import com.google.common.base.Strings;
 import com.google.common.primitives.Ints;
 import org.springframework.stereotype.Controller;
@@ -37,6 +41,12 @@ public class DonateController extends BaseController {
 
     @Resource
     private INoContractDonateService noContractDonateService;
+
+    @Resource
+    private IMemberService memberService;
+
+    @Resource
+    private ISmsService smsService;
 
     @ResponseBody
     @PostMapping("/recent")
@@ -130,5 +140,37 @@ public class DonateController extends BaseController {
         }
     }
 
+    //大额捐赠验证码
+    @PostMapping(value = "/SendSms")
+    @ResponseBody
+    public ResponseDto SendSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam long tid) {
+        if (!RegExUtil.checkMobile(mobile)) {
+            return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
+        }
+        Member member = memberService.GetMemberByMobile(mobile);
+        if (member == null) {
+            return new ResponseDto(401, Message.REGISTER_NO_EXIST);
+        }
+        return smsService.SendSms(mobile, tid);
+    }
 
+
+    /**
+     * 短信验证
+     */
+    @PostMapping(value = "/validate")
+    @ResponseBody
+    public ResponseDto CheckSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam String code, @RequestParam Long tid) {
+        //根据手机验证账号
+        Member member = memberService.GetMemberByMobile(mobile);
+        int enable = member.getEnable();
+        if (enable == 0) {
+            return new ResponseDto(402, Message.MEMBER_UNENABLE);
+        } else {
+            //验证短信
+            ResponseDto result = smsService.CheckCode(mobile, code, tid);
+            return result;
+        }
+
+    }
 }

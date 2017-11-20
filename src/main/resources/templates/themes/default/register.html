@@ -29,18 +29,21 @@
         }
 
         .table_member_content {
-            width: 60%;
-            margin-left: 20%;
+            /*width: 60%;*/
+            margin-left: 30%;
             text-align: center;
             line-height: 60px;
         }
 
         .table_member_content input {
             line-height: 28px;
+            margin-left: 47px;
+            margin-right: 120px;
         }
 
         .table_member_content td {
             border-bottom: 1px #ccc dashed;
+            /*margin-right: 120px;*/
         }
 
         .input_code {
@@ -58,7 +61,7 @@
             display: none;
             height: 42px;
             margin-top: -23px;
-            margin-right: 110px;
+            margin-right: 101px;
         }
 
         .error_1 {
@@ -66,7 +69,20 @@
             display: none;
             height: 19px;
             margin-top: 7px;
-            margin-right: 54px;
+            margin-right: 140px;
+        }
+
+        .pw {
+            width: 200px;
+        }
+
+        .ipt_mobile {
+
+        }
+
+        .tr_skip{
+            margin-left: 91px;
+            display: block;
         }
 
     </style>
@@ -118,36 +134,44 @@
             <br/>
             <table class="table_member_content">
                 <tr>
-                    <td>会员类型：</td>
+                    <td align="right">会员类型：</td>
                     <td style="line-height: 20px">
-                        <label class="radio-inline">
-                            <input type="radio" value="1" name="input_register_type" checked="checked"/>个人
-                        </label>
-                        <label class="radio-inline" style="margin-left: 60px">
-                            <input type="radio" value="2" name="input_register_type"/>公司或社会组织
-                        </label>
+                        <div style="margin-right: 18px">
+                            <label class="radio-inline">
+                                <input type="radio" value="1" name="input_register_type" checked="checked"/>个人
+                            </label>
+                            <label class="radio-inline" style="margin-left: 60px">
+                                <input type="radio" value="2" name="input_register_type"/>公司或社会组织
+                            </label>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>手机号码：</td>
                     <td>
-                        <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入11位手机号码"/>
-                        <button class="btn btn-info btn_send" style="width: 80px;padding-left: 4px">获取验证码</button>
-                        <p class="mobile_error error">手机号码格式不正确</p>
+                        <div style="margin-right: 32px">
+                            <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入手机号码"
+                                   style="width: 115px; margin-right: 9px;"/>
+                            <button class="btn btn-info btn_send" style="width: 140px;padding-left: 4px">获取验证码</button>
+                            <p class="mobile_error error">手机号码格式不正确</p>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>验证码：</td>
                     <td>
-                        <input type="text" class="input_code" placeholder="请输入验证码"/>
-                        <p class="code_error error" style="margin-right: 132px;">验证码不能为空</p>
+                        <div style="margin-left: 55px">
+                            <input type="text" class="input_code" placeholder="请输入验证码"/>
+                            <p class="code_error error" style="margin-right: 206px;">验证码不能为空</p>
+                        </div>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
-                        <label class="radio-inline">
-                            <input class="clause" type="radio"/><a>同意网站服务条款</a>
-                        </label>
+                    <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 3%">
+                        <label class="radio-inline"> </label>
+                        <input id="agree" type="checkbox" checked="checked"/><span style="margin-left: 6px;">同意</span><a
+                            class="clause"
+                            style="margin-right: 4px">网站服务条款</a>
                         <button class="btn btn-info btn_checkSms" style="width: 80px;padding-left: 4px">下一步</button>
                     </td>
                 </tr>
@@ -187,16 +211,16 @@
                 <tr>
                     <td>登录密码：</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入密码"/>
+                        <input type="password" id="ipt_pw" class="input_pw pw" placeholder="请输入密码"
+                               style="margin-left: 89px;"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
-                        <!--<p class="pw_error_0 error_1" style="color:red;display: none;margin-right: 42px;">密码不能少于6位</p>-->
                     </td>
                 </tr>
                 <tr>
                     <td>确认密码：</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pwd" class="input_pwd" placeholder="请输入确认密码"
-                               style="margin-top: 5px;"/>
+                        <input type="password" id="ipt_pwd" class="input_pwd pw" placeholder="请输入确认密码"
+                               style="margin-top: 5px;margin-left: 89px;"/>
                         <p class="pwd_error error_1">密码不能为空</p>
                         <p class="p_error error_1">两次密码不一致</p>
                     </td>
@@ -239,9 +263,15 @@
             </div>
             <br/>
             <table class="table_member_content">
-                <tr>
-                    <td style="collapse: 2"><h4><a class="skip">注册成功!5秒后自动跳转到主页</a></h4></td>
-                    <td style="collapse: 2"><h4><a href="/index">立即跳转</a></h4></td>
+                <tr class="tr_skip">
+                    <td style="collapse: 2"><h4><a class="skip">注册成功。5秒后自动跳转到主页</a></h4></td>
+                </tr>
+                <tr class="tr_skip" style="margin-left: 192px;">
+                    <td style="collapse: 2">
+                        <h4><a href="/index">
+                            <button class="btn btn-info">立即跳转</button>
+                        </a></h4>
+                    </td>
                 </tr>
                 <!--<tr>-->
                 <!--<td colspan="2" style="text-align: center">-->
@@ -274,6 +304,8 @@
                 if (data.code === 200) {
                     timer = 60;
                     Countdown();
+                    $(".btn_send").attr("disabled", true);
+                    $(".input_code").focus();
                 } else {
                     if (data.code != 502) {
                         layer.alert(data.msg);
@@ -282,40 +314,31 @@
                 }
             }
         })
-        $(".btn_send").attr("disabled", true);
-        $(".input_code").focus();
     });
 
-    //    function getNowFormatDate() {
-    //        var date = new Date();
-    //        var seperator1 = "-";
-    //        var seperator2 = ":";
-    //        var month = date.getMonth() + 1;
-    //        var strDate = date.getDate();
-    //        if (month >= 1 && month <= 9) {
-    //            month = "0" + month;
-    //        }
-    //        if (strDate >= 0 && strDate <= 9) {
-    //            strDate = "0" + strDate;
-    //        }
-    //        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-    //            + " " + date.getHours() + seperator2 + date.getMinutes()
-    //            + seperator2 + date.getSeconds();
-    //        return currentdate;
-    //    }
 
+    //倒计时
     function Countdown() {
         if (timer >= 1) {
             timer -= 1;
             t = setTimeout(function () {
                 Countdown();
             }, 1000);
-            $(".btn_send").html(timer + "后重发");
+            $(".btn_send").html(timer + "秒后可以重新获取");
+
         } else {
             $(".btn_send").attr("disabled", false);
-            $(".btn_send").html("重发");
+            $(".btn_send").html("重新获取");
         }
     }
+
+    $("#agree").change(function () {
+        if ($("#agree").prop('checked')) {
+            $(".btn_checkSms").attr("disabled", false);
+        } else {
+            $(".btn_checkSms").attr("disabled", "disabled");
+        }
+    })
 
 
     $(".btn_checkSms").click(function () {
@@ -328,6 +351,7 @@
 //            alert(mobile);
 //            alert(registerType);
 //        }
+
 
         $.ajax({
             url: '/Sms/CheckSms',
@@ -371,7 +395,7 @@
 
     //手机
     $(".ipt_mobile").blur(function () {
-        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        var mobile = /1[34578]\d{9}$/;
         if (!mobile.test($(".ipt_mobile").val())) {
             $(".mobile_error").show();
         } else {
@@ -423,10 +447,10 @@
     $(".clause").click(function () {
         layer.open({
             type: 2,
-            title: '合同内容',
+            title: '网站服务条款',
             shadeClose: true,
             shade: 0.6,
-            area: ['1100px', '90%'],
+            area: ['900px', '100%'],
             content: '/register/clause'
         });
     })
@@ -440,7 +464,7 @@
             t = setTimeout(function () {
                 f_skip();
             }, 1000);
-            $(".skip").html("注册成功!" + time + "后跳转");
+            $(".skip").html("注册成功。" + time + "秒后自动跳转到主页");
         } else {
             window.location.href = "/index";
         }
