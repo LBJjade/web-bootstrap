@@ -395,7 +395,7 @@
 
     //手机
     $(".ipt_mobile").blur(function () {
-        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        var mobile = /1[34578]\d{9}$/;
         if (!mobile.test($(".ipt_mobile").val())) {
             $(".mobile_error").show();
         } else {
