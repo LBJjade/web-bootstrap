@@ -20,6 +20,10 @@ public class ProgressExtension {
 
     private int enable;
 
+    private String userName;
+
+    private String memberName;
+
     public long getId() {
         return id;
     }
@@ -58,5 +62,21 @@ public class ProgressExtension {
 
     public void setEnable(int enable) {
         this.enable = enable;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 }

@@ -7,6 +7,7 @@ import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
 import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
+import com.becheer.donation.model.extension.intention.IntentionExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
@@ -163,6 +164,37 @@ public class HomeAppealController extends BaseController {
             return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
         } catch (Exception ex) {
             return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
+        }
+    }
+
+    @PostMapping("/addProgress")
+    @ResponseBody
+    public ResponseDto AddProgress(HttpServletRequest request,@RequestParam String content,@RequestParam long appealId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        try {
+            if (StringUtil.isNull(content)){
+                return new ResponseDto(200,Message.MEMBER_APPEAL_PROGRESS_CONTENT_NULL);
+            }
+            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
+            if (appeal==null){
+                return MemberAuthFailed();
+            }
+            String title=content;
+            if (title.length()>30){
+                title=title.substring(0,30);
+            }
+            long result=progressService.AddProgress(title,content,"dnt_appeal",appealId,currentMember.getMemberId(),1);
+            if (result>0){
+                return new ResponseDto(200,Message.MEMBER_APPEAL_PROGRESS_ADD_SUCCESS,result);
+            }else{
+                return new ResponseDto(400,Message.MEMBER_APPEAL_PROGRESS_ADD_FAILED);
+            }
+        }catch(Exception ex){
+            LOGGER.error("AddProgress", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 }

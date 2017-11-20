@@ -8,25 +8,31 @@
         <result column="content" jdbcType="VARCHAR" property="content" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="member_name" jdbcType="VARCHAR" property="memberName" />
     </resultMap>
 
 
     <select id="SelectAllProgress" resultMap="MemberProgressMapper">
         SELECT
-            id_,
-            title,
-            content,
-            enable_,
-            create_time
+            p.id_,
+            p.title,
+            p.content,
+            m.member_name,
+            u.user_name,
+            p.enable_,
+            p.create_time
         FROM
-            dnt_progress
+            dnt_progress p
+        LEFT JOIN dnt_member m ON m.id_ = p.create_member_id
+        LEFT JOIN sys_user u on u.id_ = p.create_by
         WHERE
-            ref_table=#{param2}
+            p.ref_table=#{param2}
         AND
-            ref_record_id=#{param1}
+            p.ref_record_id=#{param1}
         AND
-            enable_=1
-        ORDER BY create_time
+            p.enable_=1
+        ORDER BY p.create_time
     </select>
 
     <insert id="InsertProgress" parameterType="com.becheer.donation.model.Progress" useGeneratedKeys="true" keyProperty="id">

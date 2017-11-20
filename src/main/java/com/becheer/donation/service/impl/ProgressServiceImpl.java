@@ -31,7 +31,7 @@ public class ProgressServiceImpl implements IProgressService{
     @Override
     public long AddProgress(String title, String content, String refTable, long refRecordId, long memberId, int enable) {
         Progress progress=new Progress();
-        progress.setId(UUID.GetInt64UUID());
+//        progress.setId(UUID.GetInt64UUID());
         progress.setTitle(title);
         progress.setContent(content);
         progress.setRefTable(refTable);
@@ -39,6 +39,7 @@ public class ProgressServiceImpl implements IProgressService{
         progress.setCreateMemberId(memberId);
         progress.setEnable(1);
         progress.setCreateTime(new Date());
-        return progressMapper.InsertProgress(progress);
+        progressMapper.InsertProgress(progress);
+        return progress.getId();
     }
 }
