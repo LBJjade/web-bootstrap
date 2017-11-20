@@ -675,7 +675,7 @@
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;">
-                    请输入您的联系方式
+                    大额捐赠
                 </h4>
             </div>
 
@@ -1348,6 +1348,84 @@
     })
 
     //大额捐赠第三步(确认捐赠部分)
+
+    function f_Donate() {
+        var projectType = $("#sel_project_type").find("option:selected").text();
+        var projectName = $("#sel_project").find("option:selected").text();
+        if (flag == 0) {
+            alert("你还没有选择金额");
+        } else {
+            $("#div_cf_donate").model('show');
+            var projectTypeId = $("#sel_project_type").val();
+            var projectId = $("#sel_project").val();
+            var amount = span_money * 100;
+            $("#donateAmount").html(span_money);
+            $.ajax({
+                url: '/donate/donate',
+                type: 'post',
+                data: {
+                    projectTypeId: projectTypeId,
+                    projectId: projectId,
+                    amount: amount
+                },
+                dataType: 'json',
+                success:
+                    function (data) {
+                        if (data.code === 200) {
+                            $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
+                            $("#orderNo").html(data.result.orderNo);
+                            checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
+                        }
+                    }
+            });
+            var timer = 120;
+
+            function Countdown() {
+                if (timer >= 1) {
+                    timer -= 1;
+                    t = setTimeout(function () {
+                        Countdown();
+                    }, 1000);
+                    $("#waitingPayTimerText").html(timer);
+                } else {
+                    $("#qrCodeImageId").attr("src", "");
+                    $(".fresh").css("z-index", "3");
+                    $(".code_time").html("二维码已经失效，请刷新！");
+                }
+            }
+
+            Countdown();
+        }
+
+
+    }
+
+    function checkPayStatus() {
+        var orderNo = $("#orderNo2").html();
+        $.ajax({
+            url: '/wxpay/status',
+            type: 'post',
+            data: {
+                orderNo: orderNo
+            },
+            dataType: 'json',
+            success:
+                function (data) {
+                    if (data.code === 200) {
+                        var returnCode = data.result.notify_return_code;
+                        var resultCode = data.result.notify_result_code;
+                        var errCodeDesc = data.result.notify_err_code_desc;
+                        if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
+                            $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
+                            stopCount();
+                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
+                        } else {
+                            $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
+                        }
+                    }
+                }
+        });
+    }
 
 
     /*]]>*/
