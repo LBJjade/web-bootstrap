@@ -173,4 +173,69 @@ public class DonateController extends BaseController {
         }
 
     }
+
+//    @ResponseBody
+//    @PostMapping("/da_donate")
+//    // public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
+//    public Object da_donate(HttpServletRequest request, @RequestParam int amount) {
+//        try {
+//            MemberSessionExtension currentMember = GetCurrentUser(request);
+//            if (currentMember == null) {
+//                MemberAuthFailed();
+//            }
+////            Long memberId = null;
+//            Long memberId = currentMember.getMemberId();
+//            String memberName = null;
+//            if (currentMember != null) {
+//                memberId = currentMember.getMemberId();
+//                memberName = currentMember.getMemberName();
+//            }
+//            Donate donate = new Donate();
+//            donate.setMemberId(memberId);
+////            donate.setProjectTypeId(projectTypeId);
+////            donate.setProjectId(projectId);
+//            donate.setAmount(amount);
+//
+////            Integer projectTypeId = donate.getProjectTypeId();
+////            Integer projectId = donate.getProjectId();
+////            Integer amount = donate.getAmount();
+//
+////            if (projectTypeId == null) {
+////                return new ResponseDto(400, Message.DONATE_PROJECT_TYPE_ID_IS_EMPTY);
+////            }
+////
+////            if (projectId == null) {
+////                return new ResponseDto(400, Message.DONATE_PROJECT_ID_BAD_REQUEST);
+////            }
+////
+////            if (amount == null) {
+////                return new ResponseDto(400, Message.DONATE_AMOUNT_IS_EMPTY);
+////            }
+//
+//            String ip = IPUtil.getIpAddress(request);
+//            Map<String, String> map = donateService.donate(donate, ip, memberName);
+//
+//
+//            Map<String, String> prepay = new HashMap<>();
+//            String returnCode = map.get("return_code");
+//            String resultCode = map.get("result_code");
+//            String qrCodeURL = null;
+//            if (WxPayHelper.codeIsOK(returnCode) && WxPayHelper.codeIsOK(resultCode)) {
+//                // responsedTradeType = wxPayResponse.get("trade_type");
+//                // preparedId = wxPayResponse.get("prepared_id");
+//                qrCodeURL = map.get("code_url");
+//                if (qrCodeURL != null) {
+//                    String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
+//                    prepay.put("qrCodeImageBase64", qrCodeImageBase64);
+//                }
+//                String orderNo = map.get("orderNo");
+//                prepay.put("orderNo", orderNo);
+//            }
+//
+//
+//            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
+//        } catch (Exception ex) {
+//            return new ResponseDto(500, Message.SERVER_ERROR);
+//        }
+//    }
 }

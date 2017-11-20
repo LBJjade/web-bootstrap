@@ -675,11 +675,26 @@
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;">
-                    大额捐赠
+                    大额捐赠捐赠意向
                 </h4>
             </div>
 
             <div class="model-body" style="text-align: center">
+                <div style="float:left;margin-top: 10px;margin-left: 80px;"><span
+                        style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>
+                    <select id="sel_project_type2" onchange="f_GetProject2()">
+                        <option value="0">请选择项目类别</option>
+                        <option v-for="item in items" id="name2" :value="item.id">{{item.name}}</option>
+                    </select>
+                    <!--<input type="hidden" :value="item.name">-->
+                </div>
+                <div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">
+                    <span style="width:115px; display: inline-block; text-align: right;">请选择项目：</span>
+                    <select id="sel_project2" style="width: 124px;">
+                        <option value="0">请选择项目类别</option>
+                        <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
+                    </select>
+                </div>
 
                 <div style="clear: both;">
                     <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
@@ -708,8 +723,7 @@
                     <button class="donateSubmit button" data-toggle="model" data-target="#div_de_donate"
                             data-dismiss="model">上一步
                     </button>
-                    <button class="button" data-toggle="model" data-target="#div_de_donate_step3"
-                            data-dismiss="model">确认捐赠
+                    <button class="button" onclick="f_Donate2()">确认捐赠
                     </button>
                 </div>
             </div>
@@ -848,6 +862,7 @@
         f_GetRecentDonate();
         f_GetDonationInfo();
         f_GetProjectType();
+        f_GetProjectType2();
         if (memberInfo != null) {
             $("#ipt_dnt_mobile").val(memberInfo.mobile);
         }
@@ -1347,85 +1362,98 @@
         })
     })
 
-    //大额捐赠第三步(确认捐赠部分)
-
-    function f_Donate() {
-        var projectType = $("#sel_project_type").find("option:selected").text();
-        var projectName = $("#sel_project").find("option:selected").text();
-        if (flag == 0) {
-            alert("你还没有选择金额");
-        } else {
-            $("#div_cf_donate").model('show');
-            var projectTypeId = $("#sel_project_type").val();
-            var projectId = $("#sel_project").val();
-            var amount = span_money * 100;
-            $("#donateAmount").html(span_money);
-            $.ajax({
-                url: '/donate/donate',
-                type: 'post',
-                data: {
-                    projectTypeId: projectTypeId,
-                    projectId: projectId,
-                    amount: amount
-                },
-                dataType: 'json',
-                success:
-                    function (data) {
-                        if (data.code === 200) {
-                            $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
-                            $("#orderNo").html(data.result.orderNo);
-                            checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
+    //获取所有项目类型
+    function f_GetProjectType2() {
+        $.ajax({
+            url: '/project/type',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    new Vue({
+                        el: "#sel_project_type2",
+                        data: {
+                            items: data.result
                         }
-                    }
-            });
-            var timer = 120;
-
-            function Countdown() {
-                if (timer >= 1) {
-                    timer -= 1;
-                    t = setTimeout(function () {
-                        Countdown();
-                    }, 1000);
-                    $("#waitingPayTimerText").html(timer);
-                } else {
-                    $("#qrCodeImageId").attr("src", "");
-                    $(".fresh").css("z-index", "3");
-                    $(".code_time").html("二维码已经失效，请刷新！");
+                    });
                 }
             }
+        });
+    }
 
-            Countdown();
+    //获取所有项目
+    function f_GetProject2() {
+        var tid = $("#sel_project_type2").val();
+        if (tid !== "0") {
+            $.ajax({
+                url: '/project/all',
+                data: {tid: tid},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 200) {
+                        if (vueProject == undefined) {
+                            vueProject = new Vue({
+                                el: "#sel_project2",
+                                data: {
+                                    items: data.result
+                                }
+                            });
+                        } else {
+                            for (var i = 0; i < data.result.length; i++) {
+                                Vue.set(vueProject.items, i, data.result[i]);
+                            }
+                            vueProject.items.splice(data.result.length);
+                        }
+                    }
+                }
+            });
+
+        }
+    }
+
+    //大额捐赠第三步(确认捐赠部分)
+
+    function f_Donate2() {
+        var projectType = $("#sel_project_type2").find("option:selected").text();
+        var projectName = $("#sel_project2").find("option:selected").text();
+        if (projectType == "请选择项目类别") {
+            alert("你还没有选择项目");
+        } else if (flag == 0) {
+            alert("你还没有选择金额");
+        } else {
+            window.location.href = "/home/apply";
         }
 
 
     }
 
-    function checkPayStatus() {
-        var orderNo = $("#orderNo2").html();
-        $.ajax({
-            url: '/wxpay/status',
-            type: 'post',
-            data: {
-                orderNo: orderNo
-            },
-            dataType: 'json',
-            success:
-                function (data) {
-                    if (data.code === 200) {
-                        var returnCode = data.result.notify_return_code;
-                        var resultCode = data.result.notify_result_code;
-                        var errCodeDesc = data.result.notify_err_code_desc;
-                        if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
-                            $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
-                            stopCount();
-                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
-                        } else {
-                            $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
-                        }
-                    }
-                }
-        });
-    }
+    //    function checkPayStatus() {
+    //        var orderNo = $("#orderNo2").html();
+    //        $.ajax({
+    //            url: '/wxpay/status',
+    //            type: 'post',
+    //            data: {
+    //                orderNo: orderNo
+    //            },
+    //            dataType: 'json',
+    //            success:
+    //                function (data) {
+    //                    if (data.code === 200) {
+    //                        var returnCode = data.result.notify_return_code;
+    //                        var resultCode = data.result.notify_result_code;
+    //                        var errCodeDesc = data.result.notify_err_code_desc;
+    //                        if (returnCode != undefined && resultCode != undefined && resultCode === "SUCCESS" && returnCode === "SUCCESS") {
+    //                            $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
+    //                            stopCount();
+    //                            autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
+    //                        } else {
+    //                            $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
+    //                        }
+    //                    }
+    //                }
+    //        });
+    //    }
 
 
     /*]]>*/

@@ -766,11 +766,26 @@
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;">
-                    大额捐赠
+                    大额捐赠捐赠意向
                 </h4>
             </div>
 
             <div class="model-body" style="text-align: center">
+                <div style="float:left;margin-top: 10px;margin-left: 80px;"><span
+                        style="width: 115px;display: inline-block;text-align: right;">请选择项目类别：</span>
+                    <select id="sel_project_type2" onchange="f_GetProject2()">
+                        <option value="0">请选择项目类别</option>
+                        <option v-for="item in items" id="name2" :value="item.id">{{item.name}}</option>
+                    </select>
+                    <!--<input type="hidden" :value="item.name">-->
+                </div>
+                <div style="float:left;clear: both;margin-top: 10px;margin-left: 80px;">
+                    <span style="width:115px; display: inline-block; text-align: right;">请选择项目：</span>
+                    <select id="sel_project2" style="width: 124px;">
+                        <option value="0">请选择项目类别</option>
+                        <option v-for="item in items" :value="item.projectId">{{item.projectName}}</option>
+                    </select>
+                </div>
 
                 <div style="clear: both;">
                     <label style="clear: both;margin-top: 10px;margin-bottom: 5px;">捐赠金额</label>
@@ -799,8 +814,7 @@
                     <button class="donateSubmit button" data-toggle="model" data-target="#div_de_donate"
                             data-dismiss="model">上一步
                     </button>
-                    <button class="button" data-toggle="model" data-target="#div_de_donate_step3"
-                            data-dismiss="model">确认捐赠
+                    <button class="button" onclick="f_Donate2()">确认捐赠
                     </button>
                 </div>
             </div>
@@ -832,7 +846,7 @@
         f_GetRecentDonate();
         f_GetRelative();
         f_GetProjectType();
-
+        f_GetProjectType2();
         if (memberInfo != null) {
             $("#ipt_dnt_mobile").val(memberInfo.mobile);
         }
@@ -1078,7 +1092,7 @@
                         }
                     }
             });
-            var timer = 60;
+            var timer = 120;
 
             function Countdown() {
                 if (timer >= 1) {
@@ -1267,6 +1281,73 @@
             }
         })
     })
+
+    //获取所有项目类型
+    function f_GetProjectType2() {
+        $.ajax({
+            url: '/project/type',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    new Vue({
+                        el: "#sel_project_type2",
+                        data: {
+                            items: data.result
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    //获取所有项目
+    function f_GetProject2() {
+        var tid = $("#sel_project_type2").val();
+        if (tid !== "0") {
+            $.ajax({
+                url: '/project/all',
+                data: {tid: tid},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 200) {
+                        if (vueProject == undefined) {
+                            vueProject = new Vue({
+                                el: "#sel_project2",
+                                data: {
+                                    items: data.result
+                                }
+                            });
+                        } else {
+                            for (var i = 0; i < data.result.length; i++) {
+                                Vue.set(vueProject.items, i, data.result[i]);
+                            }
+                            vueProject.items.splice(data.result.length);
+                        }
+                    }
+                }
+            });
+
+        }
+    }
+
+    //大额捐赠第三步(确认捐赠部分)
+
+    function f_Donate2() {
+        var projectType = $("#sel_project_type2").find("option:selected").text();
+        var projectName = $("#sel_project2").find("option:selected").text();
+        if (projectType == "请选择项目类别") {
+            alert("你还没有选择项目");
+        } else if (flag == 0) {
+            alert("你还没有选择金额");
+        } else {
+            window.location.href = "/home/apply";
+        }
+
+
+    }
+
 
 
     /*]]>*/
