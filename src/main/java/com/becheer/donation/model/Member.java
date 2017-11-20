@@ -45,7 +45,9 @@ public class Member {
 
     private int validation;
 
-    private Date birthday;
+//    private Date birthday;
+
+    private String birthday;
 
     private String idCard;
 
@@ -215,15 +217,23 @@ public class Member {
         this.validation = validation;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
     public String getIdCard() {
+//        String result="";
+//        for(int i=1;i<13;i++){
+//            result=result+"*";
+//        }
+//        String str1 = idCard.substring(0,2);
+//        String str2 = idCard.substring(16,18);
+//        result=str1+result+str2;
+//        return result;
         return idCard;
     }
 

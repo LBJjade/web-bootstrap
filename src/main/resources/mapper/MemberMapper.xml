@@ -74,7 +74,7 @@
         member_name=#{memberName,jdbcType=VARCHAR},
         id_card=#{idCard,jdbcType=VARCHAR},
         sex=#{sex,jdbcType=INTEGER},
-        birthday=#{birthday,jdbcType=TIMESTAMP},
+        birthday= SUBSTR(id_card,7,8),
         project=#{project,jdbcType=VARCHAR},
         summary=#{summary,jdbcType=VARCHAR},
         organization_type=#{organizationType,jdbcType=VARCHAR},
@@ -89,11 +89,11 @@
 
     <update id="updateLogin">
         UPDATE
-          dnt_member
+        dnt_member
         SET
-          login_ip = #{param1},
-          login_time = now(),
-          update_time = now()
+        login_ip = #{param1},
+        login_time = now(),
+        update_time = now()
         WHERE id_ = #{param2}
     </update>
 
@@ -103,10 +103,10 @@
 
     <update id="updateAvator">
         UPDATE
-          dnt_member
+        dnt_member
         SET
-            update_time = now(),
-            avator_img=#{param1}
+        update_time = now(),
+        avator_img=#{param1}
         WHERE id_ = #{param2}
     </update>
 

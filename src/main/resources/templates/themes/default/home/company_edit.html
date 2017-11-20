@@ -195,7 +195,7 @@
     var license = "";
 
 
-    //组织机构代码
+    //组织机构代码，由八位数字或字母组成，加一条横线，再加一位数字或字母，例如12345678-a
     $("#ipt_code").blur(function () {
         var code = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]/;
         if ($("#ipt_code").val() == "") {

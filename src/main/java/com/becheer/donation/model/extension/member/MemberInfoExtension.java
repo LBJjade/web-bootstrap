@@ -28,7 +28,8 @@ public class MemberInfoExtension implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date birthday;
+//    private Date birthday;
+    private String birthday;
 
     private String project;
 
@@ -96,11 +97,19 @@ public class MemberInfoExtension implements Serializable {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
+//    public Date getBirthday() {
+//        return birthday;
+//    }
+//
+//    public void setBirthday(Date birthday) {
+//        this.birthday = birthday;
+//    }
+
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

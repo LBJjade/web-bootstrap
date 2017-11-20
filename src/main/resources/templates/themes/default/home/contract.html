@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
     <title>我的合同</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
 
-        .div_message_title{
+        .div_message_title {
             padding: 15px;
             height: 50px;
-            margin:15px 0px 0px 25px;
+            margin: 15px 0px 0px 25px;
             border: 1px solid #dbdbdb;
             background-color: #fbfbfb;
         }
 
-        .div_message_content{
+        .div_message_content {
             padding: 15px;
             margin-left: 25px;
             border: 1px solid #dbdbdb;
@@ -27,7 +27,7 @@
             display: none;
         }
 
-        .div_message_title h4{
+        .div_message_title h4 {
             font-weight: 400;
             color: #666;
             font-size: 14px;
@@ -35,10 +35,10 @@
             margin: 0px;
         }
 
-        .div_message_title span{
+        .div_message_title span {
             margin-right: 10px;
             margin-left: 10px;
-            float: right;
+            /*float: right;*/
         }
 
         .info_button {
@@ -54,10 +54,13 @@
             height: 30px;
             float: right;
         }
-        .status{
+
+        .status {
             color: #00a0ea;
+            float: left;
         }
-        .amount{
+
+        .amount {
             color: #ff5a43;
         }
 
@@ -90,95 +93,123 @@
             <div style="min-height: 450px">
                 <div v-for="item in items" v-cloak>
                     <div class="div_message_title">
-                        <div><h4><span class="glyphicon glyphicon-chevron-down"></span><a class="status">{{item.status}}</a>&nbsp;{{item.contractName}}<p style="float: right"><a class="amount">{{item.contractAmount}}</a>&nbsp;元&nbsp;&nbsp;&nbsp;{{item.signTime===null?"未签订":item.signTime}}</p></h4></div>
+                        <div>
+                            <h4><span class="glyphicon glyphicon-chevron-down" style="float: right;"></span><span
+                                    class="status">{{item.status}}</span>&nbsp;{{item.contractName}}<p
+                                    style="float: right">{{item.signTime===null?"未签订":item.signTime}}&nbsp;&nbsp;&nbsp;<span class="amount" style=" margin-right: 5px;">{{item.contractAmount}}</span>元
+                            </p></h4>
+                        </div>
                     </div>
                     <div class="div_message_content">
-                        <p>合同名称：{{item.contractName}}</p>
-                        <p></p>
-                        <p class="contractAmount">合同金额：<a class="amount">{{item.contractAmount}}</a>&nbsp;元</p>
-                        <p>签订日期：{{item.signTime===null?"未签订":item.signTime}}</p>
-                        <p>合同状态：<a class="status">{{item.status}}</a><a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a></p>
+                        <!--<p>合同名称：{{item.contractName}}</p>-->
+                        <!--<p class="contractAmount">合同金额：<a class="amount">{{item.contractAmount}}</a>&nbsp;元</p>-->
+                        <!--<p>签订日期：{{item.signTime===null?"未签订":item.signTime}}</p>-->
+                        <!--<p>合同状态：<a class="status">{{item.status}}</a>-->
+                        <!--<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a>-->
+                        <!--</p>-->
+                        <a :href="'contract/'+item.id" target="_blank">
+                            <button class="info_button">查看详情</button>
+                        </a>
+                        <p>合同内容：
+                            <a style="cursor: pointer;" v-on:click="f_openContent(item.id)">
+                                点击查看
+                            </a>
+
+                        </p>
                     </div>
+
                 </div>
-                <div  class="col-sm-10 p_no_data" style="margin-top: 80px;">
-                    <div  style="font-size: 18px;font-weight: 600;">
+                <div class="col-sm-10 p_no_data" style="margin-top: 80px;">
+                    <div style="font-size: 18px;font-weight: 600;">
                         <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
                     </div>
                 </div>
             </div>
-            <div   id="div_page">
+            <div id="div_page">
             </div>
         </div>
     </div>
 </div>
-    <div th:replace="themes/default/footer::footer"></div>
-    <!--全局JS-->
-    <script th:src="@{/plugin/pagination/pagination.js}"></script>
-    <script th:src="@{/js/date.js}"></script>
-    <script type="text/javascript">
-        /*<![CDATA[*/
-        var pageSize=5;
-        var pageNum=1;
-        var pageCount;
-        var vueContent;
-        $(document).ready(function () {
-            f_GetContract();
-        });
+<div th:replace="themes/default/footer::footer"></div>
+<!--全局JS-->
+<script th:src="@{/plugin/pagination/pagination.js}"></script>
+<script th:src="@{/js/date.js}"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var pageSize = 5;
+    var pageNum = 1;
+    var pageCount;
+    var vueContent;
+    $(document).ready(function () {
+        f_GetContract();
+    });
 
-        $("body").on("click", ".div_message_title", function () {
-            if ($(this).next().css("display") === "none") {
-                $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-up");
-                $(this).next().show();
-            } else {
-                $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-down");
-                $(this).next().hide();
-            }
-        });
+    $("body").on("click", ".div_message_title", function () {
+        if ($(this).next().css("display") === "none") {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-up");
+            $(this).next().show();
+        } else {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-down");
+            $(this).next().hide();
+        }
+    });
 
-        function f_GetContract() {
-            $.ajax({
-                url:'/home/contract/list',
-                data:{pageNum:pageNum,pageSize:pageSize},
-                type:'post',
-                dataType:'json',
-                success:function (data) {
-                    if(data.code===200){
-                        $.each(data.result.list, function (i, item) {
-                            item.signTime = f_FormatDateTime(item.signTime);
+    function f_GetContract() {
+        $.ajax({
+            url: '/home/contract/list',
+            data: {pageNum: pageNum, pageSize: pageSize},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    $.each(data.result.list, function (i, item) {
+                        item.signTime = f_FormatDateTime(item.signTime);
+                    });
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
+                    f_InitPagination($("#div_page"));
+                    if (vueContent == undefined) {
+                        vueContent = new Vue({
+                            el: '#div_contract_content',
+                            data: {
+                                items: data.result.list
+                            }
                         });
-                        pageCount=data.result.pages;
-                        pageNum=data.result.pageNum;
-                        $("#div_page").attr("pageNum",pageNum).attr("pageCount",pageCount).attr("pageExtra",3);
-                        f_InitPagination($("#div_page"));
-                        if (vueContent==undefined) {
-                            vueContent=new Vue({
-                                el: '#div_contract_content',
-                                data: {
-                                    items: data.result.list
-                                }
-                            });
-                            if (data.result.list.length===0){
-                                $(".p_no_data").show();
-                            }
-                        }else{
-                            for (var i = 0; i<data.result.list.length; i++) {
-                                Vue.set(vueContent.items, i, data.result.list[i]);
-                            }
-                            vueContent.items.splice(data.result.list.length);
-                            scrollTo(0,0);
+                        if (data.result.list.length === 0) {
+                            $(".p_no_data").show();
                         }
+                    } else {
+                        for (var i = 0; i < data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0, 0);
                     }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        //翻页回调函数
-        function f_PageCallBack(newPage) {
-            pageNum=newPage;
-            f_GetContract();
-        }
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum = newPage;
+        f_GetContract();
+    }
 
-        /*]]>*/
-    </script>
+
+    function f_openContent(contractId) {
+        layer.open({
+            type: 2,
+            title: '合同内容',
+            shadeClose: true,
+            shade: 0.6,
+            area: ['1100px', '90%'],
+            content: '/home/contract/content/' + contractId
+        });
+    }
+
+    /*]]>*/
+</script>
 </body>
 </html>
