@@ -3,13 +3,22 @@
 <mapper namespace="com.becheer.donation.dao.ArticleMapper">
 
     <resultMap id="ListArticleResultMap" type="com.becheer.donation.model.extension.article.ListArticleExtension">
-        <id column="id_" jdbcType="BIGINT" property="articleId" />
-        <result column="title" jdbcType="VARCHAR" property="title" />
-        <result column="summary" jdbcType="VARCHAR" property="summary" />
-        <result column="create_time" jdbcType="DATE" property="createTime" />
-        <result column="sort" jdbcType="INTEGER" property="sort" />
-        <result column="thumb_img" jdbcType="VARCHAR" property="img" />
+        <id column="id_" jdbcType="BIGINT" property="articleId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="thumb_img" jdbcType="VARCHAR" property="img"/>
         <result column="attachment_url" jdbcType="VARCHAR" property="attachmentUrl"/>
+    </resultMap>
+
+    <resultMap id="DetailResultMap" type="com.becheer.donation.model.extension.article.ArticleDetailExtension">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="article_type_id" jdbcType="BIGINT" property="articleTypeId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
     </resultMap>
 
     <sql id="ListPageColumn">
@@ -35,7 +44,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -47,12 +57,13 @@
         </where>
     </sql>
 
-    <select id="selectListByExample" parameterType="com.becheer.donation.model.condition.ArticleCondition" resultMap="ListArticleResultMap">
+    <select id="selectListByExample" parameterType="com.becheer.donation.model.condition.ArticleCondition"
+            resultMap="ListArticleResultMap">
         select
-        <include refid="ListPageColumn" />
+        <include refid="ListPageColumn"/>
         from dnt_article
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
             order by ${orderByClause}
@@ -66,5 +77,20 @@
             </if>
         </if>
     </select>
-    
+
+    <select id="selectArticleDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
+        SELECT
+            id_,
+            article_type_id,
+            title,summary,
+            create_time,
+            content
+        FROM
+            dnt_article
+        WHERE
+            id_= #{articleId,jdbcType=BIGINT}
+        AND
+            enable_ = 1
+    </select>
+
 </mapper>

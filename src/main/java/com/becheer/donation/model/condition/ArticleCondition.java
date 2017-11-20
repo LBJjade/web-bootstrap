@@ -134,6 +134,11 @@ public class ArticleCondition {
             addCriterion("article_type_id =", value, "article_type_id");
             return (Criteria) this;
         }
+
+        public Criteria andEnableEqual(long value) {
+            addCriterion("enable_ =", value, "enable_");
+            return (Criteria) this;
+        }
     }
 
     /**

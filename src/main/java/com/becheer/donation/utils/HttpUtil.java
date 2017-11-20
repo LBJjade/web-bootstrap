@@ -33,7 +33,6 @@ public class HttpUtil {
         if (sessionObject == null) {
             return null;
         }
-        String a = sessionObject.get("mobile").toString();
         MemberSessionExtension result = new MemberSessionExtension();
         result.setMemberId(sessionObject.getIntValue("memberId"));
         result.setMobile(sessionObject.getString("mobile"));
