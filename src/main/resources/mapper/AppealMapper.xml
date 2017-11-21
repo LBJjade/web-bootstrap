@@ -90,10 +90,10 @@
         UPDATE
           dnt_appeal
         SET
-          status = #{param1},
+          status = #{param2},
           update_time = now()
         WHERE
-          id_= #{param2}
+          id_= #{param1}
     </update>
 
 </mapper>

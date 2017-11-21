@@ -1,8 +1,11 @@
 package com.becheer.donation.model.extension.progress;
 
 import com.becheer.donation.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.regex.Pattern;
 
 /*
 * ProgressExtension
@@ -16,6 +19,7 @@ public class ProgressExtension {
 
     private String content;
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private int enable;

@@ -188,6 +188,10 @@ public class HomeAppealController extends BaseController {
             }
             long result=progressService.AddProgress(title,content,"dnt_appeal",appealId,currentMember.getMemberId(),1);
             if (result>0){
+                //已驳回的申述,如果用户继续提交资料,则状态变为处理中
+                if (appeal.getStatus()==1){
+                    appealService.UpdateAppealStatus(appealId,2);
+                }
                 return new ResponseDto(200,Message.MEMBER_APPEAL_PROGRESS_ADD_SUCCESS,result);
             }else{
                 return new ResponseDto(400,Message.MEMBER_APPEAL_PROGRESS_ADD_FAILED);
@@ -209,11 +213,16 @@ public class HomeAppealController extends BaseController {
         if (appeal==null){
             return MemberAuthFailed();
         }
-        //已撤销
+        if (appeal.getStatus()==3||appeal.getStatus()==4){
+            return new ResponseDto(400,Message.MEMBER_APPEAL_STATUS_ERROR);
+        }
+        //解决
+        progressService.AddProgress("申诉已解决","申诉已解决","dnt_appeal",appealId,currentMember.getMemberId(),1);
         return appealService.UpdateAppealStatus(appealId,3);
     }
 
     @PostMapping("/withdraw")
+    @ResponseBody
     public ResponseDto withdrawProgress(HttpServletRequest request,@RequestParam long appealId){
         MemberSessionExtension currentMember=GetCurrentUser(request);
         if (currentMember==null){
@@ -223,7 +232,11 @@ public class HomeAppealController extends BaseController {
         if (appeal==null){
             return MemberAuthFailed();
         }
-        //已处理
+        if (appeal.getStatus()==3||appeal.getStatus()==4){
+            return new ResponseDto(400,Message.MEMBER_APPEAL_STATUS_ERROR);
+        }
+        //撤销
+        progressService.AddProgress("您撤销了申诉","您撤销了申诉","dnt_appeal",appealId,currentMember.getMemberId(),1);
         return appealService.UpdateAppealStatus(appealId,4);
     }
 }

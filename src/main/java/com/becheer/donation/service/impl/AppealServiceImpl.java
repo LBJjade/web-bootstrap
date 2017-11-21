@@ -12,6 +12,7 @@ import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
 import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import com.becheer.donation.service.IAppealService;
+import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -54,10 +55,9 @@ public class AppealServiceImpl implements IAppealService {
     public ResponseDto UpdateAppealStatus(long appealId, int status) {
         int result = appealMapper.updateAppealStatus(appealId,status);
         if (result>0){
-
+            return new ResponseDto(200, Message.ACTION_SUCCESS);
         }else{
-
+            return new ResponseDto(500,Message.ACTION_FAILED);
         }
-        return null;
     }
 }

@@ -43,7 +43,7 @@
             line-height: 35px;
             table-layout: fixed;
             margin-left: 120px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         #table_personal_info td {
@@ -56,6 +56,14 @@
 
         #table_doc td {
             width: 250px;
+        }
+
+        .none_boder_bottom{
+            border-bottom: none !important;
+        }
+
+        .ta_content{
+            margin: 10px 0px 10px 0px;
         }
     </style>
 </head>
@@ -128,9 +136,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>申诉内容：</td>
-                                <td>
-                                    <textarea readonly="readonly" id="taContent" class="form-control" style="margin-top: 10px;margin-bottom: 10px; width: 250px" rows="8"></textarea>
+                                <td class="none_boder_bottom">申诉内容：</td>
+                                <td class="none_boder_bottom">
+                                    <textarea readonly="readonly" id="taContent" class="form-control ta_content" rows="8"></textarea>
                                 </td>
                             </tr>
                         </table>
@@ -150,10 +158,11 @@
                                 <td><a :onclick="'javascript:f_showDetail('+item.id+')'">点击查看</a></button></td>
                             </tr>
                             <tr>
-                                <td colspan="4" style="border: none;padding-bottom: 60px;">
-                                    <textarea id="textarea_apply" class="form-control"></textarea>
-                                    <button class="btn btn-success" v-on:click="add()">提交意见</button>
-                                    <button class="btn btn-info" id="btn_cancel" style="margin-left: 40px">撤销申诉</button>
+                                <td colspan="4" class="none_boder_bottom">
+                                    <textarea th:if="${appeal.getStatus()<3}" id="textarea_apply" class="form-control ta_content" rows="6"></textarea>
+                                    <button th:if="${appeal.getStatus()<3}" class="btn btn-info" v-on:click="add()">提交意见</button>
+                                    <button th:if="${appeal.getStatus()<3}" class="btn btn-info" id="btn_cancel" onclick="f_withDraw()" style="margin-left: 20px;float: right">撤销申诉</button>
+                                    <button th:if="${appeal.getStatus()<3}" class="btn btn-info" onclick="f_slove()" style="float: right;">已解决</button>
                                 </td>
                             </tr>
                         </table>
@@ -175,6 +184,7 @@
     var appealContent =/*[[${appeal.getContent()}]]*/;
     $("#taContent").val(appealContent);
     var vueContent;
+
 
     $(document).ready(function () {
         f_GetProgress();
@@ -237,10 +247,49 @@
         }
     }
 
-    function f_cancelAppeal() {
-
+    function f_slove() {
+        layer.confirm("确定将申诉状态设为已解决?",{title:"提示"},function(){
+            loadShade = layer.load(1, {shade: [0.1,'#fff']});
+            $.ajax({
+                url: '/home/appeal/solve',
+                data: {appealId: appealId},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code===200){
+                        layer.alert(data.msg,function () {
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.alert(data.msg);
+                    }
+                }
+            });
+        });
     }
 
+    function f_withDraw() {
+        layer.confirm("确定撤销申诉?",{title:"提示"},function () {
+            loadShade = layer.load(1, {shade: [0.1,'#fff']});
+            $.ajax({
+                url: '/home/appeal/withdraw',
+                data: {appealId: appealId},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code===200){
+                        layer.alert(data.msg,function () {
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.alert(data.msg);
+                    }
+                }
+            });
+        });
+    }
     /*]]>*/
 </script>
 </body>

@@ -16,6 +16,8 @@ public class Message {
     public static final String SERVER_ERROR = "服务器错误";
     public static final String PARAMETER_ERROR = "参数错误";
     public static final String UNAUTHORIZED = "授权失败";
+    public static final String ACTION_SUCCESS = "操作成功";
+    public static final String ACTION_FAILED = "操作失败";
 
     /*
      *验证
@@ -206,6 +208,8 @@ public class Message {
     public static final String MEMBER_APPEAL_PROGRESS_ADD_SUCCESS = "提交成功";
     public static final String MEMBER_APPEAL_PROGRESS_ADD_FAILED = "提交失败";
     public static final String MEMBER_APPEAL_PROGRESS_CONTENT_NULL = "请输入意见内容";
+    public static final String MEMBER_APPEAL_STATUS_ERROR = "单据状态错误";
+
 
     public static final String DONATE_PROJECT_TYPE_ID_IS_EMPTY = "请选择项目类别";
     public static final String DONATE_AMOUNT_IS_EMPTY = "请选择捐赠金额";

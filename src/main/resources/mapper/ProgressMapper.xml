@@ -15,17 +15,18 @@
 
     <select id="SelectAllProgress" resultMap="MemberProgressMapper">
         SELECT
-            p.p.id_,
+            p.id_,
             p.title,
             p.content,
-            m.
+            m.member_name,
+            u.user_name,
             p.enable_,
             p.create_time
         FROM
             dnt_progress p
         LEFT JOIN dnt_member m ON m.id_ = p.create_member_id
 
-        LEFT JOIN sys_user u on u.u
+        LEFT JOIN sys_user u on u.id_ = p.create_by
 
         WHERE
             p.ref_table=#{param2}
