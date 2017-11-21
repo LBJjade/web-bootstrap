@@ -79,7 +79,7 @@
             <div style="min-height: 450px;">
                 <div style="padding-left: 25px">
                     <table class="table table-bordered" id="table_content">
-                        <thead>
+                        <thead class="table_title">
                         <tr>
                             <th class="text-center white">项目名称</th>
                             <th class="text-center white">项目类别</th>
@@ -159,6 +159,7 @@
                         });
                         if (data.result.list.length === 0) {
                             $(".p_no_data").show();
+                            $(".table_title").hide();
                         }
                     } else {
                         for (var i = 0; i < data.result.list.length; i++) {

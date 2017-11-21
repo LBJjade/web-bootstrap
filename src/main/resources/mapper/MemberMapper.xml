@@ -54,7 +54,7 @@
         #{enable,jdbcType=INTEGER},
         #{password,jdbcType=VARCHAR},
         1,
-        'default.jpg'
+        'image/avator/default.jpg'
         )
     </insert>
 

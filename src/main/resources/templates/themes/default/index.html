@@ -65,7 +65,7 @@
         }
 
         #div_question {
-            height: 200px;
+            min-height: 200px;
         }
 
         .recommend_item {
@@ -100,7 +100,7 @@
             display: inline-block;
             *display: inline;
             *zoom: 1;
-            width: 220px;
+            width: 270px;
             height: 20px;
             line-height: 20px;
             font-size: 15px;
@@ -128,6 +128,9 @@
         #div_question p {
             margin-left: 15px;
             margin-top: 10px;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
         }
 
         #other {
@@ -163,7 +166,7 @@
 
         .item_projectName {
             color: #000000;
-            font-size: 14px;
+            font-size: 22px;
         }
 
         .info_button {
@@ -180,10 +183,18 @@
         }
 
         .item_summary {
-            padding-top: 8px;
+            padding-top: 25px;
             padding-bottom: 10px;
             margin-left: 255px;
             color: #969696;
+        }
+
+        .item_summary_word{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            color:#666666;
         }
 
         .donate_button {
@@ -339,8 +350,28 @@
             margin-right: 110px;
         }
 
-    </style>
+        #p_no_recent{
+            font-size: 18px;
+            font-weight: 600;
+        }
 
+        #p_no_relative{
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        #p_no_question{
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .p_tab_empty {
+            line-height: 100px;
+            text-align: center;
+            width: 100%;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="themes/default/header::header"></div>
@@ -424,10 +455,10 @@
                     <span class="item_time">
                         <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>
                         <span style="color:#c8c8c8;margin-right: 10px;">发布时间 ：</span>{{item.createTime}}</span>
-                    <p class="item_summary"><span>摘要 ： </span><span style=" color:#666666">{{item.summary}}</span></p>
-                    <a style="float: right;" :href="'project/'+item.projectId" target="_blank">
-                        <button class=" info_button">查看详情</button>
-                    </a>
+                    <p class="item_summary"><span class="item_summary_word"><span style="color:#969696">摘要 ： </span>{{item.summary}}</span></p>
+                    <!--<a style="float: right;" :href="'project/'+item.projectId" target="_blank">-->
+                        <!--<button class=" info_button">查看详情</button>-->
+                    <!--</a>-->
                 </div>
             </div>
 
@@ -439,11 +470,12 @@
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
+                    <p class="p_tab_empty" id="p_no_recent"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无爱心动态</p>
                     <div v-cloak>
                         <ul class="recommend_item" v-for="item in items">
                             <li><img :src="fileRoot + item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/>
                             </li>
-                            <li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠&nbsp;<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>&nbsp;{{item.amount|format}}元
+                            <li class="recommend_item_info"><span>{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠&nbsp;{{item.projectName==null?item.projectTypeName:item.projectName}}</span><br/>{{item.amount|format}}元
                             </li>
                         </ul>
                     </div>
@@ -453,6 +485,7 @@
             <div class="right_panel" id="div_project">
                 <div class="div_title">
                     <h2 class="h2_title">项目推荐</h2>
+                    <p class="p_tab_empty" id="p_no_relative"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无项目推荐</p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
                             <li><img :alt="item.projectName"
@@ -467,6 +500,7 @@
             <div class="right_panel" id="div_question">
                 <div class="div_title">
                     <h2 class="h2_title">捐赠流程</h2>
+                    <p class="p_tab_empty" id="p_no_question"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无捐赠流程</p>
                     <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank" v-cloak><p>
                         {{index+1}}.{{item.title}}</p></a>
                 </div>
@@ -961,13 +995,17 @@
             data: {blockId: 3},
             dataType: 'json',
             success: function (data) {
-                if (data.code === 200) {
-                    new Vue({
-                        el: '#div_question',
-                        data: {
-                            items: data.result,
-                        }
-                    });
+                if (data.result.length === 0) {
+                    $("#p_no_relative").show();
+                } else {
+                    if (data.code === 200) {
+                        new Vue({
+                            el: '#div_question',
+                            data: {
+                                items: data.result,
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -981,13 +1019,17 @@
             data: {blockId: 2},
             dataType: 'json',
             success: function (data) {
-                if (data.code === 200) {
-                    new Vue({
-                        el: '#div_project',
-                        data: {
-                            items: data.result
-                        }
-                    });
+                if (data.result.length === 0) {
+                    $("#p_no_relative").show();
+                } else {
+                    if (data.code === 200) {
+                        new Vue({
+                            el: '#div_project',
+                            data: {
+                                items: data.result
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -1001,13 +1043,17 @@
             data: {num: 7},
             dataType: 'json',
             success: function (data) {
-                if (data.code === 200) {
-                    new Vue({
-                        el: "#div_recent",
-                        data: {
-                            items: data.result
-                        }
-                    });
+                if (data.result.length === 0) {
+                    $("#p_no_recent").show();
+                } else {
+                    if (data.code === 200) {
+                        new Vue({
+                            el: "#div_recent",
+                            data: {
+                                items: data.result
+                            }
+                        });
+                    }
                 }
             }
         });
