@@ -20,7 +20,7 @@
                     <li></li>
                     <!--<li><a th:href="@{/login}">登录</a></li>-->
                     <li><a class="login" style="cursor: pointer;" data-toggle="model" data-target="#myModal"
-                           data-dismiss="model">登录</a></li>
+                           data-dismiss="model" onclick="f_showCode()">登录</a></li>
                     <li>|</li>
                     <li><a th:href="@{/register}">注册</a></li>
                 </ul>
@@ -138,7 +138,7 @@
                         <div class="col-lg-3">
                             <input type="text" id="code" class="form-control" name="code" placeholder="验证码"/>
                         </div>
-                        <img th:src="@{/Verify/code.jpg}" class="verify_code col-lg-3 login_code" height="30"
+                        <img class="verify_code col-lg-3 login_code" src="" height="30"
                              width="90"/>
                     </div>
 
@@ -261,6 +261,10 @@
     $(".login_code").click(function () {
         $(this).attr("src", "/Verify/code.jpg?t=" + Math.random());
     });
+
+    function f_showCode(){
+        $(".login_code").attr("src", "/Verify/code.jpg?t=" + Math.random());
+    }
 
     function f_autoLogin() {
         if (memberInfo != null) {
