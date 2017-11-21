@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.IntentionExtensionMapper">
+
+    <insert id="InsertIntention" parameterType="com.becheer.donation.model.extension.intention.IntentionDonateExtension">
+      INSERT INTO dnt_intention(project_id, project_type_id,intention_amount,contact_phone,enable_, remark_,member_id, status,create_time) VALUES (#{projectId},#{projectTypeId},#{intentionAmount},#{contactPhone},#{enable},#{remark},#{memberId},#{status},now())
+    </insert>
+
+</mapper>
