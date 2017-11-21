@@ -294,6 +294,9 @@
 
     //发送短信验证码
     $(".btn_send").click(function () {
+        loadShade = layer.load(1, {
+            shade: [0.1,'#fff']
+        });
         var mobile = $("#ipt_mobile").val();
         $.ajax({
             url: '/register/SendSms',
@@ -301,6 +304,7 @@
             data: {mobile: mobile, tid: "1"},
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     timer = 60;
                     Countdown();
@@ -342,6 +346,9 @@
 
 
     $(".btn_checkSms").click(function () {
+        loadShade = layer.load(1, {
+            shade: [0.1,'#fff']
+        });
         var smsCode = $(".input_code").val();
         var mobile = $("#ipt_mobile").val();
         registerType = $("input[name='input_register_type']:checked").val();
@@ -359,6 +366,7 @@
             data: {mobile: mobile, code: smsCode, registerType: registerType},
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     $("#div_step1").hide();
                     $("#div_step2").show();
@@ -374,6 +382,7 @@
     });
 
     $(".btn_pwd").click(function () {
+        loadShade = layer.load(1, {shade: [0.1,'#fff']});
         var pwd = $("#ipt_pwd").val();
         $.ajax({
             url: '/register/submit',
@@ -381,6 +390,7 @@
             data: {pwd: pwd},
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     $("#div_step2").hide();
                     $("#div_step3").show();

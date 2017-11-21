@@ -93,6 +93,8 @@ public class MemberAppealExtension {
                 return "处理中";
             case 3:
                 return "已处理";
+            case 4:
+                return "已撤销";
                 default:
                     return "";
         }

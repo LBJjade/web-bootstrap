@@ -16,11 +16,16 @@
             text-align: left;
             margin-left: 120px;
             line-height: 50px;
+            table-layout: fixed;
+            margin-bottom: 20px;
         }
 
         .table_member_content td {
             border-bottom: 1px #ccc dashed;
-            width: 20px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            text-align: left
         }
 
         #textarea_apply {
@@ -99,12 +104,20 @@
                 <hr/>
             </div>
             <table class="table_member_content" id="table_member_content">
-                <tr v-for="item in items" v-cloak>
-                    <td>{{item.createTime}}</td>
-                    <td>{{item.title}}</td>
-                </tr>
                 <tr>
-                    <td colspan="2" style="border: none;padding-bottom: 60px;">
+                    <td>标题</td>
+                    <td>时间</td>
+                    <td>操作人</td>
+                    <td>内容</td>
+                </tr>
+                <tr v-for="item in items" v-cloak>
+                    <td style="padding-right: 15px;">{{item.title}}</td>
+                    <td>{{item.createTime}}</td>
+                    <td>{{item.memberName==null?item.userName:item.memberName}}</td>
+                    <td><a :onclick="'javascript:f_showDetail('+item.id+')'">点击查看</a></button></td>
+                </tr>
+                <tr th:if="${apply.getStatus()!=3}">
+                    <td colspan="4" style="border: none;">
                         <textarea id="textarea_apply" class="form-control"></textarea>
                         <button class="btn btn-success" v-on:click="add()">提交意见</button>
                     </td>
@@ -147,7 +160,7 @@
                             add: function () {
                                 var content = $("#textarea_apply").val();
                                 $.ajax({
-                                    url: '/home/apply/add',
+                                    url: '/home/apply/addProgress',
                                     data: {applyId: applyId, content: content},
                                     type: 'post',
                                     dataType: 'json',
@@ -155,7 +168,7 @@
                                         layer.alert(data.msg);
                                         if (data.code === 200) {
                                             $("#textarea_apply").val("");
-                                            vueContent.items.push({title: content, createTime: f_GetCurrentTime()});
+                                            vueContent.items.push({title: content, createTime: f_GetCurrentTime(),id:data.result,memberName:memberInfo.memberName});
                                         }
                                     }
                                 });
@@ -166,7 +179,21 @@
             }
         });
     }
-
+    
+    function f_showDetail(pid) {
+        for (var i=0;i<vueContent.items.length;i++){
+            if (vueContent.items[i].id===pid){
+                layer.open({
+                    title:'详细内容',
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: vueContent.items[i].content
+                });
+                break;
+            }
+        }
+    }
     /*]]>*/
 </script>
 </body>

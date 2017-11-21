@@ -320,6 +320,7 @@
 
 
     $(".btn_checkSms").click(function () {
+        loadShade = layer.load(1, {shade: [0.1, '#fff']});
         var smsCode = $(".input_code").val();
         mobile = $("#ipt_mobile").val();
 //        registerType=$("input[name='input_register_type']:checked").val();
@@ -330,6 +331,7 @@
             data: {mobile: mobile, code: smsCode, tid: "2"},
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     $("#div_step1").hide();
                     $("#div_step2").show();
@@ -346,6 +348,7 @@
 
 
     $(".btn_pwd").click(function () {
+        loadShade = layer.load(1, {shade: [0.1, '#fff']});
         var pwd = $("#ipt_pwd").val();
         newPw = pwd;
         $.ajax({
@@ -354,6 +357,7 @@
             data: {newPw: newPw, mobile: mobile},
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     $("#div_step2").hide();
                     $("#div_step3").show();
@@ -431,10 +435,7 @@
         }
     }
 
-
     /*]]>*/
-
-
 </script>
 </body>
 </html>

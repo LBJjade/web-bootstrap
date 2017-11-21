@@ -7,6 +7,7 @@ import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
 import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
+import com.becheer.donation.model.extension.intention.IntentionExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
@@ -164,5 +165,78 @@ public class HomeAppealController extends BaseController {
         } catch (Exception ex) {
             return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
         }
+    }
+
+    @PostMapping("/addProgress")
+    @ResponseBody
+    public ResponseDto AddProgress(HttpServletRequest request,@RequestParam String content,@RequestParam long appealId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        try {
+            if (StringUtil.isNull(content)){
+                return new ResponseDto(200,Message.MEMBER_APPEAL_PROGRESS_CONTENT_NULL);
+            }
+            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
+            if (appeal==null){
+                return MemberAuthFailed();
+            }
+            String title=content;
+            if (title.length()>30){
+                title=title.substring(0,30);
+            }
+            long result=progressService.AddProgress(title,content,"dnt_appeal",appealId,currentMember.getMemberId(),1);
+            if (result>0){
+                //已驳回的申述,如果用户继续提交资料,则状态变为处理中
+                if (appeal.getStatus()==1){
+                    appealService.UpdateAppealStatus(appealId,2);
+                }
+                return new ResponseDto(200,Message.MEMBER_APPEAL_PROGRESS_ADD_SUCCESS,result);
+            }else{
+                return new ResponseDto(400,Message.MEMBER_APPEAL_PROGRESS_ADD_FAILED);
+            }
+        }catch(Exception ex){
+            LOGGER.error("AddProgress", ex);
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/solve")
+    @ResponseBody
+    public ResponseDto solveProgress(HttpServletRequest request,@RequestParam long appealId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
+        if (appeal==null){
+            return MemberAuthFailed();
+        }
+        if (appeal.getStatus()==3||appeal.getStatus()==4){
+            return new ResponseDto(400,Message.MEMBER_APPEAL_STATUS_ERROR);
+        }
+        //解决
+        progressService.AddProgress("申诉已解决","申诉已解决","dnt_appeal",appealId,currentMember.getMemberId(),1);
+        return appealService.UpdateAppealStatus(appealId,3);
+    }
+
+    @PostMapping("/withdraw")
+    @ResponseBody
+    public ResponseDto withdrawProgress(HttpServletRequest request,@RequestParam long appealId){
+        MemberSessionExtension currentMember=GetCurrentUser(request);
+        if (currentMember==null){
+            return MemberAuthFailed();
+        }
+        MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
+        if (appeal==null){
+            return MemberAuthFailed();
+        }
+        if (appeal.getStatus()==3||appeal.getStatus()==4){
+            return new ResponseDto(400,Message.MEMBER_APPEAL_STATUS_ERROR);
+        }
+        //撤销
+        progressService.AddProgress("您撤销了申诉","您撤销了申诉","dnt_appeal",appealId,currentMember.getMemberId(),1);
+        return appealService.UpdateAppealStatus(appealId,4);
     }
 }

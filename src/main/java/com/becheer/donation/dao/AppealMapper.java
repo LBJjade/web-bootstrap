@@ -15,10 +15,13 @@ import java.util.List;
 
 @Component
 public interface AppealMapper {
+
     List<MemberAppealExtension> SelectAppealByMemberId(long memberId);
 
     MemberAppealDetailExtension SelectAppealDetail(long appealId,long memberId);
 
-
     void InsertAppeal( AppealDetailExtension appealdetail);
+
+    int updateAppealStatus(long appealId,int status);
+
 }

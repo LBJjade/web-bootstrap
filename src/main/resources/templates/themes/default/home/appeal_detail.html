@@ -41,16 +41,29 @@
             width: 70%;
             text-align: left;
             line-height: 35px;
+            table-layout: fixed;
             margin-left: 120px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         #table_personal_info td {
             border-bottom: 1px #ccc dashed;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            text-align: left
         }
 
         #table_doc td {
             width: 250px;
+        }
+
+        .none_boder_bottom{
+            border-bottom: none !important;
+        }
+
+        .ta_content{
+            margin: 10px 0px 10px 0px;
         }
     </style>
 </head>
@@ -67,14 +80,17 @@
                 <div id="div_navbar" style="margin-top: 10px">
                     <ul>
                         <li><a href="#">首页</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
                         <li class="div_navbar_item"><a href="#">个人中心</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
                         <li class="div_navbar_item"><a href="/home/appeal">我的申诉</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
                         <li class="div_navbar_item"><a href="#">申诉详情</a></li>
                     </ul>
                 </div>
@@ -120,25 +136,33 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>申诉内容：</td>
-                                <td>
-                                    <textarea readonly="readonly" id="taContent" class="form-control"
-                                              style="margin-top: 10px;margin-bottom: 10px; width: 250px"
-                                              rows="5"></textarea>
+                                <td class="none_boder_bottom">申诉内容：</td>
+                                <td class="none_boder_bottom">
+                                    <textarea readonly="readonly" id="taContent" class="form-control ta_content" rows="8"></textarea>
                                 </td>
                             </tr>
                         </table>
                         <hr/>
                         <span style="margin-left: 20px">申诉进度：</span>
                         <table id="table_personal_info">
-                            <tr v-for="item in items">
+                            <tr>
+                                <td>标题</td>
+                                <td>时间</td>
+                                <td>操作人</td>
+                                <td>内容</td>
+                            </tr>
+                            <tr v-for="item in items" v-cloak>
+                                <td style="padding-right: 15px;">{{item.title}}</td>
                                 <td>{{item.createTime}}</td>
-                                <td>{{item.title}}</td>
+                                <td>{{item.memberName==null?item.userName:item.memberName}}</td>
+                                <td><a :onclick="'javascript:f_showDetail('+item.id+')'">点击查看</a></button></td>
                             </tr>
                             <tr>
-                                <td colspan="2" style="padding-top: 10px;padding-bottom: 10px">
-                                    <button style="margin-left: 120px" class="btn btn-info" id="btn_remind">催办</button>
-                                    <button class="btn btn-info" id="btn_cancel" style="margin-left: 40px">撤销申诉</button>
+                                <td colspan="4" class="none_boder_bottom">
+                                    <textarea th:if="${appeal.getStatus()<3}" id="textarea_apply" class="form-control ta_content" rows="6"></textarea>
+                                    <button th:if="${appeal.getStatus()<3}" class="btn btn-info" v-on:click="add()">提交意见</button>
+                                    <button th:if="${appeal.getStatus()<3}" class="btn btn-info" id="btn_cancel" onclick="f_withDraw()" style="margin-left: 20px;float: right">撤销申诉</button>
+                                    <button th:if="${appeal.getStatus()<3}" class="btn btn-info" onclick="f_slove()" style="float: right;">已解决</button>
                                 </td>
                             </tr>
                         </table>
@@ -161,6 +185,7 @@
     $("#taContent").val(appealContent);
     var vueContent;
 
+
     $(document).ready(function () {
         f_GetProgress();
     })
@@ -178,6 +203,29 @@
                         el: '#table_personal_info',
                         data: {
                             items: data.result
+                        },
+                        methods: {
+                            add: function () {
+                                var content = $("#textarea_apply").val();
+                                $.ajax({
+                                    url: '/home/appeal/addProgress',
+                                    data: {appealId: appealId, content: content},
+                                    type: 'post',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        layer.alert(data.msg);
+                                        if (data.code === 200) {
+                                            $("#textarea_apply").val("");
+                                            vueContent.items.push({
+                                                title: content,
+                                                createTime: f_GetCurrentTime(),
+                                                id: data.result,
+                                                memberName: memberInfo.memberName
+                                            });
+                                        }
+                                    }
+                                });
+                            }
                         }
                     });
                 }
@@ -185,6 +233,63 @@
         });
     }
 
+    function f_showDetail(pid) {
+        for (var i = 0; i < vueContent.items.length; i++) {
+            if (vueContent.items[i].id === pid) {
+                layer.open({
+                    type: 1,
+                    skin: 'layui-layer-rim', //加上边框
+                    area: ['420px', '240px'], //宽高
+                    content: vueContent.items[i].content
+                });
+                break;
+            }
+        }
+    }
+
+    function f_slove() {
+        layer.confirm("确定将申诉状态设为已解决?",{title:"提示"},function(){
+            loadShade = layer.load(1, {shade: [0.1,'#fff']});
+            $.ajax({
+                url: '/home/appeal/solve',
+                data: {appealId: appealId},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code===200){
+                        layer.alert(data.msg,function () {
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.alert(data.msg);
+                    }
+                }
+            });
+        });
+    }
+
+    function f_withDraw() {
+        layer.confirm("确定撤销申诉?",{title:"提示"},function () {
+            loadShade = layer.load(1, {shade: [0.1,'#fff']});
+            $.ajax({
+                url: '/home/appeal/withdraw',
+                data: {appealId: appealId},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code===200){
+                        layer.alert(data.msg,function () {
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.alert(data.msg);
+                    }
+                }
+            });
+        });
+    }
     /*]]>*/
 </script>
 </body>
