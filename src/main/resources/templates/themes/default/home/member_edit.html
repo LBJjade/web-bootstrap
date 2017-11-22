@@ -130,7 +130,7 @@
                             <tr>
                                 <td>手机号码：</td>
                                 <td>
-                                    <input type="text"  id="ipt_mobile" name="ipt_mobile"
+                                    <input type="text"  id="ipt_mobile" class="form-control no_border_radius" name="ipt_mobile"
                                            th:value="${member.getMobile()}"/>
                                     <div class="mobile_error error" style="margin-top: -18px;">手机号码格式不正确</div>
                                 </td>
@@ -138,7 +138,7 @@
                             <tr>
                                 <td>真实姓名：</td>
                                 <td>
-                                    <input type="text" id="ipt_name" class="form-control" name="ipt_name"
+                                    <input type="text" id="ipt_name" class="form-control no_border_radius" name="ipt_name"
                                            th:value="${member.getName()}"/>
                                     <div class="name_error error">真实姓名不能为空</div>
                                     <div class="name_error_0 error">真实姓名格式错误</div>
@@ -147,7 +147,7 @@
                             <tr>
                                 <td>身份证号：</td>
                                 <td>
-                                    <input type="text" id="ipt_id_card" class="form-control" name="ipt_id_card"
+                                    <input type="text" id="ipt_id_card" class="form-control no_border_radius" name="ipt_id_card"
                                            th:value="${member.getIdCard()}"/>
                                     <div class="id_card_error error" style="margin-right: 210px;">身份证号不能为空</div>
                                     <div class="id_card_error_0 error" style="margin-right: 193px;">身份证号格式错误</div>
@@ -181,7 +181,7 @@
                             <tr>
                                 <td>性别：</td>
                                 <td>
-                                    <select class="form-control" id="ipt_sex">
+                                    <select class="form-control no_border_radius" id="ipt_sex">
                                         <option value="0">请选择</option>
                                         <option value="1" th:selected="${member.getSex()==1}">男</option>
                                         <option value="2" th:selected="${member.getSex()==2}">女</option>
@@ -191,23 +191,19 @@
                             </tr>
                             <tr>
                                 <td>生日：</td>
-                                <!--<td><input type="text" id="ipt_birthday" class="form-control"-->
-                                           <!--style="height: 34px;width: 100%"-->
-                                           <!--th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>-->
-                                <!--</td>-->
-                                <td><input type="text" id="ipt_birthday" class="form-control" disabled="disabled"
+                                <td><input type="text" id="ipt_birthday" class="form-control no_border_radius"
                                            style="height: 34px;width: 100%"
-                                           th:value="${member.getBirthday()}"/>
+                                           th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>曾参与的公益项目：</td>
-                                <td><textarea id="ipt_project" class="form-control" rows="5"
+                                <td><textarea id="ipt_project" class="form-control no_border_radius" rows="5"
                                               style="margin: 10px 0px 10px 0px;"></textarea></td>
                             </tr>
                             <tr>
                                 <td>个人说明：</td>
-                                <td><textarea id="ipt_summary" class="form-control" rows="5"
+                                <td><textarea id="ipt_summary" class="form-control no_border_radius" rows="5"
                                               style="margin: 10px 0px 10px 0px;"></textarea></td>
                             </tr>
                         </table>

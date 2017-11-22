@@ -164,9 +164,13 @@
             </div>
             <br/>
             <div id="div_content" style="margin-top: 10px;padding-left: 30px;min-height:550px;">
-                <div style="width:20px;"></div>
+                <div  class="col-sm-10 tr_hide" style="margin-top: 80px;text-align: center;">
+                    <div  style="font-size: 18px;font-weight: 600;">
+                        <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
+                    </div>
+                </div>
                 <table class="table table-bordered">
-                    <thead>
+                    <thead class="table-title">
                     <tr>
                         <th class="text-center">文件名称</th>
                         <th class="text-center">发布时间</th>
@@ -184,9 +188,9 @@
                             <!--<button class="btn btn-primary">下载</button>-->
                         </td>
                     </tr>
-                    <tr class="tr_hide">
-                        <td colspan="4" class="text-center">暂无数据</td>
-                    </tr>
+                    <!--<tr class="tr_hide">-->
+                        <!--<td colspan="4" class="text-center">暂无数据</td>-->
+                    <!--</tr>-->
                     </tbody>
                 </table>
             </div>
@@ -313,7 +317,13 @@
                         }
                         vueContent.items.splice(data.result.list.length);
                     }
-                    data.result.list.length === 0 ? $(".tr_hide").show() : $(".tr_hide").hide();
+                    if(data.result.list.length === 0){
+                        $(".tr_hide").show();
+                        $(".table-title").hide();
+                    }else{
+                        $(".tr_hide").hide();
+                        $(".table-title").show();
+                    }
                 }
             }
         })

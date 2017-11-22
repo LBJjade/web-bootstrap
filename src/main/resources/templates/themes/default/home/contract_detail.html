@@ -91,7 +91,7 @@
                 <hr/>
             </div>
             <table class="table_member_content" ID="table_donate_plan">
-                <thead>
+                <thead class="table_title">
                 <tr>
                     <td>账单名称</td>
                     <td>善款金额</td>
@@ -145,6 +145,7 @@
                     });
                     if (data.result.length === 0) {
                         $(".p_no_data").show();
+                        $(".table_title").hide();
                     }
                 }
             }

@@ -140,7 +140,7 @@ public class ProjectController extends BaseController {
             }
         }catch(Exception ex){
             LOGGER.error("GetProject", ex);
-            return render_404();
+            return render_500();
         }
     }
 }

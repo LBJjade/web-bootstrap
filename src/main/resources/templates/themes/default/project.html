@@ -139,7 +139,15 @@
 
         .item_projectName {
             color: #000000;
-            font-size: 14px;
+            font-size: 22px;
+        }
+
+        .item_summary_word{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            color:#666666;
         }
     </style>
 </head>
@@ -218,12 +226,11 @@
                             <i class="fa fa-clock-o" aria-hidden="true" style="margin-right: 5px;font-size: 15px"></i>发布时间：&nbsp;</span>
                         </div>
                         <br/>
-                        <span style="color:#969696;">摘要：</span>
-                        <span style="color:#666666;">{{item.summary}}</span>
+                        <span class="item_summary_word"> <span style="color:#969696;">摘要：</span>{{item.summary}}</span>
                         <br/>
-                        <a :href="'project/'+item.projectId">
-                            <button class="info_button">查看详情</button>
-                        </a>
+                        <!--<a :href="'project/'+item.projectId">-->
+                            <!--<button class="info_button">查看详情</button>-->
+                        <!--</a>-->
                     </div>
                 </div>
             </div>

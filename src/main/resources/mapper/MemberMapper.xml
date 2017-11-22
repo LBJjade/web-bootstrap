@@ -54,7 +54,7 @@
         #{enable,jdbcType=INTEGER},
         #{password,jdbcType=VARCHAR},
         1,
-        'default.jpg'
+        'image/avator/default.jpg'
         )
     </insert>
 
@@ -74,7 +74,7 @@
         member_name=#{memberName,jdbcType=VARCHAR},
         id_card=#{idCard,jdbcType=VARCHAR},
         sex=#{sex,jdbcType=INTEGER},
-        birthday= SUBSTR(id_card,7,8),
+        birthday=#{birthday,jdbcType=TIMESTAMP},
         project=#{project,jdbcType=VARCHAR},
         summary=#{summary,jdbcType=VARCHAR},
         organization_type=#{organizationType,jdbcType=VARCHAR},
