@@ -7,12 +7,11 @@ import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
 import com.becheer.donation.model.extension.donate.Donate;
+import com.becheer.donation.model.extension.donate.DonateContract;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
-import com.becheer.donation.service.IDonateService;
-import com.becheer.donation.service.IMemberService;
-import com.becheer.donation.service.INoContractDonateService;
-import com.becheer.donation.service.ISmsService;
+import com.becheer.donation.service.*;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.IPUtil;
 import com.becheer.donation.utils.RegExUtil;
@@ -47,6 +46,9 @@ public class DonateController extends BaseController {
 
     @Resource
     private ISmsService smsService;
+
+    @Resource
+    IPaymentPlanService paymentPlanService;
 
     @ResponseBody
     @PostMapping("/recent")
@@ -115,6 +117,61 @@ public class DonateController extends BaseController {
 
             String ip = IPUtil.getIpAddress(request);
             Map<String, String> map = donateService.donate(donate, ip, memberName);
+
+
+            Map<String, String> prepay = new HashMap<>();
+            String returnCode = map.get("return_code");
+            String resultCode = map.get("result_code");
+            String qrCodeURL = null;
+            if (WxPayHelper.codeIsOK(returnCode) && WxPayHelper.codeIsOK(resultCode)) {
+                // responsedTradeType = wxPayResponse.get("trade_type");
+                // preparedId = wxPayResponse.get("prepared_id");
+                qrCodeURL = map.get("code_url");
+                if (qrCodeURL != null) {
+                    String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
+                    prepay.put("qrCodeImageBase64", qrCodeImageBase64);
+                }
+                String orderNo = map.get("orderNo");
+                prepay.put("orderNo", orderNo);
+            }
+
+
+            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
+        } catch (Exception ex) {
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
+    /**
+     *
+     * 合同捐赠
+     */
+    @ResponseBody
+    @PostMapping("/donateContract")
+    // public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
+    public Object donateContract(HttpServletRequest request, @RequestParam Long contractId) {
+        try {
+            //验证是否登陆
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                MemberAuthFailed();
+            }
+            //得到当前用户与用户名
+            Long memberId = currentMember.getMemberId();
+            String memberName = currentMember.getMemberName();
+            //得到捐赠金额
+            Integer amount=paymentPlanService.GetAmountByContractId(contractId);
+            //写进合同捐赠对象
+            DonateContract donateContract = new DonateContract();
+            donateContract.setAmount(amount);
+            donateContract.setMemberId(memberId);
+            //获得支付计划对象
+            List<PaymentPlanExtension> result=paymentPlanService.GetPaymentPlan(contractId);
+            PaymentPlanExtension paymentPlanExtension=result.get(0);
+            Long paymentPlanId=paymentPlanExtension.getId();
+            String ip = IPUtil.getIpAddress(request);
+            //
+            Map<String, String> map = donateService.donateContract(donateContract, ip, memberName,paymentPlanId);
 
 
             Map<String, String> prepay = new HashMap<>();

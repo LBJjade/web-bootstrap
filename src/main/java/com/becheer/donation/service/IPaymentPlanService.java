@@ -11,4 +11,10 @@ import java.util.List;
 */
 public interface IPaymentPlanService {
     List<PaymentPlanExtension>GetPaymentPlan(Long contractId);
+
+    /**
+     * 根据contractId查金额
+     */
+    Integer GetAmountByContractId(Long contractId);
+
 }

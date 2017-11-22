@@ -198,7 +198,8 @@
                         <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入新密码"
                                style="margin-left: 89px;"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
-                        <p class="pw_long_error error_1" style="color:red;display: none;margin-left: 45px;">密码长度不能低于8位</p>
+                        <p class="pw_long_error error_1" style="color:red;display: none;margin-left: 45px;">
+                            密码长度不能低于8位</p>
                     </td>
                 </tr>
                 <tr>
@@ -276,6 +277,7 @@
     /*<![CDATA[*/
     var mobile;
     var newPw;
+    var memberInfoMobile = memberInfo.mobile;
 
 
     $(".verify_code").click(function () {
@@ -286,22 +288,27 @@
     //发送短信验证码
     $(".btn_send").click(function () {
         var mobile = $("#ipt_mobile").val();
-        $.ajax({
-            url: '/forget/SendSms',
-            type: 'post',
-            data: {mobile: mobile, tid: "2"},
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 200) {
-                    timer = 60;
-                    Countdown();
-                    $(".btn_send").attr("disabled", true);
-                    $(".input_code").focus();
-                } else {
-                    layer.alert(data.msg);
+        if(memberInfoMobile != mobile){
+            layer.alert("您输入的手机号码与当前登陆手机号码不符");
+        }else{
+            $.ajax({
+                url: '/forget/SendSms',
+                type: 'post',
+                data: {mobile: mobile, tid: "2"},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 200) {
+                        timer = 60;
+                        Countdown();
+                        $(".btn_send").attr("disabled", true);
+                        $(".input_code").focus();
+                    } else {
+                        layer.alert(data.msg);
+                    }
                 }
-            }
-        })
+            })
+        }
+
     });
 
     //倒计时
@@ -405,10 +412,10 @@
         } else {
             $(".pw_long_error").hide();
             $(".pw_error").hide();
-            if($(".input_pw").val().length < 8){
+            if ($(".input_pw").val().length < 8) {
                 $(".pw_error").hide();
                 $(".pw_long_error").show();
-            }else{
+            } else {
                 $(".pw_error").hide();
                 $(".pw_long_error").hide();
             }

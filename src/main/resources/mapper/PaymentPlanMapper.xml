@@ -32,5 +32,16 @@
             AND ref_record_id=#{contractId,jdbcType=BIGINT}
     </select>
 
+    <select id="GetAmountByContractId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT
+        amount
+        FROM
+        dnt_payment_plan
+        WHERE
+        enable_=1
+        AND ref_table='dnt_contract'
+        AND ref_record_id=#{contractId,jdbcType=BIGINT}
+    </select>
+
 
 </mapper>
