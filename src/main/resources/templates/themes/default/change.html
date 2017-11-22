@@ -328,7 +328,6 @@
 
 
     $(".btn_checkSms").click(function () {
-        loadShade = layer.load(1, {shade: [0.1, '#fff']});
         var smsCode = $(".input_code").val();
         mobile = $("#ipt_mobile").val();
 //        registerType=$("input[name='input_register_type']:checked").val();
@@ -336,6 +335,7 @@
         registerType = $("input[name='input_register_type']:checked").val();
         var isPhoneOk = /1[34578]\d{9}$/;
         if (isPhoneOk.test($(".ipt_mobile").val()) && $(".input_code").val() != "") {
+            loadShade = layer.load(1, {shade: [0.1, '#fff']});
             $.ajax({
                 url: '/forget/validate',
                 type: 'post',
@@ -355,6 +355,8 @@
                     }
                 }
             })
+        }else{
+            layer.alert("您填写的信息有误。");
         }
     });
 
@@ -380,6 +382,8 @@
                     }
                 }
             })
+        }else{
+            layer.alert("您填写的信息有误。");
         }
     });
 

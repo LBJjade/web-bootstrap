@@ -297,10 +297,8 @@
 
     //发送短信验证码
     $(".btn_send").click(function () {
-        loadShade = layer.load(1, {
-            shade: [0.1,'#fff']
-        });
         var mobile = $("#ipt_mobile").val();
+        loadShade = layer.load(1, {shade: [0.1,'#fff']});
         $.ajax({
             url: '/register/SendSms',
             type: 'post',
@@ -376,6 +374,8 @@
                     }
                 }
             })
+        }else{
+            layer.alert("您填写的信息有误。");
         }
     });
 
@@ -399,6 +399,8 @@
                     }
                 }
             })
+        }else{
+            layer.alert("您填写的信息有误。");
         }
 
     });
