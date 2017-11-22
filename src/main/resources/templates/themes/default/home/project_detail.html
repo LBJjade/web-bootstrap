@@ -70,6 +70,23 @@
             width: 250px;
         }
 
+        .no_donate{
+            text-align: center;
+            display: none;
+        }
+
+        .no_donate td{
+            border: none !important;
+        }
+
+        #div_tab_detail{
+            padding: 20px;
+        }
+
+        #div_project_content{
+            margin-bottom: 20px;
+        }
+
         .info_button {
             font-size: 14px;
             text-align: center;
@@ -165,14 +182,19 @@
                             </tr>
                         </table>
                         <hr/>
+                        <br/>
                         <span style="margin-left: 20px">我的参与记录</span>
                         <table id="table_personal_info" v-cloak>
                             <tr v-for="item in items">
-                                <td style="border-bottom: none">{{item.createTime}}</td>
-                                <td style="border-bottom: none">{{item.title}}</td>
+                                <td>{{item.createTime}}</td>
+                                <td>{{item.title}}</td>
+                            </tr>
+                            <tr class="no_donate">
+                                <td colspan="2">暂无数据</td>
                             </tr>
                         </table>
                         <hr/>
+                        <br/>
                         <span style="margin-left: 20px">文档附件</span>
                         <table id="table_doc">
                             <tr>
@@ -266,6 +288,9 @@
                     $.each(data.result, function (i, item) {
                         item.createTime = f_FormatDateTime(item.createTime);
                     });
+                    if(data.result.length===0){
+                        $(".no_donate").show();
+                    }
                     vueContent=new Vue({
                         el: '#table_personal_info',
                         data: {

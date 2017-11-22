@@ -90,7 +90,7 @@
         WHERE i.id_=#{intentionId,jdbcType=BIGINT} AND i.enable_ = 1
     </select>
 
-    <insert id="InsertIntention" parameterType="com.becheer.donation.model.Intention">
+    <insert id="InsertIntention" parameterType="com.becheer.donation.model.extension.intention.IntentionDonateExtension" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO dnt_intention
         (
           project_id,

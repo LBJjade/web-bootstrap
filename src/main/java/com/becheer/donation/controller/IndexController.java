@@ -1,7 +1,7 @@
 package com.becheer.donation.controller;
 
+import com.becheer.donation.model.Intention;
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.intention.IntentionDonateExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.report.IndexReport;
 import com.becheer.donation.service.*;
@@ -28,6 +28,9 @@ public class IndexController extends BaseController {
 
     @Resource
     IReportDonateService reportDonateService;
+
+    @Resource
+    IProgressService progressService;
 
     @Resource
     IIntentionExtensionService intentionExtensionService;
@@ -78,23 +81,27 @@ public class IndexController extends BaseController {
      */
     @PostMapping(value = "/addIntention")
     @ResponseBody
-    public ResponseDto AddIntention(HttpServletRequest request, @RequestParam Long projectId, @RequestParam Long projectTypeId, @RequestParam long intentionAmount, @RequestParam String contactPhone, @RequestParam String remark,@RequestParam int enable, @RequestParam int status) {
+    public ResponseDto AddIntention(HttpServletRequest request, @RequestParam Long projectId, @RequestParam Long projectTypeId, @RequestParam long intentionAmount, @RequestParam String contactPhone, @RequestParam String remark) {
         try {
             MemberSessionExtension currentMember=GetCurrentUser(request);
             if (currentMember==null){
                 return MemberAuthFailed();
             }
-            IntentionDonateExtension intentionDonateExtension=new IntentionDonateExtension();
-            intentionDonateExtension.setProjectId(projectId);
-            intentionDonateExtension.setProjectTypeId(projectTypeId);
-            intentionDonateExtension.setIntentionAmount(intentionAmount);
-            intentionDonateExtension.setContactPhone(contactPhone);
-            intentionDonateExtension.setRemark(remark);
-            intentionDonateExtension.setEnable(enable);
-            intentionDonateExtension.setStatus(status);
-            intentionDonateExtension.setMemberId(currentMember.getMemberId());
-//            return intentionService.AddIntention(intentionDonateExtension);
-            return intentionExtensionService.AddIntentionExtension(intentionDonateExtension);
+            Intention intention=new Intention();
+            intention.setProjectId(projectId);
+            intention.setProjectId(projectId);
+            intention.setProjectTypeId(projectTypeId);
+            intention.setIntentionAmount(intentionAmount);
+            intention.setContactPhone(contactPhone);
+            intention.setRemark(remark);
+            intention.setEnable(1);
+            intention.setStatus(0);
+            intention.setMemberId(currentMember.getMemberId());
+            ResponseDto result = intentionExtensionService.AddIntentionExtension(intention);
+            if (result.getCode()==200){
+                progressService.AddProgress("您提交了捐赠意向","您提交了捐赠意向","dnt_intention",(long)result.getResult(),currentMember.getMemberId(),1);
+            }
+            return result;
         } catch (Exception ex) {
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
         }

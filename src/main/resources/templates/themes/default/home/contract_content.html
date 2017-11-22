@@ -105,18 +105,10 @@
         }
 
         .print-btn {
-            display: inline-block;
-            *display: inline;
-            *zoom: 1;
-            width: 76px;
-            height: 40px;
-            line-height: 40px;
-            background: #439fe4;
-            color: #fff;
-            font-family: 'Microsoft YaHei';
-            font-size: 18px;
-            font-weight: bold;
-            border: 0;
+            width: 45px;
+            height: 25px;
+            margin-left: 10px;
+            float: right;
         }
 
         .m2 {
@@ -222,11 +214,6 @@
             min-width: 86px;
             height: 30px;
         }
-
-        .d3{
-            float: right;
-            padding-top: 10px;
-        }
     </style>
     <style type="text/css" media="print">
         .v-h {
@@ -239,6 +226,8 @@
     <div class="w">
         <div class="logo">
             <img th:src="@{~/image/logo/375x100.png}"/>
+            <button class="print-btn" onclick="f_export()">导出</button>
+            <button class="print-btn" onclick="javascript:window.print();">打印</button>
         </div>
         <div class="m m1">
             <table class="tb1">
@@ -281,16 +270,12 @@
                     </tr>
                 </table>
             </div>
-            <div th:if="${contract.getStatus()==5||contract.getStatus()==6}" id="div_agree" class="d3">
-                <input type="checkbox" id="ipt_agree" onclick="f_ruleClick()" />我已详细阅读并同意合同条款
-                <button class="info_button" id="btn_sign" onclick="f_sign()">签订</button>
-            </div>
         </div>
     </div>
         <div class="v-h">
-            <div class="w">
-                <button class="print-btn" onclick="f_export()">导出</button>
-                <button class="print-btn" onclick="javascript:window.print();">打印</button>
+            <div id="div_sign" th:if="${(contract.getStatus()==5||contract.getStatus()==6)&&contract.getaSignTime()==null}" class="w">
+                <input type="checkbox" id="ipt_agree" />我已详细阅读并同意合同条款
+                <button class="info_button" id="btn_sign" onclick="f_sign()">签订</button>
             </div>
         </div>
     </div>
@@ -305,19 +290,25 @@
             layer.alert("请先仔细阅读并勾选'我已详细阅读并同意合同条款'");
         } else {
             layer.confirm("确定签订合同？", function () {
+                loadShade = layer.load(1, {shade: [0.1,'#fff']});
                     $.ajax({
                         url: '/home/contract/sign',
                         type: 'post',
                         data: {contractId: contractId},
                         dataType: 'json',
                         success: function (data) {
+                            layer.close(loadShade);
                             if (data.code === 200) {
-                                layer.alert(data.msg);
-                                $("#div_agree").hidden();
+                                $("#div_sign").hide();
+                                layer.alert(data.msg,function () {
+                                    parent.location.reload();
+                                });
+                                setTimeout(function () {
+                                    parent.location.reload();
+                                },3000);
                             } else {
                                 layer.alert(data.msg);
                             }
-                            layer.closeAll();
                         }
                     });
                 }, function () {
@@ -328,7 +319,7 @@
     }
 
     function f_export() {
-        alert("导出功能正在完善");
+        layer.alert("导出功能正在完善");
     }
 
     /*]]>*/
