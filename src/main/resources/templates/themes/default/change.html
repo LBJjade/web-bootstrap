@@ -289,7 +289,7 @@
     $(".btn_send").click(function () {
         var mobile = $("#ipt_mobile").val();
         if(memberInfoMobile != mobile){
-            layer.alert("您输入的手机号码与当前登陆手机号码不符");
+            layer.alert("请输入您注册时的手机号");
         }else{
             $.ajax({
                 url: '/forget/SendSms',
