@@ -72,8 +72,8 @@ public class HomeProjectController extends BaseController {
                 return render("home/project_detail");
             }
         }catch(Exception ex){
-            LOGGER.error("GetProjectDetail", ex);
-            return render_500();
+            LOGGER.error("GetProjectDetail", ex.getMessage());
+            return render_404();
         }
     }
 
@@ -94,7 +94,7 @@ public class HomeProjectController extends BaseController {
             PageInfo<MemberProjectExtension> result=projectService.GetProjectList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.PROJECT_GET_LIST_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectType", ex);
+            LOGGER.error("GetProject", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -115,7 +115,7 @@ public class HomeProjectController extends BaseController {
             List<ProgressExtension> result=progressService.GetAllProgress(contractProjectId,"dnt_contract_project");
             return new ResponseDto(200, Message.MEMBER_PROJECT_GET_PROGRESS_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetAllprogress", ex);
+            LOGGER.error("GetAllprogress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -137,7 +137,7 @@ public class HomeProjectController extends BaseController {
             PageInfo<ProjectProgress> result=projectProgressService.GetProjectProgress(projectId,pageSize,pageNum);
             return new ResponseDto(200,Message.PROJECT_PROGRESS_GET_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectProgress", ex);
+            LOGGER.error("GetProjectProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

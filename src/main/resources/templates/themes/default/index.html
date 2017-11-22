@@ -100,7 +100,7 @@
             display: inline-block;
             *display: inline;
             *zoom: 1;
-            width: 270px;
+            width: 220px;
             height: 20px;
             line-height: 20px;
             font-size: 15px;
@@ -375,6 +375,12 @@
             font-weight: 600;
         }
 
+        .recommend_item_info_fomat{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -477,9 +483,9 @@
                     <p class="p_tab_empty" id="p_no_recent"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无爱心动态</p>
                     <div v-cloak>
                         <ul class="recommend_item" v-for="item in items">
-                            <li><img :src="fileRoot + item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/>
+                            <li><img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/>
                             </li>
-                            <li class="recommend_item_info"><span>{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠&nbsp;{{item.projectName==null?item.projectTypeName:item.projectName}}</span><br/>{{item.amount|format}}元
+                            <li class="recommend_item_info"><span class="recommend_item_info_fomat">{{item.memberName==null?item.location:item.memberName}}捐赠{{item.projectName==null?item.projectTypeName:item.projectName}}{{item.amount|format}}元</span>
                             </li>
                         </ul>
                     </div>

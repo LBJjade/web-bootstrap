@@ -13,7 +13,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -30,6 +31,8 @@ public class MemberController extends BaseController {
     @Resource
     private IMemberService memberService;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
+
     @PostMapping("/info")
     @ResponseBody
     public ResponseDto Submit(HttpServletRequest request, @RequestParam long memberId) {
@@ -40,6 +43,7 @@ public class MemberController extends BaseController {
             }
             return memberService.GetMemberById(memberId);
         }catch (Exception ex){
+            LOGGER.error("Submit", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -47,33 +51,48 @@ public class MemberController extends BaseController {
     @PostMapping("/submit")
     @ResponseBody
     public ResponseDto UpdateMember(HttpServletRequest request, MemberInfoExtension memberInfoExtension) {
-        MemberSessionExtension currentMember = GetCurrentUser(request);
-        if (currentMember == null) {
-            return MemberAuthFailed();
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                return MemberAuthFailed();
+            }
+            memberInfoExtension.setValidation(2);
+            memberInfoExtension.setId(currentMember.getMemberId());
+            return memberService.UpdateMemberInfo(memberInfoExtension);
+        }catch (Exception ex){
+            LOGGER.error("UpdateMember", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-        memberInfoExtension.setValidation(2);
-        memberInfoExtension.setId(currentMember.getMemberId());
-        return memberService.UpdateMemberInfo(memberInfoExtension);
     }
 
     @Access(authorities = "member")
     @GetMapping(value = "/avator")
     public String avatorUpload(HttpServletRequest request) {
-        request.setAttribute("config", fileConfig);
-        request.setAttribute("member", GetCurrentUser(request));
-        return this.render("home/avator_upload");
+        try {
+            request.setAttribute("config", fileConfig);
+            request.setAttribute("member", GetCurrentUser(request));
+            return this.render("home/avator_upload");
+        }catch (Exception ex) {
+            LOGGER.error("avatorUpload", ex.getMessage());
+            return render_404();
+        }
     }
 
     @PostMapping("/upload")
     @ResponseBody
     public ResponseDto uploadAvator(HttpServletRequest request, @RequestParam String imgStr) {
-        MemberSessionExtension currentMember = GetCurrentUser(request);
-        if (currentMember == null) {
-            return MemberAuthFailed();
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                return MemberAuthFailed();
+            }
+            if (StringUtils.isEmpty(imgStr)) {
+                return new ResponseDto(400, Message.MEMBER_AVATOR_NULL);
+            }
+            return memberService.uploadAvator(currentMember.getMemberId(), imgStr);
+        }catch (Exception ex){
+            LOGGER.error("uploadAvator", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-        if (StringUtils.isEmpty(imgStr)) {
-            return new ResponseDto(400, Message.MEMBER_AVATOR_NULL);
-        }
-        return memberService.uploadAvator(currentMember.getMemberId(), imgStr);
     }
 }

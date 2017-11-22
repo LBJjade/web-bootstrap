@@ -161,7 +161,7 @@
             display: inline-block;
             *display: inline;
             *zoom: 1;
-            width: 255px;
+            width: 210px;
             height: 20px;
             line-height: 20px;
             font-size: 14px;
@@ -383,6 +383,12 @@
             border: 2px #d0c4c4 solid;
         }
 
+        .recommend_item_info_fomat{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -397,10 +403,10 @@
                     <p class="p_tab_empty" id="p_no_recent"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无爱心动态</p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
-                            <!--<li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>-->
+                            <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
                             <!--<li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>&nbsp;{{item.amount|format}}元-->
                             <!--</li>-->
-                            <li class="recommend_item_info"><span>{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目</span>{{item.amount|format}}元
+                            <li class="recommend_item_info"><span class="recommend_item_info_fomat">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;{{item.amount|format}}元</span>
                             </li>
                         </ul>
                     </div>
@@ -517,7 +523,7 @@
                                                             onclick="f_GetMoreProgress()">加载更多
                                                     </button>
                                                     <!--<p id="p_no_data" style="line-height: 200px;display: none">暂无数据</p>-->
-                                                    <div  id="p_no_data" class="col-sm-10" style="margin-top: 80px;display: none">
+                                                    <div class="col-sm-10 p_no_data" style="margin-top: 80px;">
                                                         <div  style="font-size: 18px;font-weight: 600;">
                                                             <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
                                                         </div>
@@ -969,7 +975,7 @@
                     totalPage = data.result.pages;
                     if (data.result.list.length === 0) {
                         $(".btn_show_more").hide();
-                        $("#p_no_data").show();
+                        $(".p_no_data").show();
                     }
                     f_GetClass(data);
                 }

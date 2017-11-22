@@ -71,8 +71,8 @@ public class HomeAppealController extends BaseController {
                 return this.render("/home/appeal_edit");
             }
         } catch (Exception ex) {
-            LOGGER.error("ViewDetail", ex);
-            return render_500();
+            LOGGER.error("ViewDetail", ex.getMessage());
+            return render_404();
         }
     }
 
@@ -93,7 +93,7 @@ public class HomeAppealController extends BaseController {
             PageInfo<MemberAppealExtension> result = appealService.GetMemberAppeal(currentMember.getMemberId(), pageNum, pageSize);
             return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS, result);
         } catch (Exception ex) {
-            LOGGER.error("GetAppealList", ex);
+            LOGGER.error("GetAppealList", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -112,8 +112,8 @@ public class HomeAppealController extends BaseController {
                 return render("home/appeal_detail");
             }
         } catch (Exception ex) {
-            LOGGER.error("GetAppealDetail", ex);
-            return render_500();
+            LOGGER.error("GetAppealDetail", ex.getMessage());
+            return render_404();
         }
     }
 
@@ -132,7 +132,7 @@ public class HomeAppealController extends BaseController {
             List<ProgressExtension> result = progressService.GetAllProgress(appealId, "dnt_appeal");
             return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_SUCCESS, result);
         } catch (Exception ex) {
-            LOGGER.error("GetAllProgress", ex);
+            LOGGER.error("GetAllProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -163,6 +163,7 @@ public class HomeAppealController extends BaseController {
             appealService.InsertAppeal(title, method, content, contractProjectId, projectId, memberId);
             return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
         } catch (Exception ex) {
+            LOGGER.error("add", ex.getMessage());
             return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
         }
     }
@@ -197,46 +198,56 @@ public class HomeAppealController extends BaseController {
                 return new ResponseDto(400,Message.MEMBER_APPEAL_PROGRESS_ADD_FAILED);
             }
         }catch(Exception ex){
-            LOGGER.error("AddProgress", ex);
+            LOGGER.error("AddProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 
     @PostMapping("/solve")
     @ResponseBody
-    public ResponseDto solveProgress(HttpServletRequest request,@RequestParam long appealId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto solveProgress(HttpServletRequest request,@RequestParam long appealId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
-        if (appeal==null){
-            return MemberAuthFailed();
+        try {
+            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId, currentMember.getMemberId());
+            if (appeal == null) {
+                return MemberAuthFailed();
+            }
+            if (appeal.getStatus() == 3 || appeal.getStatus() == 4) {
+                return new ResponseDto(400, Message.MEMBER_APPEAL_STATUS_ERROR);
+            }
+            //解决
+            progressService.AddProgress("申诉已解决", "申诉已解决", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
+            return appealService.UpdateAppealStatus(appealId, 3);
+        }catch(Exception ex){
+            LOGGER.error("solveProgress", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-        if (appeal.getStatus()==3||appeal.getStatus()==4){
-            return new ResponseDto(400,Message.MEMBER_APPEAL_STATUS_ERROR);
-        }
-        //解决
-        progressService.AddProgress("申诉已解决","申诉已解决","dnt_appeal",appealId,currentMember.getMemberId(),1);
-        return appealService.UpdateAppealStatus(appealId,3);
     }
 
     @PostMapping("/withdraw")
     @ResponseBody
-    public ResponseDto withdrawProgress(HttpServletRequest request,@RequestParam long appealId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto withdrawProgress(HttpServletRequest request,@RequestParam long appealId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
-        if (appeal==null){
-            return MemberAuthFailed();
+        try {
+            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId, currentMember.getMemberId());
+            if (appeal == null) {
+                return MemberAuthFailed();
+            }
+            if (appeal.getStatus() == 3 || appeal.getStatus() == 4) {
+                return new ResponseDto(400, Message.MEMBER_APPEAL_STATUS_ERROR);
+            }
+            //撤销
+            progressService.AddProgress("您撤销了申诉", "您撤销了申诉", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
+            return appealService.UpdateAppealStatus(appealId, 4);
+        }catch(Exception ex){
+            LOGGER.error("withdrawProgress", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-        if (appeal.getStatus()==3||appeal.getStatus()==4){
-            return new ResponseDto(400,Message.MEMBER_APPEAL_STATUS_ERROR);
-        }
-        //撤销
-        progressService.AddProgress("您撤销了申诉","您撤销了申诉","dnt_appeal",appealId,currentMember.getMemberId(),1);
-        return appealService.UpdateAppealStatus(appealId,4);
     }
 }

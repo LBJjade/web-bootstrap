@@ -6,6 +6,8 @@ import com.becheer.donation.service.IArticleService;
 import com.becheer.donation.service.IArticleTypeService;
 import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/publicity")
 public class PublicyController extends BaseController{
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PublicyController.class);
 
     @Resource
     private IArticleTypeService articleTypeService;
@@ -40,6 +44,7 @@ public class PublicyController extends BaseController{
         try{
             return articleTypeService.GetPublicyArticleTypeList();
         }catch (Exception ex){
+            LOGGER.error("GetPublicityArticleType", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -57,6 +62,7 @@ public class PublicyController extends BaseController{
             PageInfo<ListArticleExtension> resultList= articleService.getPublicyArticleList(pageNum,pageSize,tid);
             return new ResponseDto(200,Message.PUBLICITY_ARTICLE_GET_LIST_SUCCESS,resultList);
         }catch (Exception ex){
+            LOGGER.error("GetArticle", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

@@ -10,6 +10,8 @@ import com.becheer.donation.service.ISmsService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.RegExUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/forget")
 public class ForgetController extends BaseController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ForgetController.class);
 
     @Resource
     private IMemberService memberService;
@@ -71,14 +75,19 @@ public class ForgetController extends BaseController {
     @PostMapping(value = "/SendSms")
     @ResponseBody
     public ResponseDto SendSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam long tid) {
-        if (!RegExUtil.checkMobile(mobile)) {
-            return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
+        try {
+            if (!RegExUtil.checkMobile(mobile)) {
+                return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
+            }
+            Member member = memberService.GetMemberByMobile(mobile);
+            if (member == null) {
+                return new ResponseDto(401, Message.REGISTER_NO_EXIST);
+            }
+            return smsService.SendSms(mobile, tid);
+        } catch (Exception ex) {
+            LOGGER.error("SendSms", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-        Member member = memberService.GetMemberByMobile(mobile);
-        if (member == null) {
-            return new ResponseDto(401, Message.REGISTER_NO_EXIST);
-        }
-        return smsService.SendSms(mobile, tid);
     }
 
 
@@ -97,6 +106,7 @@ public class ForgetController extends BaseController {
 //        }
 //        return result;
         //根据手机验证账号
+        try{
         Member member = memberService.GetMemberByMobile(mobile);
         int enable = member.getEnable();
         if (enable == 0) {
@@ -106,7 +116,10 @@ public class ForgetController extends BaseController {
             ResponseDto result = smsService.CheckCode(mobile, code, tid);
             return result;
         }
-
+        } catch (Exception ex) {
+            LOGGER.error("CheckSms", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
     }
 
 
@@ -123,7 +136,8 @@ public class ForgetController extends BaseController {
             newPw = newPw.trim();
             int result = memberService.UpdatePw(newPw, mobile);
             return new ResponseDto(200, Message.PASSWORD_CHANG_SUCCESS, result);
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            LOGGER.error("ChangePw", ex.getMessage());
             return new ResponseDto(402, Message.PASSWORD_CHANG_ERROR);
         }
 

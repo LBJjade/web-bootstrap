@@ -62,7 +62,7 @@ public class HomeContractController extends BaseController {
             PageInfo<MemberContractExtension> result=contractService.GetContractList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetContract", ex);
+            LOGGER.error("GetContract", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -84,8 +84,8 @@ public class HomeContractController extends BaseController {
                 return render("home/contract_detail");
             }
         }catch(Exception ex){
-            LOGGER.error("GetContract", ex);
-            return render_500();
+            LOGGER.error("GetContractDetail", ex.getMessage());
+            return render_404();
         }
     }
 
@@ -104,7 +104,7 @@ public class HomeContractController extends BaseController {
             List<PaymentPlanExtension> result=paymentPlanService.GetPaymentPlan(contractId);
             return new ResponseDto(200, Message.MEMBER_GET_PAYMENT_PLAN_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetContract", ex);
+            LOGGER.error("GetPaymentPlan", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -125,8 +125,8 @@ public class HomeContractController extends BaseController {
                 return render("home/contract_content");
             }
         }catch(Exception ex){
-            LOGGER.error("GetContractContent", ex);
-            return render_500();
+            LOGGER.error("GetContractContent", ex.getMessage());
+            return render_404();
         }
     }
 
@@ -144,7 +144,7 @@ public class HomeContractController extends BaseController {
         try {
             return contractService.UpdateContractStatuas(contractId,currentMember.getMemberId());
         }catch(Exception ex){
-            LOGGER.error("SignContract", ex);
+            LOGGER.error("SignContract", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

@@ -45,7 +45,7 @@ public class ProgressController extends BaseController {
             PageInfo<ProjectProgress> result=projectProgressService.GetProjectProgress(projectId,pageSize,pageNum);
             return new ResponseDto(200,Message.PROJECT_PROGRESS_GET_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectType", ex);
+            LOGGER.error("GetProjectProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
