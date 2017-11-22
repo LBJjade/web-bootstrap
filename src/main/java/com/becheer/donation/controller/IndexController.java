@@ -1,6 +1,8 @@
 package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.intention.IntentionDonateExtension;
+import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.report.IndexReport;
 import com.becheer.donation.service.*;
 import com.becheer.donation.strings.Message;
@@ -26,6 +28,9 @@ public class IndexController extends BaseController {
 
     @Resource
     IReportDonateService reportDonateService;
+
+    @Resource
+    IIntentionExtensionService intentionExtensionService;
 
     /**
      * 首页
@@ -64,6 +69,33 @@ public class IndexController extends BaseController {
             return ResponseDto.GetResponse(200, "success", result);
         } catch (Exception ex) {
             LOGGER.error("GetReport", ex);
+            return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 添加捐赠意向
+     */
+    @PostMapping(value = "/addIntention")
+    @ResponseBody
+    public ResponseDto AddIntention(HttpServletRequest request, @RequestParam Long projectId, @RequestParam Long projectTypeId, @RequestParam long intentionAmount, @RequestParam String contactPhone, @RequestParam String remark,@RequestParam int enable, @RequestParam int status) {
+        try {
+            MemberSessionExtension currentMember=GetCurrentUser(request);
+            if (currentMember==null){
+                return MemberAuthFailed();
+            }
+            IntentionDonateExtension intentionDonateExtension=new IntentionDonateExtension();
+            intentionDonateExtension.setProjectId(projectId);
+            intentionDonateExtension.setProjectTypeId(projectTypeId);
+            intentionDonateExtension.setIntentionAmount(intentionAmount);
+            intentionDonateExtension.setContactPhone(contactPhone);
+            intentionDonateExtension.setRemark(remark);
+            intentionDonateExtension.setEnable(enable);
+            intentionDonateExtension.setStatus(status);
+            intentionDonateExtension.setMemberId(currentMember.getMemberId());
+//            return intentionService.AddIntention(intentionDonateExtension);
+            return intentionExtensionService.AddIntentionExtension(intentionDonateExtension);
+        } catch (Exception ex) {
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
         }
     }

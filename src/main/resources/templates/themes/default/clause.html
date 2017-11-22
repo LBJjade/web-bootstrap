@@ -98,23 +98,12 @@
             min-height: 1%
         }
 
-        .info_button {
-            font-size: 12px;
-            text-align: center;
-            background-color: #fcfcfc;
-            border-color: #f0f0f0;
-            border-radius: 0px;
-            border-style: solid;
-            border-width: 1px;
-            color: #00a0e9;
-            min-width: 86px;
-            height: 30px;
+        .summary{
+            padding:20px;
+            font-size: 20px;
         }
 
-        .d3 {
-            float: right;
-            padding-top: 10px;
-        }
+
     </style>
     <style type="text/css" media="print">
         .v-h {
@@ -129,7 +118,8 @@
         <img th:src="@{~/image/logo/375x100.png}"/>
     </div>
     <div class="m m2" style="margin-bottom: 50px;">
-        <div style="min-height: 450px">
+        <hr/>
+        <div class="summary" style="min-height: 450px">
 
         </div>
 
@@ -140,9 +130,22 @@
 </body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    $(document).ready(function(){
+        f_getClause();
+    })
 
     function f_getClause() {
-        //待完善
+        var clause = '网络服务条款';
+        $.ajax({
+            url:'/register/getClause',
+            type:'post',
+            data:{clause:clause},
+            dataType: 'json',
+            success:function(data){
+                $(".summary").html(data.result);
+            }
+
+        })
     }
 
 

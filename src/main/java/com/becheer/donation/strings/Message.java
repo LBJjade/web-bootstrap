@@ -236,4 +236,5 @@ public class Message {
      */
     public static final String ARTICLE_GET_BY_TYPE_SUCCESS = "获取文章成功";
     public static final String ARTICLE_DETAIL_GET_SUCCESS = "获取文章详情成功";
+    public static final String CLAUSE_GET_SUCCESS = "条款获取成功";
 }

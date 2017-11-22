@@ -115,4 +115,29 @@
         )
     </insert>
 
+    <insert id="AddIntention" parameterType="com.becheer.donation.model.Intention">
+        INSERT INTO dnt_intention
+        (
+        project_id,
+        project_type_id,
+        member_id,
+        intention_amount,
+        contact_phone,
+        enable_,
+        create_time,
+        status
+        )
+        VALUES
+        (
+        #{projectId,jdbcType=BIGINT},
+        #{projectTypeId,jdbcType=BIGINT},
+        #{memberId,jdbcType=BIGINT},
+        #{intentionAmount,jdbcType=BIGINT},
+        #{contactPhone,jdbcType=BIGINT},
+        #{enable,jdbcType=BIGINT},
+        now(),
+        #{status,jdbcType=INTEGER}
+        )
+    </insert>
+
 </mapper>

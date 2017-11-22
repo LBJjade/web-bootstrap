@@ -61,7 +61,7 @@
             display: none;
             height: 42px;
             margin-top: -23px;
-            margin-right: 110px;
+            margin-right: 100px;
         }
 
         .error_1 {
@@ -69,7 +69,7 @@
             display: none;
             height: 19px;
             margin-top: 7px;
-            margin-right: 54px;
+            margin-right: 90px;
         }
 
         .pw {
@@ -150,7 +150,7 @@
                     <td>
                         <div style="margin-left: 55px">
                             <input type="text" class="input_code" placeholder="请输入验证码"/>
-                            <p class="code_error error" style="margin-right: 132px;">验证码不能为空</p>
+                            <p class="code_error error" style="margin-right: 204px;">验证码不能为空</p>
                         </div>
                     </td>
                 </tr>
@@ -211,7 +211,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: center">
-                        <button class="btn btn-info btn_pwd" style="width: 80px;padding-left: 4px">下一步</button>
+                        <button class="btn btn-info btn_pwd" disabled="disabled" style="width: 80px;padding-left: 4px">下一步</button>
                     </td>
                 </tr>
             </table>
@@ -325,25 +325,29 @@
         mobile = $("#ipt_mobile").val();
 //        registerType=$("input[name='input_register_type']:checked").val();
         registerType = false;
-        $.ajax({
-            url: '/forget/validate',
-            type: 'post',
-            data: {mobile: mobile, code: smsCode, tid: "2"},
-            dataType: 'json',
-            success: function (data) {
-                layer.close(loadShade);
-                if (data.code === 200) {
-                    $("#div_step1").hide();
-                    $("#div_step2").show();
-                } else if (data.code == 402) {
-                    layer.alert("验证码已过期，请重新获取");
-                } else if (data.code == 403) {
-                    layer.alert("验证码错误");
-                } else {
-                    layer.alert("验证码错误");
+        registerType = $("input[name='input_register_type']:checked").val();
+        var isPhoneOk = /1[34578]\d{9}$/;
+        if (isPhoneOk.test($(".ipt_mobile").val()) && $(".input_code").val() != "") {
+            $.ajax({
+                url: '/forget/validate',
+                type: 'post',
+                data: {mobile: mobile, code: smsCode, tid: "2"},
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code === 200) {
+                        $("#div_step1").hide();
+                        $("#div_step2").show();
+                    } else if (data.code == 402) {
+                        layer.alert("验证码已过期，请重新获取");
+                    } else if (data.code == 403) {
+                        layer.alert("验证码错误");
+                    } else {
+                        layer.alert("验证码错误");
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
 
@@ -351,22 +355,24 @@
         loadShade = layer.load(1, {shade: [0.1, '#fff']});
         var pwd = $("#ipt_pwd").val();
         newPw = pwd;
-        $.ajax({
-            url: '/forget/submit',
-            type: 'post',
-            data: {newPw: newPw, mobile: mobile},
-            dataType: 'json',
-            success: function (data) {
-                layer.close(loadShade);
-                if (data.code === 200) {
-                    $("#div_step2").hide();
-                    $("#div_step3").show();
-                    f_skip();
-                } else {
-                    layer.alert("修改失败，请重试");
+        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+            $.ajax({
+                url: '/forget/submit',
+                type: 'post',
+                data: {newPw: newPw, mobile: mobile},
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code === 200) {
+                        $("#div_step2").hide();
+                        $("#div_step3").show();
+                        f_skip();
+                    } else {
+                        layer.alert("修改失败，请重试");
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
 
@@ -402,6 +408,11 @@
 //                $(".pw_error_0").hide();
 //            }
         }
+        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+            $(".btn_pwd").attr("disabled", false);
+        } else {
+            $(".btn_pwd").attr("disabled", true);
+        }
     })
 
 
@@ -416,6 +427,11 @@
             } else {
                 $(".p_error").hide();
             }
+        }
+        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+            $(".btn_pwd").attr("disabled", false);
+        } else {
+            $(".btn_pwd").attr("disabled", true);
         }
     })
 

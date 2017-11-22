@@ -80,7 +80,7 @@
 
         }
 
-        .tr_skip{
+        .tr_skip {
             margin-left: 91px;
             display: block;
         }
@@ -227,7 +227,9 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: center">
-                        <button class="btn btn-info btn_pwd" style="width: 80px;padding-left: 4px">下一步</button>
+                        <button class="btn btn-info btn_pwd" disabled="disabled" style="width: 80px;padding-left: 4px">
+                            下一步
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -352,54 +354,52 @@
         var smsCode = $(".input_code").val();
         var mobile = $("#ipt_mobile").val();
         registerType = $("input[name='input_register_type']:checked").val();
-//        //数据是否为空
-//        if(smsCode == "" || mobile == "" || registerType == ""){
-//            alert(smsCode);
-//            alert(mobile);
-//            alert(registerType);
-//        }
-
-
-        $.ajax({
-            url: '/Sms/CheckSms',
-            type: 'post',
-            data: {mobile: mobile, code: smsCode, registerType: registerType},
-            dataType: 'json',
-            success: function (data) {
-                layer.close(loadShade);
-                if (data.code === 200) {
-                    $("#div_step1").hide();
-                    $("#div_step2").show();
-                } else if (data.code == 402) {
-                    layer.alert("验证码已过期，请重新获取");
-                } else if (data.code == 403) {
-                    layer.alert("验证码错误");
-                } else {
-                    layer.alert("验证码错误");
+        var isPhoneOk = /1[34578]\d{9}$/;
+        if (isPhoneOk.test($(".ipt_mobile").val()) && $(".input_code").val() != "") {
+            $.ajax({
+                url: '/Sms/CheckSms',
+                type: 'post',
+                data: {mobile: mobile, code: smsCode, registerType: registerType},
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code === 200) {
+                        $("#div_step1").hide();
+                        $("#div_step2").show();
+                    } else if (data.code == 402) {
+                        layer.alert("验证码已过期，请重新获取");
+                    } else if (data.code == 403) {
+                        layer.alert("验证码错误");
+                    } else {
+                        layer.alert("验证码错误");
+                    }
                 }
-            }
-        })
+            })
+        }
     });
 
     $(".btn_pwd").click(function () {
         loadShade = layer.load(1, {shade: [0.1,'#fff']});
         var pwd = $("#ipt_pwd").val();
-        $.ajax({
-            url: '/register/submit',
-            type: 'post',
-            data: {pwd: pwd},
-            dataType: 'json',
-            success: function (data) {
-                layer.close(loadShade);
-                if (data.code === 200) {
-                    $("#div_step2").hide();
-                    $("#div_step3").show();
-                    f_skip();
-                } else {
-                    layer.alert("注册失败，请重试");
+        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()){
+            $.ajax({
+                url: '/register/submit',
+                type: 'post',
+                data: {pwd: pwd},
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code === 200) {
+                        $("#div_step2").hide();
+                        $("#div_step3").show();
+                        f_skip();
+                    } else {
+                        layer.alert("注册失败，请重试");
+                    }
                 }
-            }
-        })
+            })
+        }
+
     });
 
 
@@ -429,11 +429,11 @@
             $(".pw_error").show();
         } else {
             $(".pw_error").hide();
-//            if($(".input_pw").val().length < 8){
-//                $(".pw_error_0").show();
-//            }else{
-//                $(".pw_error_0").hide();
-//            }
+        }
+        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+            $(".btn_pwd").attr("disabled", false);
+        } else {
+            $(".btn_pwd").attr("disabled", true);
         }
     })
 
@@ -449,6 +449,11 @@
             } else {
                 $(".p_error").hide();
             }
+        }
+        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+            $(".btn_pwd").attr("disabled", false);
+        } else {
+            $(".btn_pwd").attr("disabled", true);
         }
     })
 

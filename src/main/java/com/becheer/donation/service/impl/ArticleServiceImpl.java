@@ -48,4 +48,10 @@ public class ArticleServiceImpl implements IArticleService {
     public ArticleDetailExtension getArticleDetail(long aid) {
         return articleMapper.selectArticleDetail(aid);
     }
+
+    @Override
+    public String getClauseByTitle(String clause) {
+        String result=articleMapper.getClauseByTitle(clause);
+        return result;
+    }
 }
