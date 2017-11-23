@@ -304,27 +304,27 @@
         });
 
         $("#btn_ac_login").click(function () {
-            var av = $('#form_accepter').data('bootstrapValidator');
-            av.validate();
-            if (av.isValid()) {
-                var authNo = $("#ipt_no").val();
+//            var av = $('#form_accepter').data('bootstrapValidator');
+//            av.validate();
+//            if (av.isValid()) {
+                var authCode = $("#ipt_no").val();
                 var pwd = $("#ipt_pwd").val();
                 var code = $("#ipt_code").val();
                 var autoLogin = $("#ipt_ac_cookie").is(':checked');
                 $.ajax({
-                    url: "/login/submit",
-                    data: {mobile: mobile, code: code, pwd: pwd, autoLogin: autoLogin},
+                    url: "/login/acLogin",
+                    data: {authCode: authCode, code: code, pwd: pwd, autoLogin: autoLogin},
                     type: 'post',
                     dataType: 'json',
                     success: function (data) {
-                        if (data.code === 407) {
+                        if (data.code === 200) {
                             window.location.href = "/home";
                         } else {
                             layer.alert(data.msg);
                         }
                     }
                 });
-            }
+//            }
         });
 
     });

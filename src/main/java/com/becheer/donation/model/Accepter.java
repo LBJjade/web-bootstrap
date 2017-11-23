@@ -46,6 +46,7 @@ public class Accepter {
 
     private long receivedAmount;
 
+    private String avator;
 
     public long getId() {
         return id;
@@ -197,5 +198,13 @@ public class Accepter {
 
     public void setReceivedAmount(long receivedAmount) {
         this.receivedAmount = receivedAmount;
+    }
+
+    public String getAvator() {
+        return avator;
+    }
+
+    public void setAvator(String avator) {
+        this.avator = avator;
     }
 }

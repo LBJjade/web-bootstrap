@@ -8,5 +8,5 @@ import com.becheer.donation.model.Accepter;
 * Date : 
 */
 public interface AccepterMapper {
-    Accepter selectAccepterByNo(String authNo);
+    Accepter selectAccepterByNo(String acceptorNo);
 }
