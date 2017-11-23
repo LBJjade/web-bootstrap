@@ -60,7 +60,7 @@ public class HomeApplyController extends BaseController {
                 return this.render("home/apply_detail");
             }
         }catch(Exception ex){
-            LOGGER.error("GetApplyDetail", ex);
+            LOGGER.error("GetApplyDetail", ex.getMessage());
             return render_404();
         }
     }
@@ -82,7 +82,7 @@ public class HomeApplyController extends BaseController {
             PageInfo<Intention> result=intentionService.GetIntentionList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.INTENTION_GET_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetApplyList", ex);
+            LOGGER.error("GetApplyList", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -98,7 +98,7 @@ public class HomeApplyController extends BaseController {
             List<ProgressExtension> result=progressService.GetAllProgress(applyId,"dnt_intention");
             return new ResponseDto(200, Message.MEMBER_INTENTION_PROGRESS_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetAllProgress", ex);
+            LOGGER.error("GetAllProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -132,7 +132,7 @@ public class HomeApplyController extends BaseController {
                 return new ResponseDto(400,Message.MEMBER_INTENTION_PROGRESS_ADD_FAILED);
             }
         }catch(Exception ex){
-            LOGGER.error("AddProgress", ex);
+            LOGGER.error("AddProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

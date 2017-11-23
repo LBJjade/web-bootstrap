@@ -55,7 +55,7 @@ public class MessageController extends BaseController {
             PageInfo<MessageExtension> result=messageService.GetMessageList(currentMember.getMemberId(),pageNum,pageSize);
             return new ResponseDto(200, Message.MESSAGE_GET_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectType", ex);
+            LOGGER.error("GetMessage", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -63,26 +63,36 @@ public class MessageController extends BaseController {
     @PostMapping("/status")
     @ResponseBody
     public ResponseDto ChangeStatus(HttpServletRequest request,@RequestParam long id){
+        try{
         MemberSessionExtension currentMember=GetCurrentUser(request);
         if (currentMember==null){
             return MemberAuthFailed();
         }
         long memberId=currentMember.memberId;
         return messageService.ChangeStatus(id,memberId);
+        }catch(Exception ex){
+            LOGGER.error("ChangeStatus", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
     }
 
     @PostMapping("/number")
     @ResponseBody
-    public ResponseDto GetMemberMessagesNum(HttpServletRequest request){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
-            return MemberAuthFailed();
-        }
+    public ResponseDto GetMemberMessagesNum(HttpServletRequest request) {
         try {
-            int result = messageService.GetMemberMessagesNum(currentMember.memberId);
-            return new ResponseDto(200, Message.GET_MEMBERMESSAGES_SUCCESS,result);
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                return MemberAuthFailed();
+            }
+            try {
+                int result = messageService.GetMemberMessagesNum(currentMember.memberId);
+                return new ResponseDto(200, Message.GET_MEMBERMESSAGES_SUCCESS, result);
+            } catch (Exception ex) {
+                return new ResponseDto(500, Message.GET_MEMBERMESSAGES_FAILED);
+            }
         }catch(Exception ex){
-            return new ResponseDto(500, Message.GET_MEMBERMESSAGES_FAILED);
+            LOGGER.error("GetMemberMessagesNum", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 }

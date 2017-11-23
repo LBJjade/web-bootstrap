@@ -44,10 +44,10 @@
             border-bottom: 1px #ccc dashed;
             padding: 9px;
         }
-        #table_content_info input{
-            height: 25px;
-            width: 220px;
-        }
+        /*#table_content_info input{*/
+            /*height: 25px;*/
+            /*width: 220px;*/
+        /*}*/
         .div_img{
             height: 120px;
             position: absolute;
@@ -128,20 +128,21 @@
                     <form id="defaultForm_2" method="post" class="form-horizontal">
                         <table id="table_content_info">
                             <tr>
-                                <td>手机号码：</td>
-                                <td>
-                                    <input type="text"  id="ipt_mobile" class="form-control no_border_radius" name="ipt_mobile"
-                                           th:value="${member.getMobile()}"/>
-                                    <div class="mobile_error error" style="margin-top: -18px;">手机号码格式不正确</div>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>真实姓名：</td>
                                 <td>
                                     <input type="text" id="ipt_name" class="form-control no_border_radius" name="ipt_name"
                                            th:value="${member.getName()}"/>
                                     <div class="name_error error">真实姓名不能为空</div>
                                     <div class="name_error_0 error">真实姓名格式错误</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>手机号码：</td>
+                                <td>
+                                    <!--<input type="text"  id="ipt_mobile" class="form-control no_border_radius" name="ipt_mobile"-->
+                                           <!--th:value="${member.getMobile()}"/>-->
+                                    <!--<div class="mobile_error error">手机号码格式不正确</div>-->
+                                    <th:block th:text="${member.getMobile()}"></th:block>
                                 </td>
                             </tr>
                             <tr>

@@ -52,7 +52,7 @@ public class ProjectController extends BaseController {
             List<ListProjectTypeExtension> result = projectTypeService.GetProjectType();
             return new ResponseDto(200,Message.PROJECT_TYPE_GET_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProjectType", ex);
+            LOGGER.error("GetProjectType", ex.getMessage());
             return new ResponseDto(500,Message.SERVER_ERROR);
         }
     }
@@ -79,7 +79,7 @@ public class ProjectController extends BaseController {
             PageInfo<ListProjectExtension> result = projectService.GetProjectList(pageNum,pageSize,tid);
             return new ResponseDto(200,Message.PROJECT_GET_LIST_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProject", ex);
+            LOGGER.error("GetProject", ex.getMessage());
             return new ResponseDto(500,Message.SERVER_ERROR);
         }
     }
@@ -91,7 +91,7 @@ public class ProjectController extends BaseController {
             List<ListProjectExtension> result = projectService.GetProjectList(tid);
             return new ResponseDto(200,Message.PROJECT_GET_LIST_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProject", ex);
+            LOGGER.error("GetProject", ex.getMessage());
             return new ResponseDto(500,Message.SERVER_ERROR);
         }
     }
@@ -102,13 +102,18 @@ public class ProjectController extends BaseController {
     @PostMapping(value = "/project")
     @ResponseBody
     public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageNum, @RequestParam int pageSize) {
-        if (pageNum<=0){
-            pageNum=1;
+        try {
+            if (pageNum <= 0) {
+                pageNum = 1;
+            }
+            if (pageSize > 50 || pageSize <= 0) {
+                pageSize = 10;
+            }
+            return ResponseDto.GetResponse(200, "success", projectService.GetProjectList(pageNum, pageSize));
+        }catch(Exception ex){
+            LOGGER.error("GetProject", ex.getMessage());
+            return new ResponseDto(500,Message.SERVER_ERROR);
         }
-        if (pageSize>50||pageSize<=0){
-            pageSize=10;
-        }
-        return ResponseDto.GetResponse(200,"success",projectService.GetProjectList(pageNum,pageSize));
     }
 
     @PostMapping("/relative")
@@ -121,7 +126,7 @@ public class ProjectController extends BaseController {
             List<ListProjectExtension> result = projectService.GetRelationProject(tid,pid,nums);
             return new ResponseDto(200,Message.PROJECT_GET_LIST_SUCCESS,result);
         }catch(Exception ex){
-            LOGGER.error("GetProject", ex);
+            LOGGER.error("GetRelativeProject", ex.getMessage());
             return new ResponseDto(500,Message.SERVER_ERROR);
         }
     }
@@ -139,7 +144,7 @@ public class ProjectController extends BaseController {
                 return this.render("project_detail");
             }
         }catch(Exception ex){
-            LOGGER.error("GetProject", ex);
+            LOGGER.error("View_Detail", ex.getMessage());
             return render_500();
         }
     }

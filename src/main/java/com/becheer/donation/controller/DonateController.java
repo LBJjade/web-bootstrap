@@ -18,6 +18,8 @@ import com.becheer.donation.utils.IPUtil;
 import com.becheer.donation.utils.RegExUtil;
 import com.google.common.base.Strings;
 import com.google.common.primitives.Ints;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +37,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/donate")
 public class DonateController extends BaseController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DonateController.class);
 
     @Resource
     private IDonateService donateService;
@@ -58,6 +62,7 @@ public class DonateController extends BaseController {
             List<NoContractDonateExtension> resultList = noContractDonateService.GetRecentNoContractDonate(num);
             return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, resultList);
         } catch (Exception ex) {
+            LOGGER.error("GetRecentDonate", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -72,6 +77,7 @@ public class DonateController extends BaseController {
             List<NoContractDonateExtension> resultList = noContractDonateService.GetRecentNoContractDonate(projectId, num);
             return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, resultList);
         } catch (Exception ex) {
+            LOGGER.error("GetRecentDonate", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -136,6 +142,7 @@ public class DonateController extends BaseController {
 
             return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
         } catch (Exception ex) {
+            LOGGER.error("donate", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
@@ -144,14 +151,19 @@ public class DonateController extends BaseController {
     @PostMapping(value = "/SendSms")
     @ResponseBody
     public ResponseDto SendSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam long tid) {
-        if (!RegExUtil.checkMobile(mobile)) {
-            return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
+        try {
+            if (!RegExUtil.checkMobile(mobile)) {
+                return new ResponseDto(400, Message.VALIDATION_MOBILE_FAILED);
+            }
+            Member member = memberService.GetMemberByMobile(mobile);
+            if (member == null) {
+                return new ResponseDto(401, Message.REGISTER_NO_EXIST);
+            }
+            return smsService.SendSms(mobile, tid);
+        }catch (Exception ex) {
+            LOGGER.error("SendSms", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-        Member member = memberService.GetMemberByMobile(mobile);
-        if (member == null) {
-            return new ResponseDto(401, Message.REGISTER_NO_EXIST);
-        }
-        return smsService.SendSms(mobile, tid);
     }
 
 
@@ -161,17 +173,21 @@ public class DonateController extends BaseController {
     @PostMapping(value = "/validate")
     @ResponseBody
     public ResponseDto CheckSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam String code, @RequestParam Long tid) {
-        //根据手机验证账号
-        Member member = memberService.GetMemberByMobile(mobile);
-        int enable = member.getEnable();
-        if (enable == 0) {
-            return new ResponseDto(402, Message.MEMBER_UNENABLE);
-        } else {
-            //验证短信
-            ResponseDto result = smsService.CheckCode(mobile, code, tid);
-            return result;
+        try {
+            //根据手机验证账号
+            Member member = memberService.GetMemberByMobile(mobile);
+            int enable = member.getEnable();
+            if (enable == 0) {
+                return new ResponseDto(402, Message.MEMBER_UNENABLE);
+            } else {
+                //验证短信
+                ResponseDto result = smsService.CheckCode(mobile, code, tid);
+                return result;
+            }
+        }catch (Exception ex) {
+            LOGGER.error("CheckSms", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-
     }
 
 //    @ResponseBody

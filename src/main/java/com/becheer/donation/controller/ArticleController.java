@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /*
 * ArticleController
 * Creator : xiaokepu
@@ -21,14 +22,21 @@ import java.util.List;
 @RequestMapping("/article")
 public class ArticleController extends BaseController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ApplyController.class);
+
     @Resource
     IArticleService articleService;
 
     @GetMapping("/{articleId}")
     public String getArticle(HttpServletRequest request, @PathVariable long articleId){
+        try{
         request.setAttribute("config", fileConfig);
         request.setAttribute("aid",articleId);
         return this.render("article");
+        }catch (Exception ex) {
+            LOGGER.error("getArticle", ex.getMessage());
+            return render_404();
+        }
     }
 
     @PostMapping("/list")
@@ -38,6 +46,7 @@ public class ArticleController extends BaseController {
             List<ListArticleExtension> articleExtensionList = articleService.getAllArticle(articleTypeId);
             return new ResponseDto(200,Message.ARTICLE_GET_BY_TYPE_SUCCESS,articleExtensionList);
         }catch (Exception ex){
+            LOGGER.error("getAllArticle", ex.getMessage());
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
         }
     }
@@ -48,6 +57,7 @@ public class ArticleController extends BaseController {
             ArticleDetailExtension result=articleService.getArticleDetail(articleId);
             return new ResponseDto(200,Message.ARTICLE_DETAIL_GET_SUCCESS,result);
         }catch (Exception ex){
+            LOGGER.error("getArticleDetail", ex.getMessage());
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
         }
     }

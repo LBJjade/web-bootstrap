@@ -52,13 +52,18 @@ public class IndexController extends BaseController {
     @PostMapping(value = "/project")
     @ResponseBody
     public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageNum, @RequestParam int pageSize) {
-        if (pageNum <= 0) {
-            pageNum = 1;
+        try {
+            if (pageNum <= 0) {
+                pageNum = 1;
+            }
+            if (pageSize > 50 || pageSize <= 0) {
+                pageSize = 10;
+            }
+            return ResponseDto.GetResponse(200, "success", projectService.GetProjectList(pageNum, pageSize));
+        }catch (Exception ex) {
+            LOGGER.error("GetProject", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
-        if (pageSize > 50 || pageSize <= 0) {
-            pageSize = 10;
-        }
-        return ResponseDto.GetResponse(200, "success", projectService.GetProjectList(pageNum, pageSize));
     }
 
     /**
@@ -103,6 +108,7 @@ public class IndexController extends BaseController {
             }
             return result;
         } catch (Exception ex) {
+            LOGGER.error("AddIntention", ex);
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
         }
     }
