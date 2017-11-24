@@ -38,52 +38,52 @@ public class HomeContractController extends BaseController {
     @Resource
     IPaymentPlanService paymentPlanService;
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping("")
-    public String View(HttpServletRequest request){
+    public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
         return this.render("/home/contract");
     }
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseDto GetContract(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetContract(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        if (pageSize<1||pageSize>50){
-            pageSize=5;
+        if (pageSize < 1 || pageSize > 50) {
+            pageSize = 5;
         }
-        if (pageNum<1){
-            pageNum=1;
+        if (pageNum < 1) {
+            pageNum = 1;
         }
         try {
-            PageInfo<MemberContractExtension> result=contractService.GetContractList(currentMember.getMemberId(),pageNum,pageSize);
-            return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS,result);
-        }catch(Exception ex){
+            PageInfo<MemberContractExtension> result = contractService.GetContractList(currentMember.getMemberId(), pageNum, pageSize);
+            return new ResponseDto(200, Message.MEMBER_GET_CONTRACT_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetContract", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping(value = "/{contractId}")
-    public String GetContractDetail(HttpServletRequest request,@PathVariable long contractId) {
+    public String GetContractDetail(HttpServletRequest request, @PathVariable long contractId) {
         request.setAttribute("config", fileConfig);
-        try{
-            MemberContractDetailExtension memberContractDetailExtension=contractService.GetMemberContractDetail(contractId);
-            MemberSessionExtension currentMember=GetCurrentUser(request);
-            if (memberContractDetailExtension.getMemberId()!=currentMember.getMemberId()){
+        try {
+            MemberContractDetailExtension memberContractDetailExtension = contractService.GetMemberContractDetail(contractId);
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (memberContractDetailExtension.getMemberId() != currentMember.getMemberId()) {
                 return render_404();
             }
-            if (memberContractDetailExtension==null){
+            if (memberContractDetailExtension == null) {
                 return render_404();
-            }else{
-                request.setAttribute("contract",memberContractDetailExtension);
+            } else {
+                request.setAttribute("contract", memberContractDetailExtension);
                 return render("home/contract_detail");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("GetContract", ex);
             return render_500();
         }
@@ -91,40 +91,41 @@ public class HomeContractController extends BaseController {
 
     @PostMapping("/payment")
     @ResponseBody
-    public ResponseDto GetPaymentPlan(HttpServletRequest request, @RequestParam long contractId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetPaymentPlan(HttpServletRequest request, @RequestParam long contractId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
         try {
-            MemberContractContentExtension contract=contractService.GetContractContent(contractId);
-            if (contract.getMemberId()!=currentMember.getMemberId()){
+            MemberContractContentExtension contract = contractService.GetContractContent(contractId);
+            if (contract.getMemberId() != currentMember.getMemberId()) {
                 return MemberAuthFailed();
             }
-            List<PaymentPlanExtension> result=paymentPlanService.GetPaymentPlan(contractId);
-            return new ResponseDto(200, Message.MEMBER_GET_PAYMENT_PLAN_SUCCESS,result);
-        }catch(Exception ex){
+
+            List<PaymentPlanExtension> result = paymentPlanService.GetPaymentPlan(contractId);
+            return new ResponseDto(200, Message.MEMBER_GET_PAYMENT_PLAN_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetContract", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping(value = "/content/{contractId}")
-    public String GetContractContent(HttpServletRequest request,@PathVariable long contractId) {
-        try{
-            MemberSessionExtension currentMember=GetCurrentUser(request);
-            MemberContractContentExtension result=contractService.GetContractContent(contractId);
-            if (result.getMemberId()!=currentMember.getMemberId()){
+    public String GetContractContent(HttpServletRequest request, @PathVariable long contractId) {
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            MemberContractContentExtension result = contractService.GetContractContent(contractId);
+            if (result.getMemberId() != currentMember.getMemberId()) {
                 return render_404();
             }
-            if (result==null){
+            if (result == null) {
                 return render_404();
-            }else{
-                request.setAttribute("contract",result);
+            } else {
+                request.setAttribute("contract", result);
                 return render("home/contract_content");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("GetContractContent", ex);
             return render_500();
         }
@@ -132,18 +133,18 @@ public class HomeContractController extends BaseController {
 
     @PostMapping("/sign")
     @ResponseBody
-    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        MemberContractContentExtension contract=contractService.GetContractContent(contractId);
-        if (contract.getMemberId()!=currentMember.getMemberId()){
+        MemberContractContentExtension contract = contractService.GetContractContent(contractId);
+        if (contract.getMemberId() != currentMember.getMemberId()) {
             return MemberAuthFailed();
         }
         try {
-            return contractService.UpdateContractStatuas(contractId,currentMember.getMemberId());
-        }catch(Exception ex){
+            return contractService.UpdateContractStatuas(contractId, currentMember.getMemberId());
+        } catch (Exception ex) {
             LOGGER.error("SignContract", ex);
             return new ResponseDto(500, Message.SERVER_ERROR);
         }

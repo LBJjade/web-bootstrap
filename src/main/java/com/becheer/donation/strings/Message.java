@@ -90,6 +90,11 @@ public class Message {
     public static final String NOCONTRACT_GET_RECENT_SUCCESS = "获取爱心动态成功";
 
     /*
+     *合同捐赠
+     */
+    public static final String CONTRACT_HAD_DONATE = "你已经捐赠过了";
+
+    /*
      *项目分类
      */
     public static final String PROJECT_TYPE_GET_SUCCESS = "获取项目类别成功";

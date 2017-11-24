@@ -149,7 +149,7 @@ public class DonateController extends BaseController {
     @ResponseBody
     @PostMapping("/donateContract")
     // public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
-    public Object donateContract(HttpServletRequest request, @RequestParam Long contractId) {
+    public Object donateContract(HttpServletRequest request,@RequestParam Long paymentPlanId) {
         try {
             //验证是否登陆
             MemberSessionExtension currentMember = GetCurrentUser(request);
@@ -159,39 +159,34 @@ public class DonateController extends BaseController {
             //得到当前用户与用户名
             Long memberId = currentMember.getMemberId();
             String memberName = currentMember.getMemberName();
-            //得到捐赠金额
-            Integer amount=paymentPlanService.GetAmountByContractId(contractId);
-            //写进合同捐赠对象
-            DonateContract donateContract = new DonateContract();
-            donateContract.setAmount(amount);
-            donateContract.setMemberId(memberId);
-            //获得支付计划对象
-            List<PaymentPlanExtension> result=paymentPlanService.GetPaymentPlan(contractId);
-            PaymentPlanExtension paymentPlanExtension=result.get(0);
-            Long paymentPlanId=paymentPlanExtension.getId();
             String ip = IPUtil.getIpAddress(request);
-            //
-            Map<String, String> map = donateService.donateContract(donateContract, ip, memberName,paymentPlanId);
-
-
-            Map<String, String> prepay = new HashMap<>();
-            String returnCode = map.get("return_code");
-            String resultCode = map.get("result_code");
-            String qrCodeURL = null;
-            if (WxPayHelper.codeIsOK(returnCode) && WxPayHelper.codeIsOK(resultCode)) {
-                // responsedTradeType = wxPayResponse.get("trade_type");
-                // preparedId = wxPayResponse.get("prepared_id");
-                qrCodeURL = map.get("code_url");
-                if (qrCodeURL != null) {
-                    String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
-                    prepay.put("qrCodeImageBase64", qrCodeImageBase64);
+            ////
+            Map<String, String> map = donateService.donateContract(memberId, ip, paymentPlanId);
+//            Map<String, String> map = donateService.donateContract(donateContract, ip, memberName,paymentPlanId);
+            if(map == null){
+                return new ResponseDto(501, Message.CONTRACT_HAD_DONATE);
+            }else{
+                Map<String, String> prepay = new HashMap<>();
+                String returnCode = map.get("return_code");
+                String resultCode = map.get("result_code");
+                String qrCodeURL = null;
+                if (WxPayHelper.codeIsOK(returnCode) && WxPayHelper.codeIsOK(resultCode)) {
+                    // responsedTradeType = wxPayResponse.get("trade_type");
+                    // preparedId = wxPayResponse.get("prepared_id");
+                    qrCodeURL = map.get("code_url");
+                    if (qrCodeURL != null) {
+                        String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
+                        prepay.put("qrCodeImageBase64", qrCodeImageBase64);
+                    }
+                    String orderNo = map.get("orderNo");
+                    String amount = map.get("amount");
+                    prepay.put("orderNo", orderNo);
+                    prepay.put("amount", amount);
                 }
-                String orderNo = map.get("orderNo");
-                prepay.put("orderNo", orderNo);
+
+
+                return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
             }
-
-
-            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
         } catch (Exception ex) {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }

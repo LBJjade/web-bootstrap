@@ -19,5 +19,7 @@ public interface IDonateService {
     /**
      * 根据主键id获取合同项目
      */
-    public Map<String, String> donateContract(DonateContract donateContract, String ip, String memberName,Long paymentPlanId);
+    public Map<String, String> donateContract(Long memberId, String ip,Long paymentPlanId);
+
+
 }
