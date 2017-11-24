@@ -35,7 +35,7 @@ public class Message {
     public static final String REGISTER_SMS_SEND_SUCCESS = "短信发送成功";
     public static final String REGISTER_SMS_INDIVIDUAL_TEMPLATE = "短信模板错误";
     public static final String REGISTER_SMS_USE_OUT = "您本天的短信次数已用尽";
-    public static final String REGISTER_SMS_TIME_OUT = "60秒还没过去";
+    public static final String REGISTER_SMS_TIME_OUT = "请不要重复获取短信";
 
 
     /*
@@ -88,6 +88,11 @@ public class Message {
      *无合同捐赠
      */
     public static final String NOCONTRACT_GET_RECENT_SUCCESS = "获取爱心动态成功";
+
+    /*
+     *合同捐赠
+     */
+    public static final String CONTRACT_HAD_DONATE = "你已经捐赠过了";
 
     /*
      *项目分类

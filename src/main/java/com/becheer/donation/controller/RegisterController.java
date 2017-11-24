@@ -70,7 +70,7 @@ public class RegisterController extends BaseController {
             if (memberRegisterExtension == null) {
                 return new ResponseDto(401, "Bad Request");
             }
-            if (pwd == null || pwd.trim().length() < 6) {
+            if (pwd == null || pwd.trim().length() < 8) {
                 return new ResponseDto(402, "error pwd");
             }
             pwd = pwd.trim();
@@ -110,7 +110,6 @@ public class RegisterController extends BaseController {
             if (member != null) {
                 return new ResponseDto(401, Message.REGISTER_MOBILE_EXIST);
             }
-
             return smsService.SendSms(mobile, 1);
         }catch (Exception ex){
             LOGGER.error("SendRegisterSms", ex.getMessage());
@@ -132,6 +131,4 @@ public class RegisterController extends BaseController {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
-
-
 }

@@ -7,12 +7,11 @@ import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
 import com.becheer.donation.model.extension.donate.Donate;
+import com.becheer.donation.model.extension.donate.DonateContract;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
-import com.becheer.donation.service.IDonateService;
-import com.becheer.donation.service.IMemberService;
-import com.becheer.donation.service.INoContractDonateService;
-import com.becheer.donation.service.ISmsService;
+import com.becheer.donation.service.*;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.IPUtil;
 import com.becheer.donation.utils.RegExUtil;
@@ -51,6 +50,9 @@ public class DonateController extends BaseController {
 
     @Resource
     private ISmsService smsService;
+
+    @Resource
+    IPaymentPlanService paymentPlanService;
 
     @ResponseBody
     @PostMapping("/recent")
@@ -143,6 +145,56 @@ public class DonateController extends BaseController {
             return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
         } catch (Exception ex) {
             LOGGER.error("donate", ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
+        }
+    }
+
+    /**
+     *
+     * 合同捐赠
+     */
+    @ResponseBody
+    @PostMapping("/donateContract")
+    // public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
+    public Object donateContract(HttpServletRequest request,@RequestParam Long paymentPlanId) {
+        try {
+            //验证是否登陆
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                MemberAuthFailed();
+            }
+            //得到当前用户与用户名
+            Long memberId = currentMember.getMemberId();
+            String memberName = currentMember.getMemberName();
+            String ip = IPUtil.getIpAddress(request);
+            ////
+            Map<String, String> map = donateService.donateContract(memberId, ip, paymentPlanId);
+//            Map<String, String> map = donateService.donateContract(donateContract, ip, memberName,paymentPlanId);
+            if(map == null){
+                return new ResponseDto(501, Message.CONTRACT_HAD_DONATE);
+            }else{
+                Map<String, String> prepay = new HashMap<>();
+                String returnCode = map.get("return_code");
+                String resultCode = map.get("result_code");
+                String qrCodeURL = null;
+                if (WxPayHelper.codeIsOK(returnCode) && WxPayHelper.codeIsOK(resultCode)) {
+                    // responsedTradeType = wxPayResponse.get("trade_type");
+                    // preparedId = wxPayResponse.get("prepared_id");
+                    qrCodeURL = map.get("code_url");
+                    if (qrCodeURL != null) {
+                        String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
+                        prepay.put("qrCodeImageBase64", qrCodeImageBase64);
+                    }
+                    String orderNo = map.get("orderNo");
+                    String amount = map.get("amount");
+                    prepay.put("orderNo", orderNo);
+                    prepay.put("amount", amount);
+                }
+
+
+                return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
+            }
+        } catch (Exception ex) {
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }

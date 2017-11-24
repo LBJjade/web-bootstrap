@@ -13,4 +13,19 @@ import java.util.List;
 @Component
 public interface PaymentPlanMapper {
     List<PaymentPlanExtension> SelectPaymentPlanByContractId(Long contractId);
+
+    /**
+     * 根据contractId查金额
+     */
+    Integer GetAmountByContractId(Long contractId);
+
+    /**
+     * 根据paymentPlanId查支付计划对象
+     */
+    PaymentPlanExtension selectPaymentPlanByaymentPlanId(Long paymentPlanId);
+
+    /**
+     * 根据paymentPlanId查金额
+     */
+    int updateOrderNo(String orderNo ,Long paymentPlanId);
 }

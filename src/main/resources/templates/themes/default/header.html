@@ -209,6 +209,11 @@
                     validators: {
                         notEmpty: {
                             message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 8,
+//                            max: 4,
+                            message: '密码不能少于8位'
                         }
                     }
                 },

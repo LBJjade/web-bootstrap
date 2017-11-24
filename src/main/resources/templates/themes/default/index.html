@@ -1215,7 +1215,7 @@
             var projectType = $("#sel_project_type").find("option:selected").text();
             var projectName = $("#sel_project").find("option:selected").text();
             if (projectType == "请选择项目类别") {
-                layer.confirm('您还没有选择项目', {
+                layer.confirm('您还没有选择项目类别', {
                     btn: ['重新选择', '取消'] //按钮
                 }, function () {
                     $("#div_qr_donate").model('show');
@@ -1487,7 +1487,7 @@
 
 //        layer.alert(da_money);
         if (projectType == "请选择项目类别") {
-            parent.layer.confirm('您还没有选择项目', {
+            parent.layer.confirm('您还没有选择项目类别', {
                 btn: ['重新选择', '取消'] //按钮
             }, function () {
                 $("#div_de_donate").model('show');
@@ -1505,8 +1505,8 @@
                 $("#div_de_donate").model('hide');
             });
         } else {
-            layer.confirm("您的捐赠意向金额为：<b>" + da_money + "</b>元<br/>" + "捐赠给项目：<b>" + projectType + "</b><br/>" + "提交大额捐赠后会有工作人员与您联系，确定具体捐赠意向", {
-                btn: ['确定捐赠', '重新输入'] //按钮
+            layer.confirm("您的捐赠意向金额为：<b style='color: red'>" + da_money + "</b>元<br/>" + "捐赠的项目类型：<b style='color: red'>" + projectType + "</b><br/><br/>" + "<i style=\"color: red\">*</i> 提交大额捐赠后会有工作人员与您联系，确定具体捐赠意向 <i style=\"color: red\">*</i>", {
+                btn: ['确定提交', '重新输入'] //按钮
             }, function () {
                 $("#div_de_donate").model('hide');
                 //添加捐赠意向

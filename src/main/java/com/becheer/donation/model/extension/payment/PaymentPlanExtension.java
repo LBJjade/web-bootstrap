@@ -46,14 +46,18 @@ public class PaymentPlanExtension {
     }
 
     public String getPaymentDate() {
-        return DateUtils.dateFormat(paymentDate,"yyyy-MM-dd");
+        return DateUtils.dateFormat(paymentDate, "yyyy-MM-dd");
     }
 
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
     }
 
-    public String getAmount() {
+    public long getAmount() {
+        return amount;
+    }
+
+    public String getAmountString() {
         return StringUtil.formatMoney(amount);
     }
 
@@ -61,8 +65,12 @@ public class PaymentPlanExtension {
         this.amount = amount;
     }
 
-    public String getReceivedAmount() {
+    public String getReceivedAmountString() {
         return StringUtil.formatMoney(receivedAmount);
+    }
+
+    public long getReceivedAmount() {
+        return receivedAmount;
     }
 
     public void setReceivedAmount(long receivedAmount) {
@@ -70,7 +78,7 @@ public class PaymentPlanExtension {
     }
 
     public String getDeadLine() {
-        return DateUtils.dateFormat(paymentDate,"yyyy-MM-dd");
+        return DateUtils.dateFormat(paymentDate, "yyyy-MM-dd");
     }
 
     public void setDeadLine(Date deadLine) {
@@ -94,7 +102,7 @@ public class PaymentPlanExtension {
     }
 
     public String getStatusText() {
-        switch(status){
+        switch (status) {
             case 0:
                 return "未捐赠";
             case 1:

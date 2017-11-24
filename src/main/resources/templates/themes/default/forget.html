@@ -198,6 +198,7 @@
                         <input type="password" id="ipt_pw" class="input_pw" placeholder="请输入新密码"
                                style="margin-left: 89px;"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
+                        <p class="pw_long_error error_1" style="color:red;display: none;margin-left: 45px;">密码长度不能低于8位</p>
                     </td>
                 </tr>
                 <tr>
@@ -211,7 +212,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" style="text-align: center">
-                        <button class="btn btn-info btn_pwd" disabled="disabled" style="width: 80px;padding-left: 4px">下一步</button>
+                        <button class="btn btn-info btn_pwd" style="width: 80px;padding-left: 4px">下一步</button>
                     </td>
                 </tr>
             </table>
@@ -310,7 +311,7 @@
             t = setTimeout(function () {
                 Countdown();
             }, 1000);
-            $(".btn_send").html(timer + "秒后可以重新获取");
+            $(".btn_send").html(timer + "秒后重新获取");
 
         } else {
             $(".btn_send").attr("disabled", false);
@@ -320,7 +321,7 @@
 
 
     $(".btn_checkSms").click(function () {
-        loadShade = layer.load(1, {shade: [0.1, '#fff']});
+
         var smsCode = $(".input_code").val();
         mobile = $("#ipt_mobile").val();
 //        registerType=$("input[name='input_register_type']:checked").val();
@@ -328,6 +329,7 @@
         registerType = $("input[name='input_register_type']:checked").val();
         var isPhoneOk = /1[34578]\d{9}$/;
         if (isPhoneOk.test($(".ipt_mobile").val()) && $(".input_code").val() != "") {
+            loadShade = layer.load(1, {shade: [0.1, '#fff']});
             $.ajax({
                 url: '/forget/validate',
                 type: 'post',
@@ -347,15 +349,17 @@
                     }
                 }
             })
+        }else{
+            layer.alert("您填写的信息有误。");
         }
     });
 
 
     $(".btn_pwd").click(function () {
-        loadShade = layer.load(1, {shade: [0.1, '#fff']});
         var pwd = $("#ipt_pwd").val();
         newPw = pwd;
-        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val() && $(".input_pw").val().length >= 8) {
+            loadShade = layer.load(1, {shade: [0.1, '#fff']});
             $.ajax({
                 url: '/forget/submit',
                 type: 'post',
@@ -372,13 +376,15 @@
                     }
                 }
             })
+        }else{
+            layer.alert("您填写的密码有误。");
         }
     });
 
 
     //手机
     $(".ipt_mobile").blur(function () {
-        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
+        var mobile = /1[34578]\d{9}$/;
         if (!mobile.test($(".ipt_mobile").val())) {
             $(".mobile_error").show();
         } else {
@@ -398,21 +404,25 @@
     //密码
     $(".input_pw").blur(function () {
         if ($(".input_pw").val() == "") {
+            $(".pw_long_error").hide();
             $(".pw_error_0").hide();
             $(".pw_error").show();
         } else {
+            $(".pw_long_error").hide();
             $(".pw_error").hide();
-//            if ($(".input_pw").val().length < 6) {
-//                $(".pw_error_0").show();
-//            } else {
-//                $(".pw_error_0").hide();
-//            }
+            if($(".input_pw").val().length < 8){
+                $(".pw_error").hide();
+                $(".pw_long_error").show();
+            }else{
+                $(".pw_error").hide();
+                $(".pw_long_error").hide();
+            }
         }
-        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
-            $(".btn_pwd").attr("disabled", false);
-        } else {
-            $(".btn_pwd").attr("disabled", true);
-        }
+//        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+//            $(".btn_pwd").attr("disabled", false);
+//        } else {
+//            $(".btn_pwd").attr("disabled", true);
+//        }
     })
 
 
@@ -428,11 +438,11 @@
                 $(".p_error").hide();
             }
         }
-        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
-            $(".btn_pwd").attr("disabled", false);
-        } else {
-            $(".btn_pwd").attr("disabled", true);
-        }
+//        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val()) {
+//            $(".btn_pwd").attr("disabled", false);
+//        } else {
+//            $(".btn_pwd").attr("disabled", true);
+//        }
     })
 
 

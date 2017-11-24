@@ -130,7 +130,7 @@ public class ForgetController extends BaseController {
     @ResponseBody
     public ResponseDto ChangePw(HttpServletRequest request, @RequestParam String newPw, @RequestParam String mobile) {
         try {
-            if (newPw == null || newPw.trim().length() < 6) {
+            if (newPw == null || newPw.trim().length() < 8) {
                 return new ResponseDto(403, "error pwd");
             }
             newPw = newPw.trim();

@@ -24,4 +24,9 @@ public class PaymentPlanServiceImpl implements IPaymentPlanService {
     public List<PaymentPlanExtension> GetPaymentPlan(Long contractId) {
         return paymentPlanMapper.SelectPaymentPlanByContractId(contractId);
     }
+
+    @Override
+    public Integer GetAmountByContractId(Long contractId) {
+        return paymentPlanMapper.GetAmountByContractId(contractId);
+    }
 }

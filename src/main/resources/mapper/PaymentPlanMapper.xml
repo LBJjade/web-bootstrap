@@ -32,5 +32,44 @@
             AND ref_record_id=#{contractId,jdbcType=BIGINT}
     </select>
 
+    <select id="GetAmountByContractId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+        SELECT
+        amount
+        FROM
+        dnt_payment_plan
+        WHERE
+        enable_=1
+        AND ref_table='dnt_contract'
+        AND ref_record_id=#{contractId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="selectPaymentPlanByaymentPlanId" parameterType="java.lang.Long" resultMap="MemberPaymentPlanListMapper">
+        SELECT
+            id_,
+            title,
+            payment_date,
+            amount,
+            received_amount,
+            deadline,
+            enable_,
+            status
+        FROM
+            dnt_payment_plan
+        WHERE
+            enable_=1
+            AND ref_table='dnt_contract'
+            AND id_=#{paymentPlanId,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateOrderNo">
+        update
+        dnt_payment_plan
+        SET
+        order_no = #{param1,jdbcType=VARCHAR}
+        WHERE
+        id_=#{param2,jdbcType=BIGINT}
+    </update>
+
 
 </mapper>

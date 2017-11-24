@@ -1,9 +1,13 @@
 package com.becheer.donation.service.impl;
 
+import com.becheer.donation.dao.DntPaymentPlanMapper;
+import com.becheer.donation.dao.PaymentPlanMapper;
 import com.becheer.donation.model.AliIpDetail;
 import com.becheer.donation.model.DntNoContractDonate;
 import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.extension.donate.Donate;
+import com.becheer.donation.model.extension.donate.DonateContract;
+import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.service.IDntNoContractDonateService;
 import com.becheer.donation.service.IDntPaymentPlanService;
 import com.becheer.donation.service.IDonateService;
@@ -32,6 +36,10 @@ public class DonateServiceImpl implements IDonateService {
 
     @Resource
     private IWxPayService payService;
+
+    @Resource
+    private PaymentPlanMapper paymentPlanMapper;
+
 
     public Map<String, String> donate(Donate donate, String ip, String memberName) {
         Integer projectTypeId = donate.getProjectTypeId();
@@ -119,6 +127,51 @@ public class DonateServiceImpl implements IDonateService {
         Map<String, String> map = payService.pay(orderNo, dntPaymentPlan.getId().toString(), amount);
         map.put("orderNo", orderNo);
         return map;
+    }
+
+//    @Override
+//    public Map<String, String> donateContract(DonateContract donateContract, String ip, String memberName, Long paymentPlanId) {
+//        Long memberId = donateContract.getMemberId();
+//        Integer amount = donateContract.getAmount();
+//        DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
+//        String orderNo = GenerateUtil.genOrderNo();
+//        String productId = String.valueOf(paymentPlanId);
+////        String productId=dntPaymentPlan.getId().toString();
+//        Long chu = new Long(100);
+//        Long totalFee = amount / chu;
+//        Map<String, String> map = payService.pay(orderNo, productId, amount);
+//        map.put("orderNo", orderNo);
+//        return map;
+////        return null;
+//    }
+
+    @Override
+    public Map<String, String> donateContract(Long memberId, String ip, Long paymentPlanId) {
+        //Ip验证
+
+        //生成订单号
+        String orderNo = GenerateUtil.genOrderNo();
+
+        //写进支付计划
+        paymentPlanMapper.updateOrderNo(orderNo,paymentPlanId);
+
+        //得到支付计划捐赠金额
+        PaymentPlanExtension paymentPlanExtension = paymentPlanMapper.selectPaymentPlanByaymentPlanId(paymentPlanId);
+        Long totalFee=paymentPlanExtension.getAmount();
+//        Long totalFee=Long.parseLong(amount);
+        String amount=String.valueOf(totalFee);
+        //验证是否已经捐赠
+        Long receivedAmount=paymentPlanExtension.getReceivedAmount();
+        if(receivedAmount == 0){
+            String productId = String.valueOf(paymentPlanId);
+            Map<String, String> map = payService.pay(orderNo, productId, totalFee);
+            map.put("orderNo", orderNo);
+            map.put("amount",amount);
+            return map;
+        }else{
+            return null;
+        }
+
     }
 }
 
