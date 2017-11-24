@@ -94,7 +94,7 @@
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
+                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'+r"/>
                     <br/>
                     <br/>
                     <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
@@ -164,10 +164,7 @@
 <script type="text/javascript">
     /*<![CDATA[*/
     //会员信息
-    var license;
     var licenseUrl;
-
-
 
     $(document).ready(function () {
         f_GetmemberInfo();

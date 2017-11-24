@@ -6,7 +6,9 @@ import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
+import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -87,7 +89,11 @@ public class MemberController extends BaseController {
             if (StringUtils.isEmpty(imgStr)) {
                 return new ResponseDto(400, Message.MEMBER_AVATOR_NULL);
             }
-            return memberService.uploadAvator(currentMember.getMemberId(), imgStr);
+            ResponseDto result = memberService.uploadAvator(currentMember.getMemberId(), imgStr);
+            if (result.getCode()==200){
+                RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_MEMBER + ":" + currentMember.getMemberId());
+            }
+            return result;
         }catch (Exception ex){
             LOGGER.error("uploadAvator", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
