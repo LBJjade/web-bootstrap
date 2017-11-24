@@ -1334,13 +1334,9 @@
             $("#autoCloseAfterPaidTimerText").html(autoCloseTimeout);
             $("#qrCodeImageId").attr("src", "/image/play.jpg");
         } else {
-            alert(1);
             clearInterval(autoCloseAfterPaidInterval);
-            alert(2);
             $(".close_qr").click();
-            alert(3);
             window.location.reload();
-            alert(4);
         }
     }
 
