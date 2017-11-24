@@ -98,6 +98,6 @@
     </update>
 
     <select id="updateDonate" resultType="java.util.Map" statementType="CALLABLE">
-        call updateDonate(#{param1})
+        call updateDonate(#{param1},#{param2},#{param3})
     </select>
 </mapper>

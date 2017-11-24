@@ -70,6 +70,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
         String returnCode = notify.get("return_code");
         String returnMsg = notify.get("return_msg");
+
         if ("FAIL".equals(returnCode)) {
             returnToWxPay.put("return_code", "SUCCESS");
             returnToWxPay.put("return_msg", "OK");
@@ -156,9 +157,8 @@ public class WxPayServiceImpl implements IWxPayService {
         if (!Strings.isNullOrEmpty(timeEnd)) {
             paymentDate = DateUtils.convertToDate(timeEnd);
         }
-
         paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo,  paymentDate, totalFee);
-        paymentPlanService.updateDonate(outTradeNo);
+        paymentPlanService.updateDonate(outTradeNo,paymentDate,totalFee);
 
 
 
