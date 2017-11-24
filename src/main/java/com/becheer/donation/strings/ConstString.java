@@ -24,8 +24,14 @@ public class ConstString {
     public static final String REDIS_BACKEDN_KEY = "iBase4J";
 
     /**
-     * 表名
+     * 表名，Redis用
      */
     //会员表
     public static final String TABLE_MEMBER = "dntMember";
+
+    //合同表
+    public static final String TABLE_CONTRACT = "dntContract";
+
+    //申诉
+    public static final String TABLE_APPEAL = "dntAppeal";
 }

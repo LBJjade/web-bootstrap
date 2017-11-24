@@ -1,5 +1,6 @@
 package com.becheer.donation.utils;
 
+import com.becheer.donation.strings.ConstString;
 import org.thymeleaf.expression.Maps;
 import redis.clients.jedis.Jedis;
 
@@ -12,7 +13,34 @@ import java.util.Map;
 * Creator : xiaokepu
 * Date : 2017-10-19
 */
-public class RedisUtil extends RedisProvider{
+public class RedisUtil extends RedisProvider {
+
+    /**
+     * 删除会员Redis缓存
+     *
+     * @param memberId
+     */
+    public static void delMemberKey(long memberId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_MEMBER + ":" + memberId);
+    }
+
+    /**
+     * 删除合同Redis缓存
+     *
+     * @param contractId
+     */
+    public static void delContractkey(long contractId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT + ":" + contractId);
+    }
+
+    /**
+     * 删除合同Redis缓存
+     *
+     * @param appealId
+     */
+    public static void delAppealkey(long appealId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_APPEAL + ":" + appealId);
+    }
 
     public static String SetKey(String key, String value) {
         Jedis jedis = null;

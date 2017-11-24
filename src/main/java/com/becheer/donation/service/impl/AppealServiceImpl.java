@@ -13,6 +13,7 @@ import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
 import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import com.becheer.donation.service.IAppealService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.RedisUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -27,21 +28,21 @@ public class AppealServiceImpl implements IAppealService {
     AppealMapper appealMapper;
 
     @Override
-    public PageInfo<MemberAppealExtension> GetMemberAppeal(long memberId,int pageNum,int pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<MemberAppealExtension> data=appealMapper.SelectAppealByMemberId(memberId);
-        PageInfo<MemberAppealExtension> pageInfo=new PageInfo<MemberAppealExtension>(data);
+    public PageInfo<MemberAppealExtension> GetMemberAppeal(long memberId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<MemberAppealExtension> data = appealMapper.SelectAppealByMemberId(memberId);
+        PageInfo<MemberAppealExtension> pageInfo = new PageInfo<MemberAppealExtension>(data);
         return pageInfo;
     }
 
     @Override
-    public MemberAppealDetailExtension GetMemberAppealDetail(long appealId,long memberId) {
-        return appealMapper.SelectAppealDetail(appealId,memberId);
+    public MemberAppealDetailExtension GetMemberAppealDetail(long appealId, long memberId) {
+        return appealMapper.SelectAppealDetail(appealId, memberId);
     }
 
     @Override
-    public  void InsertAppeal(String title,String method, String content,long contractProjectId,long projectId,long memberId) {
-        AppealDetailExtension appealdetail=new AppealDetailExtension();
+    public void InsertAppeal(String title, String method, String content, long contractProjectId, long projectId, long memberId) {
+        AppealDetailExtension appealdetail = new AppealDetailExtension();
         appealdetail.setAppealTitle(title);
         appealdetail.setAppealMethod(method);
         appealdetail.setAppealContent(content);
@@ -53,11 +54,12 @@ public class AppealServiceImpl implements IAppealService {
 
     @Override
     public ResponseDto UpdateAppealStatus(long appealId, int status) {
-        int result = appealMapper.updateAppealStatus(appealId,status);
-        if (result>0){
+        int result = appealMapper.updateAppealStatus(appealId, status);
+        if (result > 0) {
+            RedisUtil.delAppealkey(appealId);
             return new ResponseDto(200, Message.ACTION_SUCCESS);
-        }else{
-            return new ResponseDto(500,Message.ACTION_FAILED);
+        } else {
+            return new ResponseDto(500, Message.ACTION_FAILED);
         }
     }
 }

@@ -188,7 +188,7 @@ public class MemberServiceImpl implements IMemberService {
         }
         int result = memberMapper.UpdateMember(member);
         if (result > 0) {
-            RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_MEMBER + ":" + member.getId());
+            RedisUtil.delMemberKey(member.getId());
             return new ResponseDto(200, Message.MEMBER_UPDATE_SUCCESS);
         } else {
             return new ResponseDto(500, Message.MEMBER_UPDATE_ERROR);
@@ -203,7 +203,7 @@ public class MemberServiceImpl implements IMemberService {
             OssUtil.addByteArray(bytes, fileName);
             int result = memberMapper.updateAvator(fileName, memberId);
             if (result > 0) {
-                return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS,fileName);
+                return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS, fileName);
             } else {
                 return new ResponseDto(500, Message.MEMBER_AVATOR_UPLOAD_ERROR);
             }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -40,7 +41,7 @@ public class MemberController extends BaseController {
                 return MemberAuthFailed();
             }
             return memberService.GetMemberById(memberId);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("Submit", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -57,7 +58,7 @@ public class MemberController extends BaseController {
             memberInfoExtension.setValidation(2);
             memberInfoExtension.setId(currentMember.getMemberId());
             return memberService.UpdateMemberInfo(memberInfoExtension);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("UpdateMember", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -72,7 +73,7 @@ public class MemberController extends BaseController {
             MemberInfoExtension member = memberService.GetMemberExtensionById(currentMember.getMemberId());
             request.setAttribute("member", member);
             return this.render("home/avator_upload");
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             LOGGER.error("avatorUpload", ex.getMessage());
             return render_404();
         }
@@ -90,11 +91,11 @@ public class MemberController extends BaseController {
                 return new ResponseDto(400, Message.MEMBER_AVATOR_NULL);
             }
             ResponseDto result = memberService.uploadAvator(currentMember.getMemberId(), imgStr);
-            if (result.getCode()==200){
-                RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_MEMBER + ":" + currentMember.getMemberId());
+            if (result.getCode() == 200) {
+                RedisUtil.delMemberKey(currentMember.getMemberId());
             }
             return result;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("uploadAvator", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
