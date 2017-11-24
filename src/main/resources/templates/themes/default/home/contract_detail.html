@@ -226,7 +226,7 @@
                     <td>{{item.deadLine}}</td>
                     <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
                     <td>{{item.statusText}}</td>
-                    <td><a onclick="f_openDoanteLayer()" id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
+                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status)" id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
             <div class="col-sm-10 p_no_data" style="margin-bottom: 40px;">
@@ -365,14 +365,14 @@
     }
 
 
-    function f_openDoanteLayer() {
-        if ($("#donate").html() == "捐赠") {
+    function f_openDoanteLayer(id,status) {
+        if (status === 0) {
             $("#div_cf_donate").model('show');
             $.ajax({
                 url: '/donate/donateContract',
                 type: 'post',
                 data: {
-                    paymentPlanId: paymentPlanId
+                    paymentPlanId: id
                 },
                 dataType: 'json',
                 success:
@@ -380,7 +380,7 @@
                         if (data.code === 200) {
                             $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
                             $("#orderNo").html(data.result.orderNo);
-                            amount=data.result.amount;
+                            amount = data.result.amount;
                             var length = amount.length;
                             amount = amount.substring(0, length - 2);
                             $("#donateAmount").html(amount);
@@ -433,7 +433,7 @@
                     if (data.code === 200) {
                         $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
                         $("#orderNo").html(data.result.orderNo);
-                        amount=data.result.amount;
+                        amount = data.result.amount;
                         var length = amount.length;
                         amount = amount.substring(0, length - 2);
                         $("#donateAmount").html(amount);
@@ -480,9 +480,13 @@
             $("#autoCloseAfterPaidTimerText").html(autoCloseTimeout);
             $("#qrCodeImageId").attr("src", "");
         } else {
+            alert(1);
             clearInterval(autoCloseAfterPaidInterval);
+            alert(2);
             $(".close_qr").click();
+            alert(3);
             window.location.reload();
+            alert(4);
         }
     }
 

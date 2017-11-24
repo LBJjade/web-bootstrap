@@ -60,7 +60,7 @@ public class IndexController extends BaseController {
                 pageSize = 10;
             }
             return ResponseDto.GetResponse(200, "success", projectService.GetProjectList(pageNum, pageSize));
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             LOGGER.error("GetProject", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -88,25 +88,32 @@ public class IndexController extends BaseController {
     @ResponseBody
     public ResponseDto AddIntention(HttpServletRequest request, @RequestParam Long projectId, @RequestParam Long projectTypeId, @RequestParam long intentionAmount, @RequestParam String contactPhone, @RequestParam String remark) {
         try {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
-            if (currentMember==null){
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            int MemberValidation = currentMember.getValidation();
+            if (currentMember == null) {
                 return MemberAuthFailed();
+            } else if (MemberValidation != 3) {
+                return MemberAuthFailed();
+            } else {
+                //获取memberId
+                Long memberId = currentMember.getMemberId();
+                Intention intention = new Intention();
+                intention.setProjectId(projectId);
+                intention.setProjectId(projectId);
+                intention.setProjectTypeId(projectTypeId);
+                intention.setIntentionAmount(intentionAmount);
+                intention.setContactPhone(contactPhone);
+                intention.setRemark(remark);
+                intention.setEnable(1);
+                intention.setStatus(0);
+                intention.setMemberId(currentMember.getMemberId());
+                ResponseDto result = intentionExtensionService.AddIntentionExtension(intention);
+                if (result.getCode() == 200) {
+                    progressService.AddProgress("您提交了捐赠意向", "您提交了捐赠意向", "dnt_intention", (long) result.getResult(), currentMember.getMemberId(), 1);
+                }
+                return result;
             }
-            Intention intention=new Intention();
-            intention.setProjectId(projectId);
-            intention.setProjectId(projectId);
-            intention.setProjectTypeId(projectTypeId);
-            intention.setIntentionAmount(intentionAmount);
-            intention.setContactPhone(contactPhone);
-            intention.setRemark(remark);
-            intention.setEnable(1);
-            intention.setStatus(0);
-            intention.setMemberId(currentMember.getMemberId());
-            ResponseDto result = intentionExtensionService.AddIntentionExtension(intention);
-            if (result.getCode()==200){
-                progressService.AddProgress("您提交了捐赠意向","您提交了捐赠意向","dnt_intention",(long)result.getResult(),currentMember.getMemberId(),1);
-            }
-            return result;
+
         } catch (Exception ex) {
             LOGGER.error("AddIntention", ex);
             return ResponseDto.GetResponse(500, Message.SERVER_ERROR);

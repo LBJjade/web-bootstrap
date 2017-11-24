@@ -1332,7 +1332,7 @@
         if (autoCloseTimeout > 1) {
             autoCloseTimeout -= 1;
             $("#autoCloseAfterPaidTimerText").html(autoCloseTimeout);
-            $("#qrCodeImageId").attr("src", "");
+            $("#qrCodeImageId").attr("src", "/image/play.jpg");
         } else {
             clearInterval(autoCloseAfterPaidInterval);
             $(".close_qr").click();
@@ -1505,7 +1505,7 @@
                 $("#div_de_donate").model('hide');
             });
         } else {
-            layer.confirm("您的捐赠意向金额为：<b style='color: red'>" + da_money + "</b>元<br/>" + "捐赠的项目类型：<b style='color: red'>" + projectType + "</b><br/><br/>" + "<i style=\"color: red\">*</i> 提交大额捐赠后会有工作人员与您联系，确定具体捐赠意向 <i style=\"color: red\">*</i>", {
+            layer.confirm("您的捐赠意向金额为：<b style='color: red'>" + da_money + "</b>元<br/>" + "捐赠的项目类型：<b style='color: red'>" + projectType + "</b><br/><br/>" + "<i style=\"color: red\">*</i> 提交大额捐赠后会有工作人员与您联系，确定具体捐赠细节 <i style=\"color: red\">*</i>", {
                 btn: ['确定提交', '重新输入'] //按钮
             }, function () {
                 $("#div_de_donate").model('hide');
@@ -1526,11 +1526,11 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.code == 200) {
-                            layer.alert("提交捐赠成功。", 3000, function () {
+                            layer.alert("提交捐赠<b style='color: red'>成功</b>。", 3000, function () {
                                 window.location.href = "/home/apply";
                             });
                         } else {
-                            layer.alert("提交捐赠失败。", 3000, function () {
+                            layer.alert("提交捐赠<b style='color: red'>失败</b>。", 3000, function () {
                                 window.location.href = "/index";
                             });
                         }
