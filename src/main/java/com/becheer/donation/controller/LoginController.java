@@ -82,7 +82,7 @@ public class LoginController extends BaseController {
                 request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                 //自动登录，设置cookie
                 if (autoLogin) {
-                    Cookie cookie = new Cookie("member", memberSessionExtension.getMemberId() + "|" + GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
+                    Cookie cookie = new Cookie(ConstString.LOGIN_COOKIE_NAME, memberSessionExtension.getMemberId() + "|" + GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
                     cookie.setMaxAge(2592000);
                     cookie.setPath("/");
                     response.addCookie(cookie);
@@ -131,7 +131,7 @@ public class LoginController extends BaseController {
                 request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                 //用户勾选了自动登录，登录
                 if (autoLogin) {
-                    Cookie cookie = new Cookie("accepter", memberSessionExtension.getMemberId() + "|" + GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
+                    Cookie cookie = new Cookie(ConstString.LOGIN_COOKIE_NAME, memberSessionExtension.getMemberId() + "|" + GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
                     cookie.setMaxAge(2592000);
                     cookie.setPath("/");
                     response.addCookie(cookie);

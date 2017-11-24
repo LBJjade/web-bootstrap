@@ -190,7 +190,7 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var fileRoot =/*[[${config.getFileRoot()}]]*/;
-    var memberInfo =/*[[${session.member==null?null:session.member}]]*/;
+    var memberInfo =/*[[${session.sjax_member_session}]]*/;
 
     $(document).ready(function () {
         f_autoLogin();
