@@ -94,7 +94,7 @@
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'+r"/>
+                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'"/>
                     <br/>
                     <br/>
                     <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
@@ -233,8 +233,8 @@
         });
     }
 
-    function f_refreshImg() {
-        $("#img_avator").attr("src", $("#img_avator").attr("src")+"&r="+Math.random()*4);
+    function f_refreshImg(avatorName) {
+        $("#img_avator").attr("src", fileRoot+avatorName+'?x-oss-process=image/resize,m_lfit,h_200,w_200+&r='+Math.random()*4);
     }
     /*]]>*/
 </script>

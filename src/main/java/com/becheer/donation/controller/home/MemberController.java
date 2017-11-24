@@ -2,22 +2,18 @@ package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
-import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.Message;
-import com.becheer.donation.utils.OssUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.BASE64Decoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 /*
 * MemberController
@@ -70,7 +66,9 @@ public class MemberController extends BaseController {
     public String avatorUpload(HttpServletRequest request) {
         try {
             request.setAttribute("config", fileConfig);
-            request.setAttribute("member", GetCurrentUser(request));
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            MemberInfoExtension member = memberService.GetMemberExtensionById(currentMember.getMemberId());
+            request.setAttribute("member", member);
             return this.render("home/avator_upload");
         }catch (Exception ex) {
             LOGGER.error("avatorUpload", ex.getMessage());

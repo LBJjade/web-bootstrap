@@ -48,8 +48,8 @@
         }
 
         /*#table_content_info input {*/
-            /*height: 25px;*/
-            /*width: 220px;*/
+        /*height: 25px;*/
+        /*width: 220px;*/
         /*}*/
 
         #ipt_license {
@@ -150,23 +150,22 @@
                         <tr>
                             <td>营业执照：</td>
                             <td>
-                                <input type="file" id="ipt_license" class="input_img" onchange="f_preImg()"
-                                       accept="image/png,image/jpeg"/>
-                                <img id="img_license"
-                                     th:src="${config.getFileRoot()+(member.getLicense()==null?'image/license/license.png':member.getLicense())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
-                                     height="120" width="120" style="margin-bottom: 10px"/>
+                                <input type="file" id="ipt_license" class="input_img" onchange="f_preImg()" accept="image/png,image/jpeg"/>
+                                <img id="img_license" th:src="${config.getFileRoot()+(member.getLicense()==null?'image/license/license.png':member.getLicense())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
                                 <p>请选择营业执照照片,照片大小不超过2M</p>
                             </td>
                         </tr>
                         <tr>
                             <td>曾参与的公益项目：</td>
-                            <td><textarea id="ipt_project" class="form-control no_border_radius" rows="5"
-                                          style="margin: 10px 0px 10px 0px;"></textarea></td>
+                            <td>
+                                <textarea id="ipt_project" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                            </td>
                         </tr>
                         <tr>
                             <td>公司简介：</td>
-                            <td><textarea id="ipt_summary" class="form-control no_border_radius" rows="5"
-                                          style="margin: 10px 0px 10px 0px;"></textarea></td>
+                            <td>
+                                <textarea id="ipt_summary" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                            </td>
                         </tr>
                     </table>
                     <button class="btn btn-info btn_save" style="margin-top: 20px">保存</button>
@@ -263,7 +262,7 @@
 
     $(".btn_save").click(function () {
         loadShade = layer.load(1, {
-            shade: [0.1,'#fff']
+            shade: [0.1, '#fff']
         });
         var companyName = $("#ipt_name").val();
         var organizationCode = $("#ipt_code").val();
@@ -310,9 +309,10 @@
         });
     }
 
-    function f_refreshImg() {
-        $("#img_avator").attr("src", $("#img_avator").attr("src")+"&r="+Math.random()*4);
+    function f_refreshImg(avatorName) {
+        $("#img_avator").attr("src", fileRoot + avatorName + '?x-oss-process=image/resize,m_lfit,h_200,w_200+&r=' + Math.random() * 4);
     }
+
     /*]]>*/
 </script>
 </body>

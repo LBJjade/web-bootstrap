@@ -203,7 +203,7 @@ public class MemberServiceImpl implements IMemberService {
             OssUtil.addByteArray(bytes, fileName);
             int result = memberMapper.updateAvator(fileName, memberId);
             if (result > 0) {
-                return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS);
+                return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS,fileName);
             } else {
                 return new ResponseDto(500, Message.MEMBER_AVATOR_UPLOAD_ERROR);
             }
