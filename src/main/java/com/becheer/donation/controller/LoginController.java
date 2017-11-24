@@ -127,15 +127,8 @@ public class LoginController extends BaseController {
                 memberSessionExtension.setRole(3);
                 memberSessionExtension.setValidation(3);
                 memberSessionExtension.setAvator(accepter.getAvator());
-                //移除捐赠人Session
-//                request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
-//                //写受捐人Session
-//                request.getSession().setAttribute(ConstString.ACCEPTER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
-                //移除捐赠人Cookie
-                Cookie memberCookie = new Cookie("member", null);
-                memberCookie.setMaxAge(0);
-                memberCookie.setPath("/");
-                response.addCookie(memberCookie);
+                //写受捐人Session
+                request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                 //用户勾选了自动登录，登录
                 if (autoLogin) {
                     Cookie cookie = new Cookie("accepter", memberSessionExtension.getMemberId() + "|" + GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
