@@ -79,7 +79,7 @@ public class LoginController extends BaseController {
                 memberSessionExtension.setRole(member.getRole());
                 memberSessionExtension.setValidation(member.getValidation());
                 memberSessionExtension.setAvator(member.getAvatorImg());
-                request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
+                request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                 //自动登录，设置cookie
                 if (autoLogin) {
                     Cookie cookie = new Cookie("member", memberSessionExtension.getMemberId() + "|" + GenerateUtil.genLoginCookie(memberSessionExtension.getMemberId()));
@@ -128,9 +128,9 @@ public class LoginController extends BaseController {
                 memberSessionExtension.setValidation(3);
                 memberSessionExtension.setAvator(accepter.getAvator());
                 //移除捐赠人Session
-                request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
-                //写受捐人Session
-                request.getSession().setAttribute(ConstString.ACCEPTER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
+//                request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
+//                //写受捐人Session
+//                request.getSession().setAttribute(ConstString.ACCEPTER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
                 //移除捐赠人Cookie
                 Cookie memberCookie = new Cookie("member", null);
                 memberCookie.setMaxAge(0);
@@ -157,8 +157,8 @@ public class LoginController extends BaseController {
     @ResponseBody
     public ResponseDto Logout(HttpServletRequest request, HttpServletResponse response) {
         try {
-            request.getSession().removeAttribute(ConstString.MEMBER_SESSION_CODE);
-            Cookie cookie = new Cookie("member", null);
+            request.getSession().removeAttribute(ConstString.LOGIN_SESSION_NAME);
+            Cookie cookie = new Cookie(ConstString.LOGIN_COOKIE_NAME, null);
             cookie.setMaxAge(0);
             cookie.setPath("/");
             response.addCookie(cookie);
@@ -184,7 +184,7 @@ public class LoginController extends BaseController {
                     memberSessionExtension.setRole(member.getRole());
                     memberSessionExtension.setValidation(member.getValidation());
                     memberSessionExtension.setAvator(member.getAvatorImg());
-                    request.getSession().setAttribute(ConstString.MEMBER_SESSION_CODE, JSON.toJSON(memberSessionExtension));
+                    request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                     memberService.updateLoginInfo(request.getRemoteAddr(), member.getId());
                     return new ResponseDto(200, Message.LOGIN_SUCCESS, memberSessionExtension);
                 }

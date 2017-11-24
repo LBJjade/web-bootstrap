@@ -14,11 +14,11 @@ public class ConstString {
     //登录二维码SessionKey
     public static final String LOGIN_VERIFY_CODE = "LoginVerifyCode";
 
-    //捐赠人登录Session
-    public static final String MEMBER_SESSION_CODE = "member";
+    //登录Session
+    public static final String LOGIN_SESSION_NAME = "sjax_member_session";
 
-    //受捐人登录Session
-    public static final String ACCEPTER_SESSION_CODE = "accepter";
+    //登录Cookie
+    public static final String LOGIN_COOKIE_NAME = "sjax_member_cookie";
 
     //后台Redis键前缀
     public static final String REDIS_BACKEDN_KEY = "iBase4J";
