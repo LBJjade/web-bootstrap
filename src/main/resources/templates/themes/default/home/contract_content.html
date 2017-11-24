@@ -203,16 +203,19 @@
         }
 
         .info_button {
-            font-size: 12px;
-            text-align: center;
-            background-color: #fcfcfc;
-            border-color: #f0f0f0;
-            border-radius: 0px;
-            border-style: solid;
-            border-width: 1px;
-            color: #00a0e9;
-            min-width: 86px;
-            height: 30px;
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            width: 56px;
+            height: 35px;
+            line-height: 30px;
+            background: #439fe4;
+            color: #fff;
+            font-family: 'Microsoft YaHei';
+            font-size: 14px;
+            font-weight: bold;
+            border: 0;
+            margin-left: 10px;
         }
     </style>
     <style type="text/css" media="print">
@@ -274,7 +277,7 @@
     </div>
         <div class="v-h">
             <div id="div_sign" th:if="${(contract.getStatus()==5||contract.getStatus()==6)&&contract.getaSignTime()==null}" class="w">
-                <input type="checkbox" id="ipt_agree" />我已详细阅读并同意合同条款
+                <span style="font-size: 14px;"><input type="checkbox" id="ipt_agree" />&nbsp;&nbsp;我已详细阅读并同意合同条款</span>
                 <button class="info_button" id="btn_sign" onclick="f_sign()">签订</button>
             </div>
         </div>
