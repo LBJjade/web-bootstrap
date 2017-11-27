@@ -271,6 +271,7 @@
 <div th:replace="themes/default/footer::footer"></div>
 
 <!--全局JS-->
+<script th:src="@{/js/validation.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
@@ -327,8 +328,8 @@
 //        registerType=$("input[name='input_register_type']:checked").val();
         registerType = false;
         registerType = $("input[name='input_register_type']:checked").val();
-        var isPhoneOk = /1[34578]\d{9}$/;
-        if (isPhoneOk.test($(".ipt_mobile").val()) && $(".input_code").val() != "") {
+//        var isPhoneOk = /1[34578]\d{9}$/;
+        if (f_phoneValidate($(".ipt_mobile").val()) && $(".input_code").val() != "") {
             loadShade = layer.load(1, {shade: [0.1, '#fff']});
             $.ajax({
                 url: '/forget/validate',
@@ -384,8 +385,8 @@
 
     //手机
     $(".ipt_mobile").blur(function () {
-        var mobile = /1[34578]\d{9}$/;
-        if (!mobile.test($(".ipt_mobile").val())) {
+//        var mobile = /1[34578]\d{9}$/;
+        if (!f_phoneValidate($(".ipt_mobile").val())) {
             $(".mobile_error").show();
         } else {
             $(".mobile_error").hide();

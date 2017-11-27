@@ -104,6 +104,28 @@ public class StringUtil {
     }
 
     /**
+     * 加密会员名
+     *
+     * @param memberName
+     * @return
+     */
+    public static String getEncryptedMemberName(String memberName) {
+        if (isNull(memberName)){
+            return "";
+        }else{
+            int length=memberName.length();
+            switch (length){
+                case 1:
+                    return memberName+"*";
+                case 2:
+                    return memberName.substring(0,1)+"*";
+                default:
+                    return memberName.substring(0,1)+"*" + memberName.substring(memberName.length()-1);
+            }
+        }
+    }
+
+    /**
      * unicode 转换成 中文
      */
     public static String decodeUnicode(String unicodeString) {

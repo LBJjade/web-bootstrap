@@ -100,7 +100,8 @@
           contact_phone,
           enable_,
           create_time,
-          status
+          status,
+          remark_
         )
         VALUES
         (
@@ -111,7 +112,8 @@
           #{contactPhone,jdbcType=BIGINT},
           #{enable,jdbcType=BIGINT},
           now(),
-          #{status,jdbcType=INTEGER}
+          #{status,jdbcType=INTEGER},
+          #{remark,jdbcType=VARCHAR}
         )
     </insert>
 

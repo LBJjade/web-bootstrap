@@ -112,6 +112,7 @@
 <div th:replace="themes/default/footer::footer"></div>
 
 <!--全局JS-->
+<script th:src="@{/js/validation.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
@@ -151,8 +152,7 @@
 
     //手机号码
     $(".ipt_mobile").blur(function(){
-        var mobile = /^0{0,1}(13[0-9]|15[7-9]|153|156|18[7-9])[0-9]{8}$/;
-        if(!mobile.test($(".ipt_mobile").val())){
+        if(!f_phoneValidate($(".ipt_mobile").val())){
             $(".mobile_error").show();
         }else{
             $(".mobile_error").hide();

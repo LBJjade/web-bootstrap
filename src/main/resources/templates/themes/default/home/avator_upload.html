@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>头像上传</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
     <link rel="stylesheet" th:href="@{/plugin/jcrop/css/jquery.Jcrop.css}" type="text/css"/>
 
@@ -199,10 +199,10 @@
             color: #444444;
         }
 
-        #target{
+        #target {
             height: 200px;
             width: 200px;
-            visibility:hidden;
+            visibility: hidden;
         }
     </style>
 
@@ -242,10 +242,9 @@
 <script th:src="@{/plugin/jcrop/js/html2canvas.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
-
-    var imgUrl=/*[[${config.getFileRoot()+member.getAvator()}]]*/+'?x-oss-process=image/resize,m_lfit,h_200,w_200';
-    imgUrl+="?r="+Math.random();
-    $("#target").attr("src",imgUrl).css("visibility","visible");
+    var imgUrl = /*[[${config.getFileRoot()+member.getAvator()}]]*/+'?x-oss-process=image/resize,m_lfit,h_200,w_200';
+    imgUrl += "?r=" + Math.random();
+    $("#target").attr("src", imgUrl).css("visibility", "visible");
 
     //通过Jcrop插件实现，思路 选择图片后，预览图片，并在图片上添加选择框， 保存时，将选择框选中的图片转成字节码
     var jcrop_api;
@@ -348,7 +347,7 @@
     //生成截图
     $('#draw_button').on('click', function () {
         loadShade = layer.load(1, {
-            shade: [0.1,'#fff']
+            shade: [0.1, '#fff']
         });
         var oTarget = $('.jcrop-holder :first-child :first-child')[0];
         drawImage($pcnt, function (data) {
@@ -358,10 +357,10 @@
 
     //ajax上传
     function f_uploadAvator(imgStr) {
-        if (imgStr==="data:,"){
+        if (imgStr === "data:,") {
             layer.alert("请先选择头像");
             layer.close(loadShade);
-        }else {
+        } else {
             $.ajax({
                 url: '/home/member/upload',
                 data: {imgStr: imgStr},
@@ -370,7 +369,7 @@
                 success: function (data) {
                     if (data.code === 200) {
                         layer.alert(data.msg, function () {
-                            parent.f_refreshImg();
+                            parent.f_refreshImg(data.result);
                             parent.layer.closeAll();
                         });
                     } else {

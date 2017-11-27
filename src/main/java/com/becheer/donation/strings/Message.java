@@ -43,6 +43,8 @@ public class Message {
      */
     public static final String LOGIN_MOBILE_NOT_EXIST = "手机号不存在";
 
+    public static final String LOGIN_ACCEPTOR_NOT_EXIST = "账号不存在";
+
     public static final String LOGIN_ACCOUNT_DISABLED = "账号已被禁用";
 
     public static final String LOGIN_PASSWORD_ERROR = "密码错误";
@@ -66,6 +68,8 @@ public class Message {
     public static final String PASSWORD_CHANG_ERROR = "修改密码失败";
 
     public static final String MEMBER_UNENABLE = "无效账户,账户已删除";
+
+    public static final String LOGIN_AUTH_NO_NULL="授号错误";
 
 
     /*

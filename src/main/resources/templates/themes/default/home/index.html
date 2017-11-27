@@ -164,10 +164,7 @@
 <script type="text/javascript">
     /*<![CDATA[*/
     //会员信息
-    var license;
     var licenseUrl;
-
-
 
     $(document).ready(function () {
         f_GetmemberInfo();
@@ -233,8 +230,8 @@
         });
     }
 
-    function f_refreshImg() {
-        $("#img_avator").attr("src", $("#img_avator").attr("src")+"&r="+Math.random()*4);
+    function f_refreshImg(avatorName) {
+        $("#img_avator").attr("src", fileRoot+avatorName+'?x-oss-process=image/resize,m_lfit,h_200,w_200+&r='+Math.random()*4);
     }
     /*]]>*/
 </script>
