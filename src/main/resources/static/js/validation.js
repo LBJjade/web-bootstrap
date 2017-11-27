@@ -8,9 +8,9 @@ function f_nameValidate(inputName) {
     }
 }
 
+var phone = /^1[3|4|5|7|8][0-9]{9}$/;
 //手机号码验证
 function f_phoneValidate(inputPhone) {
-    var phone = /^1[3|4|5|7|8][0-9]{9}$/;
     if(!phone.test(inputPhone)){
         return false;
     }else {
