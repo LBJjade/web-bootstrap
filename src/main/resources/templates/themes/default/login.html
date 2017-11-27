@@ -33,7 +33,8 @@
         .table_member_content input{
             line-height: 28px;
             margin-top: 11px;
-            margin-right: 60px;
+            /*margin-right: 60px;*/
+            float: left;
         }
         .table_member_content tr{
             border-bottom: 1px #ccc dashed;
@@ -49,6 +50,16 @@
             margin-top: -16px;
             margin-right: 173px;
             margin-bottom: -10px;
+        }
+
+        .tab_title{
+            width: 617px;
+            margin-left: 295px;
+            margin-top: 20px;
+        }
+
+        .tab-content{
+            margin-bottom: 120px;
         }
     </style>
 </head>
@@ -67,35 +78,39 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12" style="height: 500px; padding-top: 20px">
-            <table class="table_member_content">
+            <ul class="nav nav-tabs tab_title">
+                <li class="active"><a href="#tab1" data-toggle="tab">会员登录</a></li>
+                <li><a href="#tab2" data-toggle="tab">受捐人登录</a></li>
+            </ul>
+            <div class="tab-content">
+            <table class="table_member_content tab-pane active" id="tab1">
                 <tr>
                     <td>手机号码：</td>
-                    <td style="margin-right: 250px;display: block;">
+                    <td>
                         <input type="text" class="input_text ipt_mobile" id="ipt_mobile" placeholder="请输入11位手机号码" />
                         <div class="mobile_error error">手机号码格式不正确</div>
                     </td>
                 </tr>
                 <tr>
                     <td>登录密码：</td>
-                    <td style="margin-right: 250px;display: block;">
+                    <td>
                         <input type="password" class="input_text ipt_pwd" id="ipt_pwd" placeholder="请输入6位密码"/>
                         <div class="pw_error error"  style="margin-right: 210px;">密码不能为空</div>
                         <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于6位</div>
                     </td>
                 </tr>
                 <tr>
-                    <td style="border-bottom: none">验证码：</td>
-                    <td style="border-bottom: none;margin-right: 158px;display: block;">
-                        <input type="text" class="input_text ipt_code" id="ipt_code" placeholder="请输入验证码"/>
+                    <td width="150px" style="border-bottom: none">验证码：</td>
+                    <td style="border-bottom: none;" width="400px">
+                        <input typeipt_="text" class="input_text ipt_code" id="ipt_code" placeholder="请输入验证码"/>
                         <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
                         <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="text-center">
-                        <input type="checkbox" id="ipt_cookie" style="margin-left: -150px;"/>下次自动登录
-                    </td>
+
+                        <input type="checkbox" id="ipt_cookie" style="float: none;margin-left: 130px;"/> 下次自动登录
+
                 </tr>
                 <tr>
                     <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
@@ -105,6 +120,44 @@
                     </td>
                 </tr>
             </table>
+                <table class="table_member_content tab-pane" id="tab2">
+                    <tr>
+                        <td>授号：</td>
+                        <td>
+                            <input type="text" class="input_text ipt_mobile" id="mobile" placeholder="请输入11位手机号码" />
+                            <div class="mobile_error error">授号格式不正确</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>登录密码：</td>
+                        <td>
+                            <input type="password" class="input_text ipt_pwd" id="pwd" placeholder="请输入6位密码"/>
+                            <div class="pw_error error"  style="margin-right: 210px;">密码不能为空</div>
+                            <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于6位</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="150px" style="border-bottom: none">验证码：</td>
+                        <td style="border-bottom: none;" width="400px">
+                            <input type="text" class="input_text ipt_code" id="code" placeholder="请输入验证码"/>
+                            <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
+                            <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="cookie" style="float: none;margin-left: 130px;"/> 下次自动登录
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
+                            <span><a th:href="@{/reset}">忘记密码?</a></span>
+                            <span><a th:href="@{/change}">修改密码?</a></span>
+                            <button class="btn btn-info btn_login" style="margin-right: 200px;width: 80px;padding-left: 4px">登录</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
