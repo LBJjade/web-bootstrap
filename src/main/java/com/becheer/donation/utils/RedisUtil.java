@@ -34,7 +34,7 @@ public class RedisUtil extends RedisProvider {
     }
 
     /**
-     * 删除合同Redis缓存
+     * 删除申诉Redis缓存
      *
      * @param appealId
      */
