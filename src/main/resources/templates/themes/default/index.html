@@ -130,7 +130,7 @@
             margin-left: 15px;
             margin-top: 10px;
             overflow: hidden;
-            text-overflow:ellipsis;
+            text-overflow: ellipsis;
             white-space: nowrap;
         }
 
@@ -190,12 +190,12 @@
             color: #969696;
         }
 
-        .item_summary_word{
+        .item_summary_word {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 3;
             overflow: hidden;
-            color:#666666;
+            color: #666666;
         }
 
         .donate_button {
@@ -351,17 +351,17 @@
             margin-right: 110px;
         }
 
-        #p_no_recent{
+        #p_no_recent {
             font-size: 18px;
             font-weight: 600;
         }
 
-        #p_no_relative{
+        #p_no_relative {
             font-size: 18px;
             font-weight: 600;
         }
 
-        #p_no_question{
+        #p_no_question {
             font-size: 18px;
             font-weight: 600;
         }
@@ -372,11 +372,12 @@
             width: 100%;
             display: none;
         }
+
         .cu {
             font-weight: 600;
         }
 
-        .recommend_item_info_fomat{
+        .recommend_item_info_fomat {
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
@@ -386,11 +387,11 @@
             font-size: 14px;
         }
 
-        .recommend_item_info_money{
+        .recommend_item_info_money {
             float: right;
             font-size: 17px;
             line-height: 40px;
-            color:#FF5A43;
+            color: #FF5A43;
             /*color:#ffa701;*/
         }
     </style>
@@ -492,12 +493,17 @@
             <div class="right_panel" id="div_recent">
                 <div class="div_title">
                     <h2 class="h2_title">爱心动态</h2>
-                    <p class="p_tab_empty" id="p_no_recent"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无爱心动态</p>
+                    <p class="p_tab_empty" id="p_no_recent"><img src="/image/face.png"
+                                                                 style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无爱心动态
+                    </p>
                     <div v-cloak>
                         <ul class="recommend_item" v-for="item in items">
-                            <li><img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/>
+                            <li><img
+                                    :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/>
                             </li>
-                            <li class="recommend_item_info"><span class="recommend_item_info_fomat"><span style="font-weight: bold;color: #00a0e9">{{item.memberName==null?item.location:item.memberName}}</span><br/>{{item.projectName==null?item.projectTypeName:item.projectName}}</span><span class="recommend_item_info_money">{{item.amount|format}}</span>
+                            <li class="recommend_item_info"><span class="recommend_item_info_fomat"><span
+                                    style="font-weight: bold;color: #00a0e9">{{item.memberName==null?item.location:item.memberName}}</span><br/>{{item.projectName==null?item.projectTypeName:item.projectName}}</span><span
+                                    class="recommend_item_info_money">{{item.amount|format}}</span>
                             </li>
                         </ul>
                     </div>
@@ -507,7 +513,9 @@
             <div class="right_panel" id="div_project">
                 <div class="div_title">
                     <h2 class="h2_title">项目推荐</h2>
-                    <p class="p_tab_empty" id="p_no_relative"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无项目推荐</p>
+                    <p class="p_tab_empty" id="p_no_relative"><img src="/image/face.png"
+                                                                   style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无项目推荐
+                    </p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
                             <li><img :alt="item.projectName"
@@ -522,7 +530,9 @@
             <div class="right_panel" id="div_question">
                 <div class="div_title">
                     <h2 class="h2_title">捐赠流程</h2>
-                    <p class="p_tab_empty" id="p_no_question"><img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无捐赠流程</p>
+                    <p class="p_tab_empty" id="p_no_question"><img src="/image/face.png"
+                                                                   style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无捐赠流程
+                    </p>
                     <a v-for="(item,index) in items" :href="'/'+'article/'+item.articleId" target="_blank" v-cloak><p>
                         {{index+1}}.{{item.title}}</p></a>
                 </div>
@@ -1526,13 +1536,22 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.code == 200) {
-                            layer.alert("提交捐赠<b style='color: red'>成功</b>。", 3000, function () {
-                                window.location.href = "/home/apply";
-                            });
+                            layer.alert("提交捐赠意向<b style='color: red'>成功</b>。",
+                                {
+                                    icon: 1,
+                                    skin: 'layer-ext-moon'
+                                },
+                                function () {
+                                    window.location.href = "/home/apply";
+                                });
                         } else {
-                            layer.alert("提交捐赠<b style='color: red'>失败</b>。", 3000, function () {
-                                window.location.href = "/index";
-                            });
+                            layer.alert("提交捐赠意向失败。", {
+                                    icon: 2,
+                                    skin: 'layer-ext-moon'
+                                },
+                                function () {
+                                    window.location.href = "/index";
+                                });
                         }
                     }
                 })
