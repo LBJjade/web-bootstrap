@@ -11,6 +11,7 @@ import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IPaymentPlanService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.RedisUtil;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,7 +143,11 @@ public class HomeContractController extends BaseController {
             return MemberAuthFailed();
         }
         try {
-            return contractService.UpdateContractStatuas(contractId, currentMember.getMemberId());
+            ResponseDto result = contractService.UpdateContractStatuas(contractId, currentMember.getMemberId());
+            if (result.getCode() == 200) {
+                RedisUtil.delContractkey(contractId);
+            }
+            return result;
         } catch (Exception ex) {
             LOGGER.error("SignContract", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);

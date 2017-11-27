@@ -48,7 +48,7 @@ public class NoContractDonateExtension {
     }
 
     public String getMemberName() {
-        return memberName;
+        return StringUtil.getEncryptedMemberName(memberName);
     }
 
     public void setMemberName(String memberName) {

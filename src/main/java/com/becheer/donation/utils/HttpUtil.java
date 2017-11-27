@@ -29,7 +29,7 @@ public class HttpUtil {
         if (null == session) {
             return null;
         }
-        JSONObject sessionObject = (JSONObject) session.getAttribute(ConstString.MEMBER_SESSION_CODE);
+        JSONObject sessionObject = (JSONObject) session.getAttribute(ConstString.LOGIN_SESSION_NAME);
         if (sessionObject == null) {
             return null;
         }
