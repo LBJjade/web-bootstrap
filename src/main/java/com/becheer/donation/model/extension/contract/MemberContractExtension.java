@@ -15,7 +15,9 @@ public class MemberContractExtension {
 
     private String contractName;
 
-    private Date signTime;
+    private Date a_signTime;
+
+    private Date b_signTime;
 
     private long contractAmount;
 
@@ -41,12 +43,20 @@ public class MemberContractExtension {
         this.contractName = contractName;
     }
 
-    public Date getSignTime() {
-        return signTime;
+    public Date getA_signTime() {
+        return a_signTime;
     }
 
-    public void setSignTime(Date signTime) {
-        this.signTime = signTime;
+    public void setA_signTime(Date a_signTime) {
+        this.a_signTime = a_signTime;
+    }
+
+    public Date getB_signTime() {
+        return b_signTime;
+    }
+
+    public void setB_signTime(Date b_signTime) {
+        this.b_signTime = b_signTime;
     }
 
     public String getContractAmount() {
@@ -79,7 +89,7 @@ public class MemberContractExtension {
                 return "重新编辑中";
             case 5:
                 //此处临时处理，因枚举值缺失,须同后台沟通统一。
-                if (signTime!=null){
+                if (a_signTime!=null){
                     return "捐赠人已签订";
                 }else {
                     return "待签订";

@@ -106,6 +106,7 @@
             line-height: 20px;
             font-size: 15px;
             word-wrap: break-word;
+            float: right;
         }
 
         #ul_total input {
@@ -379,19 +380,30 @@
         .recommend_item_info_fomat{
             display: -webkit-box;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 1;
             overflow: hidden;
             float: left;
-            width: 130px;
+            width: 90px;
             font-size: 14px;
+            font-weight: bold;
+            color: #00a0e9
         }
 
         .recommend_item_info_money{
             float: right;
             font-size: 17px;
-            line-height: 40px;
+            line-height: 0px;
             color:#FF5A43;
-            /*color:#ffa701;*/
+        }
+
+        .recommend_item_info_project{
+            float: left;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1;
+            overflow: hidden;
+            width: 130px;
         }
     </style>
 </head>
@@ -497,7 +509,11 @@
                         <ul class="recommend_item" v-for="item in items">
                             <li><img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/>
                             </li>
-                            <li class="recommend_item_info"><span class="recommend_item_info_fomat"><span style="font-weight: bold;color: #00a0e9">{{item.memberName==null?item.location:item.memberName}}</span><br/>{{item.projectName==null?item.projectTypeName:item.projectName}}</span><span class="recommend_item_info_money">{{item.amount|format}}</span>
+                            <li class="recommend_item_info">
+                                <span class="recommend_item_info_fomat">{{item.memberName==null?item.location:item.memberName}}&nbsp;</span>
+                                <span style="color: #00a0e9;font-weight: bold">捐赠</span>
+                                <span class="recommend_item_info_project">{{item.projectName==null?item.projectTypeName:item.projectName}}</span>
+                                <span class="recommend_item_info_money">{{item.amount|format}}</span>
                             </li>
                         </ul>
                     </div>

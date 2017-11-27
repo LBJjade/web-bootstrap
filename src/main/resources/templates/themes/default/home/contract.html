@@ -57,9 +57,11 @@
 
         .status {
             color: #00a0ea;
-            float: left;
         }
 
+        .sign_time {
+            color: #00a0ea;
+        }
         .amount {
             color: #ff5a43;
         }
@@ -94,9 +96,8 @@
                 <div v-for="item in items" v-cloak>
                     <div class="div_message_title">
                         <div>
-                            <h4><span class="glyphicon glyphicon-chevron-down" style="float: right;"></span><span
-                                    class="status">{{item.status}}</span>&nbsp;{{item.contractName}}<p
-                                    style="float: right">{{item.signTime===null?"未签订":item.signTime}}&nbsp;&nbsp;&nbsp;<span class="amount" style=" margin-right: 5px;">{{item.contractAmount}}</span>元
+                            <h4><span class="glyphicon glyphicon-chevron-down" style="float: right;"></span>{{item.contractName}}<p
+                                    style="float: right"><span class="amount" style=" margin-right: 5px;">{{item.contractAmount}}</span>元
                             </p></h4>
                         </div>
                     </div>
@@ -110,11 +111,19 @@
                         <a :href="'contract/'+item.id" target="_blank">
                             <button class="info_button">查看详情</button>
                         </a>
+                        <p>合同状态：
+                            <span class="status">{{item.status}}</span>
+                        </p>
+                        <p>捐赠人签订时间：
+                            <span class="sign_time">{{item.a_signTime===null?"未签订":item.a_signTime}}</span>
+                        </p>
+                        <p>基金会签订时间：
+                            <span class="sign_time">{{item.b_signTime===null?"未签订":item.b_signTime}}</span>
+                        </p>
                         <p>合同内容：
                             <a style="cursor: pointer;" v-on:click="f_openContent(item.id)">
                                 点击查看
                             </a>
-
                         </p>
                     </div>
 
@@ -163,7 +172,8 @@
             success: function (data) {
                 if (data.code === 200) {
                     $.each(data.result.list, function (i, item) {
-                        item.signTime = f_FormatDateTime(item.signTime);
+                        item.a_signTime = f_FormatDateTime(item.a_signTime);
+                        item.b_signTime = f_FormatDateTime(item.b_signTime);
                     });
                     pageCount = data.result.pages;
                     pageNum = data.result.pageNum;

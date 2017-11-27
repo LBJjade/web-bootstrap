@@ -6,7 +6,8 @@
         <id column="id_" jdbcType="BIGINT" property="id" />
         <result column="member_id" jdbcType="BIGINT" property="memberId" />
         <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
-        <result column="a_sign_time" jdbcType="TIMESTAMP" property="signTime" />
+        <result column="a_sign_time" jdbcType="TIMESTAMP" property="a_signTime" />
+        <result column="b_sign_time" jdbcType="TIMESTAMP" property="b_signTime" />
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
         <result column="enable_" jdbcType="INTEGER" property="enable" />
         <result column="status" jdbcType="INTEGER" property="status" />
@@ -45,6 +46,7 @@
             member_id,
             contract_name,
             a_sign_time,
+            b_sign_time,
             contract_amount,
             enable_,
             status
