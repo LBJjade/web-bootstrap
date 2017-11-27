@@ -69,7 +69,7 @@
 <div class="center-block" style="width: 1200px;">
     <div class="row">
         <div class="col-sm-2">
-            <div th:replace="themes/default/menu::menu"></div>
+            <div th:replace="themes/default/accepter/menu::menu"></div>
         </div>
         <div class="col-sm-10">
             <div class="div_member_title">
@@ -83,13 +83,6 @@
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">我的信息</a></li>
                     </ul>
-                    <a href="home/edit"  >
-                        <button class="info_button" style="float: right">编辑</button>
-                        <span id="a_edit" class="complete"
-                              style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
-                                th:src="@{~/image/vector.png}"
-                                style="display: none;float: right;width: 27px;margin-right: 7px;" ></span>
-                    </a></p>
                 </div>
             </div>
             <div class="div_content" id="div_member">
@@ -102,55 +95,28 @@
                 <div id="div_content_info">
                     <table class="table_content_info" v-cloak>
                         <tr>
-                            <td v-if="member.role===1">真实姓名：</td>
-                            <td v-if="member.role===2">公司名称：</td>
-                            <td>{{member.name}}</td>
+                            <td>姓名：</td>
+                            <td>{{accepter.name}}</td>
+                        </tr>
+                        <tr>
+                            <td>授号：</td>
+                            <td>{{accepter.acceptorNo}}</td>
                         </tr>
                         <tr>
                             <td>手机号码：</td>
-                            <td>{{member.mobile}}</td>
+                            <td>{{accepter.mobile}}</td>
                         </tr>
                         <tr v-if="member.role===1">
                             <td>身份证号：</td>
-                            <td>{{member.idCard}}</td>
+                            <td>{{accepter.idCard}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>组织机构代码：</td>
-                            <td>{{member.organizationCode}}</td>
+                            <td>地址：</td>
+                            <td>{{accepter.address}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>公司性质：</td>
-                            <td>{{member.organizationType}}</td>
-                        </tr>
-                        <tr v-if="member.role===2">
-                            <td>营业执照：</td>
-                            <td><a href="javascript:f_showLicense()">点击查看</a></td>
-                        </tr>
-                        <tr v-if="member.role===1">
-                            <td>性别：</td>
-                            <td v-if="member.sex===0">保密</td>
-                            <td v-if="member.sex===1">男</td>
-                            <td v-if="member.sex===2">女</td>
-                        </tr>
-                        <tr v-if="member.role===1">
-                            <td>生日：</td>
-                            <td>{{member.birthday}}</td>
-                        </tr>
-                        <tr>
-                            <td>曾参与的公益项目：</td>
-                            <td>{{member.project}}</td>
-                        </tr>
-                        <tr v-if="member.role===1">
-                            <td v-if="member.role===1">个人说明：</td>
-                            <td v-if="member.role===2">公司简介：</td>
-                            <td>{{member.summary}}</td>
-                        </tr>
-                        <tr>
-                            <td>认证状态：</td>
-                            <td v-if="member.validation===1">未认证</td>
-                            <td v-if="member.validation===2">审核中</td>
-                            <td v-if="member.validation===3">已认证</td>
-                            <td v-if="member.validation===4">已驳回</td>
+                            <td>获捐金额</td>
+                            <td>{{member.receivedAmount}}</td>
                         </tr>
                     </table>
                 </div>
@@ -164,29 +130,20 @@
 <script type="text/javascript">
     /*<![CDATA[*/
     //会员信息
-    var licenseUrl;
 
     $(document).ready(function () {
-        f_GetmemberInfo();
+        f_getAccepterInfo();
     });
-
-    var membervalidation;
 
     //获取会员信息
     function f_GetmemberInfo() {
         $.ajax({
-            url: '/home/member/info',
-            data: {memberId: memberInfo.memberId},
+            url: '/accepter/info',
+            data: {aid: memberInfo.memberId},
             type: 'post',
             dataType: 'json',
             success: function (data) {
                 if (data.code === 200) {
-                    licenseUrl = data.result.license;
-                    if (data.result.validation === 1 || data.result.validation === 4) {
-                        $("#a_edit").show();
-                    }
-                    membervalidation = data.result.validation;
-                    f_cue(membervalidation);
                     new Vue({
                         el: "#div_member",
                         data: {
@@ -201,14 +158,6 @@
         });
     }
 
-    function f_cue(validation) {
-        if (validation === 1 || validation === 4) {
-            $(".complete").fadeIn(3000);
-        } else {
-            $(".complete").hide();
-        }
-    }
-
     function f_uploadAvator() {
         layer.open({
             type: 2,
@@ -217,16 +166,6 @@
             shade: 0.6,
             area: ['800px', '600px'],
             content: '/home/member/avator'
-        });
-    }
-
-    function f_showLicense() {
-        layer.open({
-            type: 1,
-            title: '营业执照',
-            skin: 'layui-layer-rim',
-            area: ['800px', '600px'],
-            content: '<div style="width:100%;height: 100%;text-align: center"><img src="'+fileRoot+licenseUrl+'" /></div>'
         });
     }
 

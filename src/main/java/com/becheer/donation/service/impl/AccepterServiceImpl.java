@@ -3,6 +3,7 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.dao.AccepterMapper;
 import com.becheer.donation.model.Accepter;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 import com.becheer.donation.service.IAccepterService;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.HashUtil;
@@ -37,5 +38,17 @@ public class AccepterServiceImpl implements IAccepterService{
             return new ResponseDto(400,Message.LOGIN_PASSWORD_ERROR);
         }
         return new ResponseDto(200,Message.LOGIN_SUCCESS,accepter);
+    }
+
+    @Override
+    public ResponseDto getAccepterInfo(long aid) {
+        AccepterInfoExtension accepter=accepterMapper.selectAccepterById(aid);
+        if (accepter==null){
+            return new ResponseDto(400,Message.ACCEPTER_NOT_EXISTS);
+        }
+        if (accepter.getEnable()==0){
+            return new ResponseDto(400,Message.ACCEPTER_DISABLED);
+        }
+        return new ResponseDto(200,Message.ACCEPTER_GET_SUCCESS);
     }
 }

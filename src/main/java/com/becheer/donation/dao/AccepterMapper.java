@@ -1,6 +1,7 @@
 package com.becheer.donation.dao;
 
 import com.becheer.donation.model.Accepter;
+import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 
 /*
 * 
@@ -9,4 +10,6 @@ import com.becheer.donation.model.Accepter;
 */
 public interface AccepterMapper {
     Accepter selectAccepterByNo(String acceptorNo);
+
+    AccepterInfoExtension selectAccepterById(long aid);
 }

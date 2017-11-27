@@ -246,4 +246,11 @@ public class Message {
     public static final String ARTICLE_GET_BY_TYPE_SUCCESS = "获取文章成功";
     public static final String ARTICLE_DETAIL_GET_SUCCESS = "获取文章详情成功";
     public static final String CLAUSE_GET_SUCCESS = "条款获取成功";
+
+    /**
+     * 受捐人个人信息页
+     */
+    public static final String ACCEPTER_GET_SUCCESS = "获取受捐人成功";
+    public static final String ACCEPTER_NOT_EXISTS = "授号不存在";
+    public static final String ACCEPTER_DISABLED = "授号已禁用";
 }

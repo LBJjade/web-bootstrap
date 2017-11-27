@@ -5,11 +5,10 @@
 <style type="text/css">
     #div_menu {
         width: 200px;
-        height: 348px;
         border-left: 1px #eee solid;
         border-right: 1px #eee solid;
         border-top: 2px #eee solid;
-        border-bottom: 3px #eee solid;
+        border-bottom: 2px #eee solid;
     }
 
     #div_menu a {
@@ -20,6 +19,10 @@
         margin-left: 15px;
         color: #444444;
         font-family: 微软雅黑;
+    }
+
+    .div_menu_box {
+        border-bottom: 1px solid #eee;
     }
 
     .div_menu_box:hover {
@@ -56,34 +59,42 @@
     <p>个人中心</p>
 </div>
 <div id="div_menu">
-    <div class="div_menu_box">
+    <div th:if="${session.sjax_member_session.role==1||session.sjax_member_session.role==2}" class="div_menu_box">
         <a class="glyphicon" href="/home"><i class="fa fa-comment-o" aria-hidden="true"></i>我的信息</a>
     </div>
-    <hr/>
-    <div class="div_menu_box">
+    <div th:if="${session.sjax_member_session.role==3}" class="div_menu_box">
+        <a class="glyphicon" href="/accepter"><i class="fa fa-comment-o" aria-hidden="true"></i>我的信息</a>
+    </div>
+    <div th:if="${session.sjax_member_session.role==1||session.sjax_member_session.role==2}" class="div_menu_box">
         <a class="glyphicon" href="/home/message"><i class="fa fa-envelope-o" aria-hidden="true"></i>我的消息</a>
     </div>
-    <hr/>
-    <div class="div_menu_box">
+    <div th:if="${session.sjax_member_session.role==3}" class="div_menu_box">
+        <a class="glyphicon" href="/accepter/message"><i class="fa fa-envelope-o" aria-hidden="true"></i>我的消息</a>
+    </div>
+    <div th:if="${session.sjax_member_session.role==1||session.sjax_member_session.role==2}" class="div_menu_box">
         <a class="glyphicon" href="/home/apply"><i class="fa fa-heart-o" aria-hidden="true"></i>我的捐赠意向</a>
     </div>
-    <hr/>
-    <div class="div_menu_box">
+    <div th:if="${session.sjax_member_session.role==1||session.sjax_member_session.role==2}" class="div_menu_box">
         <a class="glyphicon" href="/home/project"><i class="fa fa-hand-o-right" aria-hidden="true"></i>我参与的项目</a>
     </div>
-    <hr/>
-    <div class="div_menu_box">
+    <div th:if="${session.sjax_member_session.role==1||session.sjax_member_session.role==2}" class="div_menu_box">
         <a class="glyphicon" href="/home/contract"><i class="fa fa-file-o" aria-hidden="true"></i>我的合同</a>
     </div>
-    <hr/>
-    <div class="div_menu_box">
+    <div th:if="${session.sjax_member_session.role==3}" class="div_menu_box">
+        <a class="glyphicon" href="/accepter/contract"><i class="fa fa-file-o" aria-hidden="true"></i>我的合同</a>
+    </div>
+    <div th:if="${session.sjax_member_session.role==3}" class="div_menu_box">
+        <a class="glyphicon" href="/accepter/received"><i class="fa fa-file-o" aria-hidden="true"></i>我的获捐</a>
+    </div>
+    <div th:if="${session.sjax_member_session.role==1||session.sjax_member_session.role==2}" class="div_menu_box">
         <a class="glyphicon" href="/home/appeal"><i class="fa fa-user" aria-hidden="true"></i>我的申诉</a>
     </div>
-    <hr/>
+    <div th:if="${session.sjax_member_session.role==3}" class="div_menu_box">
+        <a class="glyphicon" href="/accepter/appeal"><i class="fa fa-user" aria-hidden="true"></i>我的申诉</a>
+    </div>
     <div class="div_menu_box">
-    <a class="glyphicon" th:href="@{/change}"><i class="fa fa-lock" aria-hidden="true"></i>修改密码</a>
+        <a class="glyphicon" href="/home/change"><i class="fa fa-lock" aria-hidden="true"></i>修改密码</a>
     </div>
 </div>
 </body>
-
 </html>

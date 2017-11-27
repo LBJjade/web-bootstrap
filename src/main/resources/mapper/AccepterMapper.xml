@@ -25,6 +25,19 @@
         <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
     </resultMap>
 
+    <resultMap id="accepterInfoResultMap" type="com.becheer.donation.model.extension.accepter.AccepterInfoExtension">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="member_id" jdbcType="BIGINT" property="memberId"/>
+        <result column="acceptor_no" jdbcType="VARCHAR" property="acceptorNo"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="received_amount" jdbcType="BIGINT" property="receivedAmount"/>
+        <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
+    </resultMap>
+
+
     <select id="selectAccepterByNo" parameterType="java.lang.String" resultMap="AccepterDetailResultMap">
         SELECT
           *
@@ -32,5 +45,23 @@
           dnt_acceptor
         WHERE
           acceptor_no =#{acceptorNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAccepterById" parameterType="java.lang.Long" resultMap="accepterInfoResultMap">
+        SELECT
+          id_,
+          member_id,
+          enable_,
+          acceptor_no,
+          name,
+          mobile,
+          id_card,
+          address,
+          received_amount,
+          avator_img
+        FROM
+          dnt_acceptor
+        WHERE
+          id_ = #{aid,jdbcType=BIGINT}
     </select>
 </mapper>
