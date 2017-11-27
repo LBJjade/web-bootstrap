@@ -17,7 +17,10 @@ import java.util.List;
 public interface IntentionMapper {
     List<Intention> SelectByCondition(IntentionCondition condition);
 
-    IntentionExtension SelectIntentionById (long intentionId);
+    IntentionExtension SelectIntentionById(long intentionId);
 
     int InsertIntention(Intention intention);
+
+    String generateContractNo(String iNamePre, String iModule, int iNum, int iNoLength, String oNewNo);
+
 }

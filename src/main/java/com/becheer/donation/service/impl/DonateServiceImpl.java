@@ -153,22 +153,22 @@ public class DonateServiceImpl implements IDonateService {
         String orderNo = GenerateUtil.genOrderNo();
 
         //写进支付计划
-        paymentPlanMapper.updateOrderNo(orderNo,paymentPlanId);
+        paymentPlanMapper.updateOrderNo(orderNo, paymentPlanId);
 
         //得到支付计划捐赠金额
         PaymentPlanExtension paymentPlanExtension = paymentPlanMapper.selectPaymentPlanByaymentPlanId(paymentPlanId);
-        Long totalFee=paymentPlanExtension.getAmount();
+        Long totalFee = paymentPlanExtension.getAmount();
 //        Long totalFee=Long.parseLong(amount);
-        String amount=String.valueOf(totalFee);
+        String amount = String.valueOf(totalFee);
         //验证是否已经捐赠
-        Long receivedAmount=paymentPlanExtension.getReceivedAmount();
-        if(receivedAmount == 0){
+        Long receivedAmount = paymentPlanExtension.getReceivedAmount();
+        if (receivedAmount == 0) {
             String productId = String.valueOf(paymentPlanId);
             Map<String, String> map = payService.pay(orderNo, productId, totalFee);
             map.put("orderNo", orderNo);
-            map.put("amount",amount);
+            map.put("amount", amount);
             return map;
-        }else{
+        } else {
             return null;
         }
 

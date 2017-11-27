@@ -19,5 +19,5 @@ public interface DntPaymentPlanMapper {
 
     int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount);
 
-    Map updateDonate(String orderNo,Date paymentDate,Integer receivedAmount);
+    Map updateDonate(String orderNo, Date paymentDate, Integer receivedAmount);
 }

@@ -226,7 +226,8 @@
                     <td>{{item.deadLine}}</td>
                     <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
                     <td>{{item.statusText}}</td>
-                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status)" id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
+                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status)"
+                           id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
             <div class="col-sm-10 p_no_data" style="margin-bottom: 40px;">
@@ -309,6 +310,40 @@
     </div>
 </div>
 
+<!--弹出表格-->
+<table id="bill" class="table " style="display: none; ">
+    <thead>
+    <tr>
+        <th>账单详情</th>
+    </tr>
+    </thead>
+    <thead>
+    <tr>
+        <th>账单名称</th>
+        <th>捐款日期</th>
+    </tr>
+    </thead>
+    <thead>
+    <tr>
+        <td>账单名称</td>
+        <td>A+</td>
+    </tr>
+    <tr>
+        <td>捐款项目</td>
+        <td>A</td>
+    </tr>
+    <tr>
+        <td>捐款金额</td>
+        <td>A+</td>
+    </tr>
+    <tr>
+        <td>捐款日期</td>
+        <td>A+</td>
+    </tr>
+    </thead>
+</table>
+
+
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
@@ -365,7 +400,7 @@
     }
 
 
-    function f_openDoanteLayer(id,status) {
+    function f_openDoanteLayer(id, status) {
         if (status === 0) {
             $("#div_cf_donate").model('show');
             $.ajax({
@@ -593,6 +628,17 @@
         $("#donateAmount").html("");
         $("#orderNo").html("");
     }
+
+    //弹出账单
+    layer.open({
+        type: 1,
+        title: false,
+        area: ['800px', '300px'],
+        closeBtn: 0,
+        shadeClose: true,
+        skin: 'yourclass',
+        content: $("#bill")
+    });
 
 
     /*]]>*/

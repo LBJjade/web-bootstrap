@@ -1425,41 +1425,6 @@
         }
     }
 
-
-    //大额捐赠第一步
-    //    $("#ipt_dnt_amount").change(function(){
-    //        if ($("#ipt_dnt_amount").val() == "") {
-    //            $(".code_error").show();
-    //        } else {
-    //            $(".code_error").hide();
-    ////            var m = $("#ipt_dnt_amount").val();
-    ////            var reg = new RegExp("^[0-9]*$");
-    ////            if (!reg.test(m)) {
-    ////                layer.alert("请输入数字!");
-    ////            }
-    //        }
-    //    })
-
-    //    $(".btn_send").click(function () {
-    //        var mobile = $("#ipt_dnt_mobile").val();
-    //        $.ajax({
-    //            url: '/donate/SendSms',
-    //            type: 'post',
-    //            data: {mobile: mobile, tid: "3"},
-    //            dataType: 'json',
-    //            success: function (data) {
-    //                if (data.code === 200) {
-    //                    timer = 60;
-    //                    Countdown();
-    //                    $(".btn_send").attr("disabled", true);
-    //                    $("#ipt_dnt_amount").focus();
-    //                } else {
-    //                    layer.alert(data.msg);
-    //                }
-    //            }
-    //        })
-    //    });
-
     //    //捐赠意向金额
     $("#ipt_dnt_amount").blur(function () {
 //        alert($("#ipt_dnt_amount").val());
@@ -1473,20 +1438,6 @@
         }
     })
 
-    //    //倒计时
-    //    function Countdown() {
-    //        if (timer >= 1) {
-    //            timer -= 1;
-    //            t = setTimeout(function () {
-    //                Countdown();
-    //            }, 1000);
-    //            $(".btn_send").html(timer + "秒后可以重新获取");
-    //
-    //        } else {
-    //            $(".btn_send").attr("disabled", false);
-    //            $(".btn_send").html("重新获取");
-    //        }
-    //    }
 
     //大额捐赠第二步
     $(".da_donate_next").click(function () {
@@ -1536,7 +1487,7 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.code == 200) {
-                            layer.alert("提交捐赠意向<b style='color: red'>成功</b>。",
+                            layer.alert("提交捐赠意向成功。",
                                 {
                                     icon: 1,
                                     skin: 'layer-ext-moon'
@@ -1564,29 +1515,6 @@
 //            });
         }
     })
-
-    //    //验证验证码
-    //    $(".da_donate_next").click(function () {
-    //        var smsCode = $("#ipt_dnt_amount").val();
-    //        mobile = $("#ipt_dnt_mobile").val();
-    //        $.ajax({
-    //            url: '/donate/validate',
-    //            type: 'post',
-    //            data: {mobile: mobile, code: smsCode, tid: "3"},
-    //            dataType: 'json',
-    //            success: function (data) {
-    //                if (data.code === 200) {
-    //                    $("#div_de_donate_step2").model('show');
-    //                } else if (data.code == 402) {
-    //                    layer.alert("验证码已过期，请重新获取");
-    //                } else if (data.code == 403) {
-    //                    layer.alert("验证码错误");
-    //                } else {
-    //                    layer.alert("验证码错误");
-    //                }
-    //            }
-    //        })
-    //    })
 
     //获取所有项目类型
     function f_GetProjectType2() {
@@ -1638,62 +1566,7 @@
         }
     }
 
-    //大额捐赠第三步(确认捐赠部分)
 
-    //    function f_Donate2() {
-    //        if (donateType == 0) {
-    //            var projectType = $("#sel_project_type_second").find("option:selected").text();
-    //            var projectName = $("#sel_project_second").find("option:selected").text();
-    //            if (projectType == "请选择项目类别") {
-    //                alert("你还没有选择项目");
-    //            } else if (flag == 0) {
-    //                alert("你还没有选择金额");
-    //            } else {
-    //                $("#div_de_donate_step2").model('hide');
-    //                $("#div_cf_donate").model('show');
-    //                var projectTypeId = $("#sel_project_type_second").val();
-    //                var projectId = $("#sel_project_second").val();
-    //                var amount = span_money * 100000;
-    //                $("#donateAmount").html(span_money * 1000);
-    //                $.ajax({
-    //                    url: '/donate/donate',
-    //                    type: 'post',
-    //                    data: {
-    //                        projectTypeId: projectTypeId,
-    //                        projectId: projectId,
-    //                        amount: amount
-    //                    },
-    //                    dataType: 'json',
-    //                    success:
-    //                        function (data) {
-    //                            if (data.code === 200) {
-    //                                $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
-    //                                $("#orderNo").html(data.result.orderNo);
-    //                                checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
-    //                            }
-    //                        }
-    //                });
-    //                var timer = 120;
-    //
-    //                function Countdown() {
-    //                    if (timer >= 1) {
-    //                        timer -= 1;
-    //                        t = setTimeout(function () {
-    //                            Countdown();
-    //                        }, 1000);
-    //                        $("#waitingPayTimerText").html(timer);
-    //                    } else {
-    //                        $("#qrCodeImageId").attr("src", "");
-    //                        $(".fresh").css("z-index", "3");
-    //                        $(".code_time").html("二维码已经失效，请刷新！");
-    //                    }
-    //                }
-    //
-    //                Countdown();
-    //            }
-    //        }
-    //
-    //    }
 
 
     /*]]>*/

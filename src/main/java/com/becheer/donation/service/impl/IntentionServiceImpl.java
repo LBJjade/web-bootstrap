@@ -28,11 +28,11 @@ public class IntentionServiceImpl implements IIntentionService {
 
     @Override
     public PageInfo<Intention> GetIntentionList(long memberId, int pageNum, int pageSize) {
-        IntentionCondition condition=new IntentionCondition();
+        IntentionCondition condition = new IntentionCondition();
         condition.setOrderByClause("create_time desc");
         condition.createCriteria().addMemberIdEqualTo(memberId).addEnable(1);
-        PageHelper.startPage(pageNum,pageSize);
-        List<Intention> data=intentionMapper.SelectByCondition(condition);
+        PageHelper.startPage(pageNum, pageSize);
+        List<Intention> data = intentionMapper.SelectByCondition(condition);
         PageInfo<Intention> pageInfo = new PageInfo<Intention>(data);
         return pageInfo;
     }
@@ -44,11 +44,19 @@ public class IntentionServiceImpl implements IIntentionService {
 
     @Override
     public ResponseDto AddIntention(Intention intention) {
-        int result=intentionMapper.InsertIntention(intention);
-        if (result>0){
+        int result = intentionMapper.InsertIntention(intention);
+        if (result > 0) {
             return new ResponseDto(200, Message.INTENTION_ADD_SUCCESS);
-        }else{
-            return new ResponseDto(500,Message.SERVER_ERROR);
+        } else {
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
+
+    @Override
+    public String generateContractNo() {
+        String iNamePre = "", iModule = "IT";
+        int iNum = 8, iNoLength = 6;
+        return intentionMapper.generateContractNo(iNamePre, iModule, iNum, iNoLength, "");
+    }
+
 }

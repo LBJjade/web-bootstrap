@@ -3,15 +3,15 @@
 <mapper namespace="com.becheer.donation.dao.IntentionMapper">
 
     <resultMap id="ListResultMap" type="com.becheer.donation.model.extension.intention.IntentionExtension">
-        <id column="id_" jdbcType="BIGINT" property="id" />
-        <result column="member_id" jdbcType="VARCHAR" property="memberId" />
-        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-        <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName" />
-        <result column="intention_amount" jdbcType="BIGINT" property="intentionAmount" />
-        <result column="enable_" jdbcType="INTEGER" property="enable" />
-        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-        <result column="remark_" jdbcType="VARCHAR" property="remark" />
-        <result column="status" jdbcType="INTEGER" property="status" />
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="member_id" jdbcType="VARCHAR" property="memberId"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="project_type_name" jdbcType="VARCHAR" property="projectTypeName"/>
+        <result column="intention_amount" jdbcType="BIGINT" property="intentionAmount"/>
+        <result column="enable_" jdbcType="INTEGER" property="enable"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="remark_" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
     </resultMap>
 
     <sql id="Example_Where_Clause">
@@ -32,7 +32,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -44,7 +45,8 @@
         </where>
     </sql>
 
-    <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.IntentionCondition" resultMap="ListResultMap">
+    <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.IntentionCondition"
+            resultMap="ListResultMap">
         SELECT
         i.id_,
         p.project_name,
@@ -58,7 +60,7 @@
         LEFT JOIN dnt_project p on p.id_= i.project_id
         LEFT JOIN dnt_project_type t on t.id_=i.project_type_id
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
             order by ${orderByClause}
@@ -90,9 +92,11 @@
         WHERE i.id_=#{intentionId,jdbcType=BIGINT} AND i.enable_ = 1
     </select>
 
-    <insert id="InsertIntention" parameterType="com.becheer.donation.model.extension.intention.IntentionDonateExtension" useGeneratedKeys="true" keyProperty="id">
+    <insert id="InsertIntention" parameterType="com.becheer.donation.model.extension.intention.IntentionDonateExtension"
+            useGeneratedKeys="true" keyProperty="id">
         INSERT INTO dnt_intention
         (
+          intention_no,
           project_id,
           project_type_id,
           member_id,
@@ -104,6 +108,7 @@
         )
         VALUES
         (
+          #{intentionNo,jdbcType=VARCHAR},
           #{projectId,jdbcType=BIGINT},
           #{projectTypeId,jdbcType=BIGINT},
           #{memberId,jdbcType=BIGINT},
@@ -139,5 +144,10 @@
         #{status,jdbcType=INTEGER}
         )
     </insert>
+
+    <select id="generateContractNo" resultType="String" statementType="CALLABLE">
+        call sp_generate_contractNO(#{param1},#{param2},#{param3},#{param4},#{param5});
+    </select>
+
 
 </mapper>

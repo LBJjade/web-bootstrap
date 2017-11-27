@@ -2,6 +2,7 @@ package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.service.IWxPayService;
+import com.becheer.donation.service.impl.DntPaymentPlanServiceImpl;
 import com.becheer.donation.strings.Message;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 
 /*
@@ -39,7 +41,7 @@ public class WxPayController extends BaseController {
         try {
             String result = wxPayService.payNotify(notifyXML);
             return new ResponseDto(200, result);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("notify", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -63,7 +65,7 @@ public class WxPayController extends BaseController {
                 return new ResponseDto(204, Message.WXPAY_GET_STATUS_UNPAID);
             }
             return new ResponseDto(200, Message.WXPAY_GET_STATUS_SUCCESS, map);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("status", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
