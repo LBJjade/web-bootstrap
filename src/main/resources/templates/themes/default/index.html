@@ -1194,7 +1194,6 @@
         var target = $(e.target);
         if(target.closest(".span_donation").length == 0){
             flag = 0;
-//            alert(flag);
         }
     })
 
@@ -1221,21 +1220,13 @@
         f_GetArticle();
     }
 
-//    //清空input值
-//    function clear() {
-//        alert(1);
-//        $(".tx_yuan").val("");
-//    }
-
     $(".donate_button").click(function(){
-        alert(1);
         $(".tx_yuan").val("");
     })
 
     function f_Donate() {
         if (donateType == 0) {
             var projectType = $("#sel_project_type").find("option:selected").text();
-            var projectName = $("#sel_project").find("option:selected").text();
             if (projectType == "请选择项目类别") {
                 layer.confirm('您还没有选择项目类别', {
                     btn: ['重新选择', '取消'] //按钮
@@ -1259,7 +1250,6 @@
                 var projectTypeId = $("#sel_project_type").val();
                 var projectId = $("#sel_project").val();
                 var amount = span_money * 100;
-//                alert(span_money);
                 $("#donateAmount").html(span_money);
                 $.ajax({
                     url: '/donate/donate',
@@ -1373,8 +1363,6 @@
         $("#qrCodeImageId").removeClass("qrCodeImageId");
         var projectTypeId = $("#sel_project_type").val();
         var projectId = $("#sel_project").val();
-        // var amount = $(".money_2").html().replace("￥","").replace("&yen;", "");
-        // amount = math.eval(amount * 100);
         var amount = span_money * 100;
         $(".order_fund").html(amount / 100);
         $.ajax({
@@ -1420,13 +1408,6 @@
         if (memberInfo != null) {
             $("#ipt_dnt_mobile").val(memberInfo.mobile);
             $("#div_de_donate").model('show');
-//            layer.open({
-//                type: 1,
-//                closeBtn: false,
-//                shift: 2,
-//                shadeClose: true,
-//                content: $('#div_de_donate')
-//            })
         } else {
             layer.alert("大额捐赠需要签订捐赠合同，请注册登录后进行大额捐赠，谢谢");
             $("#div_cf_donate").model('hide');
@@ -1437,7 +1418,6 @@
 
     //    //捐赠意向金额
     $("#ipt_dnt_amount").blur(function () {
-//        alert($("#ipt_dnt_amount").val());
         if ($("#ipt_dnt_amount").val() == "") {
             $(".code_error").show();
         } else {
@@ -1456,7 +1436,6 @@
         var phone = $("#ipt_dnt_mobile").val();
         var remark = $("#ps").val();
 
-//        layer.alert(da_money);
         if (projectType == "请选择项目类别") {
             parent.layer.confirm('您还没有选择项目类别', {
                 btn: ['重新选择', '取消'] //按钮
@@ -1520,9 +1499,6 @@
                 $("#div_de_donate").model('show');
                 layer.closeAll('dialog');
             });
-//            layer.alert("您的捐赠意向金额为：<b>" + da_money + "</b>元<br/>"+"捐赠给项目：<b>"+projectType + "</b><br/>"+"提交大额捐赠后会有工作人员与您联系，确定具体捐赠意向", 3000, function () {
-//                window.location.href = "/home/apply"
-//            });
         }
     })
 
@@ -1575,8 +1551,6 @@
 
         }
     }
-
-
     /*]]>*/
 </script>
 </body>

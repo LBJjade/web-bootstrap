@@ -391,10 +391,10 @@
                             items: data.result
                         }
                     });
-//                    if (data.result.length === 0) {
-//                        $(".p_no_data").show();
-//                        $(".table_title").hide();
-//                    }
+                    if (data.result.length === 0) {
+                        $(".p_no_data").show();
+                        $(".table_title").hide();
+                    }
                 }
             }
         });
@@ -484,9 +484,6 @@
             url: '/donate/donateContract',
             type: 'post',
             data: {
-//                    projectTypeId: projectTypeId,
-//                    projectId: projectId,
-//                    contractId:contractId
                 paymentPlanId: paymentPlanId
             },
             dataType: 'json',
@@ -552,77 +549,6 @@
         }
     }
 
-    //    function f_Donate() {
-    //        if (donateType == 0) {
-    //            var projectType = $("#sel_project_type").find("option:selected").text();
-    //            var projectName = $("#sel_project").find("option:selected").text();
-    //            if (projectType == "请选择项目类别") {
-    //                layer.confirm('您还没有选择项目类别', {
-    //                    btn: ['重新选择', '取消'] //按钮
-    //                }, function () {
-    //                    $("#div_qr_donate").model('show');
-    //                    layer.closeAll('dialog');
-    //                }, function () {
-    //                    $("#div_qr_donate").model('hide');
-    //                });
-    ////                alert("你还没有选择项目");
-    //            } else if (flag == 0) {
-    //                layer.confirm('您还没有选择金额', {
-    //                    btn: ['重新选择或输入', '取消'] //按钮
-    //                }, function () {
-    //                    $("#div_qr_donate").model('show');
-    //                    layer.closeAll('dialog');
-    //                }, function () {
-    //                    $("#div_qr_donate").model('hide');
-    //                });
-    ////                alert("你还没有选择金额");
-    //            } else {
-    //                $("#div_cf_donate").model('show');
-    //                var projectTypeId = $("#sel_project_type").val();
-    //                var projectId = $("#sel_project").val();
-    //                var amount = span_money * 100;
-    ////                alert(span_money);
-    //                $("#donateAmount").html(span_money);
-    //                $.ajax({
-    //                    url: '/donate/donate',
-    //                    type: 'post',
-    //                    data: {
-    //                        projectTypeId: projectTypeId,
-    //                        projectId: projectId,
-    //                        amount: amount
-    //                    },
-    //                    dataType: 'json',
-    //                    success:
-    //                        function (data) {
-    //                            if (data.code === 200) {
-    //                                $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
-    //                                $("#orderNo").html(data.result.orderNo);
-    //                                checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
-    //                            }
-    //                        }
-    //                });
-    //                var timer = 120;
-    //
-    //                function Countdown() {
-    //                    if (timer >= 1) {
-    //                        timer -= 1;
-    //                        t = setTimeout(function () {
-    //                            Countdown();
-    //                        }, 1000);
-    //                        $("#waitingPayTimerText").html(timer);
-    //                    } else {
-    //                        $("#qrCodeImageId").attr("src", "");
-    //                        $(".fresh").css("z-index", "3");
-    //                        $(".code_time").html("二维码已经失效，请刷新！");
-    //                    }
-    //                }
-    //
-    //                Countdown();
-    //            }
-    //        }
-    //
-    //    }
-
     function checkPayStatus() {
         var orderNo = $("#orderNo").html();
         $.ajax({
@@ -655,10 +581,6 @@
         $("#donateAmount").html("");
         $("#orderNo").html("");
     }
-
-
-
-
     /*]]>*/
 </script>
 </body>
