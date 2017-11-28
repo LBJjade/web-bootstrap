@@ -986,8 +986,8 @@
     $(document).bind("click", function (e) {
         var target = $(e.target);
         if (target.closest(".span_donation").length == 0) {
+            $(".money_2").removeClass("money_2");
             flag = 0;
-//            alert(flag);
         }
     })
 

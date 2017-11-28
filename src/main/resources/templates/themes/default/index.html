@@ -562,7 +562,7 @@
                         <br/>
                         <span id="span_5" class="money span_donation money_1" style="font-weight: 600;">&yen;100</span>
 
-                        <span id="other" class="span_donation money_1">
+                        <span id="other" class="money_1">
                             <span class="cu">其他捐赠金额(元)：</span>
                             <input type="number" class="tx_yuan cu" style="outline:none;border:none;border-color:#e41620;text-align: right;width: 52px" value=""/>
                         </span>
@@ -965,9 +965,10 @@
     })
 
     //金额取消选择
-    $(document).bind("click",function(e){
+    $(document).bind("click", function (e) {
         var target = $(e.target);
-        if(target.closest(".span_donation").length == 0){
+        if (target.closest(".span_donation").length == 0) {
+            $(".money_2").removeClass("money_2");
             flag = 0;
         }
     })
@@ -1011,7 +1012,7 @@
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-            } else if (flag == 0 && (otherMoney == "" || otherMoney == undefined)) {
+            } else if (flag === 0 && (otherMoney === "" || otherMoney === undefined)) {
                 layer.confirm('您还没有选择金额', {
                     btn: ['重新选择或输入', '取消'] //按钮
                 }, function () {
@@ -1022,6 +1023,7 @@
                 });
 //                alert("你还没有选择金额");
             } else {
+                alert(flag);
                 $("#div_cf_donate").model('show');
                 var projectTypeId = $("#sel_project_type").val();
                 var projectId = $("#sel_project").val();
