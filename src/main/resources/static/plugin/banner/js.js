@@ -11,31 +11,25 @@ function f_begin() {
     }
     for(var i=0;i<totalImg;i++){
         var tempLi=document.createElement("li");
-        $(tempLi).attr("onclick","showImg("+i+")");
+        $(tempLi).attr("onclick",i==0?"showImg("+0+")":"showImg("+i+")");
         $(tempLi).addClass(i==0?"li_focus":"li_out");
         $("#ul_index").append(tempLi);
         $("#p_banner").html($("#ul_img").find("img").eq(0).attr("alt"));
     }
-    timeOut=setTimeout(changeImg,shotTime);
+    timeOut=setTimeout(changeNextImg,shotTime);
 
     $("#div_prev").click(function () {
-        if(currentImg===totalImg-1){
-            showImg(0);
-        }else if (currentImg===0){
-            showImg(totalImg-1);
-        }else{
-            showImg(currentImg-1);
-        }
+        changePrevImg();
     });
 
     $("#div_next").click(function () {
-        changeImg();
+        changeNextImg();
     });
 }
 
-function changeImg() {
+function changeNextImg() {
     clearTimeout(timeOut);
-    $("#ul_img").children().eq(currentImg).fadeOut(1000);
+    $("#ul_img").children().eq(currentImg).fadeOut();
     $("#ul_index").children().eq(currentImg).attr("class","li_out");
     if (currentImg===totalImg-1){
         currentImg=0;
@@ -46,10 +40,29 @@ function changeImg() {
         currentImg=nextImg;
         nextImg=0;
     }
-    $("#ul_img").children().eq(currentImg).fadeIn(1000);
+    $("#ul_img").children().eq(currentImg).fadeIn();
     $("#ul_index").children().eq(currentImg).attr("class","li_focus");
     $("#p_banner").html($("#ul_img").find("img").eq(currentImg).attr("alt"));
-    timeOut=setTimeout(changeImg,shotTime);
+    timeOut=setTimeout(changeNextImg,shotTime);
+}
+
+function changePrevImg() {
+    clearTimeout(timeOut);
+    $("#ul_img").children().eq(currentImg).fadeOut();
+    $("#ul_index").children().eq(currentImg).attr("class","li_out");
+    if(currentImg===totalImg-1){
+        currentImg=totalImg-2;
+    }else if (currentImg===1){
+        currentImg=0;
+    }else if (currentImg===0){
+        currentImg=totalImg-1;
+    }else{
+        currentImg=currentImg-1;
+    }
+    $("#ul_img").children().eq(currentImg).fadeIn();
+    $("#ul_index").children().eq(currentImg).attr("class","li_focus");
+    $("#p_banner").html($("#ul_img").find("img").eq(currentImg).attr("alt"));
+    timeOut=setTimeout(changePrevImg,shotTime);
 }
 
 //鼠标点击切换图片
@@ -57,10 +70,10 @@ function showImg(img) {
     clearTimeout(timeOut);
     if(currentImg===img){
         //点击当前图片,重置timeout
-        timeOut=setTimeout(changeImg,shotTime);
+        timeOut=setTimeout(changeNextImg,shotTime);
     }else{
         //显示目标图片
         nextImg=img;
-        changeImg();
+        changeNextImg();
     }
 }
