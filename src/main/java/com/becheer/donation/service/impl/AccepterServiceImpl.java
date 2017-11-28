@@ -17,38 +17,43 @@ import javax.annotation.Resource;
 * Date : 
 */
 @Service
-public class AccepterServiceImpl implements IAccepterService{
+public class AccepterServiceImpl implements IAccepterService {
 
     @Resource
     AccepterMapper accepterMapper;
 
     @Override
     public ResponseDto login(String authNo, String pwd) {
-        Accepter accepter=accepterMapper.selectAccepterByNo(authNo);
-        if (accepter==null){
+        Accepter accepter = accepterMapper.selectAccepterByNo(authNo);
+        if (accepter == null) {
             //未找到受捐人
             return new ResponseDto(400, Message.LOGIN_ACCEPTOR_NOT_EXIST);
         }
-        if (accepter.getEnable()==0){
+        if (accepter.getEnable() == 0) {
             //受捐人已禁用
-            return new ResponseDto(400,Message.LOGIN_ACCOUNT_DISABLED);
+            return new ResponseDto(400, Message.LOGIN_ACCOUNT_DISABLED);
         }
-        if (!accepter.getPassword().equals(HashUtil.GetPassword(pwd))){
+        if (!accepter.getPassword().equals(HashUtil.GetPassword(pwd))) {
             //密码错误
-            return new ResponseDto(400,Message.LOGIN_PASSWORD_ERROR);
+            return new ResponseDto(400, Message.LOGIN_PASSWORD_ERROR);
         }
-        return new ResponseDto(200,Message.LOGIN_SUCCESS,accepter);
+        return new ResponseDto(200, Message.LOGIN_SUCCESS, accepter);
     }
 
     @Override
-    public ResponseDto getAccepterInfo(long aid) {
-        AccepterInfoExtension accepter=accepterMapper.selectAccepterById(aid);
-        if (accepter==null){
-            return new ResponseDto(400,Message.ACCEPTER_NOT_EXISTS);
+    public ResponseDto getAccepterInfo(long mid) {
+        AccepterInfoExtension accepter = accepterMapper.selectAccepterById(mid);
+        if (accepter == null) {
+            return new ResponseDto(400, Message.ACCEPTER_NOT_EXISTS);
         }
-        if (accepter.getEnable()==0){
-            return new ResponseDto(400,Message.ACCEPTER_DISABLED);
+        if (accepter.getEnable() == 0) {
+            return new ResponseDto(400, Message.ACCEPTER_DISABLED);
         }
-        return new ResponseDto(200,Message.ACCEPTER_GET_SUCCESS);
+        return new ResponseDto(200, Message.ACCEPTER_GET_SUCCESS, accepter);
+    }
+
+    @Override
+    public AccepterInfoExtension getAccepterByMemberId(long mid){
+        return accepterMapper.selectAccepterById(mid);
     }
 }

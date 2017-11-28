@@ -2,6 +2,7 @@ package com.becheer.donation.service;
 
 import com.becheer.donation.model.Accepter;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 
 /*
 * IAccepterService 受捐人Service类接口
@@ -11,5 +12,7 @@ import com.becheer.donation.model.base.ResponseDto;
 public interface IAccepterService {
     ResponseDto login(String authNo,String pwd);
 
-    ResponseDto getAccepterInfo(long aid);
+    ResponseDto getAccepterInfo(long mid);
+
+    public AccepterInfoExtension getAccepterByMemberId(long mid);
 }

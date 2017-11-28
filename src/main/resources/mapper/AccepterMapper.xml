@@ -35,6 +35,7 @@
         <result column="address" jdbcType="VARCHAR" property="address"/>
         <result column="received_amount" jdbcType="BIGINT" property="receivedAmount"/>
         <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
+        <result column="enable_" jdbcType="INTEGER" property="enable"/>
     </resultMap>
 
 
@@ -62,6 +63,15 @@
         FROM
           dnt_acceptor
         WHERE
-          id_ = #{aid,jdbcType=BIGINT}
+          member_id = #{mid,jdbcType=BIGINT}
     </select>
+
+    <update id="updateAvator">
+        UPDATE
+        dnt_acceptor
+        SET
+        update_time = now(),
+        avator_img=#{param1}
+        WHERE member_id = #{param2}
+    </update>
 </mapper>

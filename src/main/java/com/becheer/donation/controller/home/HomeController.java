@@ -28,14 +28,19 @@ public class HomeController extends BaseController {
     @Resource
     IMemberService memberService;
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping(value = "")
     public String index(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
-        return this.render("home/index");
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember.getRole() == 3) {
+            return this.render("accepter/index");
+        } else {
+            return this.render("home/index");
+        }
     }
 
-    @Access(authorities="member")
+    @Access(authorities = "member")
     @GetMapping(value = "/edit")
     public String MemberEdit(HttpServletRequest request) {
         try {
@@ -48,7 +53,7 @@ public class HomeController extends BaseController {
             } else {
                 return this.render("home/company_edit");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("MemberEdit", ex.getMessage());
             return render_404();
         }

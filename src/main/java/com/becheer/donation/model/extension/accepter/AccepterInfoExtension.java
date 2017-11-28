@@ -10,7 +10,7 @@ public class AccepterInfoExtension {
 
     private long memberId;
 
-    private String accepterNo;
+    private String acceptorNo;
 
     private String name;
 
@@ -42,12 +42,12 @@ public class AccepterInfoExtension {
         this.memberId = memberId;
     }
 
-    public String getAccepterNo() {
-        return accepterNo;
+    public String getAcceptorNo() {
+        return acceptorNo;
     }
 
-    public void setAccepterNo(String accepterNo) {
-        this.accepterNo = accepterNo;
+    public void setAcceptorNo(String acceptorNo) {
+        this.acceptorNo = acceptorNo;
     }
 
     public String getName() {

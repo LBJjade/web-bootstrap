@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.ContractMapper">
+
+    <resultMap id="MemberContractResultMap" type="com.becheer.donation.model.extension.contract.MemberContractExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="a_sign_time" jdbcType="TIMESTAMP" property="a_signTime" />
+        <result column="b_sign_time" jdbcType="TIMESTAMP" property="b_signTime" />
+        <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+    </resultMap>
+
+    <resultMap id="MemberContractDetailResultMap" type="com.becheer.donation.model.extension.contract.MemberContractDetailExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
+        <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="a_sign_time" jdbcType="TIMESTAMP" property="aSignTime" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+    </resultMap>
+
+    <resultMap id="MemberContractContentResultMap" type="com.becheer.donation.model.extension.contract.MemberContractContentExtension">
+        <id column="id_" jdbcType="BIGINT" property="id" />
+        <result column="member_id" jdbcType="BIGINT" property="memberId" />
+        <result column="contract_name" jdbcType="VARCHAR" property="contractName" />
+        <result column="contract_no" jdbcType="VARCHAR" property="contractNo"/>
+        <result column="contract_amount" jdbcType="BIGINT" property="contractAmount" />
+        <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount" />
+        <result column="begin_time" jdbcType="TIMESTAMP" property="beginTime" />
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="a_sign_time" jdbcType="TIMESTAMP" property="aSignTime" />
+        <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+    </resultMap>
+
+    <select id="SelectContractByMemberId" parameterType="java.lang.Long" resultMap="MemberContractResultMap">
+        SELECT
+        id_,
+        member_id,
+        contract_name,
+        a_sign_time,
+        b_sign_time,
+        contract_amount,
+        enable_,
+        status
+        FROM dnt_contract
+        WHERE member_id=#{memberId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
+    </select>
+
+    <select id="SelectContractDetail" parameterType="java.lang.Long" resultMap="MemberContractDetailResultMap">
+        SELECT
+        id_,
+        member_id,
+        contract_name,
+        contract_amount,
+        donated_amount,
+        begin_time,
+        end_time,
+        a_sign_time,
+        enable_,
+        status
+        FROM dnt_contract
+        WHERE id_=#{contractId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
+    </select>
+
+    <select id="SelectContractContent" parameterType="java.lang.Long" resultMap="MemberContractContentResultMap">
+        SELECT
+        id_,
+        member_id,
+        contract_name,
+        contract_amount,
+        donated_amount,
+        begin_time,
+        end_time,
+        a_sign_time,
+        enable_,
+        status,
+        content,
+        contract_no
+        FROM dnt_contract
+        WHERE id_=#{contractId,jdbcType=BIGINT} AND enable_ = 1 AND status >= 5
+    </select>
+
+    <update id="UpdateContractStatus">
+        UPDATE
+        dnt_contract
+        SET
+        STATUS= (CASE STATUS WHEN 6 THEN 7 WHEN 5 THEN 5 ELSE `status` END ),
+        update_time=NOW(),
+        a_sign_time=NOW()
+        WHERE id_=#{param1} AND member_id=#{param2} and `status` IN (5,6);
+    </update>
+
+    <select id="selectContractByContractProjectId" parameterType="java.lang.Long" resultMap="MemberContractDetailResultMap">
+        SELECT
+        id_,
+        member_id,
+        contract_name,
+        contract_amount,
+        donated_amount,
+        begin_time,
+        end_time,
+        a_sign_time,
+        enable_,
+        status
+        FROM dnt_contract
+        WHERE id_=(SELECT contract_id FROM dnt_contract_project WHERE id_ = #{contractProjectId,jdbcType=BIGINT} AND enable_ = 1)
+        AND enable_ = 1 AND status >= 5
+    </select>
+</mapper>
