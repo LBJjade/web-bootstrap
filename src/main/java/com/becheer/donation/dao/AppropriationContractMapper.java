@@ -13,5 +13,5 @@ import java.util.List;
 
 @Component
 public interface AppropriationContractMapper {
-    List<AppropriationContractExtension> selectAccepterContractList(long memberId);
+    List<AppropriationContractExtension> selectAccepterContractList(long accepterId);
 }

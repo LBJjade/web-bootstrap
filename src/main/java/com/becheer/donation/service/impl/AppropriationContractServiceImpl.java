@@ -22,9 +22,9 @@ public class AppropriationContractServiceImpl implements IAppropriationContractS
     AppropriationContractMapper appropriationContractMapper;
 
     @Override
-    public PageInfo<AppropriationContractExtension> getContractList(long memberId, int pageNum, int pageSize) {
+    public PageInfo<AppropriationContractExtension> getContractList(long accepterId, int pageNum, int pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<AppropriationContractExtension> data = appropriationContractMapper.selectAccepterContractList(memberId);
+        List<AppropriationContractExtension> data = appropriationContractMapper.selectAccepterContractList(accepterId);
         PageInfo<AppropriationContractExtension> pageInfo = new PageInfo<>(data);
         return pageInfo;
     }

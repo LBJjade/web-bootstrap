@@ -19,6 +19,8 @@ public class MemberSessionExtension {
 
     public String avator;
 
+    public long accepterId;
+
     public long getMemberId() {
         return memberId;
     }
@@ -65,5 +67,13 @@ public class MemberSessionExtension {
 
     public void setAvator(String avator) {
         this.avator = avator;
+    }
+
+    public long getAccepterId() {
+        return accepterId;
+    }
+
+    public void setAccepterId(long accepterId) {
+        this.accepterId = accepterId;
     }
 }

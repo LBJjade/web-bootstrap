@@ -3,6 +3,7 @@
 <mapper namespace="com.becheer.donation.dao.AppropriationContractMapper">
     <resultMap id="listContractResultMap" type="com.becheer.donation.model.extension.contract.AppropriationContractExtension">
         <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="acceptor_id" jdbcType="BIGINT" property="accepterId"/>
         <result column="contract_no" jdbcType="VARCHAR" property="contractNo"/>
         <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount"/>
@@ -14,6 +15,7 @@
     <select id="selectAccepterContractList" parameterType="java.lang.Long" resultMap="listContractResultMap">
         SELECT
             id_,
+            acceptor_id,
             contract_no,
             contract_name,
             contract_amount,
@@ -21,7 +23,7 @@
             end_time,
             status
         FROM dnt_appropriation_contract
-        WHERE member_id=#{memberId,jdbcType=BIGINT} AND enable_ = 1 AND status in (1,3)
+        WHERE acceptor_id=#{accepterId,jdbcType=BIGINT} AND enable_ = 1 AND status in (1,3)
     </select>
 
 </mapper>

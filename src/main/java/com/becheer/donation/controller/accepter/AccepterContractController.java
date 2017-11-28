@@ -52,7 +52,7 @@ public class AccepterContractController extends BaseController {
             pageNum = 1;
         }
         try {
-            PageInfo<AppropriationContractExtension> result = appropriationContractService.getContractList(currentMember.getMemberId(), pageNum, pageSize);
+            PageInfo<AppropriationContractExtension> result = appropriationContractService.getContractList(currentMember.getAccepterId(), pageNum, pageSize);
             return new ResponseDto(200, Message.ACCEPTER_GET_CONTRACT_SUCCESS, result);
         } catch (Exception ex) {
             LOGGER.error("GetContract", ex.getMessage());

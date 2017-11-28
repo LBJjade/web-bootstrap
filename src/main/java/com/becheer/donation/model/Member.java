@@ -73,6 +73,8 @@ public class Member {
 
     private String remark;
 
+    private long accepterId;
+
     public long getId() {
         return id;
     }
@@ -226,14 +228,6 @@ public class Member {
     }
 
     public String getIdCard() {
-//        String result="";
-//        for(int i=1;i<13;i++){
-//            result=result+"*";
-//        }
-//        String str1 = idCard.substring(0,2);
-//        String str2 = idCard.substring(16,18);
-//        result=str1+result+str2;
-//        return result;
         return idCard;
     }
 
@@ -319,5 +313,13 @@ public class Member {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public long getAccepterId() {
+        return accepterId;
+    }
+
+    public void setAccepterId(long accepterId) {
+        this.accepterId = accepterId;
     }
 }

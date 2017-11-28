@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.becheer.donation.dao.AccepterMapper">
 
-    <resultMap id="AccepterDetailResultMap" type="com.becheer.donation.model.Accepter">
+    <resultMap id="accepterDetailResultMap" type="com.becheer.donation.model.Accepter">
         <id column="id_" jdbcType="BIGINT" property="id"/>
         <result column="project_type_id" jdbcType="INTEGER" property="projectTypeId"/>
         <result column="member_id" jdbcType="BIGINT" property="memberId"/>
@@ -39,7 +39,7 @@
     </resultMap>
 
 
-    <select id="selectAccepterByNo" parameterType="java.lang.String" resultMap="AccepterDetailResultMap">
+    <select id="selectAccepterByNo" parameterType="java.lang.String" resultMap="accepterDetailResultMap">
         SELECT
           *
         FROM

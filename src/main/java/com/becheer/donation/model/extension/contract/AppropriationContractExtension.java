@@ -11,6 +11,8 @@ public class AppropriationContractExtension {
 
     private long id;
 
+    private long accepterId;
+
     private String contractNo;
 
     private String contractName;
@@ -23,12 +25,22 @@ public class AppropriationContractExtension {
 
     private int status;
 
+    private String statusText;
+
     public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getAccepterId() {
+        return accepterId;
+    }
+
+    public void setAccepterId(long accepterId) {
+        this.accepterId = accepterId;
     }
 
     public String getContractNo() {
@@ -73,6 +85,28 @@ public class AppropriationContractExtension {
 
     public int getStatus() {
         return status;
+    }
+
+    public String getStatusText() {
+        switch (status){
+            case 0:
+                return "编辑中";
+            case 1:
+                return "执行中";
+            case 2:
+                return "审批中";
+            case 3:
+                return "待签订";
+            case 4:
+                return "已驳回";
+            case 5:
+                return "调整中";
+                default:return "";
+        }
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 
     public void setStatus(int status) {

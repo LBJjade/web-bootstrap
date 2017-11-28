@@ -81,11 +81,9 @@
                 <div id="div_navbar" style="margin-top: 10px">
                     <ul>
                         <li><a href="#">首页</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">个人中心</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">我的合同</a></li>
                     </ul>
                 </div>
@@ -102,19 +100,16 @@
                         </div>
                     </div>
                     <div class="div_message_content">
-                        <!--<p>合同名称：{{item.contractName}}</p>-->
-                        <!--<p class="contractAmount">合同金额：<a class="amount">{{item.contractAmount}}</a>&nbsp;元</p>-->
-                        <!--<p>签订日期：{{item.signTime===null?"未签订":item.signTime}}</p>-->
-                        <!--<p>合同状态：<a class="status">{{item.status}}</a>-->
-                        <!--<a :href="'contract/'+item.id" target="_blank"><button class="info_button"  >查看详情</button></a>-->
-                        <!--</p>-->
                         <a :href="'contract/'+item.id" target="_blank">
                             <button class="info_button">查看详情</button>
                         </a>
-                        <p>合同状态：
-                            <span class="status">{{item.status}}</span>
+                        <p>合同编号：
+                            <span class="status">{{item.contractNo}}</span>
                         </p>
-                        <p>捐赠人签订时间：
+                        <p>合同状态：
+                            <span class="status">{{item.statusText}}</span>
+                        </p>
+                        <p>：
                             <span class="sign_time">{{item.a_signTime===null?"未签订":item.a_signTime}}</span>
                         </p>
                         <p>基金会签订时间：
@@ -145,7 +140,7 @@
 <script th:src="@{/js/date.js}"></script>
 <script type="text/javascript">
     /*<![CDATA[*/
-    var pageSize = 5;
+    var pageSize = 8;
     var pageNum = 1;
     var pageCount;
     var vueContent;
