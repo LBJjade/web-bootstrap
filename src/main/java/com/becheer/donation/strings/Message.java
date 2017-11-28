@@ -151,6 +151,11 @@ public class Message {
     public static final String MEMBER_GET_CONTRACT_SUCCESS = "获取合同成功";
 
     /**
+     * 三方合同
+     */
+    public static final String ACCEPTER_GET_CONTRACT_SUCCESS = "获取合同成功";
+
+    /**
      * 捐赠计划
      */
     public static final String MEMBER_GET_PAYMENT_PLAN_SUCCESS = "获取捐赠计划成功";
