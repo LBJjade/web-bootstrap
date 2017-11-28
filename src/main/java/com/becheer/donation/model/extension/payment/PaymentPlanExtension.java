@@ -29,6 +29,16 @@ public class PaymentPlanExtension {
 
     private String statusText;
 
+    private String orderNo;
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
+    }
+
     public long getId() {
         return id;
     }

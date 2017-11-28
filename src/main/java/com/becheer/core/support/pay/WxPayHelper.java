@@ -263,7 +263,7 @@ public class WxPayHelper {
     /**
      * 验证AppID和MchID
      *
-     * @param params         参数
+     * @param params 参数
      * @return {boolean}
      */
     public static boolean verifyAppIdAndMchId(Map<String, String> params) {
@@ -274,10 +274,11 @@ public class WxPayHelper {
         String localMchId = config.getMchId();
         return appId.equals(localAppId) && mchId.equals(localMchId);
     }
+
     /**
      * 支付异步通知时校验sign
      *
-     * @param params         参数
+     * @param params 参数
      * @return {boolean}
      */
     public static boolean verifyNotify(Map<String, String> params) {
@@ -287,6 +288,7 @@ public class WxPayHelper {
         String localSign = WxPayHelper.createSign(params, wxPayApiSecret);
         return sign.equals(localSign);
     }
+
     /**
      * 支付异步通知时校验sign
      *

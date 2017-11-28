@@ -451,7 +451,7 @@
                     </li>
                     <div align="center" style="position: relative;">
                         <button type="button" class="donate_button" data-toggle="model" data-target="#div_qr_donate"
-                                data-dismiss="model" onclick="clear()">
+                                data-dismiss="model">
                             我要捐赠
                         </button>
                     </div>
@@ -590,7 +590,7 @@
                         <br/>
                         <span id="span_5" class="money span_donation money_1" style="font-weight: 600;">&yen;100</span>
 
-                        <span id="other" class="span_donation money_1"><span class="cu">其他捐赠金额(元)：</span>
+                        <span id="other" class=" money_1"><span class="cu">其他捐赠金额(元)：</span>
                             <input type="number" class="tx_yuan cu"
                                    style="outline:none;border:none;border-color:#e41620;text-align: right;width: 52px"
                                    value=""/></span>
@@ -955,6 +955,7 @@
     var vueContent;
     var vueProject;
     var vueProjectSecond;
+    var otherMoney;
 
 
     var flag = 0;
@@ -1188,18 +1189,23 @@
         span_money = ms;
     })
 
+    //金额取消选择
+    $(document).bind("click",function(e){
+        var target = $(e.target);
+        if(target.closest(".span_donation").length == 0){
+            flag = 0;
+//            alert(flag);
+        }
+    })
+
     $("#other").change(function () {
         $(".money_2").removeClass("money_2");
-//        $(this).addClass("money_2");
-        flag = 1;
-        var m = $(".tx_yuan").val();
-//        var reg = new RegExp("^[0-9]*$");
-//        if (!reg.test(m)) {
-//            alert("请输入数字!");
-//        }
-//        alert(ms);
-        span_money = m;
-//        alert(span_money);
+        otherMoney = $(".tx_yuan").val();
+        span_money=otherMoney;
+    })
+
+    $("#other").click(function(){
+        $(".money_2").removeClass("money_2");
     })
 
 
@@ -1215,10 +1221,16 @@
         f_GetArticle();
     }
 
-    //清空input值
-    function clear() {
+//    //清空input值
+//    function clear() {
+//        alert(1);
+//        $(".tx_yuan").val("");
+//    }
+
+    $(".donate_button").click(function(){
+        alert(1);
         $(".tx_yuan").val("");
-    }
+    })
 
     function f_Donate() {
         if (donateType == 0) {
@@ -1233,8 +1245,7 @@
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-//                alert("你还没有选择项目");
-            } else if (flag == 0) {
+            } else if (flag == 0 && (otherMoney == "" || otherMoney == undefined)) {
                 layer.confirm('您还没有选择金额', {
                     btn: ['重新选择或输入', '取消'] //按钮
                 }, function () {
@@ -1243,7 +1254,6 @@
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-//                alert("你还没有选择金额");
             } else {
                 $("#div_cf_donate").model('show');
                 var projectTypeId = $("#sel_project_type").val();
@@ -1565,8 +1575,6 @@
 
         }
     }
-
-
 
 
     /*]]>*/

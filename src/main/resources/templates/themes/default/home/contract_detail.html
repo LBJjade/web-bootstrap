@@ -141,7 +141,6 @@
             font-weight: 600;
         }
 
-
     </style>
 </head>
 <body>
@@ -222,11 +221,11 @@
                 </thead>
                 <tr v-for="item in items" v-cloak>
                     <td>{{item.title}}</td>
-                    <td class="amount">{{item.amount}}</td>
+                    <td class="amount">{{item.amountString}}</td>
                     <td>{{item.deadLine}}</td>
                     <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
                     <td>{{item.statusText}}</td>
-                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status)"
+                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.deadLine,item.orderNo,item.statusText)"
                            id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
@@ -311,34 +310,46 @@
 </div>
 
 <!--弹出表格-->
-<table id="bill" class="table " style="display: none; ">
+<table id="bill" class="table " style="display: none;margin-left:16px;margin-top:18px;overflow-x: hidden;width: 94%; ">
     <thead>
     <tr>
-        <th>账单详情</th>
+        <th><img src="/image/bill.png" style=" width: 25px;">  账单详情</th>
     </tr>
     </thead>
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th>账单名称</th>-->
+    <!--<th>捐款日期</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
     <thead>
     <tr>
-        <th>账单名称</th>
-        <th>捐款日期</th>
-    </tr>
-    </thead>
-    <thead>
-    <tr>
-        <td>账单名称</td>
-        <td>A+</td>
+        <td>账单名称：</td>
+        <td class="title"></td>
     </tr>
     <tr>
-        <td>捐款项目</td>
-        <td>A</td>
+        <td>合同名称：</td>
+        <td><th:block th:text="${contract.getContractName()}"></td>
     </tr>
     <tr>
-        <td>捐款金额</td>
-        <td>A+</td>
+        <td>捐赠金额：</td>
+        <td class="amount"></td>
     </tr>
     <tr>
-        <td>捐款日期</td>
-        <td>A+</td>
+        <td>捐款日期：</td>
+        <td class="date"></td>
+    </tr>
+    <tr>
+        <td>付款方式：</td>
+        <td>微信</td>
+    </tr>
+    <tr>
+        <td>订单号：</td>
+        <td class="orderNo"></td>
+    </tr>
+    <tr>
+        <td>捐赠状态：</td>
+        <td class="donate_status"></td>
     </tr>
     </thead>
 </table>
@@ -350,6 +361,7 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var contractId =/*[[${contract.getId()}]]*/;
+
 
     var paymentPlanId;
     var amount;
@@ -379,10 +391,10 @@
                             items: data.result
                         }
                     });
-                    if (data.result.length === 0) {
-                        $(".p_no_data").show();
-                        $(".table_title").hide();
-                    }
+//                    if (data.result.length === 0) {
+//                        $(".p_no_data").show();
+//                        $(".table_title").hide();
+//                    }
                 }
             }
         });
@@ -400,7 +412,7 @@
     }
 
 
-    function f_openDoanteLayer(id, status) {
+    function f_openDoanteLayer(id, status,amount,title,date,orderNo,donateStatus) {
         if (status === 0) {
             $("#div_cf_donate").model('show');
             $.ajax({
@@ -442,8 +454,23 @@
             Countdown();
 
         } else {
-//            alert(0);
             $("#div_cf_donate").model('hide');
+            //弹出账单
+            layer.open({
+                type: 1,
+                title: false,
+                area: ['580px', '350px'],
+                closeBtn: 1,
+                shadeClose: true,
+                skin: 'yourclass',
+                content: $("#bill")
+            });
+            //账单数据
+            $(".title").html(title);
+            $(".amount").html(amount);
+            $(".date").html(date);
+            $(".orderNo").html(orderNo);
+            $(".donate_status").html(donateStatus);
         }
     }
 
@@ -629,16 +656,7 @@
         $("#orderNo").html("");
     }
 
-    //弹出账单
-    layer.open({
-        type: 1,
-        title: false,
-        area: ['800px', '300px'],
-        closeBtn: 0,
-        shadeClose: true,
-        skin: 'yourclass',
-        content: $("#bill")
-    });
+
 
 
     /*]]>*/

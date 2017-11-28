@@ -18,6 +18,6 @@ public interface IDntPaymentPlanService {
 
     int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount);
 
-    Map updateDonate(String orderNoDate ,Date paymentDate, Integer receivedAmount);
+    Map updateDonate(String orderNoDate , Integer receivedAmount ,Date paymentDate);
 
 }

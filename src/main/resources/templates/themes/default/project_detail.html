@@ -559,7 +559,7 @@
                         <span id="span_4" class="cu money span_donation money_1">&yen;50</span>
                         <br/>
                         <span id="span_5" class="cu money span_donation money_1">&yen;100</span>
-                        <span id="other" class="cu span_donation money_1"><span class="cu">其他捐赠金额：</span>
+                        <span id="other" class="cu money_1"><span class="cu">其他捐赠金额：</span>
                             <input type="text" class="tx_yuan cu"
                                    style="outline:none;border:none;border-color:#e41620;text-align: right;width: 74px"
                                    value=""/></span>
@@ -600,7 +600,7 @@
 
 
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
+                    <span class="donate_msg orderMoney" style="margin-left: 28px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
@@ -750,6 +750,7 @@
     var totalPage = 0;
     var vueProgress;
     var vueProject;
+    var otherMoney;
 
     var flag = 0;
     var span_money;
@@ -975,6 +976,25 @@
         span_money = ms;
     })
 
+    //金额取消选择
+    $(document).bind("click", function (e) {
+        var target = $(e.target);
+        if (target.closest(".span_donation").length == 0) {
+            flag = 0;
+//            alert(flag);
+        }
+    })
+
+    $("#other").change(function () {
+        $(".money_2").removeClass("money_2");
+        otherMoney = $(".tx_yuan").val();
+        span_money=otherMoney;
+    })
+
+    $("#other").click(function(){
+        $(".money_2").removeClass("money_2");
+    })
+
 
     $("#da").click(function () {
         $(this).removeClass("money_1");
@@ -985,8 +1005,15 @@
     function f_Donate() {
         if (projectType == "请选择项目类别") {
             layer.alert("你还没有选择项目");
-        } else if (flag == 0) {
-            layer.alert("你还没有选择金额");
+        } else if (flag == 0 && (otherMoney == "" || otherMoney == undefined)) {
+            layer.confirm('您还没有选择金额', {
+                btn: ['重新选择或输入', '取消'] //按钮
+            }, function () {
+                $("#div_qr_donate").model('show');
+                layer.closeAll('dialog');
+            }, function () {
+                $("#div_qr_donate").model('hide');
+            });
         } else {
             $("#div_cf_donate").model('show');
             var amount = span_money * 100;
@@ -1171,7 +1198,7 @@
 //                $("#div_de_donate").model('hide');
 //            });
 //        } else
-            if (da_money == "") {
+        if (da_money == "") {
             parent.layer.confirm('您还没有输入金额', {
                 btn: ['重新输入', '取消'] //按钮
             }, function () {
@@ -1181,7 +1208,7 @@
                 $("#div_de_donate").model('hide');
             });
         } else {
-            layer.confirm("您的捐赠意向金额为：<b style='color: red'>" + da_money + "</b>元<br/>" + "捐赠的项目类型：<b style='color: red'>" + projectType + "</b><br/><br/>" + "<i style=\"color: red\">*</i> 提交大额捐赠后会有工作人员与您联系，确定具体捐赠细节 <i style=\"color: red\">*</i>", {
+            layer.confirm("您的捐赠意向金额为：<b style='color: red'>" + da_money + "</b>元<br/>" + "捐赠的项目：<b style='color: red'>" + projectName + "</b><br/><br/>" + "<i style=\"color: red\">*</i> 提交大额捐赠后会有工作人员与您联系，确定具体捐赠细节 <i style=\"color: red\">*</i>", {
                 btn: ['确定提交', '重新输入'] //按钮
             }, function () {
                 $("#div_de_donate").model('hide');
@@ -1231,55 +1258,55 @@
         }
     })
 
-//    //获取所有项目类型
-//    function f_GetProjectType2() {
-//        $.ajax({
-//            url: '/project/type',
-//            type: 'post',
-//            dataType: 'json',
-//            success: function (data) {
-//                if (data.code === 200) {
-//                    new Vue({
-//                        el: "#sel_project_type_second",
-//                        data: {
-//                            items: data.result
-//                        }
-//                    });
-//                }
-//            }
-//        });
-//    }
-//
-//    //获取所有项目
-//    function f_GetProject2() {
-//        var tid = $("#sel_project_type_second").val();
-//        if (tid !== "0") {
-//            $.ajax({
-//                url: '/project/all',
-//                data: {tid: tid},
-//                type: 'post',
-//                dataType: 'json',
-//                success: function (data) {
-//                    if (data.code === 200) {
-//                        if (vueProjectSecond == undefined) {
-//                            vueProjectSecond = new Vue({
-//                                el: "#sel_project_second",
-//                                data: {
-//                                    items: data.result
-//                                }
-//                            });
-//                        } else {
-//                            for (var i = 0; i < data.result.length; i++) {
-//                                Vue.set(vueProjectSecond.items, i, data.result[i]);
-//                            }
-//                            vueProjectSecond.items.splice(data.result.length);
-//                        }
-//                    }
-//                }
-//            });
-//
-//        }
-//    }
+    //    //获取所有项目类型
+    //    function f_GetProjectType2() {
+    //        $.ajax({
+    //            url: '/project/type',
+    //            type: 'post',
+    //            dataType: 'json',
+    //            success: function (data) {
+    //                if (data.code === 200) {
+    //                    new Vue({
+    //                        el: "#sel_project_type_second",
+    //                        data: {
+    //                            items: data.result
+    //                        }
+    //                    });
+    //                }
+    //            }
+    //        });
+    //    }
+    //
+    //    //获取所有项目
+    //    function f_GetProject2() {
+    //        var tid = $("#sel_project_type_second").val();
+    //        if (tid !== "0") {
+    //            $.ajax({
+    //                url: '/project/all',
+    //                data: {tid: tid},
+    //                type: 'post',
+    //                dataType: 'json',
+    //                success: function (data) {
+    //                    if (data.code === 200) {
+    //                        if (vueProjectSecond == undefined) {
+    //                            vueProjectSecond = new Vue({
+    //                                el: "#sel_project_second",
+    //                                data: {
+    //                                    items: data.result
+    //                                }
+    //                            });
+    //                        } else {
+    //                            for (var i = 0; i < data.result.length; i++) {
+    //                                Vue.set(vueProjectSecond.items, i, data.result[i]);
+    //                            }
+    //                            vueProjectSecond.items.splice(data.result.length);
+    //                        }
+    //                    }
+    //                }
+    //            });
+    //
+    //        }
+    //    }
 
 
     /*]]>*/
