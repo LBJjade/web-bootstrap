@@ -2,63 +2,68 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="renderer" content="webkit" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
 
     <title>登录</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
-    <link rel="stylesheet" th:href="@{/css/common.css}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
 
     <style type="text/css">
-        #div_menu a{
+        #div_menu a {
             display: block;
             margin: 10px;
         }
-        #div_menu span{
+
+        #div_menu span {
             float: left;
             font-size: 20px;
         }
-        #div_menu ul{
+
+        #div_menu ul {
             margin-left: 30px;
             display: none;
         }
-        .table_member_content{
+
+        .table_member_content {
             width: 60%;
             margin-left: 24%;
             text-align: center;
             line-height: 50px;
         }
-        .table_member_content input{
+
+        .table_member_content input {
             line-height: 28px;
             margin-top: 11px;
             /*margin-right: 60px;*/
             float: left;
         }
-        .table_member_content tr{
+
+        .table_member_content tr {
             border-bottom: 1px #ccc dashed;
         }
 
-        .input_text{
+        .input_text {
             width: 234px;
         }
 
-        .error{
-            color:red;
+        .error {
+            color: red;
             display: none;
             margin-top: -16px;
             margin-right: 173px;
             margin-bottom: -10px;
         }
 
-        .tab_title{
+        .tab_title {
             width: 617px;
             margin-left: 295px;
             margin-top: 20px;
         }
 
-        .tab-content{
+        .tab-content {
             margin-bottom: 120px;
         }
     </style>
@@ -77,89 +82,85 @@
             </div>
         </div>
     </div>
-    <div class="row">
-            <ul class="nav nav-tabs tab_title">
-                <li class="active"><a href="#tab1" data-toggle="tab">会员登录</a></li>
-                <li><a href="#tab2" data-toggle="tab">受捐人登录</a></li>
-            </ul>
-            <div class="tab-content">
-            <table class="table_member_content tab-pane active" id="tab1">
-                <tr>
-                    <td>手机号码：</td>
-                    <td>
-                        <input type="text" class="input_text ipt_mobile" id="ipt_mobile" placeholder="请输入11位手机号码" />
-                        <div class="mobile_error error">手机号码格式不正确</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>登录密码：</td>
-                    <td>
-                        <input type="password" class="input_text ipt_pwd" id="ipt_pwd" placeholder="请输入6位密码"/>
-                        <div class="pw_error error"  style="margin-right: 210px;">密码不能为空</div>
-                        <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于6位</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="150px" style="border-bottom: none">验证码：</td>
-                    <td style="border-bottom: none;" width="400px">
-                        <input typeipt_="text" class="input_text ipt_code" id="ipt_code" placeholder="请输入验证码"/>
-                        <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
-                        <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
-                    </td>
-                </tr>
-                <tr>
-
-                        <input type="checkbox" id="ipt_cookie" style="float: none;margin-left: 130px;"/> 下次自动登录
-
-                </tr>
-                <tr>
-                    <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
-                        <span><a th:href="@{/reset}">忘记密码?</a></span>
-                        <span><a th:href="@{/change}">修改密码?</a></span>
-                        <button class="btn btn-info btn_login" style="margin-right: 200px;width: 80px;padding-left: 4px">登录</button>
-                    </td>
-                </tr>
-            </table>
-                <table class="table_member_content tab-pane" id="tab2">
-                    <tr>
-                        <td>授号：</td>
-                        <td>
-                            <input type="text" class="input_text ipt_mobile" id="mobile" placeholder="请输入11位手机号码" />
-                            <div class="mobile_error error">授号格式不正确</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>登录密码：</td>
-                        <td>
-                            <input type="password" class="input_text ipt_pwd" id="pwd" placeholder="请输入6位密码"/>
-                            <div class="pw_error error"  style="margin-right: 210px;">密码不能为空</div>
-                            <div class="pw_error_0 error"  style="margin-right: 193px;">密码不能少于6位</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="150px" style="border-bottom: none">验证码：</td>
-                        <td style="border-bottom: none;" width="400px">
-                            <input type="text" class="input_text ipt_code" id="code" placeholder="请输入验证码"/>
-                            <img src="Verify/code.jpg" class="verify_code" height="30" width="90"/>
-                            <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="checkbox" id="cookie" style="float: none;margin-left: 130px;"/> 下次自动登录
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;padding-left: 10%">
-                            <span><a th:href="@{/reset}">忘记密码?</a></span>
-                            <span><a th:href="@{/change}">修改密码?</a></span>
-                            <button class="btn btn-info btn_login" style="margin-right: 200px;width: 80px;padding-left: 4px">登录</button>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
+    <div class="row" style="margin-bottom: 50px">
+        <table class="table_member_content" id="tab1">
+            <tr>
+                <td>手机号码：</td>
+                <td>
+                    <input type="text" class="input_text ipt_mobile" id="tab_ipt_mobile" placeholder="请输入11位手机号码"/>
+                    <div class="mobile_error error" style="margin-right: 310px;margin-top: 43px;">手机号码格式不正确</div>
+                </td>
+            </tr>
+            <tr>
+                <td>登录密码：</td>
+                <td width="400px">
+                    <input type="password" class="input_text ipt_pwd" id="tab_ipt_pwd" placeholder="请输入8位密码"/>
+                    <div class="pw_error error" style="margin-right: 310px;margin-top: 43px;">密码不能为空</div>
+                    <div class="pw_error_0 error" style="margin-right: 310px;margin-top: 43px;">密码不能少于8位</div>
+                </td>
+            </tr>
+            <tr>
+                <td width="150px" style="border-bottom: none">验证码：</td>
+                <td style="border-bottom: none;" width="400px">
+                    <input type="text" class="input_text ipt_code" id="tab_ipt_code" placeholder="请输入验证码"/>
+                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90" style="margin-right: 180px;"/>
+                    <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="text-left"><input type="checkbox" id="tab_ipt_cookie" style="float: none;"/> 下次自动登录<span style="margin-left: 70px;"><a th:href="@{/forget}">找回密码?</a></span></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;">
+                    <!--<span><a th:href="@{/change}">修改密码?</a></span>-->
+                    <span><a href="javascript:f_loginChangeMode()">授号登陆</a></span>
+                    <button class="btn btn-info" id="tab_btn_login" style="width: 80px; margin-right: 140px;">
+                        登录
+                    </button>
+                </td>
+            </tr>
+        </table>
+        <table class="table_member_content tab-pane" id="tab2" style="display: none">
+            <tr>
+                <td>授号：</td>
+                <td>
+                    <input type="text" class="input_text ipt_mobile" id="ac_no" placeholder="请输入授号"/>
+                    <div class="mobile_error error" style="margin-right: 310px;margin-top: 43px;">授号格式不正确</div>
+                </td>
+            </tr>
+            <tr>
+                <td>登录密码：</td>
+                <td>
+                    <input type="password" class="input_text ipt_pwd" id="ac_pwd" placeholder="请输入8位密码"/>
+                    <div class="pw_error error" style="margin-right: 310px;margin-top: 43px;">密码不能为空</div>
+                    <div class="pw_error_0 error" style="margin-right: 310px;margin-top: 43px;">密码不能少于8位</div>
+                </td>
+            </tr>
+            <tr>
+                <td width="150px" style="border-bottom: none">验证码：</td>
+                <td style="border-bottom: none;" width="400px">
+                    <input type="text" class="input_text ipt_code" id="ac_code" placeholder="请输入验证码"/>
+                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90" style="margin-right: 180px;"/>
+                    <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td class="text-left"><input type="checkbox" id="ac_cookie" style="float: none;"/> 下次自动登录<span style="margin-left: 70px;"><a th:href="@{/forget}">找回密码?</a></span></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;">
+                    <!--<span><a th:href="@{/change}">修改密码?</a></span>-->
+                    <span><a href="javascript:f_loginChangeMode()">会员登陆</a></span>
+                    <button class="btn btn-info" id="tab_btn_ac_login" style=" width: 80px; margin-right: 140px;">
+                        登录
+                    </button>
+                </td>
+            </tr>
+        </table>
     </div>
+</div>
 </div>
 
 <div th:replace="themes/default/footer::footer"></div>
@@ -173,20 +174,40 @@
         $("#ipt_mobile").focus();
     })
 
-    $(".btn_login").click(function () {
-        var mobile=$("#ipt_mobile").val();
-        var pwd=$("#ipt_pwd").val();
-        var code=$("#ipt_code").val();
-        var autoLogin=$("#ipt_cookie").is(':checked');
+    $("#tab_btn_login").click(function () {
+        var mobile = $("#tab_ipt_mobile").val();
+        var pwd = $("#tab_ipt_pwd").val();
+        var code = $("#tab_ipt_code").val();
+        var autoLogin = $("#tab_ipt_cookie").is(':checked');
         $.ajax({
-            url:"/login/submit",
-            data:{mobile:mobile,code:code,pwd:pwd,autoLogin:autoLogin},
-            type:'post',
-            dataType:'json',
-            success:function (data) {
-                if (data.code===407){
+            url: "/login/submit",
+            data: {mobile: mobile, code: code, pwd: pwd, autoLogin: autoLogin},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 407) {
                     window.location.href = "/home";
-                }else{
+                } else {
+                    layer.alert(data.msg);
+                }
+            }
+        });
+    });
+
+    $("#tab_btn_ac_login").click(function () {
+        var authCode = $("#ac_no").val();
+        var pwd = $("#ac_pwd").val();
+        var code = $("#ac_code").val();
+        var autoLogin = $("#ac_cookie").is(':checked');
+        $.ajax({
+            url: "/login/acLogin",
+            data: {authCode:authCode, code: code, pwd: pwd, autoLogin: autoLogin},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    window.location.href = "/home";
+                } else {
                     layer.alert(data.msg);
                 }
             }
@@ -194,48 +215,58 @@
     });
 
     $(".verify_code").click(function () {
-        $(this).attr("src","Verify/code.jpg?t="+Math.random());
+        $(this).attr("src", "Verify/code.jpg?t=" + Math.random());
     });
 
-    function f_redirect(){
-        window.location.href="member.html";
+    function f_redirect() {
+        window.location.href = "member.html";
     }
 
 
-
     //手机号码
-    $(".ipt_mobile").blur(function(){
-        if(!f_phoneValidate($(".ipt_mobile").val())){
+    $(".ipt_mobile").blur(function () {
+        if (!f_phoneValidate($(".ipt_mobile").val())) {
             $(".mobile_error").show();
-        }else{
+        } else {
             $(".mobile_error").hide();
         }
     })
 
     //密码
-    $(".ipt_pwd").blur(function(){
-        if($(".ipt_pwd").val() == ""){
+    $(".ipt_pwd").blur(function () {
+        if ($(".ipt_pwd").val() == "") {
             $(".pw_error_0").hide();
             $(".pw_error").show();
-        }else{
+        } else {
             $(".pw_error").hide();
-            if($(".ipt_pwd").val().length < 6){
+            if ($(".ipt_pwd").val().length < 8) {
                 $(".pw_error_0").show();
-            }else{
+            } else {
                 $(".pw_error_0").hide();
             }
         }
     })
 
     //验证码
-    $(".ipt_code").blur(function(){
-        if($(".ipt_code").val() == ""){
+    $(".ipt_code").blur(function () {
+        if ($(".ipt_code").val() == "") {
             $(".code_error").show();
-        }else{
+        } else {
             $(".code_error").hide();
         }
     })
 
+    function f_loginChangeMode() {
+        if($("#tab2").is(":hidden")){
+            $("#tab1").css("display","none");
+            $("#tab2").css("display","inline-table");
+            $(".error").css("display","none");
+        }else{
+            $("#tab2").css("display","none");
+            $("#tab1").css("display","inline-table");
+            $(".error").css("display","none");
+        }
+    }
     /*]]>*/
 
 </script>
