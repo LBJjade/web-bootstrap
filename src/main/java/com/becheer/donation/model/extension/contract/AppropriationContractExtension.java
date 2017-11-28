@@ -1,5 +1,9 @@
 package com.becheer.donation.model.extension.contract;
 
+import com.becheer.donation.utils.StringUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 /*
@@ -19,8 +23,12 @@ public class AppropriationContractExtension {
 
     private long contractAmount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date beginTime;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date endTime;
 
     private int status;
@@ -59,8 +67,8 @@ public class AppropriationContractExtension {
         this.contractName = contractName;
     }
 
-    public long getContractAmount() {
-        return contractAmount;
+    public String getContractAmount() {
+        return StringUtil.formatMoney(contractAmount);
     }
 
     public void setContractAmount(long contractAmount) {

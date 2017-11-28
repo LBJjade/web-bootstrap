@@ -109,11 +109,11 @@
                         <p>合同状态：
                             <span class="status">{{item.statusText}}</span>
                         </p>
-                        <p>：
-                            <span class="sign_time">{{item.a_signTime===null?"未签订":item.a_signTime}}</span>
+                        <p>合同金额：
+                            <span class="status">{{item.contractAmount}} 元</span>
                         </p>
-                        <p>基金会签订时间：
-                            <span class="sign_time">{{item.b_signTime===null?"未签订":item.b_signTime}}</span>
+                        <p>合同周期：
+                            <span class="status">{{item.beginTime}} <span style="color: #0f0f0f">~</span> {{item.endTime}}</span>
                         </p>
                         <p>合同内容：
                             <a style="cursor: pointer;" v-on:click="f_openContent(item.id)">
@@ -199,7 +199,7 @@
     //翻页回调函数
     function f_PageCallBack(newPage) {
         pageNum = newPage;
-        f_GetContract();
+        f_getContract();
     }
 
 
