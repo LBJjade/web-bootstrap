@@ -17,4 +17,7 @@ public interface IIntentionService {
     IntentionExtension GetIntention(long intentionId);
 
     ResponseDto AddIntention(Intention intention);
+
+    String generateContractNo();
+
 }

@@ -141,7 +141,6 @@
             font-weight: 600;
         }
 
-
     </style>
 </head>
 <body>
@@ -222,11 +221,12 @@
                 </thead>
                 <tr v-for="item in items" v-cloak>
                     <td>{{item.title}}</td>
-                    <td class="amount">{{item.amount}}</td>
+                    <td class="amount">{{item.amountString}}</td>
                     <td>{{item.deadLine}}</td>
                     <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
                     <td>{{item.statusText}}</td>
-                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status)" id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
+                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.deadLine,item.orderNo,item.statusText)"
+                           id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
             <div class="col-sm-10 p_no_data" style="margin-bottom: 40px;">
@@ -309,12 +309,59 @@
     </div>
 </div>
 
+<!--弹出表格-->
+<table id="bill" class="table " style="display: none;margin-left:16px;margin-top:18px;overflow-x: hidden;width: 94%; ">
+    <thead>
+    <tr>
+        <th><img src="/image/bill.png" style=" width: 25px;">  账单详情</th>
+    </tr>
+    </thead>
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th>账单名称</th>-->
+    <!--<th>捐款日期</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <thead>
+    <tr>
+        <td>账单名称：</td>
+        <td class="title"></td>
+    </tr>
+    <tr>
+        <td>合同名称：</td>
+        <td><th:block th:text="${contract.getContractName()}"></td>
+    </tr>
+    <tr>
+        <td>捐赠金额：</td>
+        <td class="amount"></td>
+    </tr>
+    <tr>
+        <td>捐款日期：</td>
+        <td class="date"></td>
+    </tr>
+    <tr>
+        <td>付款方式：</td>
+        <td>微信</td>
+    </tr>
+    <tr>
+        <td>订单号：</td>
+        <td class="orderNo"></td>
+    </tr>
+    <tr>
+        <td>捐赠状态：</td>
+        <td class="donate_status"></td>
+    </tr>
+    </thead>
+</table>
+
+
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var contractId =/*[[${contract.getId()}]]*/;
+
 
     var paymentPlanId;
     var amount;
@@ -365,7 +412,7 @@
     }
 
 
-    function f_openDoanteLayer(id,status) {
+    function f_openDoanteLayer(id, status,amount,title,date,orderNo,donateStatus) {
         if (status === 0) {
             $("#div_cf_donate").model('show');
             $.ajax({
@@ -407,8 +454,23 @@
             Countdown();
 
         } else {
-//            alert(0);
             $("#div_cf_donate").model('hide');
+            //弹出账单
+            layer.open({
+                type: 1,
+                title: false,
+                area: ['580px', '350px'],
+                closeBtn: 1,
+                shadeClose: true,
+                skin: 'yourclass',
+                content: $("#bill")
+            });
+            //账单数据
+            $(".title").html(title);
+            $(".amount").html(amount);
+            $(".date").html(date);
+            $(".orderNo").html(orderNo);
+            $(".donate_status").html(donateStatus);
         }
     }
 
@@ -422,9 +484,6 @@
             url: '/donate/donateContract',
             type: 'post',
             data: {
-//                    projectTypeId: projectTypeId,
-//                    projectId: projectId,
-//                    contractId:contractId
                 paymentPlanId: paymentPlanId
             },
             dataType: 'json',
@@ -490,77 +549,6 @@
         }
     }
 
-    //    function f_Donate() {
-    //        if (donateType == 0) {
-    //            var projectType = $("#sel_project_type").find("option:selected").text();
-    //            var projectName = $("#sel_project").find("option:selected").text();
-    //            if (projectType == "请选择项目类别") {
-    //                layer.confirm('您还没有选择项目类别', {
-    //                    btn: ['重新选择', '取消'] //按钮
-    //                }, function () {
-    //                    $("#div_qr_donate").model('show');
-    //                    layer.closeAll('dialog');
-    //                }, function () {
-    //                    $("#div_qr_donate").model('hide');
-    //                });
-    ////                alert("你还没有选择项目");
-    //            } else if (flag == 0) {
-    //                layer.confirm('您还没有选择金额', {
-    //                    btn: ['重新选择或输入', '取消'] //按钮
-    //                }, function () {
-    //                    $("#div_qr_donate").model('show');
-    //                    layer.closeAll('dialog');
-    //                }, function () {
-    //                    $("#div_qr_donate").model('hide');
-    //                });
-    ////                alert("你还没有选择金额");
-    //            } else {
-    //                $("#div_cf_donate").model('show');
-    //                var projectTypeId = $("#sel_project_type").val();
-    //                var projectId = $("#sel_project").val();
-    //                var amount = span_money * 100;
-    ////                alert(span_money);
-    //                $("#donateAmount").html(span_money);
-    //                $.ajax({
-    //                    url: '/donate/donate',
-    //                    type: 'post',
-    //                    data: {
-    //                        projectTypeId: projectTypeId,
-    //                        projectId: projectId,
-    //                        amount: amount
-    //                    },
-    //                    dataType: 'json',
-    //                    success:
-    //                        function (data) {
-    //                            if (data.code === 200) {
-    //                                $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
-    //                                $("#orderNo").html(data.result.orderNo);
-    //                                checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
-    //                            }
-    //                        }
-    //                });
-    //                var timer = 120;
-    //
-    //                function Countdown() {
-    //                    if (timer >= 1) {
-    //                        timer -= 1;
-    //                        t = setTimeout(function () {
-    //                            Countdown();
-    //                        }, 1000);
-    //                        $("#waitingPayTimerText").html(timer);
-    //                    } else {
-    //                        $("#qrCodeImageId").attr("src", "");
-    //                        $(".fresh").css("z-index", "3");
-    //                        $(".code_time").html("二维码已经失效，请刷新！");
-    //                    }
-    //                }
-    //
-    //                Countdown();
-    //            }
-    //        }
-    //
-    //    }
-
     function checkPayStatus() {
         var orderNo = $("#orderNo").html();
         $.ajax({
@@ -593,8 +581,6 @@
         $("#donateAmount").html("");
         $("#orderNo").html("");
     }
-
-
     /*]]>*/
 </script>
 </body>

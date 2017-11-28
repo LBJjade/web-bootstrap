@@ -48,7 +48,7 @@ public class WxPayServiceImpl implements IWxPayService {
                 if (params.containsKey(key)) {
                     continue;
                 }
-                String value = (String)prepayMap.get(key);
+                String value = (String) prepayMap.get(key);
                 params.put(key, value);
             }
             payWxUnifiedOrderService.insert(params);
@@ -116,7 +116,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
         try {
             unifiedOrder = payWxUnifiedOrderService.getPayWxUnifiedOrderByOutTradeNo(outTradeNo);
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.warn("微信支付结果通知: !!!获取统一下单数据时出现异常: " + e.getMessage());
             returnToWxPay.put("return_code", "SUCCESS");
             returnToWxPay.put("return_msg", "OK");
@@ -157,9 +157,8 @@ public class WxPayServiceImpl implements IWxPayService {
         if (!Strings.isNullOrEmpty(timeEnd)) {
             paymentDate = DateUtils.convertToDate(timeEnd);
         }
-        paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo,  paymentDate, totalFee);
-        paymentPlanService.updateDonate(outTradeNo,paymentDate,totalFee);
-
+        paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
+        paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
 
 
         // 签名、商户信息、业务数据状态、订单金额都没问题的情况下
@@ -172,6 +171,11 @@ public class WxPayServiceImpl implements IWxPayService {
         returnToWxPay.put("return_code", "SUCCESS");
         returnToWxPay.put("return_msg", "OK");
         return WxPayHelper.toXml(returnToWxPay);
+
+        //测试
+//        Date now=new Date();
+//        paymentPlanService.updateDonate("DNT_9643478767", 150, now);
+//        return null;
     }
 
     @Override

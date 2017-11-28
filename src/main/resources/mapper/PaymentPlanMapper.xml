@@ -12,6 +12,7 @@
         <result column="dead_line" jdbcType="TIMESTAMP" property="deadLine"/>
         <result column="enable_" jdbcType="INTEGER" property="enable"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
+        <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
     </resultMap>
 
     <select id="SelectPaymentPlanByContractId" parameterType="java.lang.Long" resultMap="MemberPaymentPlanListMapper">
@@ -23,7 +24,8 @@
             received_amount,
             deadline,
             enable_,
-            status
+            status,
+            order_no
         FROM
             dnt_payment_plan
         WHERE

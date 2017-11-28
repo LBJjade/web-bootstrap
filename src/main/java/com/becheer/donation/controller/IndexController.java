@@ -35,6 +35,9 @@ public class IndexController extends BaseController {
     @Resource
     IIntentionExtensionService intentionExtensionService;
 
+    @Resource
+    IIntentionService intentionService;
+
     /**
      * 首页
      *
@@ -98,7 +101,10 @@ public class IndexController extends BaseController {
                 //获取memberId
                 Long memberId = currentMember.getMemberId();
                 Intention intention = new Intention();
-                intention.setProjectId(projectId);
+                //生成捐赠意向流水号
+                String no = intentionService.generateContractNo();
+                //写入itention表
+                intention.setIntentionNo(no);
                 intention.setProjectId(projectId);
                 intention.setProjectTypeId(projectTypeId);
                 intention.setIntentionAmount(intentionAmount);
