@@ -6,19 +6,16 @@ package com.becheer.donation.interceptor;
 * Date : 2017-10-17
 */
 
-import com.becheer.donation.configs.FileConfig;
+import com.alibaba.fastjson.JSONObject;
 import com.becheer.donation.interfaces.Access;
-import com.becheer.donation.model.extension.member.MemberSessionExtension;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.becheer.donation.strings.ConstString;
 import org.springframework.web.method.HandlerMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
-
-import static com.becheer.donation.utils.HttpUtil.GetCurrentUser;
 
 // 自定义一个权限拦截器, 继承HandlerInterceptorAdapter类
 public class MemberInterceptor extends HandlerInterceptorAdapter {
@@ -35,14 +32,32 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
             // 如果注解为null, 说明不需要拦截
             return true;
         }
-        if (access.authorities().equals("member")) {
-            MemberSessionExtension currentMember=GetCurrentUser(request);
-            if (currentMember==null){
-                response.sendRedirect("/login");
-            }else{
+
+        int[] authorities = access.authorities();
+
+        //未配置权限，直接放行
+        if (authorities.length == 0) {
+            return true;
+        }
+
+        //未登录
+        HttpSession session = request.getSession();
+        if (session == null) {
+            return false;
+        }
+        JSONObject sessionObject = (JSONObject) session.getAttribute(ConstString.LOGIN_SESSION_NAME);
+        if (sessionObject == null) {
+            return false;
+        }
+        int role = sessionObject.getIntValue("role");
+
+        //验证权限
+        for (int i = 0; i < authorities.length; i++) {
+            if (authorities[i] == role) {
                 return true;
             }
         }
+        response.sendRedirect("/login");
         return false;
     }
 }

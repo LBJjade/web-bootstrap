@@ -13,8 +13,11 @@ import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.message.MessageExtension;
 import com.becheer.donation.service.IMessageService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.strings.Role;
 import com.github.pagehelper.PageInfo;
+
 import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,7 +34,7 @@ public class MessageController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MessageController.class);
 
-    @Access(authorities="member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping(value = "")
     public String index(javax.servlet.http.HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
@@ -40,21 +43,21 @@ public class MessageController extends BaseController {
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseDto GetMessage(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetMessage(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        if (pageSize<1||pageSize>50){
-            pageSize=5;
+        if (pageSize < 1 || pageSize > 50) {
+            pageSize = 5;
         }
-        if (pageNum<1){
-            pageNum=1;
+        if (pageNum < 1) {
+            pageNum = 1;
         }
         try {
-            PageInfo<MessageExtension> result=messageService.GetMessageList(currentMember.getMemberId(),pageNum,pageSize);
-            return new ResponseDto(200, Message.MESSAGE_GET_SUCCESS,result);
-        }catch(Exception ex){
+            PageInfo<MessageExtension> result = messageService.GetMessageList(currentMember.getMemberId(), pageNum, pageSize);
+            return new ResponseDto(200, Message.MESSAGE_GET_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetMessage", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -62,15 +65,15 @@ public class MessageController extends BaseController {
 
     @PostMapping("/status")
     @ResponseBody
-    public ResponseDto ChangeStatus(HttpServletRequest request,@RequestParam long id){
-        try{
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
-            return MemberAuthFailed();
-        }
-        long memberId=currentMember.memberId;
-        return messageService.ChangeStatus(id,memberId);
-        }catch(Exception ex){
+    public ResponseDto ChangeStatus(HttpServletRequest request, @RequestParam long id) {
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                return MemberAuthFailed();
+            }
+            long memberId = currentMember.memberId;
+            return messageService.ChangeStatus(id, memberId);
+        } catch (Exception ex) {
             LOGGER.error("ChangeStatus", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -90,7 +93,7 @@ public class MessageController extends BaseController {
             } catch (Exception ex) {
                 return new ResponseDto(500, Message.GET_MEMBERMESSAGES_FAILED);
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("GetMemberMessagesNum", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }

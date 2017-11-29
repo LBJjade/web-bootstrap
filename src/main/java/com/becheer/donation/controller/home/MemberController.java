@@ -3,11 +3,14 @@ package com.becheer.donation.controller.home;
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.service.IAccepterService;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,9 @@ public class MemberController extends BaseController {
 
     @Resource
     private IMemberService memberService;
+
+    @Resource
+    private IAccepterService accepterService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MemberController.class);
 
@@ -64,15 +70,20 @@ public class MemberController extends BaseController {
         }
     }
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping(value = "/avator")
     public String avatorUpload(HttpServletRequest request) {
         try {
             request.setAttribute("config", fileConfig);
             MemberSessionExtension currentMember = GetCurrentUser(request);
-            MemberInfoExtension member = memberService.GetMemberExtensionById(currentMember.getMemberId());
-            request.setAttribute("member", member);
-            return this.render("home/avator_upload");
+            if (currentMember.getRole() == 3) {
+                AccepterInfoExtension accepter = accepterService.getAccepterByMemberId(currentMember.getMemberId());
+                request.setAttribute("avator", accepter.getAvator());
+            } else {
+                MemberInfoExtension member = memberService.GetMemberExtensionById(currentMember.getMemberId());
+                request.setAttribute("avator", member.getAvator());
+            }
+            return this.render("avator_upload");
         } catch (Exception ex) {
             LOGGER.error("avatorUpload", ex.getMessage());
             return render_404();
@@ -90,7 +101,7 @@ public class MemberController extends BaseController {
             if (StringUtils.isEmpty(imgStr)) {
                 return new ResponseDto(400, Message.MEMBER_AVATOR_NULL);
             }
-            ResponseDto result = memberService.uploadAvator(currentMember.getMemberId(), imgStr);
+            ResponseDto result = memberService.uploadAvator(currentMember.getMemberId(), imgStr, currentMember.getRole() == 3);
             if (result.getCode() == 200) {
                 RedisUtil.delMemberKey(currentMember.getMemberId());
             }

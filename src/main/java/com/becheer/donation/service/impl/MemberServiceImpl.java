@@ -7,6 +7,7 @@ package com.becheer.donation.service.impl;
 */
 
 import com.becheer.donation.configs.OssConfig;
+import com.becheer.donation.dao.AccepterMapper;
 import com.becheer.donation.dao.MemberMapper;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
@@ -29,6 +30,9 @@ public class MemberServiceImpl implements IMemberService {
 
     @Resource
     private MemberMapper memberMapper;
+
+    @Resource
+    private AccepterMapper accepterMapper;
 
     @Autowired
     OssConfig ossConfig;
@@ -196,12 +200,17 @@ public class MemberServiceImpl implements IMemberService {
     }
 
     @Override
-    public ResponseDto uploadAvator(long memberId, String fileStr) {
+    public ResponseDto uploadAvator(long memberId, String fileStr,boolean isAccepter) {
         try {
             byte[] bytes = StringUtil.base64ImgToByteArray(fileStr);
             String fileName = ossConfig.getAvatorPath() + "a" + memberId + ".jpg";
             OssUtil.addByteArray(bytes, fileName);
-            int result = memberMapper.updateAvator(fileName, memberId);
+            int result = 0;
+            if (!isAccepter) {
+                result = memberMapper.updateAvator(fileName, memberId);
+            }else{
+                result= accepterMapper.updateAvator(fileName,memberId);
+            }
             if (result > 0) {
                 return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS, fileName);
             } else {
