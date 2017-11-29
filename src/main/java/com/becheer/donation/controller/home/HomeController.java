@@ -6,6 +6,7 @@ import com.becheer.donation.model.Member;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
+import com.becheer.donation.strings.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,7 @@ public class HomeController extends BaseController {
     @Resource
     IMemberService memberService;
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping(value = "")
     public String index(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
@@ -40,7 +41,7 @@ public class HomeController extends BaseController {
         }
     }
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping(value = "/edit")
     public String MemberEdit(HttpServletRequest request) {
         try {

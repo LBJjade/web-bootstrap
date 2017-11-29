@@ -6,6 +6,7 @@ import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IAccepterService;
+import com.becheer.donation.strings.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -30,14 +31,15 @@ public class AccepterController extends BaseController {
     IAccepterService accepterService;
 
     @GetMapping(value = "")
-    public String index(HttpServletRequest request){
+    @Access(authorities = {Role.ACCEPTER})
+    public String index(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
         return this.render("/accepter/index");
     }
 
     @ResponseBody
     @PostMapping("/info")
-    public ResponseDto getAccepterInfo(HttpServletRequest request){
+    public ResponseDto getAccepterInfo(HttpServletRequest request) {
         MemberSessionExtension currentMember = GetCurrentUser(request);
         if (currentMember == null) {
             return MemberAuthFailed();

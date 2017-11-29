@@ -7,6 +7,7 @@ import com.becheer.donation.model.extension.contract.AppropriationContractExtens
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IAppropriationContractService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.strings.Role;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ public class AccepterContractController extends BaseController {
     @Resource
     IAppropriationContractService appropriationContractService;
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.ACCEPTER})
     @GetMapping("")
     public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);

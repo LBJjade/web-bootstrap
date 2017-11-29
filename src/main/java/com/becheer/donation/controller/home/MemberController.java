@@ -10,6 +10,7 @@ import com.becheer.donation.service.IAccepterService;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -69,7 +70,7 @@ public class MemberController extends BaseController {
         }
     }
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping(value = "/avator")
     public String avatorUpload(HttpServletRequest request) {
         try {
