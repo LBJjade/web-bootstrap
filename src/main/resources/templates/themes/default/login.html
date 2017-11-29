@@ -36,9 +36,9 @@
 
         .table_member_content input {
             line-height: 28px;
-            margin-top: 11px;
-            /*margin-right: 60px;*/
             float: left;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         .table_member_content tr {
@@ -86,25 +86,25 @@
         <table class="table_member_content" id="tab1">
             <tr>
                 <td>手机号码：</td>
-                <td>
+                <td style="line-height: 20px">
                     <input type="text" class="input_text ipt_mobile" id="tab_ipt_mobile" placeholder="请输入11位手机号码"/>
-                    <div class="mobile_error error" style="margin-right: 310px;margin-top: 43px;">手机号码格式不正确</div>
+                    <div class="mobile_error error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">手机号码格式不正确</div>
                 </td>
             </tr>
             <tr>
                 <td>登录密码：</td>
-                <td width="400px">
+                <td width="400px" style="line-height: 20px">
                     <input type="password" class="input_text ipt_pwd" id="tab_ipt_pwd" placeholder="请输入8位密码"/>
-                    <div class="pw_error error" style="margin-right: 310px;margin-top: 43px;">密码不能为空</div>
-                    <div class="pw_error_0 error" style="margin-right: 310px;margin-top: 43px;">密码不能少于8位</div>
+                    <div class="pw_error error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能为空</div>
+                    <div class="pw_error_0 error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能少于8位</div>
                 </td>
             </tr>
             <tr>
                 <td width="150px" style="border-bottom: none">验证码：</td>
-                <td style="border-bottom: none;" width="400px">
+                <td style="border-bottom: none;line-height: 20px" width="400px">
                     <input type="text" class="input_text ipt_code" id="tab_ipt_code" placeholder="请输入验证码"/>
-                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90" style="margin-right: 180px;"/>
-                    <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
+                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90" style="margin-right: 180px;margin-top: 10px;"/>
+                    <div class="code_error error" style="text-align: left;margin-top: 13px;padding-top: 9px;height: 40px;">验证码不能为空</div>
                 </td>
             </tr>
             <tr>
@@ -124,25 +124,25 @@
         <table class="table_member_content tab-pane" id="tab2" style="display: none">
             <tr>
                 <td>授号：</td>
-                <td>
+                <td style="line-height: 20px">
                     <input type="text" class="input_text ipt_mobile" id="ac_no" placeholder="请输入授号"/>
-                    <div class="mobile_error error" style="margin-right: 310px;margin-top: 43px;">授号格式不正确</div>
+                    <div class="ac_no_error error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">授号格式不正确</div>
                 </td>
             </tr>
             <tr>
                 <td>登录密码：</td>
-                <td>
+                <td style="line-height: 20px">
                     <input type="password" class="input_text ipt_pwd" id="ac_pwd" placeholder="请输入8位密码"/>
-                    <div class="pw_error error" style="margin-right: 310px;margin-top: 43px;">密码不能为空</div>
-                    <div class="pw_error_0 error" style="margin-right: 310px;margin-top: 43px;">密码不能少于8位</div>
+                    <div class="pw_error error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能为空</div>
+                    <div class="pw_error_0 error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能少于8位</div>
                 </td>
             </tr>
             <tr>
-                <td width="150px" style="border-bottom: none">验证码：</td>
-                <td style="border-bottom: none;" width="400px">
+                <td width="150px" style="border-bottom: none;">验证码：</td>
+                <td style="border-bottom: none;line-height: 20px" width="400px">
                     <input type="text" class="input_text ipt_code" id="ac_code" placeholder="请输入验证码"/>
-                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90" style="margin-right: 180px;"/>
-                    <div class="code_error error" style="margin-right: 293px;">验证码不能为空</div>
+                    <img src="Verify/code.jpg" class="verify_code" height="30" width="90" style="margin-right: 180px;margin-top: 10px;"/>
+                    <div class="code_error error" style="text-align: left;margin-top: 3px;padding-top: 9px;height: 40px;">验证码不能为空</div>
                 </td>
             </tr>
             <tr>
@@ -175,23 +175,27 @@
     })
 
     $("#tab_btn_login").click(function () {
-        var mobile = $("#tab_ipt_mobile").val();
-        var pwd = $("#tab_ipt_pwd").val();
-        var code = $("#tab_ipt_code").val();
-        var autoLogin = $("#tab_ipt_cookie").is(':checked');
-        $.ajax({
-            url: "/login/submit",
-            data: {mobile: mobile, code: code, pwd: pwd, autoLogin: autoLogin},
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 407) {
-                    window.location.href = "/home";
-                } else {
-                    layer.alert(data.msg);
+            var mobile = $("#tab_ipt_mobile").val();
+            var pwd = $("#tab_ipt_pwd").val();
+            var code = $("#tab_ipt_code").val();
+            var autoLogin = $("#tab_ipt_cookie").is(':checked');
+        if( f_phoneValidate(mobile) && $("#tab_ipt_code").val() != "" && $("#tab_ipt_pwd").val() != "" && $("#tab_ipt_pwd").val().length >= 8){
+            $.ajax({
+                url: "/login/submit",
+                data: {mobile: mobile, code: code, pwd: pwd, autoLogin: autoLogin},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 407) {
+                        window.location.href = "/home";
+                    } else {
+                        layer.alert(data.msg);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            layer.alert("您填写的信息有误。");
+        }
     });
 
     $("#tab_btn_ac_login").click(function () {
@@ -199,19 +203,23 @@
         var pwd = $("#ac_pwd").val();
         var code = $("#ac_code").val();
         var autoLogin = $("#ac_cookie").is(':checked');
-        $.ajax({
-            url: "/login/acLogin",
-            data: {authCode:authCode, code: code, pwd: pwd, autoLogin: autoLogin},
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                if (data.code === 200) {
-                    window.location.href = "/home";
-                } else {
-                    layer.alert(data.msg);
+        if( $("#ac_no").val() !== "" && $("#ac_code").val() != "" && $("#ac_pwd").val() != "" && $("#ac_pwd").val().length >= 8) {
+            $.ajax({
+                url: "/login/acLogin",
+                data: {authCode: authCode, code: code, pwd: pwd, autoLogin: autoLogin},
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.code === 200) {
+                        window.location.href = "/home";
+                    } else {
+                        layer.alert(data.msg);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            layer.alert("您填写的信息有误。");
+        }
     });
 
     $(".verify_code").click(function () {
@@ -223,23 +231,32 @@
     }
 
 
-    //手机号码
-    $(".ipt_mobile").blur(function () {
-        if (!f_phoneValidate($(".ipt_mobile").val())) {
+    //会员手机号码
+    $("#tab_ipt_mobile").blur(function () {
+        if (!f_phoneValidate($("#tab_ipt_mobile").val())) {
             $(".mobile_error").show();
         } else {
             $(".mobile_error").hide();
         }
     })
 
-    //密码
-    $(".ipt_pwd").blur(function () {
-        if ($(".ipt_pwd").val() == "") {
+    //受捐人授号
+    $("#ac_no").blur(function () {
+        if ($("#ac_no").val() == "") {
+            $(".ac_no_error").show();
+        } else {
+            $(".ac_no_error").hide();
+        }
+    })
+
+    //会员密码
+    $("#tab_ipt_pwd").blur(function () {
+        if ($("#tab_ipt_pwd").val() == "") {
             $(".pw_error_0").hide();
             $(".pw_error").show();
         } else {
             $(".pw_error").hide();
-            if ($(".ipt_pwd").val().length < 8) {
+            if ($("#tab_ipt_pwd").val().length < 8) {
                 $(".pw_error_0").show();
             } else {
                 $(".pw_error_0").hide();
@@ -247,9 +264,33 @@
         }
     })
 
-    //验证码
-    $(".ipt_code").blur(function () {
-        if ($(".ipt_code").val() == "") {
+    //受捐人密码
+    $("#ac_pwd").blur(function () {
+        if ($("#ac_pwd").val() == "") {
+            $(".pw_error_0").hide();
+            $(".pw_error").show();
+        } else {
+            $(".pw_error").hide();
+            if ($("#ac_pwd").val().length < 8) {
+                $(".pw_error_0").show();
+            } else {
+                $(".pw_error_0").hide();
+            }
+        }
+    })
+
+    //会员验证码
+    $("#tab_ipt_code").blur(function () {
+        if ($("#tab_ipt_code").val() == "") {
+            $(".code_error").show();
+        } else {
+            $(".code_error").hide();
+        }
+    })
+
+    //受捐人验证码
+    $("#ac_code").blur(function () {
+        if ($("#ac_code").val() == "") {
             $(".code_error").show();
         } else {
             $(".code_error").hide();

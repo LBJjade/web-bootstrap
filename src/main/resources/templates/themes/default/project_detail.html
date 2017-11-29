@@ -412,7 +412,7 @@
                     </p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
-                            <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" style="border-radius: 20px;border:1px solid #a1a1a1;"/></li>
+                            <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" style="border-radius: 20px;border:1px solid #a1a1a1;"/>
                             <!--<li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>&nbsp;{{item.amount|format}}元-->
                             <!--</li>-->
                             <li class="recommend_item_info">

@@ -11,7 +11,7 @@ function f_begin() {
     }
     for(var i=0;i<totalImg;i++){
         var tempLi=document.createElement("li");
-        $(tempLi).attr("onclick",i==0?"showImg("+0+")":"showImg("+i+")");
+        $(tempLi).attr("onclick","showImg("+i+")");
         $(tempLi).addClass(i==0?"li_focus":"li_out");
         $("#ul_index").append(tempLi);
         $("#p_banner").html($("#ul_img").find("img").eq(0).attr("alt"));
