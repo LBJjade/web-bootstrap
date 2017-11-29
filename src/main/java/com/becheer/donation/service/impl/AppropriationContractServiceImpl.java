@@ -1,6 +1,7 @@
 package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.AppropriationContractMapper;
+import com.becheer.donation.model.extension.contract.AppropriationContractContentExtension;
 import com.becheer.donation.model.extension.contract.AppropriationContractExtension;
 import com.becheer.donation.service.IAppropriationContractService;
 import com.github.pagehelper.PageHelper;
@@ -27,5 +28,10 @@ public class AppropriationContractServiceImpl implements IAppropriationContractS
         List<AppropriationContractExtension> data = appropriationContractMapper.selectAccepterContractList(accepterId);
         PageInfo<AppropriationContractExtension> pageInfo = new PageInfo<>(data);
         return pageInfo;
+    }
+
+    @Override
+    public AppropriationContractContentExtension selectAccepterContractContent(long contractId) {
+        return appropriationContractMapper.selectAccepterContractContent(contractId);
     }
 }
