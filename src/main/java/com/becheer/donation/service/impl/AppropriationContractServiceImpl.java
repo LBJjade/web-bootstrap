@@ -31,7 +31,12 @@ public class AppropriationContractServiceImpl implements IAppropriationContractS
     }
 
     @Override
-    public AppropriationContractContentExtension selectAccepterContractContent(long contractId) {
+    public AppropriationContractContentExtension getAccepterContractContent(long contractId) {
         return appropriationContractMapper.selectAccepterContractContent(contractId);
+    }
+
+    @Override
+    public AppropriationContractExtension getAccepterContracttDetail(long contractId) {
+        return appropriationContractMapper.selectAccepterContractDetail(contractId);
     }
 }

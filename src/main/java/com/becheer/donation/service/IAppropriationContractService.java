@@ -21,5 +21,8 @@ public interface IAppropriationContractService {
      */
     PageInfo<AppropriationContractExtension> getContractList(long accepterId, int pageNum, int pageSize);
 
-    AppropriationContractContentExtension selectAccepterContractContent(long contractId);
+    AppropriationContractContentExtension getAccepterContractContent(long contractId);
+
+    AppropriationContractExtension getAccepterContracttDetail(long contractId);
+
 }

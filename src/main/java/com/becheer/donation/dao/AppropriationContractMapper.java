@@ -17,4 +17,6 @@ public interface AppropriationContractMapper {
     List<AppropriationContractExtension> selectAccepterContractList(long accepterId);
 
     AppropriationContractContentExtension selectAccepterContractContent(long contractId);
+
+    AppropriationContractExtension selectAccepterContractDetail(long contractId);
 }
