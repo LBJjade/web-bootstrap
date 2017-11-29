@@ -223,9 +223,9 @@
                     <td>{{item.title}}</td>
                     <td class="amount">{{item.amountString}}</td>
                     <td>{{item.deadLine}}</td>
-                    <td>{{item.paymentDate==""?"尚未捐赠":item.paymentDate}}</td>
+                    <td>{{item.formatPaymentDate==""?"尚未捐赠":item.formatPaymentDate}}</td>
                     <td>{{item.statusText}}</td>
-                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.deadLine,item.orderNo,item.statusText)"
+                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
                            id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
