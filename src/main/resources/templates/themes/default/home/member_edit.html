@@ -170,7 +170,8 @@
                                     <img id="img_b"
                                          th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
                                          height="120" width="120" style="margin-bottom: 10px"/>
-                                    <p>请选择身份证照片,单张图片照片过2M</p>
+                                    <div class="id_card_photo_error error" style="margin-right: 193px;">请上传身份证照片</div>
+                                    <p>请选择身份证照片,单张照片大小不能超过2M</p>
                                 </td>
                             </tr>
                             <tr>
@@ -304,48 +305,52 @@
         }
     })
 
-
     $(".btn_save").click(function () {
-        loadShade = layer.load(1, {
-            shade: [0.1,'#fff']
-        });
-        var memberName = $("#ipt_name").val();
-        var mobile = $("#ipt_mobile").val();
-        var idCard = $("#ipt_id_card").val();
-        var sex = $("#ipt_sex").val();
-        var birthday = $("#ipt_birthday").val();
-        var project = $("#ipt_project").val();
-        var summary = $("#ipt_summary").val();
+        if(f_nameValidate($("#ipt_name").val()) && f_idcardValidate($("#ipt_id_card").val()) && $("#ipt_f").val() !== "" && $("#ipt_b").val() !== "") {
+            loadShade = layer.load(1, {
+                shade: [0.1, '#fff']
+            });
+            var memberName = $("#ipt_name").val();
+            var mobile = $("#ipt_mobile").val();
+            var idCard = $("#ipt_id_card").val();
+            var sex = $("#ipt_sex").val();
+            var birthday = $("#ipt_birthday").val();
+            var project = $("#ipt_project").val();
+            var summary = $("#ipt_summary").val();
 
-        $.ajax({
-            url: '/home/member/submit',
-            data: {
-                name: memberName,
-                mobile: mobile,
-                idCard: idCard,
-                sex: sex,
-                birthday: birthday,
-                project: project,
-                summary: summary,
-                idCardFront: imgF,
-                idCardBack: imgB
-            },
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                layer.close(loadShade);
-                if (data.code === 200) {
-                    layer.alert(data.msg, function () {
-                        window.location.href = "/home";
-                    });
-                    setTimeout(function(){
-                        window.location.href = "/home";
-                    },3000);
-                }else{
-                    layer.alert(data.msg);
+            $.ajax({
+                url: '/home/member/submit',
+                data: {
+                    name: memberName,
+                    mobile: mobile,
+                    idCard: idCard,
+                    sex: sex,
+                    birthday: birthday,
+                    project: project,
+                    summary: summary,
+                    idCardFront: imgF,
+                    idCardBack: imgB
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code === 200) {
+                        layer.alert(data.msg, function () {
+                            window.location.href = "/home";
+                        });
+                        setTimeout(function () {
+                            window.location.href = "/home";
+                        }, 3000);
+                    } else {
+                        layer.alert(data.msg);
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            layer.alert("您填写的信息有误");
+            $(".id_card_photo_error").show();
+        }
     });
 
     function f_readAsDataURL(item){

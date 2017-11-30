@@ -127,7 +127,7 @@
                         <tr>
                             <td>组织机构代码：</td>
                             <td>
-                                <input class="form-control no_border_radius" type="text" id="ipt_code" th:value="${member.getOrganizationCode()}"/>
+                                <input class="form-control no_border_radius" type="text" id="ipt_organizationCode" th:value="${member.getOrganizationCode()}"/>
                                 <div class="ipt_code_error error">组织机构代码不能为空</div>
                                 <div class="ipt_code_error_0 error">组织机构代码格式错误</div>
                             </td>
@@ -152,6 +152,7 @@
                             <td>
                                 <input type="file" id="ipt_license" class="input_img" onchange="f_preImg()" accept="image/png,image/jpeg"/>
                                 <img id="img_license" th:src="${config.getFileRoot()+(member.getLicense()==null?'image/license/license.png':member.getLicense())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
+                                <div class="img_license_error error" style="margin-right: 193px;">请上传营业执照照片</div>
                                 <p>请选择营业执照照片,照片大小不超过2M</p>
                             </td>
                         </tr>
@@ -197,14 +198,14 @@
 
 
     //组织机构代码，由八位数字或字母组成，加一条横线，再加一位数字或字母，例如12345678-a
-    $("#ipt_code").blur(function () {
+    $("#ipt_organizationCode").blur(function () {
 //        var code = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]/;
 //        if ($("#ipt_code").val() == "") {
 //            $(".ipt_code_error").show();
 //        } else {
 //            $(".ipt_code_error").hide();
 //        }
-        if (!f_codeValidate($("#ipt_code").val())) {
+        if (!f_codeValidate($("#ipt_organizationCode").val())) {
             $(".ipt_code_error_0").show();
         } else {
             $(".ipt_code_error_0").hide();
@@ -226,8 +227,6 @@
     function f_preImg() {
 
         var imgUrl;
-
-        alert($("#ipt_license").prop('files')[0].size);
 
         if ($("#ipt_license").prop('files')[0].size > fileSize) {
             layer.alert("请选择2M以内的图片");
@@ -262,41 +261,52 @@
     }
 
     $(".btn_save").click(function () {
-        loadShade = layer.load(1, {
-            shade: [0.1, '#fff']
-        });
-        var companyName = $("#ipt_name").val();
-        var organizationCode = $("#ipt_code").val();
-        var organizationType = $("#ipt_type").val();
-        var project = $("#ipt_project").val();
-        var summary = $("#ipt_summary").val();
+        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val()) && $("#ipt_license").val() !== "") {
+            loadShade = layer.load(1, {
+                shade: [0.1, '#fff']
+            });
+            var companyName = $("#ipt_name").val();
+            var organizationCode = $("#ipt_code").val();
+            var organizationType = $("#ipt_type").val();
+            var project = $("#ipt_project").val();
+            var summary = $("#ipt_summary").val();
 
-        $.ajax({
-            url: '/home/member/submit',
-            data: {
-                name: companyName,
-                organizationCode: organizationCode,
-                organizationType: organizationType,
-                project: project,
-                summary: summary,
-                license: license
-            },
-            type: 'post',
-            dataType: 'json',
-            success: function (data) {
-                layer.close(loadShade);
-                if (data.code === 200) {
-                    layer.alert(data.msg, function () {
-                        window.location.href = "/home";
-                    });
-                    setTimeout(function () {
-                        window.location.href = "/home";
-                    }, 3000);
-                } else {
-                    layer.alert(data.msg);
+            $.ajax({
+                url: '/home/member/submit',
+                data: {
+                    name: companyName,
+                    organizationCode: organizationCode,
+                    organizationType: organizationType,
+                    project: project,
+                    summary: summary,
+                    license: license
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code === 200) {
+                        layer.alert(data.msg, function () {
+                            window.location.href = "/home";
+                        });
+                        setTimeout(function () {
+                            window.location.href = "/home";
+                        }, 3000);
+                    } else {
+                        layer.alert(data.msg);
+                    }
                 }
+            });
+        } else {
+            layer.alert("您填写的信息有误");
+            if($("#ipt_license").val() == ""){
+                $(".img_license_error").show();
+            }else{
+                $(".img_license_error").hide();
+            }if (!f_codeValidate($("#ipt_organizationCode").val())) {
+                $(".ipt_code_error_0").show();
             }
-        });
+        }
     });
 
     function f_uploadAvator() {

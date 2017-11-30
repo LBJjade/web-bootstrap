@@ -150,7 +150,7 @@
             display: inline-block;
             *display: inline;
             *zoom: 1;
-            width: 210px;
+            width: 208px;
             line-height: 20px;
             font-size: 15px;
             word-wrap: break-word;
@@ -302,6 +302,12 @@
             -moz-opacity: 0.5;
             opacity: 0.2;
         }
+        .success {
+            position: absolute;
+            left: 38px;
+            top: -7px;
+            z-index: -2;
+        }
 
         .donate_button {
             border-radius: 5px;
@@ -409,7 +415,7 @@
                     </p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
-                            <li><img :src="fileRoot+item.avator+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"/></li>
+                            <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" style="border-radius: 20px;border:1px solid #a1a1a1;"/>
                             <!--<li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>&nbsp;{{item.amount|format}}元-->
                             <!--</li>-->
                             <li class="recommend_item_info">
@@ -624,7 +630,7 @@
 
 
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 28px;color:#847f7f">捐赠金额：&yen;<span
+                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
@@ -634,11 +640,13 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200"
-                                     onerror="this.onerror=null;this.src='/image/error.jpg'"/>
+                                <img id="qrCodeImageId" height="200" width="200" onerror="nofind()"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
+                                </div>
+                                <div class="success">
+                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body" th:src="@{~/image/play.png}"/>
                                 </div>
                             </div>
                             <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
@@ -986,8 +994,8 @@
     $(document).bind("click", function (e) {
         var target = $(e.target);
         if (target.closest(".span_donation").length == 0) {
+            $(".money_2").removeClass("money_2");
             flag = 0;
-//            alert(flag);
         }
     })
 
@@ -1013,6 +1021,15 @@
             layer.alert("你还没有选择项目");
         } else if (flag == 0 && (otherMoney == "" || otherMoney == undefined)) {
             layer.confirm('您还没有选择金额', {
+                btn: ['重新选择或输入', '取消'] //按钮
+            }, function () {
+                $("#div_qr_donate").model('show');
+                layer.closeAll('dialog');
+            }, function () {
+                $("#div_qr_donate").model('hide');
+            });
+        } else if ($(".tx_yuan").val() !== "" && $(".tx_yuan").val() <= 0) {
+            layer.confirm('请输入正确金额', {
                 btn: ['重新选择或输入', '取消'] //按钮
             }, function () {
                 $("#div_qr_donate").model('show');
@@ -1062,6 +1079,13 @@
         }
     }
 
+    //图片不存在时
+    function nofind(){
+        var img=event.srcElement;
+        img.src="/image/error.jpg";
+        img.onerror=null;
+    }
+
     function checkPayStatus() {
         var orderNo = $("#orderNo").html();
         $.ajax({
@@ -1081,12 +1105,29 @@
                             $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
                             stopCount();
                             autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
+                            $("#qrCodeImageId").attr("src", "");
+                            $(".success").css("z-index", "6");
                         } else {
                             $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
                         }
                     }
                 }
         });
+    }
+
+    var autoCloseTimeout = 5;
+
+    //支付成功
+    function autoCloseAfterPaid() {
+        if (autoCloseTimeout > 1) {
+//            $("#qrCodeImageId").attr("src", "/image/play.jpg");
+            autoCloseTimeout -= 1;
+            $("#autoCloseAfterPaidTimerText").html(autoCloseTimeout);
+        } else {
+            clearInterval(autoCloseAfterPaidInterval);
+            $(".close_qr").click();
+            window.location.reload();
+        }
     }
 
 
@@ -1130,7 +1171,7 @@
                     }
                 }
         });
-        var timer = 60;
+        var timer = 120;
 
         function Countdown() {
             if (timer >= 1) {
@@ -1206,6 +1247,15 @@
 //        } else
         if (da_money == "") {
             parent.layer.confirm('您还没有输入金额', {
+                btn: ['重新输入', '取消'] //按钮
+            }, function () {
+                $("#div_de_donate").model('show');
+                layer.closeAll('dialog');
+            }, function () {
+                $("#div_de_donate").model('hide');
+            });
+        }  if (da_money <= 0) {
+            parent.layer.confirm('请输入正确金额', {
                 btn: ['重新输入', '取消'] //按钮
             }, function () {
                 $("#div_de_donate").model('show');
