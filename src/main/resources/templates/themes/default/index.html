@@ -286,6 +286,13 @@
             z-index: -1;
         }
 
+        .success {
+            position: absolute;
+            left: 38px;
+            top: -7px;
+            z-index: -2;
+        }
+
         #fushImage {
             height: auto;
             width: auto;
@@ -384,7 +391,8 @@
                 <ul id="ul_img" v-cloak>
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
                         <a :href="'project/'+item.projectId" target="_blank">
-                            <img :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fixed,h_600,w_900'"/>
+                            <img :alt="item.projectName"
+                                 :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fixed,h_600,w_900'"/>
                         </a>
                     </li>
                 </ul>
@@ -421,7 +429,8 @@
                         <p style="display: inline;">个</p>
                     </li>
                     <div align="center" style="position: relative;">
-                        <button type="button" class="donate_button" data-toggle="model" data-target="#div_qr_donate" data-dismiss="model" onclick="clear()">
+                        <button type="button" class="donate_button" data-toggle="model" data-target="#div_qr_donate"
+                                data-dismiss="model" onclick="clear()">
                             我要捐赠
                         </button>
                     </div>
@@ -438,7 +447,8 @@
                         <img :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'" style="float:left;"/>
                     </a>
                     <span class="projectName">
-                        <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 30px;color: #999999;margin-right: 10px"></i>
+                        <i class="fa fa-angle-right" aria-hidden="true"
+                           style="font-size: 30px;color: #999999;margin-right: 10px"></i>
                         <a class="item_projectName" :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a>
                     </span>
                     <i class="fa fa-picture-o" aria-hidden="true" style="font-size:18px;color: #037270;"></i>
@@ -465,7 +475,8 @@
                     <div v-cloak>
                         <ul class="recommend_item" v-for="item in items">
                             <li>
-                                <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" style="border-radius: 20px;border:1px solid #a1a1a1;"/>
+                                <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"
+                                     style="border-radius: 20px;border:1px solid #a1a1a1;"/>
                             </li>
                             <li class="recommend_item_info">
                                 <span class="recommend_item_info_fomat">{{item.memberName==null?item.location:item.memberName}}&nbsp;</span>
@@ -487,7 +498,8 @@
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
                             <li>
-                                <img :alt="item.projectName" :src="fileRoot + item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/>
+                                <img :alt="item.projectName"
+                                     :src="fileRoot + item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/>
                             </li>
                             <li class="recommend_item_word">
                                 <a :href="'project/'+item.projectId" target="_blank">{{item.projectName}}</a>
@@ -562,9 +574,11 @@
                         <br/>
                         <span id="span_5" class="money span_donation money_1" style="font-weight: 600;">&yen;100</span>
 
-                        <span id="other" class="span_donation money_1">
+                        <span id="other" class="money_1">
                             <span class="cu">其他捐赠金额(元)：</span>
-                            <input type="number" class="tx_yuan cu" style="outline:none;border:none;border-color:#e41620;text-align: right;width: 52px" value=""/>
+                            <input type="number" class="tx_yuan cu"
+                                   style="outline:none;border:none;border-color:#e41620;text-align: right;width: 52px"
+                                   value=""/>
                         </span>
                     </div>
                 </div>
@@ -586,7 +600,8 @@
 </div>
 
 <!--确认捐赠弹出层-->
-<div class="model fade" id="div_cf_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate" aria-hidden="true" data-backdrop='static'>
+<div class="model fade" id="div_cf_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
+     aria-hidden="true" data-backdrop='static'>
     <div class="model-dialog" style="margin-top:100px">
         <div class="model-content" style="width: 600px">
             <div class="model-header">
@@ -601,7 +616,8 @@
             <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 60px;color:#847f7f">捐赠金额：&yen;<span id="donateAmount" class="order_fund" style=""></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 60px;color:#847f7f">捐赠金额：&yen;<span
+                            id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">
                     距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
@@ -610,16 +626,21 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" onerror="this.onerror=null;this.src='/image/error.jpg'"/>
+                                <img id="qrCodeImageId" height="200" width="200" onerror="nofind()"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
+                                </div>
+                                <div class="success">
+                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body"
+                                         th:src="@{~/image/play.png}"/>
                                 </div>
                             </div>
                             <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
                         </div>
                         <div class="col-sm-6">
-                            <img id="qr_logo" th:src="@{~/image/sm.jpg}" alt="hjaksfh" style="height:205px; width:265px;display: none;"/>
+                            <img id="qr_logo" th:src="@{~/image/sm.jpg}" alt="hjaksfh"
+                                 style="height:205px; width:265px;display: none;"/>
                             <div class="orderMoney" style="margin-top: 33px;">
                                 打开手机 <span style="color: red;">微信扫一扫</span>，扫描二维码
                             </div>
@@ -663,7 +684,8 @@
             </div>
 
             <div class="model-body" style="text-align: center">
-                <div style="float:left;margin-top: 20px; margin-left: 32px;"><span style="width: 115px;text-align: right;" class="cu">请选择项目类别
+                <div style="float:left;margin-top: 20px; margin-left: 32px;"><span
+                        style="width: 115px;text-align: right;" class="cu">请选择项目类别
                     <i style="color: red">*</i>：
                 </span>
                     <select id="sel_project_type_second" class="cu" style="width: 166px;" onchange="f_GetProject2()">
@@ -687,7 +709,8 @@
                             联系方式 <i style="color: red">*</i>：
                         </label>
                         <span class="col_sm_2">
-                            <input type="text" class="cu" id="ipt_dnt_mobile" style=" width: 167px; height: 28px;margin-right: 20px;" readonly="readonly"/>
+                            <input type="text" class="cu" id="ipt_dnt_mobile"
+                                   style=" width: 167px; height: 28px;margin-right: 20px;" readonly="readonly"/>
                         </span>
                     </div>
                     <div style="width:80%;margin-top:20px;">
@@ -707,7 +730,8 @@
                     </div>
                 </div>
                 <div style="margin-top:10px;clear: both; margin-bottom: 20px;">
-                    <button class="donateSubmit button" data-toggle="model" data-target="#div_qr_donate" data-dismiss="model">
+                    <button class="donateSubmit button" data-toggle="model" data-target="#div_qr_donate"
+                            data-dismiss="model">
                         上一步
                     </button>
                     <button class="button da_donate_next" data-dismiss="model">
@@ -736,6 +760,9 @@
     var vueContent;
     var vueProject;
     var vueProjectSecond;
+    var otherMoney;
+
+
     var flag = 0;
     var span_money;
     var donateType = 0;
@@ -963,11 +990,23 @@
         span_money = ms;
     })
 
+    //金额取消选择
+    $(document).bind("click", function (e) {
+        var target = $(e.target);
+        if (target.closest(".span_donation").length == 0) {
+            $(".money_2").removeClass("money_2");
+            flag = 0;
+        }
+    })
+
     $("#other").change(function () {
         $(".money_2").removeClass("money_2");
-        flag = 1;
-        var m = $(".tx_yuan").val();
-        span_money = m;
+        otherMoney = $(".tx_yuan").val();
+        span_money = otherMoney;
+    })
+
+    $("#other").click(function () {
+        $(".money_2").removeClass("money_2");
     })
 
 
@@ -983,15 +1022,13 @@
         f_GetArticle();
     }
 
-    //清空input值
-    function clear() {
+    $(".donate_button").click(function () {
         $(".tx_yuan").val("");
-    }
+    })
 
     function f_Donate() {
         if (donateType == 0) {
             var projectType = $("#sel_project_type").find("option:selected").text();
-            var projectName = $("#sel_project").find("option:selected").text();
             if (projectType == "请选择项目类别") {
                 layer.confirm('您还没有选择项目类别', {
                     btn: ['重新选择', '取消'] //按钮
@@ -1001,7 +1038,7 @@
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-            } else if (flag == 0 && $(".tx_yuan").val() == "") {
+            } else if (flag === 0 && (otherMoney === "" || otherMoney === undefined) && $(".tx_yuan").val() == "") {
                 layer.confirm('您还没有选择金额', {
                     btn: ['重新选择或输入', '取消'] //按钮
                 }, function () {
@@ -1085,6 +1122,8 @@
                             $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
                             stopCount();
                             autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
+                            $("#qrCodeImageId").attr("src", "");
+                            $(".success").css("z-index", "6");
                         } else {
                             $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
                         }
@@ -1092,6 +1131,14 @@
                 }
         });
     }
+
+    //图片不存在时
+    function nofind() {
+        var img = event.srcElement;
+        img.src = "/image/error.jpg";
+        img.onerror = null;
+    }
+
 
     $(".code_img").mouseover(function () {
         $("#qr_logo").fadeIn(2000);
@@ -1111,17 +1158,19 @@
 
     var autoCloseTimeout = 5;
 
+    //支付成功
     function autoCloseAfterPaid() {
         if (autoCloseTimeout > 1) {
+//            $("#qrCodeImageId").attr("src", "/image/play.jpg");
             autoCloseTimeout -= 1;
             $("#autoCloseAfterPaidTimerText").html(autoCloseTimeout);
-            $("#qrCodeImageId").attr("src", "/image/play.jpg");
         } else {
             clearInterval(autoCloseAfterPaidInterval);
             $(".close_qr").click();
             window.location.reload();
         }
     }
+
 
     //关闭函数
     function stopCount() {
@@ -1204,6 +1253,7 @@
         }
     })
 
+
     //大额捐赠第二步
     $(".da_donate_next").click(function () {
         var da_money = $("#ipt_dnt_amount").val();
@@ -1260,13 +1310,22 @@
                     dataType: 'json',
                     success: function (data) {
                         if (data.code == 200) {
-                            layer.alert("提交捐赠<b style='color: red'>成功</b>。", 3000, function () {
-                                window.location.href = "/home/apply";
-                            });
+                            layer.alert("提交捐赠意向成功。",
+                                {
+                                    icon: 1,
+                                    skin: 'layer-ext-moon'
+                                },
+                                function () {
+                                    window.location.href = "/home/apply";
+                                });
                         } else {
-                            layer.alert("提交捐赠<b style='color: red'>失败</b>。", 3000, function () {
-                                window.location.href = "/index";
-                            });
+                            layer.alert("提交捐赠意向失败。", {
+                                    icon: 2,
+                                    skin: 'layer-ext-moon'
+                                },
+                                function () {
+                                    window.location.href = "/index";
+                                });
                         }
                     }
                 })
