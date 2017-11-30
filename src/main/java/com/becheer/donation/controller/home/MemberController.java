@@ -70,7 +70,7 @@ public class MemberController extends BaseController {
         }
     }
 
-    @Access(authorities = {Role.PERSON, Role.COMPANY})
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping(value = "/avator")
     public String avatorUpload(HttpServletRequest request) {
         try {

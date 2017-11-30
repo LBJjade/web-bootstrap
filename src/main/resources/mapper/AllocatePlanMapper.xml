@@ -28,6 +28,7 @@
         WHERE
         enable_=1
         AND appropriation_contract_id=#{contractId,jdbcType=BIGINT}
+        ORDER BY id_
     </select>
 
     <select id="selectAllocatePlanByMemberId" parameterType="java.lang.Long" resultMap="accepterAllocatePlanListMapper">
@@ -45,7 +46,7 @@
         WHERE
         a.enable_=1
         AND a.appropriation_contract_id IN (SELECT id_ FROM dnt_appropriation_contract c where c.acceptor_id = #{accepterId,jdbcType=BIGINT})
-		ORDER BY a.create_time DESC
+		ORDER BY a.id_ DESC
     </select>
 
 </mapper>
