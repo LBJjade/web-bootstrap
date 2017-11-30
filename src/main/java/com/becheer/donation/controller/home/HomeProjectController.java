@@ -65,7 +65,6 @@ public class HomeProjectController extends BaseController {
                 render_404();
             }
             MemberProjectDetailExtension memberProjectDetailExtension = projectService.GetMemberProjectDetail(contractProjectId);
-
             if (memberProjectDetailExtension == null) {
                 return render_404();
             } else {

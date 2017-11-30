@@ -44,6 +44,7 @@
         <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
         <result column="project_id" jdbcType="BIGINT" property="projectId"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="contract_id" jdbcType="BIGINT" property="contractId"/>
         <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount"/>
         <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount"/>
@@ -176,6 +177,7 @@
       p.project_name,
       p.id_ AS project_id,
       p.content,
+      c.id_ AS contract_id,
       c.contract_name,
       cp.contract_amount,
       cp.donated_amount,
