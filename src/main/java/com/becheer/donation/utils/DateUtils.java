@@ -102,6 +102,30 @@ public class DateUtils {
         return dateFormat(date, "yyyy-MM-dd HH:mm:ss");
     }
 
+    public static String strToDateFormat(String date){
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            formatter.setLenient(false);
+            Date newDate= formatter.parse(date);
+            formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return formatter.format(newDate);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public static Date StrToDate(String str) {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = format.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
     public static String dateFormat(Date date, String dateFormat) {
         if(date != null) {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);

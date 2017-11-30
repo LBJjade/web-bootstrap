@@ -25,6 +25,8 @@ public class PaymentPlanExtension {
 
     private long receivedAmount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd ")
+    @DateTimeFormat(pattern="yyyy-MM-dd ")
     private Date deadLine;
 
     private int enable;
@@ -95,8 +97,12 @@ public class PaymentPlanExtension {
         this.receivedAmount = receivedAmount;
     }
 
-    public String getDeadLine() {
-        return DateUtils.dateFormat(paymentDate, "yyyy-MM-dd");
+    public String getFormatDeadLine() {
+        return DateUtils.dateFormat(deadLine, "yyyy-MM-dd");
+    }
+
+    public Date getDeadLine() {
+        return deadLine;
     }
 
     public void setDeadLine(Date deadLine) {

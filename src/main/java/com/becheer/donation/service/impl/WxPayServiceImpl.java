@@ -154,8 +154,10 @@ public class WxPayServiceImpl implements IWxPayService {
         // 更新业务数据状态
         Date paymentDate = null;
         String timeEnd = notify.get("time_end");
+        String time=null;
         if (!Strings.isNullOrEmpty(timeEnd)) {
-            paymentDate = DateUtils.convertToDate(timeEnd);
+            time=DateUtils.strToDateFormat(timeEnd);
+            paymentDate = DateUtils.StrToDate(time);
         }
         paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
         paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
