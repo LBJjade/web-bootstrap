@@ -1,5 +1,6 @@
 package com.becheer.donation.model.extension.contract;
 
+import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.StringUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,11 +25,11 @@ public class AppropriationContractExtension {
     private long contractAmount;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date beginTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 
     private int status;
@@ -75,16 +76,16 @@ public class AppropriationContractExtension {
         this.contractAmount = contractAmount;
     }
 
-    public Date getBeginTime() {
-        return beginTime;
+    public String getBeginTime() {
+        return DateUtils.dateFormat(beginTime, "yyyy-MM-dd");
     }
 
     public void setBeginTime(Date beginTime) {
         this.beginTime = beginTime;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        return DateUtils.dateFormat(endTime, "yyyy-MM-dd");
     }
 
     public void setEndTime(Date endTime) {
@@ -96,7 +97,7 @@ public class AppropriationContractExtension {
     }
 
     public String getStatusText() {
-        switch (status){
+        switch (status) {
             case 0:
                 return "编辑中";
             case 1:
@@ -109,7 +110,8 @@ public class AppropriationContractExtension {
                 return "已驳回";
             case 5:
                 return "调整中";
-                default:return "";
+            default:
+                return "";
         }
     }
 

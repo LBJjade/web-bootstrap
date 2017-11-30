@@ -50,14 +50,14 @@ public class HomeAppealController extends BaseController {
     @Resource
     IProjectService projectService;
 
-    @Access(authorities = {Role.PERSON, Role.COMPANY})
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping("")
     public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
         return this.render("/home/appeal");
     }
 
-    @Access(authorities = {Role.PERSON, Role.COMPANY})
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping("/add/{contractProjectId}")
     public String ViewDetail(HttpServletRequest request, @PathVariable long contractProjectId) {
         request.setAttribute("config", fileConfig);
@@ -99,7 +99,7 @@ public class HomeAppealController extends BaseController {
         }
     }
 
-    @Access(authorities = {Role.PERSON, Role.COMPANY})
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping(value = "/{appealId}")
     public String GetAppealDetail(HttpServletRequest request, @PathVariable long appealId) {
         request.setAttribute("config", fileConfig);

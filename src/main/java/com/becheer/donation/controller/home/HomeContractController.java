@@ -117,15 +117,14 @@ public class HomeContractController extends BaseController {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
             MemberContractContentExtension result = contractService.GetContractContent(contractId);
+            if (result == null) {
+                return render_404();
+            }
             if (result.getMemberId() != currentMember.getMemberId()) {
                 return render_404();
             }
-            if (result == null) {
-                return render_404();
-            } else {
-                request.setAttribute("contract", result);
-                return render("home/contract_content");
-            }
+            request.setAttribute("contract", result);
+            return render("home/contract_content");
         } catch (Exception ex) {
             LOGGER.error("GetContractContent", ex.getMessage());
             return render_404();

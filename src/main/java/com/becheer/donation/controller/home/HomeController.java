@@ -29,7 +29,7 @@ public class HomeController extends BaseController {
     @Resource
     IMemberService memberService;
 
-    @Access(authorities = {Role.PERSON, Role.COMPANY})
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping(value = "")
     public String index(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
