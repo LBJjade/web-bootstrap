@@ -350,14 +350,14 @@
             color: #00a0e9
         }
 
-        .recommend_item_info_money{
+        .recommend_item_info_money {
             float: right;
             font-size: 17px;
             line-height: 0px;
-            color:#FF5A43;
+            color: #FF5A43;
         }
 
-        .recommend_item_info_project{
+        .recommend_item_info_project {
             float: left;
             font-size: 14px;
             display: -webkit-box;
@@ -465,7 +465,7 @@
                     <div v-cloak>
                         <ul class="recommend_item" v-for="item in items">
                             <li>
-                                <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" style="border-radius: 20px;"/>
+                                <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" style="border-radius: 20px;border:1px solid #a1a1a1;"/>
                             </li>
                             <li class="recommend_item_info">
                                 <span class="recommend_item_info_fomat">{{item.memberName==null?item.location:item.memberName}}&nbsp;</span>
@@ -695,6 +695,7 @@
                         </label>
                         <input type="number" class="cu" id="ipt_dnt_amount" placeholder="请输入金额数字" style="width:170px;"/>
                         <p class="code_error error cu" style="margin-left: 60px;">捐赠意向金额不能为空</p>
+                        <p class="code_error_0 error cu" style="margin-left: 60px;">捐赠意向金额要大于0</p>
                     </div>
                     <div style="width:105%;margin-top:20px;">
                         <span>
@@ -722,6 +723,7 @@
 </div>
 
 <!--全局JS-->
+<script th:src="@{/js/validation.js}"></script>
 <script th:src="@{/plugin/banner/js.js}"></script>
 <script th:src="@{/plugin/pagination/pagination.js}"></script>
 <!--页面JS-->
@@ -999,8 +1001,18 @@
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-            } else if (flag == 0) {
+            } else if (flag == 0 && $(".tx_yuan").val() > 0) {
                 layer.confirm('您还没有选择金额', {
+                    btn: ['重新选择或输入', '取消'] //按钮
+                }, function () {
+                    $("#div_qr_donate").model('show');
+                    layer.closeAll('dialog');
+                }, function () {
+                    $("#div_qr_donate").model('hide');
+                });
+            }
+            else if ($(".tx_yuan").val() <= 0) {
+                layer.confirm('请输入正确金额', {
                     btn: ['重新选择或输入', '取消'] //按钮
                 }, function () {
                     $("#div_qr_donate").model('show');
@@ -1180,11 +1192,15 @@
     $("#ipt_dnt_amount").blur(function () {
         if ($("#ipt_dnt_amount").val() == "") {
             $(".code_error").show();
+            $(".code_error_0").hide();
         } else {
-            $(".code_error").hide();
-        }
-        if ($("#ipt_dnt_amount").val() != "") {
-            $(".da_donate_next").attr("disabled", false);
+            if ($("#ipt_dnt_amount").val() <= 0) {
+                $(".code_error").hide();
+                $(".code_error_0").show();
+            } else {
+                $(".code_error_0").hide();
+                $(".da_donate_next").attr("disabled", false);
+            }
         }
     })
 
@@ -1206,6 +1222,15 @@
             });
         } else if (da_money == "") {
             parent.layer.confirm('您还没有输入金额', {
+                btn: ['重新输入', '取消'] //按钮
+            }, function () {
+                $("#div_de_donate").model('show');
+                layer.closeAll('dialog');
+            }, function () {
+                $("#div_de_donate").model('hide');
+            });
+        } else if (da_money <= 0) {
+            parent.layer.confirm('请输入正确金额', {
                 btn: ['重新输入', '取消'] //按钮
             }, function () {
                 $("#div_de_donate").model('show');
