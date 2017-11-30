@@ -13,5 +13,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Access {
+    int authFailedAction() default 0;
+
     int[] authorities() default {0};
 }
