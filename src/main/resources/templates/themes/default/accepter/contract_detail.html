@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
+    <title>合同详情</title>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
+    <style type="text/css">
+        .table_member_content {
+            width: 70%;
+            text-align: left;
+            margin-left: 120px;
+            margin-bottom: 50px;
+            line-height: 50px;
+        }
+
+        .table_member_content td {
+            border-bottom: 1px #ccc dashed;
+        }
+
+        * {
+            font-family: 微软雅黑;
+        }
+
+        #div_recent img {
+            float: left;
+        }
+
+        #div_project img {
+            height: 40px;
+            width: 40px;
+            float: left;
+        }
+
+        .recommend_item a {
+            color: #000000;
+        }
+
+        #ul_total input {
+            border: 1px solid;
+            width: 215px;
+            font-size: 24px;
+            color: #ffa701;
+            text-align: right;
+            padding-right: 5px;
+        }
+
+        #ul_total p {
+            font-size: 15px;
+        }
+
+        #ul_total li {
+            padding-top: 10px;
+            padding-left: 20px;
+        }
+
+        #div_question p {
+            margin-left: 15px;
+            margin-top: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /*去掉输入框中的加减符号*/
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+
+        .donate_msg span {
+            font-family: 微软雅黑;
+            color: #e4393c;
+            font-size: 17px;
+            font-weight: 600;
+            line-height: 63px;
+        }
+
+        button.close_qr {
+            -webkit-appearance: none;
+            padding: 0;
+            cursor: pointer;
+            background: 0 0;
+            border: 0;
+        }
+
+        .info_button {
+            font-size: 14px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border: 1px solid #f0f0f0;
+            border-radius: 0px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+            float:right;
+            margin-top: -5px;
+            margin-left: 600px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-2">
+            <div th:replace="themes/default/menu::menu"></div>
+        </div>
+        <div class="col-sm-10">
+            <div class="div_member_title">
+                <div id="div_navbar" style="margin-top: 10px">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="div_navbar_item"><a href="/home/contract">我的合同</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="div_navbar_item"><a href="#">合同详情</a></li>
+                    </ul>
+                    <a>
+                        <button class="info_button">我要申诉</button>
+                    </a>
+                </div>
+
+            </div>
+            <table class="table_member_content">
+                <tr>
+                    <td>合同名称：</td>
+                    <td>
+                        <th:block th:text="${contract.getContractName()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同金额：</td>
+                    <td>
+                        <th:block th:text="${contract.getContractAmount()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同周期：</td>
+                    <td>
+                        <th:block th:text="${contract.getBeginTime()+' ~ '+contract.getEndTime()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同状态：</td>
+                    <td>
+                        <th:block th:text="${contract.getStatusText()}"></th:block>
+                    </td>
+                </tr>
+                <tr>
+                    <td>合同内容：</td>
+                    <td><a href="javascript:f_openContent()">点击查看</a></td>
+                </tr>
+            </table>
+            <div class="div_member_title">
+                <p>合同批资名称</p>
+                <hr/>
+            </div>
+            <table class="table_member_content" ID="table_donate_plan">
+                <thead class="table_title">
+                <tr>
+                    <td>名称</td>
+                    <td>金额</td>
+                    <td>已批资金额</td>
+                    <td>批资日期</td>
+                    <td>批资截止日期</td>
+                    <td>状态</td>
+                </tr>
+                </thead>
+                <tr v-for="item in items" v-cloak>
+                    <td>{{item.title}}</td>
+                    <td class="amount">{{item.amount}}</td>
+                    <td>{{item.allocateAmount}}</td>
+                    <td>{{item.allocateDate==null?"尚未批资":item.allocateDate}}</td>
+                    <td>{{item.deadLine}}</td>
+                    <td>{{item.status}}</a></td>
+                </tr>
+            </table>
+            <div class="col-sm-10 p_no_data" style="margin-bottom: 40px;">
+                <div style="font-size: 18px;font-weight: 600;">
+                    <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="themes/default/footer::footer"></div>
+<!--全局JS-->
+<script th:src="@{/js/date.js}"></script>
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    var contractId =/*[[${contract.getId()}]]*/;
+
+    $(document).ready(function () {
+        f_getAllocatePlan();
+    })
+
+    $(".close_qr").click(function () {
+        $("#div_cf_donate").model('hide');
+        stopCount();
+    })
+
+    function f_getAllocatePlan() {
+        $.ajax({
+            url: '/accepter/contract/allocate',
+            data: {contractId: contractId},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    new Vue({
+                        el: '#table_donate_plan',
+                        data: {
+                            items: data.result
+                        }
+                    });
+                    if (data.result.length === 0) {
+                        $(".p_no_data").show();
+                        $(".table_title").hide();
+                    }
+                }
+            }
+        });
+    }
+
+    function f_openContent() {
+        layer.open({
+            type: 2,
+            title: '合同内容',
+            shadeClose: true,
+            shade: 0.6,
+            area: ['1100px', '90%'],
+            content: '/accepter/contract/content/' + contractId
+        });
+    }
+
+    /*]]>*/
+</script>
+</body>
+</html>

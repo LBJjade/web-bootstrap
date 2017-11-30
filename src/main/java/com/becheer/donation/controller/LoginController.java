@@ -79,6 +79,8 @@ public class LoginController extends BaseController {
                 memberSessionExtension.setRole(member.getRole());
                 memberSessionExtension.setValidation(member.getValidation());
                 memberSessionExtension.setAvator(member.getAvatorImg());
+                memberSessionExtension.setAccepterId(member.getAccepterId());
+
                 request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                 //自动登录，设置cookie
                 if (autoLogin) {
@@ -127,6 +129,7 @@ public class LoginController extends BaseController {
                 memberSessionExtension.setRole(3);
                 memberSessionExtension.setValidation(3);
                 memberSessionExtension.setAvator(accepter.getAvator());
+                memberSessionExtension.setAccepterId(accepter.getId());
                 //写受捐人Session
                 request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                 //用户勾选了自动登录，登录
@@ -177,6 +180,7 @@ public class LoginController extends BaseController {
                     memberSessionExtension.setRole(member.getRole());
                     memberSessionExtension.setValidation(member.getValidation());
                     memberSessionExtension.setAvator(member.getAvatorImg());
+                    memberSessionExtension.setAccepterId(member.getAccepterId());
                     request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
                     memberService.updateLoginInfo(request.getRemoteAddr(), member.getId());
                     return new ResponseDto(200, Message.LOGIN_SUCCESS, memberSessionExtension);

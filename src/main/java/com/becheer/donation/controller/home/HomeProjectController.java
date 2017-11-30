@@ -14,6 +14,7 @@ import com.becheer.donation.service.IProgressService;
 import com.becheer.donation.service.IProjectProgressService;
 import com.becheer.donation.service.IProjectService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.strings.Role;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,31 +48,30 @@ public class HomeProjectController extends BaseController {
     @Resource
     IProjectProgressService projectProgressService;
 
-    @Access(authorities="member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping("")
-    public String View(HttpServletRequest request){
+    public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
         return this.render("home/project");
     }
 
-    @Access(authorities="member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping("/{contractProjectId}")
-    public String GetProjectDetail(HttpServletRequest request,@PathVariable long contractProjectId){
+    public String GetProjectDetail(HttpServletRequest request, @PathVariable long contractProjectId) {
         request.setAttribute("config", fileConfig);
         try {
-            MemberContractDetailExtension contract =contractService.getContractByContractProjectId(contractProjectId);
-            if (contract==null){
+            MemberContractDetailExtension contract = contractService.getContractByContractProjectId(contractProjectId);
+            if (contract == null) {
                 render_404();
             }
-            MemberProjectDetailExtension memberProjectDetailExtension=projectService.GetMemberProjectDetail(contractProjectId);
-
-            if (memberProjectDetailExtension==null){
+            MemberProjectDetailExtension memberProjectDetailExtension = projectService.GetMemberProjectDetail(contractProjectId);
+            if (memberProjectDetailExtension == null) {
                 return render_404();
-            }else{
-                request.setAttribute("project",memberProjectDetailExtension);
+            } else {
+                request.setAttribute("project", memberProjectDetailExtension);
                 return render("home/project_detail");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("GetProjectDetail", ex.getMessage());
             return render_404();
         }
@@ -79,21 +79,21 @@ public class HomeProjectController extends BaseController {
 
     @PostMapping("/list")
     @ResponseBody
-    public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetProject(HttpServletRequest request, @RequestParam int pageSize, @RequestParam int pageNum) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        if (pageSize<1||pageSize>50){
-            pageSize=5;
+        if (pageSize < 1 || pageSize > 50) {
+            pageSize = 5;
         }
-        if (pageNum<1){
-            pageNum=1;
+        if (pageNum < 1) {
+            pageNum = 1;
         }
         try {
-            PageInfo<MemberProjectExtension> result=projectService.GetProjectList(currentMember.getMemberId(),pageNum,pageSize);
-            return new ResponseDto(200, Message.PROJECT_GET_LIST_SUCCESS,result);
-        }catch(Exception ex){
+            PageInfo<MemberProjectExtension> result = projectService.GetProjectList(currentMember.getMemberId(), pageNum, pageSize);
+            return new ResponseDto(200, Message.PROJECT_GET_LIST_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetProject", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -102,19 +102,19 @@ public class HomeProjectController extends BaseController {
 
     @PostMapping("/progress")
     @ResponseBody
-    public ResponseDto GetAllprogress(HttpServletRequest request, @RequestParam long contractProjectId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetAllprogress(HttpServletRequest request, @RequestParam long contractProjectId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        MemberContractDetailExtension contract =contractService.getContractByContractProjectId(contractProjectId);
-        if (contract==null){
+        MemberContractDetailExtension contract = contractService.getContractByContractProjectId(contractProjectId);
+        if (contract == null) {
             return MemberAuthFailed();
         }
         try {
-            List<ProgressExtension> result=progressService.GetAllProgress(contractProjectId,"dnt_contract_project");
-            return new ResponseDto(200, Message.MEMBER_PROJECT_GET_PROGRESS_SUCCESS,result);
-        }catch(Exception ex){
+            List<ProgressExtension> result = progressService.GetAllProgress(contractProjectId, "dnt_contract_project");
+            return new ResponseDto(200, Message.MEMBER_PROJECT_GET_PROGRESS_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetAllprogress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -122,21 +122,21 @@ public class HomeProjectController extends BaseController {
 
     @PostMapping("/projectProgress")
     @ResponseBody
-    public ResponseDto GetProjectProgress(HttpServletRequest request, @RequestParam long projectId, @RequestParam int pageSize, @RequestParam int pageNum){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto GetProjectProgress(HttpServletRequest request, @RequestParam long projectId, @RequestParam int pageSize, @RequestParam int pageNum) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
-        if (pageSize<1||pageSize>50){
-            pageSize=5;
+        if (pageSize < 1 || pageSize > 50) {
+            pageSize = 5;
         }
-        if (pageNum<1){
-            pageNum=1;
+        if (pageNum < 1) {
+            pageNum = 1;
         }
         try {
-            PageInfo<ProjectProgress> result=projectProgressService.GetProjectProgress(projectId,pageSize,pageNum);
-            return new ResponseDto(200,Message.PROJECT_PROGRESS_GET_SUCCESS,result);
-        }catch(Exception ex){
+            PageInfo<ProjectProgress> result = projectProgressService.GetProjectProgress(projectId, pageSize, pageNum);
+            return new ResponseDto(200, Message.PROJECT_PROGRESS_GET_SUCCESS, result);
+        } catch (Exception ex) {
             LOGGER.error("GetProjectProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }

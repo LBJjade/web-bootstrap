@@ -32,7 +32,7 @@
         <result column="create_by" jdbcType="BIGINT" property="createBy"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
-        <result column="remark_" jdbcType="VARCHAR" property="remark"/>
+        <result column="acceptor_id" jdbcType="BIGINT" property="accepterId"/>
     </resultMap>
 
     <insert id="insertMember" parameterType="com.becheer.donation.model.Member">

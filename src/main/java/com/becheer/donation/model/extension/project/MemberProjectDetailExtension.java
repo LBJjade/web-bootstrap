@@ -24,6 +24,8 @@ public class MemberProjectDetailExtension {
 
     private String content;
 
+    private long contractId;
+
     private String contractName;
 
     private long contractAmount;
@@ -76,6 +78,18 @@ public class MemberProjectDetailExtension {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public long getContractId() {
+        return contractId;
+    }
+
+    public void setContractId(long contractId) {
+        this.contractId = contractId;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 
     public String getContractName() {

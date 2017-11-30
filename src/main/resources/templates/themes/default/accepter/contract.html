@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
+    <title>我的合同</title>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
+    <style type="text/css">
+
+        .div_message_title {
+            padding: 15px;
+            height: 50px;
+            margin: 15px 0px 0px 25px;
+            border: 1px solid #dbdbdb;
+            background-color: #fbfbfb;
+        }
+
+        .div_message_content {
+            padding: 15px;
+            margin-left: 25px;
+            border: 1px solid #dbdbdb;
+            border-top: none;
+            display: none;
+        }
+
+        .div_message_title h4 {
+            font-weight: 400;
+            color: #666;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0px;
+        }
+
+        .div_message_title span {
+            margin-right: 10px;
+            margin-left: 10px;
+            /*float: right;*/
+        }
+
+        .info_button {
+            font-size: 12px;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-color: #f0f0f0;
+            border-radius: 0px;
+            border-style: solid;
+            border-width: 1px;
+            color: #00a0e9;
+            min-width: 86px;
+            height: 30px;
+            float: right;
+        }
+
+        .status {
+            color: #00a0ea;
+        }
+
+        .sign_time {
+            color: #00a0ea;
+        }
+
+        .amount {
+            color: #ff5a43;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-2">
+            <div th:replace="themes/default/menu::menu"></div>
+        </div>
+        <div class="col-sm-10" id="div_contract_content">
+            <div class="div_member_title">
+                <div id="div_navbar" style="margin-top: 10px">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li class="div_navbar_item"><a href="#">我的合同</a></li>
+                    </ul>
+                </div>
+                <!--<p>我的合同</p>-->
+                <!--<hr/>-->
+            </div>
+            <div style="min-height: 450px">
+                <div v-for="item in items" v-cloak>
+                    <div class="div_message_title">
+                        <div>
+                            <h4><span class="glyphicon glyphicon-chevron-down" style="float: right;"></span>{{item.contractName}}
+                                <p
+                                        style="float: right"><span class="amount" style=" margin-right: 5px;">{{item.contractAmount}}</span>元
+                                </p></h4>
+                        </div>
+                    </div>
+                    <div class="div_message_content">
+                        <a :href="'contract/'+item.id" target="_blank">
+                            <button class="info_button">查看详情</button>
+                        </a>
+                        <p>合同编号：
+                            <span class="status">{{item.contractNo}}</span>
+                        </p>
+                        <p>合同状态：
+                            <span class="status">{{item.statusText}}</span>
+                        </p>
+                        <p>合同金额：
+                            <span class="status">{{item.contractAmount}} 元</span>
+                        </p>
+                        <p>合同周期：
+                            <span class="status">{{item.beginTime}} <span style="color: #0f0f0f">~</span> {{item.endTime}}</span>
+                        </p>
+                        <p>合同内容：
+                            <a style="cursor: pointer;" v-on:click="f_openContent(item.id)">
+                                点击查看
+                            </a>
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-sm-10 p_no_data" style="margin-top: 80px;">
+                    <div style="font-size: 18px;font-weight: 600;">
+                        <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
+                    </div>
+                </div>
+            </div>
+            <div id="div_page">
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="themes/default/footer::footer"></div>
+<!--全局JS-->
+<script th:src="@{/plugin/pagination/pagination.js}"></script>
+<script th:src="@{/js/date.js}"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var pageSize = 8;
+    var pageNum = 1;
+    var pageCount;
+    var vueContent;
+    $(document).ready(function () {
+        f_getContract();
+    });
+
+    $("body").on("click", ".div_message_title", function () {
+        if ($(this).next().css("display") === "none") {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-up");
+            $(this).next().show();
+        } else {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-down");
+            $(this).next().hide();
+        }
+    });
+
+    function f_getContract() {
+        $.ajax({
+            url: '/accepter/contract/list',
+            data: {pageNum: pageNum, pageSize: pageSize},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    $.each(data.result.list, function (i, item) {
+                        item.a_signTime = f_FormatDateTime(item.a_signTime);
+                        item.b_signTime = f_FormatDateTime(item.b_signTime);
+                    });
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
+                    f_InitPagination($("#div_page"));
+                    if (vueContent == undefined) {
+                        vueContent = new Vue({
+                            el: '#div_contract_content',
+                            data: {
+                                items: data.result.list
+                            }
+                        });
+                        if (data.result.list.length === 0) {
+                            $(".p_no_data").show();
+                        }
+                    } else {
+                        for (var i = 0; i < data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0, 0);
+                    }
+                }
+            }
+        });
+    }
+
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum = newPage;
+        f_getContract();
+    }
+
+
+    function f_openContent(contractId) {
+        layer.open({
+            type: 2,
+            title: '合同内容',
+            shadeClose: true,
+            shade: 0.6,
+            area: ['1100px', '90%'],
+            content: '/accepter/contract/content/' + contractId
+        });
+    }
+
+    /*]]>*/
+</script>
+</body>
+</html>

@@ -17,6 +17,7 @@ import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IProgressService;
 import com.becheer.donation.service.IProjectService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
@@ -49,14 +50,14 @@ public class HomeAppealController extends BaseController {
     @Resource
     IProjectService projectService;
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping("")
     public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
         return this.render("/home/appeal");
     }
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping("/add/{contractProjectId}")
     public String ViewDetail(HttpServletRequest request, @PathVariable long contractProjectId) {
         request.setAttribute("config", fileConfig);
@@ -98,7 +99,7 @@ public class HomeAppealController extends BaseController {
         }
     }
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping(value = "/{appealId}")
     public String GetAppealDetail(HttpServletRequest request, @PathVariable long appealId) {
         request.setAttribute("config", fileConfig);
@@ -170,34 +171,34 @@ public class HomeAppealController extends BaseController {
 
     @PostMapping("/addProgress")
     @ResponseBody
-    public ResponseDto AddProgress(HttpServletRequest request,@RequestParam String content,@RequestParam long appealId){
-        MemberSessionExtension currentMember=GetCurrentUser(request);
-        if (currentMember==null){
+    public ResponseDto AddProgress(HttpServletRequest request, @RequestParam String content, @RequestParam long appealId) {
+        MemberSessionExtension currentMember = GetCurrentUser(request);
+        if (currentMember == null) {
             return MemberAuthFailed();
         }
         try {
-            if (StringUtil.isNull(content)){
-                return new ResponseDto(200,Message.MEMBER_APPEAL_PROGRESS_CONTENT_NULL);
+            if (StringUtil.isNull(content)) {
+                return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_CONTENT_NULL);
             }
-            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId,currentMember.getMemberId());
-            if (appeal==null){
+            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId, currentMember.getMemberId());
+            if (appeal == null) {
                 return MemberAuthFailed();
             }
-            String title=content;
-            if (title.length()>30){
-                title=title.substring(0,30);
+            String title = content;
+            if (title.length() > 30) {
+                title = title.substring(0, 30);
             }
-            long result=progressService.AddProgress(title,content,"dnt_appeal",appealId,currentMember.getMemberId(),1);
-            if (result>0){
+            long result = progressService.AddProgress(title, content, "dnt_appeal", appealId, currentMember.getMemberId(), 1);
+            if (result > 0) {
                 //已驳回的申述,如果用户继续提交资料,则状态变为处理中
-                if (appeal.getStatus()==1){
-                    appealService.UpdateAppealStatus(appealId,2);
+                if (appeal.getStatus() == 1) {
+                    appealService.UpdateAppealStatus(appealId, 2);
                 }
-                return new ResponseDto(200,Message.MEMBER_APPEAL_PROGRESS_ADD_SUCCESS,result);
-            }else{
-                return new ResponseDto(400,Message.MEMBER_APPEAL_PROGRESS_ADD_FAILED);
+                return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_ADD_SUCCESS, result);
+            } else {
+                return new ResponseDto(400, Message.MEMBER_APPEAL_PROGRESS_ADD_FAILED);
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("AddProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -205,7 +206,7 @@ public class HomeAppealController extends BaseController {
 
     @PostMapping("/solve")
     @ResponseBody
-    public ResponseDto solveProgress(HttpServletRequest request,@RequestParam long appealId) {
+    public ResponseDto solveProgress(HttpServletRequest request, @RequestParam long appealId) {
         MemberSessionExtension currentMember = GetCurrentUser(request);
         if (currentMember == null) {
             return MemberAuthFailed();
@@ -221,7 +222,7 @@ public class HomeAppealController extends BaseController {
             //解决
             progressService.AddProgress("申诉已解决", "申诉已解决", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
             return appealService.UpdateAppealStatus(appealId, 3);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("solveProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -229,7 +230,7 @@ public class HomeAppealController extends BaseController {
 
     @PostMapping("/withdraw")
     @ResponseBody
-    public ResponseDto withdrawProgress(HttpServletRequest request,@RequestParam long appealId) {
+    public ResponseDto withdrawProgress(HttpServletRequest request, @RequestParam long appealId) {
         MemberSessionExtension currentMember = GetCurrentUser(request);
         if (currentMember == null) {
             return MemberAuthFailed();
@@ -245,7 +246,7 @@ public class HomeAppealController extends BaseController {
             //撤销
             progressService.AddProgress("您撤销了申诉", "您撤销了申诉", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
             return appealService.UpdateAppealStatus(appealId, 4);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             LOGGER.error("withdrawProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }

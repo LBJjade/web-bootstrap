@@ -2,6 +2,8 @@ package com.becheer.donation.model.extension.payment;
 
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.StringUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -15,12 +17,16 @@ public class PaymentPlanExtension {
 
     private String title;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date paymentDate;
 
     private long amount;
 
     private long receivedAmount;
 
+    @JsonFormat(pattern = "yyyy-MM-dd ")
+    @DateTimeFormat(pattern="yyyy-MM-dd ")
     private Date deadLine;
 
     private int enable;
@@ -55,7 +61,11 @@ public class PaymentPlanExtension {
         this.title = title;
     }
 
-    public String getPaymentDate() {
+    public Date getPaymentDate() {
+        return paymentDate;
+    }
+
+    public String getFormatPaymentDate() {
         return DateUtils.dateFormat(paymentDate, "yyyy-MM-dd");
     }
 
@@ -87,8 +97,12 @@ public class PaymentPlanExtension {
         this.receivedAmount = receivedAmount;
     }
 
-    public String getDeadLine() {
-        return DateUtils.dateFormat(paymentDate, "yyyy-MM-dd");
+    public String getFormatDeadLine() {
+        return DateUtils.dateFormat(deadLine, "yyyy-MM-dd");
+    }
+
+    public Date getDeadLine() {
+        return deadLine;
     }
 
     public void setDeadLine(Date deadLine) {

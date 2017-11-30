@@ -34,12 +34,13 @@ public class HttpUtil {
             return null;
         }
         MemberSessionExtension result = new MemberSessionExtension();
-        result.setMemberId(sessionObject.getIntValue("memberId"));
+        result.setMemberId(sessionObject.getLongValue("memberId"));
         result.setMobile(sessionObject.getString("mobile"));
         result.setValidation(sessionObject.getIntValue("validation"));
         result.setMemberName(sessionObject.getString("memberName"));
         result.setRole(sessionObject.getIntValue("role"));
         result.setAvator(sessionObject.getString("avator"));
+        result.setAccepterId(sessionObject.getLongValue("accepterId"));
         return result;
     }
 

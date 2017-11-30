@@ -11,6 +11,7 @@ import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IPaymentPlanService;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.RedisUtil;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class HomeContractController extends BaseController {
     @Resource
     IPaymentPlanService paymentPlanService;
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping("")
     public String View(HttpServletRequest request) {
         request.setAttribute("config", fileConfig);
@@ -68,7 +69,7 @@ public class HomeContractController extends BaseController {
         }
     }
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping(value = "/{contractId}")
     public String GetContractDetail(HttpServletRequest request, @PathVariable long contractId) {
         request.setAttribute("config", fileConfig);
@@ -110,21 +111,20 @@ public class HomeContractController extends BaseController {
         }
     }
 
-    @Access(authorities = "member")
+    @Access(authorities = {Role.PERSON, Role.COMPANY})
     @GetMapping(value = "/content/{contractId}")
     public String GetContractContent(HttpServletRequest request, @PathVariable long contractId) {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
             MemberContractContentExtension result = contractService.GetContractContent(contractId);
+            if (result == null) {
+                return render_404();
+            }
             if (result.getMemberId() != currentMember.getMemberId()) {
                 return render_404();
             }
-            if (result == null) {
-                return render_404();
-            } else {
-                request.setAttribute("contract", result);
-                return render("home/contract_content");
-            }
+            request.setAttribute("contract", result);
+            return render("home/contract_content");
         } catch (Exception ex) {
             LOGGER.error("GetContractContent", ex.getMessage());
             return render_404();

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.becheer.donation.dao.AccepterMapper">
 
-    <resultMap id="AccepterDetailResultMap" type="com.becheer.donation.model.Accepter">
+    <resultMap id="accepterDetailResultMap" type="com.becheer.donation.model.Accepter">
         <id column="id_" jdbcType="BIGINT" property="id"/>
         <result column="project_type_id" jdbcType="INTEGER" property="projectTypeId"/>
         <result column="member_id" jdbcType="BIGINT" property="memberId"/>
@@ -25,7 +25,21 @@
         <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
     </resultMap>
 
-    <select id="selectAccepterByNo" parameterType="java.lang.String" resultMap="AccepterDetailResultMap">
+    <resultMap id="accepterInfoResultMap" type="com.becheer.donation.model.extension.accepter.AccepterInfoExtension">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="member_id" jdbcType="BIGINT" property="memberId"/>
+        <result column="acceptor_no" jdbcType="VARCHAR" property="acceptorNo"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="received_amount" jdbcType="BIGINT" property="receivedAmount"/>
+        <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
+        <result column="enable_" jdbcType="INTEGER" property="enable"/>
+    </resultMap>
+
+
+    <select id="selectAccepterByNo" parameterType="java.lang.String" resultMap="accepterDetailResultMap">
         SELECT
           *
         FROM
@@ -33,4 +47,31 @@
         WHERE
           acceptor_no =#{acceptorNo,jdbcType=VARCHAR}
     </select>
+
+    <select id="selectAccepterById" parameterType="java.lang.Long" resultMap="accepterInfoResultMap">
+        SELECT
+          id_,
+          member_id,
+          enable_,
+          acceptor_no,
+          name,
+          mobile,
+          id_card,
+          address,
+          received_amount,
+          avator_img
+        FROM
+          dnt_acceptor
+        WHERE
+          member_id = #{mid,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateAvator">
+        UPDATE
+        dnt_acceptor
+        SET
+        update_time = now(),
+        avator_img=#{param1}
+        WHERE member_id = #{param2}
+    </update>
 </mapper>
