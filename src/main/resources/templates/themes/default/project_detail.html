@@ -1111,12 +1111,11 @@
     function f_Donate() {
         if (projectType == "请选择项目类别") {
             layer.alert("你还没有选择项目");
+        } else if (flag == 0) {
+            layer.alert("你还没有选择金额");
         }
-        else if (flag == 0) {
-            if($(".tx_yuan").val() <= 0 ){
-                layer.alert("请选择金额或输入正确金额");
-            }else{
-            layer.alert("你还没有选择金额");}
+        else if ($(".tx_yuan").val() !== "" && $(".tx_yuan").val() <= 0) {
+            layer.alert("请输入正确金额");
         } else {
             $("#div_cf_donate").model('show');
             var amount = span_money * 100;
@@ -1386,11 +1385,10 @@
         var projectName = $("#sel_project2").find("option:selected").text();
         if (projectType == "请选择项目类别") {
             layer.alert("你还没有选择项目");
-        } else if (flag == 0) {
-            if($(".tx_yuan").val() <= 0 ){
-                layer.alert("请选择金额或输入正确金额");
-            }else{
-                layer.alert("你还没有选择金额");}
+        } else if (flag == 0 && $(".tx_yuan").val() == "") {
+            layer.alert("你还没有选择金额");
+        } else if ($(".tx_yuan").val() <= 0) {
+            layer.alert("请输入正确金额");
         } else {
 //            window.location.href = "/home/apply";
             layer.alert("提交捐赠意向成功！", 3000, function () {
