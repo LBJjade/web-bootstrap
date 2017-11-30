@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="renderer" content="webkit"/>
+    <title>我的获捐</title>
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/common.css}"/>
+    <link th:href="@{/css/font-awesome.css?v=4.7.0}" rel="stylesheet"/>
+    <style type="text/css">
+
+        .div_message_title {
+            padding: 15px;
+            height: 50px;
+            margin: 15px 0px 0px 25px;
+            border: 1px solid #dbdbdb;
+            background-color: #fbfbfb;
+        }
+
+        .div_message_content {
+            padding: 15px;
+            margin-left: 25px;
+            border: 1px solid #dbdbdb;
+            border-top: none;
+            display: none;
+        }
+
+        .div_message_title h4 {
+            font-weight: 400;
+            color: #666;
+            font-size: 14px;
+            line-height: 22px;
+            margin: 0px;
+        }
+
+        .div_message_title span {
+            margin-right: 10px;
+            float: right;
+        }
+
+        .p_no_data {
+            line-height: 100px;
+            text-align: center;
+            display: none;
+        }
+
+        .status {
+            color: #00a0ea;
+        }
+
+    </style>
+</head>
+<body>
+<div th:replace="themes/default/header::header"></div>
+
+<div class="center-block" style="width: 1200px;">
+    <div class="row">
+        <div class="col-sm-2">
+            <div th:replace="themes/default/menu::menu"></div>
+        </div>
+        <div class="col-sm-10" id="message_item">
+            <div class="div_member_title">
+                <div id="div_navbar" style="margin-top: 10px">
+                    <ul>
+                        <li><a href="#">首页</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                               style="font-size: 20px;color: #999999; "></i></li>
+                        <li class="div_navbar_item"><a href="#">我的获捐</a></li>
+                    </ul>
+                </div>
+                <!--<p>我的消息</p>-->
+                <!--<hr/>-->
+            </div>
+            <div style="min-height: 450px;" v-cloak>
+                <div class="div_message" v-for="item in items">
+                    <div class="div_message_title">
+                        <div>
+                            <h4 style="font-weight: 900;">
+                                <span class="glyphicon glyphicon-chevron-down"></span>
+                                {{item.title}}
+                                <span style="font-weight: normal;">
+                                    {{item.createTime}}
+                                </span>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="div_message_content">
+                        <p>合同金额：
+                            <span class="status">{{item.amount}}</span>
+                        </p>
+                        <p>已获捐金额：
+                            <span class="status">{{item.allocateAmount}}</span>
+                        </p>
+                        <p>状态：
+                            <span class="status">{{item.status}}</span>
+                        </p>
+                        <p>最迟批资时间：
+                            <span class="status">{{item.deadLine}}</span>
+                        </p>
+                    </div>
+                </div>
+                <div  class="col-sm-10 p_no_data" style="margin-top: 80px;">
+                    <div  style="font-size: 18px;font-weight: 600;">
+                        <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
+                    </div>
+                </div>
+            </div>
+            <div id="div_page">
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="themes/default/footer::footer"></div>
+<!--全局JS-->
+<script th:src="@{/js/date.js}"></script>
+<script th:src="@{/plugin/pagination/pagination.js}"></script>
+<script type="text/javascript">
+    /*<![CDATA[*/
+    var pageSize = 10;
+    var pageNum = 1;
+    var pageCount;
+    var vueContent;
+
+    $(document).ready(function () {
+        f_getReceivedList();
+    });
+
+
+    $("body").on("click", ".div_message_title", function () {
+        if ($(this).next().css("display") === "none") {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-up");
+            $(this).next().show();
+        } else {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-down");
+            $(this).next().hide();
+        }
+    });
+
+
+    function f_getReceivedList() {
+        $.ajax({
+            url: '/accepter/accepted/list',
+            data: {pageNum: pageNum, pageSize: pageSize},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                    pageCount = data.result.pages;
+                    pageNum = data.result.pageNum;
+                    $("#div_page").attr("pageNum", pageNum).attr("pageCount", pageCount).attr("pageExtra", 3);
+                    f_InitPagination($("#div_page"));
+                    if (vueContent == undefined) {
+                        vueContent = new Vue({
+                            el: '#message_item',
+                            data: {
+                                items: data.result.list
+                            }
+                        });
+                        if (data.result.list.length === 0) {
+                            $(".p_no_data").show();
+                        }
+                    } else {
+                        for (var i = 0; i < data.result.list.length; i++) {
+                            Vue.set(vueContent.items, i, data.result.list[i]);
+                        }
+                        vueContent.items.splice(data.result.list.length);
+                        scrollTo(0, 0);
+                    }
+                }
+            }
+        });
+    }
+
+    //翻页回调函数
+    function f_PageCallBack(newPage) {
+        pageNum = newPage;
+        f_getReceivedList();
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

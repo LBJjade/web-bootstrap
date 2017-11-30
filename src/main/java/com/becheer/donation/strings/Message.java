@@ -69,7 +69,7 @@ public class Message {
 
     public static final String MEMBER_UNENABLE = "无效账户,账户已删除";
 
-    public static final String LOGIN_AUTH_NO_NULL="授号错误";
+    public static final String LOGIN_AUTH_NO_NULL = "授号错误";
 
 
     /*
@@ -263,4 +263,9 @@ public class Message {
     public static final String ACCEPTER_GET_SUCCESS = "获取受捐人成功";
     public static final String ACCEPTER_NOT_EXISTS = "授号不存在";
     public static final String ACCEPTER_DISABLED = "授号已禁用";
+
+    /**
+     * 我的获捐页面
+     */
+    public static final String ACCEPTER_ACCEPTED_GET_SUCCESS = "获取我的获捐成功";
 }

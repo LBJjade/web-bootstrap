@@ -1,5 +1,7 @@
 package com.becheer.donation.model.extension.accepter;
 
+import com.becheer.donation.utils.StringUtil;
+
 /*
 * AccepterInfoExtension
 * Creator : xiaokepu
@@ -90,8 +92,8 @@ public class AccepterInfoExtension {
         this.avator = avator;
     }
 
-    public long getReceivedAmount() {
-        return receivedAmount;
+    public String getReceivedAmount() {
+        return StringUtil.formatMoney(receivedAmount);
     }
 
     public void setReceivedAmount(long receivedAmount) {

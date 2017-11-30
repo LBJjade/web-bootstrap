@@ -30,4 +30,22 @@
         AND appropriation_contract_id=#{contractId,jdbcType=BIGINT}
     </select>
 
+    <select id="selectAllocatePlanByMemberId" parameterType="java.lang.Long" resultMap="accepterAllocatePlanListMapper">
+        SELECT
+        a.id_,
+        a.title,
+        a.allocate_date,
+        a.amount,
+        a.allocated_amount,
+        a.deadline,
+        a.enable_,
+        a.status
+        FROM
+        dnt_allocate_plan a
+        WHERE
+        a.enable_=1
+        AND a.appropriation_contract_id IN (SELECT id_ FROM dnt_appropriation_contract c where c.acceptor_id = #{accepterId,jdbcType=BIGINT})
+		ORDER BY a.create_time DESC
+    </select>
+
 </mapper>

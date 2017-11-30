@@ -3,6 +3,8 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.dao.AllocatePlanMapper;
 import com.becheer.donation.model.extension.allocate.AllocatePlanExtension;
 import com.becheer.donation.service.IAllocatePlanService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,5 +25,13 @@ public class AllocatePlanServiceImpl implements IAllocatePlanService {
     @Override
     public List<AllocatePlanExtension> getAllocatePlan(Long contractId) {
         return allocatePlanMapper.selectAllocatePlanByContractId(contractId);
+    }
+
+    @Override
+    public PageInfo<AllocatePlanExtension> getAllocatePlanByAccepterId(Long accepterId,int pageNum,int pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<AllocatePlanExtension> data=allocatePlanMapper.selectAllocatePlanByMemberId(accepterId);
+        PageInfo<AllocatePlanExtension> pageInfo = new PageInfo<AllocatePlanExtension>(data);
+        return pageInfo;
     }
 }
