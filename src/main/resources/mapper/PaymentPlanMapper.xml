@@ -9,7 +9,7 @@
         <result column="payment_date" jdbcType="TIMESTAMP" property="paymentDate"/>
         <result column="amount" jdbcType="BIGINT" property="amount"/>
         <result column="received_amount" jdbcType="BIGINT" property="receivedAmount"/>
-        <result column="dead_line" jdbcType="TIMESTAMP" property="deadLine"/>
+        <result column="deadline" jdbcType="TIMESTAMP" property="deadLine"/>
         <result column="enable_" jdbcType="INTEGER" property="enable"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>

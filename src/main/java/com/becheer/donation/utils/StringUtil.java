@@ -19,7 +19,8 @@ public class StringUtil {
         money = Math.abs(money);
         if (money < 100000) {
             // 绝对值不足六位，不用添加','
-            return String.valueOf(new DecimalFormat("0.00").format(money / 100));
+//            return String.valueOf(new DecimalFormat("0.00").format(money / 100));
+            return String.valueOf(new DecimalFormat("0.00").format(Double.valueOf(money) / 100));
         }
         //解决大数除不准的问题
         String stringMoney = new BigDecimal(new DecimalFormat("0.00").format(((double) money) / 100)).toString();

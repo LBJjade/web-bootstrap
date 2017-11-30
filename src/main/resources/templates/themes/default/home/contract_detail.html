@@ -108,6 +108,13 @@
             border: 0;
         }
 
+        .success {
+            position: absolute;
+            left: 38px;
+            top: -7px;
+            z-index: -2;
+        }
+
         .close_qr {
             float: right;
             font-size: 21px;
@@ -222,10 +229,11 @@
                 <tr v-for="item in items" v-cloak>
                     <td>{{item.title}}</td>
                     <td class="amount">{{item.amountString}}</td>
-                    <td>{{item.deadLine}}</td>
+                    <td>{{item.formatDeadLine}}</td>
                     <td>{{item.formatPaymentDate==""?"尚未捐赠":item.formatPaymentDate}}</td>
                     <td>{{item.statusText}}</td>
-                    <td><a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
+                    <td>
+                        <a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
                            id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
@@ -267,11 +275,14 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200"
-                                     onerror="this.onerror=null;this.src='/image/error.jpg'"/>
+                                <img id="qrCodeImageId" height="200" width="200" onerror="nofind()"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
+                                </div>
+                                <div class="success">
+                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body"
+                                         th:src="@{~/image/play.png}"/>
                                 </div>
                             </div>
                             <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
@@ -313,7 +324,7 @@
 <table id="bill" class="table " style="display: none;margin-left:16px;margin-top:18px;overflow-x: hidden;width: 94%; ">
     <thead>
     <tr>
-        <th><img src="/image/bill.png" style=" width: 25px;">  账单详情</th>
+        <th><img src="/image/bill.png" style=" width: 25px;"> 账单详情</th>
     </tr>
     </thead>
     <!--<thead>-->
@@ -329,7 +340,9 @@
     </tr>
     <tr>
         <td>合同名称：</td>
-        <td><th:block th:text="${contract.getContractName()}"></td>
+        <td>
+            <th:block th:text="${contract.getContractName()}">
+        </td>
     </tr>
     <tr>
         <td>捐赠金额：</td>
@@ -412,7 +425,8 @@
     }
 
 
-    function f_openDoanteLayer(id, status,amount,title,date,orderNo,donateStatus) {
+    function f_openDoanteLayer(id, status, amount, title, date, orderNo, donateStatus) {
+        paymentPlanId = id;
         if (status === 0) {
             $("#div_cf_donate").model('show');
             $.ajax({
@@ -533,20 +547,24 @@
 
     var autoCloseTimeout = 5;
 
+    //支付成功
     function autoCloseAfterPaid() {
         if (autoCloseTimeout > 1) {
+//            $("#qrCodeImageId").attr("src", "/image/play.jpg");
             autoCloseTimeout -= 1;
             $("#autoCloseAfterPaidTimerText").html(autoCloseTimeout);
-            $("#qrCodeImageId").attr("src", "");
         } else {
-            alert(1);
             clearInterval(autoCloseAfterPaidInterval);
-            alert(2);
             $(".close_qr").click();
-            alert(3);
             window.location.reload();
-            alert(4);
         }
+    }
+
+    //图片不存在时
+    function nofind() {
+        var img = event.srcElement;
+        img.src = "/image/error.jpg";
+        img.onerror = null;
     }
 
     function checkPayStatus() {
@@ -568,6 +586,8 @@
                             $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
                             stopCount();
                             autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
+                            $("#qrCodeImageId").attr("src", "");
+                            $(".success").css("z-index", "6");
                         } else {
                             $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
                         }
@@ -581,6 +601,7 @@
         $("#donateAmount").html("");
         $("#orderNo").html("");
     }
+
     /*]]>*/
 </script>
 </body>
