@@ -43,12 +43,15 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
         //未登录
         HttpSession session = request.getSession();
         if (session == null) {
+            response.sendRedirect("/login");
             return false;
         }
         JSONObject sessionObject = (JSONObject) session.getAttribute(ConstString.LOGIN_SESSION_NAME);
         if (sessionObject == null) {
+            response.sendRedirect("/login");
             return false;
         }
+
         int role = sessionObject.getIntValue("role");
 
         //验证权限

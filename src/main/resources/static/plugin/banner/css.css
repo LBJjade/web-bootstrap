@@ -50,6 +50,7 @@
     top: 177px;
     left: 10px;
     z-index: 100;
+    cursor: pointer;
     /*background: RGBA(44,44,44,0.5);*/
 }
 
@@ -58,5 +59,6 @@
     top: 177px;
     right: 5px;
     z-index: 100;
+    cursor: pointer;
 }
 

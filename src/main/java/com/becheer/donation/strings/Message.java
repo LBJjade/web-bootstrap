@@ -162,6 +162,11 @@ public class Message {
 
 
     /**
+     * 批资计划
+     */
+    public static final String ACCEPTER_GET_ALLOCATE_PLAN_SUCCESS = "获取批资计划成功";
+
+    /**
      * 项目
      */
     public static final String MEMBER_PROJECT_GET_PROGRESS_SUCCESS = "获取参与记录成功";
