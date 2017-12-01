@@ -18,7 +18,7 @@ public interface IAppealService {
 
     MemberAppealDetailExtension GetMemberAppealDetail(long appealId,long memberId);
 
-    void InsertAppeal(String title,String method, String content,long contractProjectId,long projectId,long memberId);
+    void InsertAppeal(String title,String method, String content,long contractId,long projectId,long memberId);
 
     ResponseDto UpdateAppealStatus(long appealId, int status);
 }
