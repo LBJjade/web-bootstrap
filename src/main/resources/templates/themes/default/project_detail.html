@@ -476,8 +476,7 @@
                     </p>
                     <div class="info_ma">
                         <p class="info_time"><span class="info_name">项目时间</span>：
-                            <th:block
-                                    th:text='${project.getLongTerm()==1?"长期":(project.getStartTime()+" 至 "+project.getEndTime())}'/>
+                            <th:block th:text='${(project.getStartTime()+" 至 "+project.getEndTime())}'/>
                         </p>
                         <div class="center">
                             <p class="info"><span class="info_name">目标金额</span>：&nbsp;<span
