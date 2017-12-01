@@ -20,13 +20,34 @@ public class AccepterInfoExtension {
 
     private String idCard;
 
-    private String address;
+//    private String address;
 
     private String avator;
 
     private long receivedAmount;
 
     private int enable;
+
+    private int role;
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public int getRole() {
+
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    private int number;
 
     public long getId() {
         return id;
@@ -76,13 +97,13 @@ public class AccepterInfoExtension {
         this.idCard = idCard;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+//    public String getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(String address) {
+//        this.address = address;
+//    }
 
     public String getAvator() {
         return avator;

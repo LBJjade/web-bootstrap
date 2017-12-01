@@ -5,22 +5,16 @@ import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
-import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
-import com.becheer.donation.model.extension.contract.MemberContractExtension;
-import com.becheer.donation.model.extension.intention.IntentionExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
-import com.becheer.donation.model.extension.project.MemberProjectExtension;
 import com.becheer.donation.service.IAppealService;
-import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IProgressService;
 import com.becheer.donation.service.IProjectService;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -141,7 +135,7 @@ public class HomeAppealController extends BaseController {
 
     @PostMapping("/add")
     @ResponseBody
-    public ResponseDto add(HttpServletRequest request, @RequestParam String title, @RequestParam String method, @RequestParam String content, @RequestParam long contractProjectId, @RequestParam long projectId) {
+    public ResponseDto add(HttpServletRequest request, @RequestParam String title, @RequestParam String method, @RequestParam String content, @RequestParam long contractId, @RequestParam long projectId) {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
             if (currentMember == null) {
@@ -156,16 +150,19 @@ public class HomeAppealController extends BaseController {
             if (StringUtil.isNull(content)) {
                 return new ResponseDto(400, Message.SUBMIT_APPEAL_CONTENT_NULL);
             }
-            if (contractProjectId == 0 || projectId == 0) {
+            if (contractId == 0 || projectId == 0) {
                 return new ResponseDto(400, Message.SUBMIT_APPEAL_ID_NULL);
             }
             //TODO 还需要检查合同是否属于该会员，合同项目是否属于该会员
             long memberId = currentMember.memberId;
-            appealService.InsertAppeal(title, method, content, contractProjectId, projectId, memberId);
-            return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
+            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, projectId, memberId);
+            if (result.getCode()==200){
+                progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int)result.getResult(), memberId, 1);
+            }
+            return result;
         } catch (Exception ex) {
             LOGGER.error("add", ex.getMessage());
-            return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 

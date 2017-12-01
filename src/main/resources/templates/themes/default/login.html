@@ -94,7 +94,7 @@
             <tr>
                 <td>登录密码：</td>
                 <td width="400px" style="line-height: 20px">
-                    <input type="password" class="input_text ipt_pwd" id="tab_ipt_pwd" placeholder="请输入8位密码"/>
+                    <input type="password" class="input_text ipt_pwd" id="tab_ipt_pwd" placeholder="请输入密码"/>
                     <div class="pw_error error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能为空</div>
                     <div class="pw_error_0 error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能少于8位</div>
                 </td>
@@ -132,9 +132,9 @@
             <tr>
                 <td>登录密码：</td>
                 <td style="line-height: 20px">
-                    <input type="password" class="input_text ipt_pwd" id="ac_pwd" placeholder="请输入8位密码"/>
+                    <input type="password" class="input_text ipt_pwd" id="ac_pwd" placeholder="请输入密码"/>
                     <div class="pw_error error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能为空</div>
-                    <div class="pw_error_0 error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能少于8位</div>
+                    <div class="ac_pw_error_0 error" style="text-align: left;height: 40px;padding-top: 9px;margin-top: 43px;">密码不能少于6位</div>
                 </td>
             </tr>
             <tr>
@@ -152,7 +152,7 @@
             <tr>
                 <td colspan="2" style="line-height: 20px;padding-top: 10px;padding-bottom: 10px;">
                     <!--<span><a th:href="@{/change}">修改密码?</a></span>-->
-                    <span><a href="javascript:f_loginChangeMode()">会员登陆</a></span>
+                    <span><a href="javascript:f_loginChangeMode()">会员登录</a></span>
                     <button class="btn btn-info" id="tab_btn_ac_login" style=" width: 80px; margin-right: 140px;">
                         登录
                     </button>
@@ -203,7 +203,7 @@
         var pwd = $("#ac_pwd").val();
         var code = $("#ac_code").val();
         var autoLogin = $("#ac_cookie").is(':checked');
-        if( $("#ac_no").val() !== "" && $("#ac_code").val() != "" && $("#ac_pwd").val() != "" && $("#ac_pwd").val().length >= 8) {
+        if( $("#ac_no").val() !== "" && $("#ac_code").val() != "" && $("#ac_pwd").val() != "" && $("#ac_pwd").val().length >= 6) {
             $.ajax({
                 url: "/login/acLogin",
                 data: {authCode: authCode, code: code, pwd: pwd, autoLogin: autoLogin},
@@ -267,14 +267,14 @@
     //受捐人密码
     $("#ac_pwd").blur(function () {
         if ($("#ac_pwd").val() == "") {
-            $(".pw_error_0").hide();
+            $(".ac_pw_error_0").hide();
             $(".pw_error").show();
         } else {
             $(".pw_error").hide();
-            if ($("#ac_pwd").val().length < 8) {
-                $(".pw_error_0").show();
+            if ($("#ac_pwd").val().length < 6) {
+                $(".ac_pw_error_0").show();
             } else {
-                $(".pw_error_0").hide();
+                $(".ac_pw_error_0").hide();
             }
         }
     })

@@ -108,7 +108,7 @@
 
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var contractProjectId =/*[[${project.getId()}]]*/;
+    var contractId =/*[[${project.getContractId()}]]*/;
     var projectId =/*[[${project.getProjectId()}]]*/;
     $("#btn_submit").click(function () {
         var title = $("#theme").val();
@@ -120,7 +120,7 @@
                 title: title,
                 method: method,
                 content: content,
-                contractProjectId: contractProjectId,
+                contractId: contractId,
                 projectId: projectId
             },
             type: 'post',

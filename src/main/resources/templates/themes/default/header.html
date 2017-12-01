@@ -4,6 +4,11 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/bootstrapValidator.css}" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .help-block{
+            float: left;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid div-shadown-3-5" id="div_header">
@@ -124,7 +129,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-6 col-lg-offset-6">
-                            <span><a href="javascript:f_loginMode()">授号登陆</a></span>
+                            <span><a href="javascript:f_loginMode()">授号登录</a></span>
                             <span>|</span>
                             <span><a th:href="@{/forget}">忘记密码</a></span>
                             <span>|</span>
@@ -169,7 +174,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-6 col-lg-offset-6">
-                            <span><a href="javascript:f_loginMode()">会员登陆</a></span>
+                            <span><a href="javascript:f_loginMode()">会员登录</a></span>
                             <span>|</span>
                             <span><a th:href="@{/forget}">忘记密码</a></span>
                             <span>|</span>
@@ -255,11 +260,7 @@
                     message: 'The phone is not valid',
                     validators: {
                         notEmpty: {
-                            message: '手机号码不能为空'
-                        },
-                        regexp: {
-                            regexp: v_phone,
-                            message: '手机号格式错误'
+                            message: '授号不能为空'
                         }
                     }
                 },
@@ -267,6 +268,10 @@
                     validators: {
                         notEmpty: {
                             message: '密码不能为空'
+                        },
+                        stringLength: {
+                            min: 6,
+                            message: '请输入至少6位密码'
                         }
                     }
                 },

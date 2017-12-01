@@ -220,8 +220,8 @@
                 <tr>
                     <td>确认密码：</td>
                     <td style="line-height: 20px">
-                        <input type="password" id="ipt_pwd" class="input_pwd pw" placeholder="请输入确认密码"
-                               style="margin-top: 5px;margin-left: 89px;"/>
+                        <input type="password" id="ipt_reg_pwd" class="input_pwd pw" placeholder="请输入确认密码"
+                                                                     style="margin-top: 5px;margin-left: 89px;"/>
                         <p class="pwd_error error_1">密码不能为空</p>
                         <p class="p_error error_1">两次密码不一致</p>
                     </td>
@@ -381,8 +381,8 @@
     });
 
     $(".btn_pwd").click(function () {
-        var pwd = $("#ipt_pwd").val();
-        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val() && $(".input_pw").val().length >= 8){
+        var pwd = $("#ipt_reg_pwd").val();
+        if ($(".input_pw").val() != "" && $("#ipt_reg_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_reg_pwd").val() && $(".input_pw").val().length >= 8){
             loadShade = layer.load(1, {shade: [0.1,'#fff']});
             $.ajax({
                 url: '/register/submit',
@@ -452,12 +452,12 @@
 
 
     $(".input_pwd").blur(function () {
-        if ($("#ipt_pwd").val() == "") {
+        if ($("#ipt_reg_pwd").val() == "") {
             $(".p_error").hide();
             $(".pwd_error").show();
         } else {
             $(".pwd_error").hide();
-            if ($("#ipt_pw").val() !== $("#ipt_pwd").val()) {
+            if ($("#ipt_pw").val() !== $("#ipt_reg_pwd").val()) {
                 $(".p_error").show();
             } else {
                 $(".p_error").hide();

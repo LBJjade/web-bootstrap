@@ -2,17 +2,35 @@ package com.becheer.donation.model.extension.appeal;
 
 import com.becheer.donation.model.base.BaseModel;
 
-public class AppealDetailExtension extends BaseModel{
+public class AppealDetailExtension extends BaseModel {
+
+    private int id;
 
     private Long contractId;
+
     private Long projectId;
+
     private Long memberId;
+
     private String appealTitle;
+
     private String appealContent;
+
     private String appealMethod;
+
     private int appealType;
+
     private int enable;
+
     private int status;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Long getContractId() {
         return contractId;

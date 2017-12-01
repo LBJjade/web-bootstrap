@@ -81,7 +81,7 @@
                         <li class="div_navbar_item"><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">我的信息</a></li>
+                        <li class="div_navbar_item"><a href="#">个人信息</a></li>
                     </ul>
                 </div>
             </div>
@@ -111,8 +111,12 @@
                             <td>{{accepter.idCard}}</td>
                         </tr>
                         <tr>
-                            <td>地址：</td>
-                            <td>{{accepter.address}}</td>
+                            <td>角色：</td>
+                            <td>{{accepter.role==1?"个人":"组织"}}</td>
+                        </tr>
+                        <tr v-if="accepter.role===2">
+                            <td>人数：</td>
+                            <td>{{accepter.number}}</td>
                         </tr>
                         <tr>
                             <td>获捐金额</td>

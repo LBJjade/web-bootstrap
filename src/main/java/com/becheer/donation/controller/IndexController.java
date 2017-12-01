@@ -95,8 +95,6 @@ public class IndexController extends BaseController {
             int MemberValidation = currentMember.getValidation();
             if (currentMember == null) {
                 return MemberAuthFailed();
-            } else if (MemberValidation != 3) {
-                return MemberAuthFailed();
             } else {
                 //获取memberId
                 Long memberId = currentMember.getMemberId();

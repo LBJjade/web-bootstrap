@@ -37,7 +37,7 @@
         LEFT JOIN dnt_project p ON d.project_id=p.id_
         LEFT JOIN dnt_project_type t ON d.project_type_id=t.id_
         LEFT JOIN dnt_member m ON d.member_id= m.id_
-        WHERE d.enable_=1
+        WHERE d.enable_=1 and d.donated_amount > 0
         ORDER by d.create_time DESC
         LIMIT #{number,jdbcType=INTEGER}
     </select>
@@ -61,7 +61,7 @@
         LEFT JOIN dnt_project p ON d.project_id=p.id_
         LEFT JOIN dnt_project_type t ON d.project_type_id=t.id_
         LEFT JOIN dnt_member m ON d.member_id= m.id_
-        WHERE d.enable_=1 AND  d.project_id=#{param1}
+        WHERE d.enable_=1 AND  d.project_id=#{param1} and d.donated_amount > 0
         ORDER by d.create_time DESC
         LIMIT #{param2}
     </select>
