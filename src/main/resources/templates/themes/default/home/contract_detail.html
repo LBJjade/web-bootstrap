@@ -233,7 +233,7 @@
                     <td>{{item.formatPaymentDate==""?"尚未捐赠":item.formatPaymentDate}}</td>
                     <td>{{item.statusText}}</td>
                     <td>
-                        <a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
+                        <a v-on:click="f_openDoanteLayer(item.id,item.status,item.receivedAmountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
                            id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
@@ -346,7 +346,7 @@
     </tr>
     <tr>
         <td>捐赠金额：</td>
-        <td class="amount"></td>
+        <td class="receivedAmount"></td>
     </tr>
     <tr>
         <td>捐款日期：</td>
@@ -481,7 +481,7 @@
             });
             //账单数据
             $(".title").html(title);
-            $(".amount").html(amount);
+            $(".receivedAmount").html(amount);
             $(".date").html(date);
             $(".orderNo").html(orderNo);
             $(".donate_status").html(donateStatus);
