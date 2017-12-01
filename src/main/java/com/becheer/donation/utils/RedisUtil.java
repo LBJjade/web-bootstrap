@@ -42,6 +42,15 @@ public class RedisUtil extends RedisProvider {
         RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_APPEAL + ":" + appealId);
     }
 
+    /**
+     * 删除paymentplan缓存
+     *
+     * @param paymentPlanId
+     */
+    public static void delPaymentPlankey(long paymentPlanId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_PAYMENT_PLAN + ":" + paymentPlanId);
+    }
+
     public static String SetKey(String key, String value) {
         Jedis jedis = null;
         String rtn = null;
