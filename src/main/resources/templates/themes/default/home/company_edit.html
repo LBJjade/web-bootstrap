@@ -261,7 +261,7 @@
     }
 
     $(".btn_save").click(function () {
-        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val()) && $("#ipt_license").val() !== "") {
+        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val())) {
             loadShade = layer.load(1, {
                 shade: [0.1, '#fff']
             });
@@ -299,13 +299,6 @@
             });
         } else {
             layer.alert("您填写的信息有误");
-            if($("#ipt_license").val() == ""){
-                $(".img_license_error").show();
-            }else{
-                $(".img_license_error").hide();
-            }if (!f_codeValidate($("#ipt_organizationCode").val())) {
-                $(".ipt_code_error_0").show();
-            }
         }
     });
 
