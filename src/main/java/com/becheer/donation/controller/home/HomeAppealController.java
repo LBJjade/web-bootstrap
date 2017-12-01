@@ -155,11 +155,14 @@ public class HomeAppealController extends BaseController {
             }
             //TODO 还需要检查合同是否属于该会员，合同项目是否属于该会员
             long memberId = currentMember.memberId;
-            appealService.InsertAppeal(title, method, content, contractId, projectId, memberId);
-            return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS);
+            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, projectId, memberId);
+            if (result.getCode()==200){
+                progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int)result.getResult(), memberId, 1);
+            }
+            return result;
         } catch (Exception ex) {
             LOGGER.error("add", ex.getMessage());
-            return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 

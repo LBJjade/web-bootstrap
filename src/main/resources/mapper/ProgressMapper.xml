@@ -34,6 +34,8 @@
             p.ref_record_id=#{param1}
         AND
             p.enable_=1
+        AND
+            p.progress_type is NULL
         ORDER BY p.create_time
     </select>
 
