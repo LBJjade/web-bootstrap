@@ -108,7 +108,7 @@ public class LoginController extends BaseController {
             if (StringUtil.isNull(authCode)) {
                 return new ResponseDto(401, Message.LOGIN_AUTH_NO_NULL);
             }
-            if (pwd == null || pwd.trim().length() < 8) {
+            if (pwd == null || pwd.trim().length() < 6) {
                 return new ResponseDto(402, Message.LOGIN_PASSWORD_ERROR);
             }
             Object objCode = request.getSession().getAttribute(ConstString.LOGIN_VERIFY_CODE);

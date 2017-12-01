@@ -34,4 +34,7 @@ public class ConstString {
 
     //申诉
     public static final String TABLE_APPEAL = "dntAppeal";
+
+    //付款记录
+    public static final String TABLE_PAYMENT_PLAN = "dntPaymentPlan";
 }
