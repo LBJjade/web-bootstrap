@@ -283,12 +283,14 @@
     //获取全部项目
     function f_GetAllProject() {
         isall = 0;
+        loadShade = layer.load(1, {shade: [0.1,'#fff']});
         $.ajax({
             url: '/project/project',
             type: 'post',
             data: {pageSize: pageSize, pageNum: pageNum},
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     $("#b_title").html("全部项目");
                     pageCount = data.result.pages;
@@ -299,6 +301,7 @@
                         $("#div_none").show();
                     } else {
                         $("#div_none").hide();
+                        $("#div_page").show();
                     }
                     if (vueContent == undefined) {
                         vueContent = new Vue({
@@ -312,7 +315,7 @@
                             Vue.set(vueContent.items, i, data.result.list[i]);
                         }
                         vueContent.items.splice(data.result.list.length);
-                        scrollTo(0, 0);
+//                        scrollTo(0, 0);
                     }
                 }
             }
@@ -325,12 +328,14 @@
     }
 
     function f_GetProject() {
+        loadShade = layer.load(1, {shade: [0.1,'#fff']});
         $.ajax({
             url: '/project/list',
             type: 'post',
             data: {pageSize: pageSize, pageNum: pageNum, tid: typeItem.id},
             dataType: 'json',
             success: function (data) {
+                layer.close(loadShade);
                 if (data.code === 200) {
                     $("#b_title").html(typeItem.name);
                     pageCount = data.result.pages;
@@ -355,7 +360,7 @@
                             Vue.set(vueContent.items, i, data.result.list[i]);
                         }
                         vueContent.items.splice(data.result.list.length);
-                        scrollTo(0, 0);
+//                        scrollTo(0, 0);
                     }
                 }
             }
