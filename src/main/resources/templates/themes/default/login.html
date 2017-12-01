@@ -203,7 +203,7 @@
         var pwd = $("#ac_pwd").val();
         var code = $("#ac_code").val();
         var autoLogin = $("#ac_cookie").is(':checked');
-        if( $("#ac_no").val() !== "" && $("#ac_code").val() != "" && $("#ac_pwd").val() != "" && $("#ac_pwd").val().length >= 8) {
+        if( $("#ac_no").val() !== "" && $("#ac_code").val() != "" && $("#ac_pwd").val() != "" && $("#ac_pwd").val().length >= 6) {
             $.ajax({
                 url: "/login/acLogin",
                 data: {authCode: authCode, code: code, pwd: pwd, autoLogin: autoLogin},
