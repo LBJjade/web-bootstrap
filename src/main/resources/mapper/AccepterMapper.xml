@@ -32,7 +32,9 @@
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
         <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
-        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <!--<result column="address" jdbcType="VARCHAR" property="address"/>-->
+        <result column="role" jdbcType="INTEGER" property="role"/>
+        <result column="number" jdbcType="INTEGER" property="number"/>
         <result column="received_amount" jdbcType="BIGINT" property="receivedAmount"/>
         <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
         <result column="enable_" jdbcType="INTEGER" property="enable"/>
@@ -57,7 +59,8 @@
           name,
           mobile,
           id_card,
-          address,
+          role,
+          number,
           received_amount,
           avator_img
         FROM
