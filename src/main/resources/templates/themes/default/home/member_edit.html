@@ -170,7 +170,6 @@
                                     <img id="img_b"
                                          th:src="${config.getFileRoot()+(member.getIdCardBack()==null?'image/idcard/id_card.png':member.getIdCardBack())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
                                          height="120" width="120" style="margin-bottom: 10px"/>
-                                    <div class="id_card_photo_error error" style="margin-right: 193px;">请上传身份证照片</div>
                                     <p>请选择身份证照片,单张照片大小不能超过2M</p>
                                 </td>
                             </tr>
@@ -306,7 +305,7 @@
     })
 
     $(".btn_save").click(function () {
-        if(f_nameValidate($("#ipt_name").val()) && f_idcardValidate($("#ipt_id_card").val()) && $("#ipt_f").val() !== "" && $("#ipt_b").val() !== "") {
+        if(f_nameValidate($("#ipt_name").val()) && f_idcardValidate($("#ipt_id_card").val())) {
             loadShade = layer.load(1, {
                 shade: [0.1, '#fff']
             });
@@ -349,7 +348,6 @@
             });
         }else{
             layer.alert("您填写的信息有误");
-            $(".id_card_photo_error").show();
         }
     });
 

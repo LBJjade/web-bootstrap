@@ -4,6 +4,11 @@
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/common.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/css/bootstrapValidator.css}" rel="stylesheet" type="text/css"/>
+    <style type="text/css">
+        .help-block{
+            float: left;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid div-shadown-3-5" id="div_header">
@@ -255,11 +260,7 @@
                     message: 'The phone is not valid',
                     validators: {
                         notEmpty: {
-                            message: '手机号码不能为空'
-                        },
-                        regexp: {
-                            regexp: v_phone,
-                            message: '手机号格式错误'
+                            message: '授号不能为空'
                         }
                     }
                 },
