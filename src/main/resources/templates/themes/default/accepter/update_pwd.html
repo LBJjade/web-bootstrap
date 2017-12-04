@@ -61,7 +61,7 @@
             display: none;
             height: 42px;
             margin-top: -23px;
-            margin-right: 100px;
+            margin-right: 136px;
         }
 
         .error_1 {
@@ -138,8 +138,9 @@
                     <td>
                         <div style="margin-right: 32px">
                             <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入授号"
-                                   style="width: 115px; margin-right: 9px;"/>
-                            <button class="btn btn-info btn_send" style="width: 140px;padding-left: 4px">获取验证码</button>
+                                   style="width: 129px; margin-right: 9px;"/>
+                            <span class=" btn_send" style="width: 140px;padding-left: 4px"><img class="verify_code col-lg-3 login_code" th:src="@{/Verify/code.jpg}" style="float: initial;
+    width: 128px;" src="" height="30" width="90"/></span>
                             <p class="mobile_error error">授号不能为空</p>
                         </div>
                     </td>
@@ -198,7 +199,7 @@
                                style="margin-left: 89px;"/>
                         <p class="pw_error error_1" style="color:red;display: none;">密码不能为空</p>
                         <p class="pw_long_error error_1" style="color:red;display: none;margin-left: 45px;">
-                            密码长度不能低于8位</p>
+                            密码长度不能低于6位</p>
                     </td>
                 </tr>
                 <tr>
@@ -277,6 +278,7 @@
     /*<![CDATA[*/
     var mobile;
     var newPw;
+    var acceptCode
     var memberInfoMobile = memberInfo.mobile;
 
 
@@ -284,32 +286,36 @@
         $(this).attr("src", "Verify/code.jpg?t=" + Math.random());
     });
 
+    $(".login_code").click(function () {
+        $(this).attr("src", "/Verify/code.jpg?t=" + Math.random());
+    });
+
 
     //发送短信验证码
-    $(".btn_send").click(function () {
-        var mobile = $("#ipt_mobile").val();
-        if(memberInfoMobile != mobile){
-            layer.alert("请输入您注册时的手机号");
-        }else{
-            $.ajax({
-                url: '/forget/SendSms',
-                type: 'post',
-                data: {mobile: mobile, tid: "2"},
-                dataType: 'json',
-                success: function (data) {
-                    if (data.code === 200) {
-                        timer = 60;
-                        Countdown();
-                        $(".btn_send").attr("disabled", true);
-                        $(".input_code").focus();
-                    } else {
-                        layer.alert(data.msg);
-                    }
-                }
-            })
-        }
-
-    });
+//    $(".btn_send").click(function () {
+//        var mobile = $("#ipt_mobile").val();
+//        if(memberInfoMobile != mobile){
+//            layer.alert("请输入您注册时的手机号");
+//        }else{
+//            $.ajax({
+//                url: '/forget/SendSms',
+//                type: 'post',
+//                data: {mobile: mobile, tid: "2"},
+//                dataType: 'json',
+//                success: function (data) {
+//                    if (data.code === 200) {
+//                        timer = 60;
+//                        Countdown();
+//                        $(".btn_send").attr("disabled", true);
+//                        $(".input_code").focus();
+//                    } else {
+//                        layer.alert(data.msg);
+//                    }
+//                }
+//            })
+//        }
+//
+//    });
 
     //倒计时
     function Countdown() {
@@ -327,19 +333,16 @@
     }
 
 
+    //修改密码第一步
     $(".btn_checkSms").click(function () {
-        var smsCode = $(".input_code").val();
-        mobile = $("#ipt_mobile").val();
-//        registerType=$("input[name='input_register_type']:checked").val();
-        registerType = false;
-        registerType = $("input[name='input_register_type']:checked").val();
-//        var isPhoneOk = /1[34578]\d{9}$/;
-        if (f_phoneValidate($(".ipt_mobile").val()) && $(".input_code").val() != "") {
+        var inputCode=$(".input_code").val();
+        acceptCode = $("#ipt_mobile").val();
+        if (inputCode != "" && acceptCode !="") {
             loadShade = layer.load(1, {shade: [0.1, '#fff']});
             $.ajax({
-                url: '/forget/validate',
+                url: '/accepter/security/validate',
                 type: 'post',
-                data: {mobile: mobile, code: smsCode, tid: "2"},
+                data: {acceptCode: acceptCode,code: inputCode},
                 dataType: 'json',
                 success: function (data) {
                     layer.close(loadShade);
@@ -362,14 +365,14 @@
 
 
     $(".btn_pwd").click(function () {
-        var pwd = $("#ipt_pwd").val();
-        newPw = pwd;
-        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val() && $(".input_pw").val().length >= 8) {
+        var pw=$(".input_pw").val()
+        newPw = $(".input_pwd").val();
+        if (pw != "" && newPw != "" && pw == newPw && newPw.length >= 6) {
             loadShade = layer.load(1, {shade: [0.1, '#fff']});
             $.ajax({
-                url: '/forget/submit',
+                url: '/accepter/security/updatePw',
                 type: 'post',
-                data: {newPw: newPw, mobile: mobile},
+                data: {newPw: newPw, acceptCode: acceptCode},
                 dataType: 'json',
                 success: function (data) {
                     layer.close(loadShade);
@@ -388,10 +391,9 @@
     });
 
 
-    //手机
+//    //授号
     $(".ipt_mobile").blur(function () {
-//        var mobile = /1[34578]\d{9}$/;
-        if (!f_phoneValidate($(".ipt_mobile").val())) {
+        if ($(".ipt_mobile").val() == "") {
             $(".mobile_error").show();
         } else {
             $(".mobile_error").hide();
@@ -416,7 +418,7 @@
         } else {
             $(".pw_long_error").hide();
             $(".pw_error").hide();
-            if ($(".input_pw").val().length < 8) {
+            if ($(".input_pw").val().length < 6) {
                 $(".pw_error").hide();
                 $(".pw_long_error").show();
             } else {
@@ -428,12 +430,12 @@
 
 
     $(".input_pwd").blur(function () {
-        if ($("#ipt_pwd").val() == "") {
+        if ($(".input_pwd").val() == "") {
             $(".p_error").hide();
             $(".pwd_error").show();
         } else {
             $(".pwd_error").hide();
-            if ($("#ipt_pw").val() !== $("#ipt_pwd").val()) {
+            if ($(".input_pwd").val() !== $(".input_pw").val()) {
                 $(".p_error").show();
             } else {
                 $(".p_error").hide();

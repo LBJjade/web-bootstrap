@@ -95,7 +95,7 @@ public class MemberServiceImpl implements IMemberService {
             //个人
             memberInfoExtension.setIdCard(StringUtil.getEncryptedIdCard(member.getIdCard()));
             memberInfoExtension.setSex(member.getSex());
-            memberInfoExtension.setBirthday(member.getBirthday());
+//            memberInfoExtension.setBirthday(member.getBirthday());
         } else if (member.getRole() == 2) {
             //公司
             memberInfoExtension.setOrganizationType(member.getOrganizationType());
@@ -200,7 +200,7 @@ public class MemberServiceImpl implements IMemberService {
     }
 
     @Override
-    public ResponseDto uploadAvator(long memberId, String fileStr,boolean isAccepter) {
+    public ResponseDto uploadAvator(long memberId, String fileStr, boolean isAccepter) {
         try {
             byte[] bytes = StringUtil.base64ImgToByteArray(fileStr);
             String fileName = ossConfig.getAvatorPath() + "a" + memberId + ".jpg";
@@ -208,8 +208,8 @@ public class MemberServiceImpl implements IMemberService {
             int result = 0;
             if (!isAccepter) {
                 result = memberMapper.updateAvator(fileName, memberId);
-            }else{
-                result= accepterMapper.updateAvator(fileName,memberId);
+            } else {
+                result = accepterMapper.updateAvator(fileName, memberId);
             }
             if (result > 0) {
                 return new ResponseDto(200, Message.MEMBER_AVATOR_UPLOAD_SUCCESS, fileName);

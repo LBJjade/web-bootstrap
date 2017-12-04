@@ -40,4 +40,8 @@ public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
         return mapper.updateDonate(orderNo, receivedAmount, paymentDate);
     }
 
+    @Override
+    public Long selectIdByOrderNo(String no) {
+        return mapper.selectIdByOrderNo(no);
+    }
 }

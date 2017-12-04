@@ -53,7 +53,16 @@ public class AccepterServiceImpl implements IAccepterService {
     }
 
     @Override
-    public AccepterInfoExtension getAccepterByMemberId(long mid){
+    public ResponseDto updatePw(String newPw, String acceptCode) {
+        newPw = HashUtil.GetPassword(newPw);
+        accepterMapper.updatePw(newPw, acceptCode);
+        return new ResponseDto(200,"success");
+    }
+
+    @Override
+    public AccepterInfoExtension getAccepterByMemberId(long mid) {
         return accepterMapper.selectAccepterById(mid);
     }
+
+
 }

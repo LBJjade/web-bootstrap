@@ -77,4 +77,14 @@
         avator_img=#{param1}
         WHERE member_id = #{param2}
     </update>
+
+    <update id="updatePw">
+        UPDATE
+        dnt_acceptor
+        SET
+        password = #{param1}
+        WHERE acceptor_no = #{param2}
+    </update>
+
+
 </mapper>
