@@ -28,6 +28,8 @@ public class ProgressExtension {
 
     private String memberName;
 
+    private String accepterName;
+
     public long getId() {
         return id;
     }
@@ -82,5 +84,13 @@ public class ProgressExtension {
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    public String getAccepterName() {
+        return accepterName;
+    }
+
+    public void setAccepterName(String accepterName) {
+        this.accepterName = accepterName;
     }
 }

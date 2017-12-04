@@ -10,6 +10,7 @@
         <result column="enable_" jdbcType="INTEGER" property="enable" />
         <result column="user_name" jdbcType="VARCHAR" property="userName" />
         <result column="member_name" jdbcType="VARCHAR" property="memberName" />
+        <result column="accepter_name" jdbcType="VARCHAR" property="accepterName" />
     </resultMap>
 
 
@@ -19,12 +20,15 @@
             p.title,
             p.content,
             m.member_name,
+            a.name as accepter_name,
             u.user_name,
             p.enable_,
             p.create_time
         FROM
             dnt_progress p
         LEFT JOIN dnt_member m ON m.id_ = p.create_member_id
+
+        LEFT JOIN dnt_acceptor a on a.member_id = m.id_
 
         LEFT JOIN sys_user u on u.id_ = p.create_by
 

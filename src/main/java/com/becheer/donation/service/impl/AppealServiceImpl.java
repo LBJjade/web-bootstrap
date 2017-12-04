@@ -55,7 +55,6 @@ public class AppealServiceImpl implements IAppealService {
         }else{
             return new ResponseDto(500, Message.SUBMIT_APPEAL_FAILED);
         }
-
     }
 
     @Override
@@ -67,5 +66,18 @@ public class AppealServiceImpl implements IAppealService {
         } else {
             return new ResponseDto(500, Message.ACTION_FAILED);
         }
+    }
+
+    @Override
+    public PageInfo<MemberAppealExtension> getAccepterAppeal(long memberId, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<MemberAppealExtension> data = appealMapper.selectAccepterAppealByMemberId(memberId);
+        PageInfo<MemberAppealExtension> pageInfo = new PageInfo<MemberAppealExtension>(data);
+        return pageInfo;
+    }
+
+    @Override
+    public MemberAppealDetailExtension getAccepterAppealDetail(long appealId, long memberId) {
+        return appealMapper.selectAccepterAppealDetail(appealId,memberId);
     }
 }

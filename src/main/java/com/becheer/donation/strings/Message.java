@@ -265,6 +265,11 @@ public class Message {
     public static final String ACCEPTER_DISABLED = "授号已禁用";
 
     /**
+     * 受捐人申诉列表页
+     */
+    public static final String ACCEPTER_APPEAL_LIST_GET_SUCCESS = "获取申诉成功";
+
+    /**
      * 我的获捐页面
      */
     public static final String ACCEPTER_ACCEPTED_GET_SUCCESS = "获取我的获捐成功";

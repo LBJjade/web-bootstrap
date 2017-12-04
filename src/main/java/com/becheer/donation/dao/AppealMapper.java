@@ -24,4 +24,7 @@ public interface AppealMapper {
 
     int updateAppealStatus(long appealId,int status);
 
+    List<MemberAppealExtension> selectAccepterAppealByMemberId(long memberId);
+
+    MemberAppealDetailExtension selectAccepterAppealDetail(long appealId,long memberId);
 }

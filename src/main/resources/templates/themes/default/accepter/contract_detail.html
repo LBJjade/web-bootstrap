@@ -128,7 +128,7 @@
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">合同详情</a></li>
                     </ul>
-                    <a>
+                    <a th:href="@{'/accepter/appeal/add/'+${contract.getId()}}">
                         <button class="info_button">我要申诉</button>
                     </a>
                 </div>

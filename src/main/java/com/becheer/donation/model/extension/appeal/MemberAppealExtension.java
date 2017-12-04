@@ -19,6 +19,8 @@ public class MemberAppealExtension {
 
     private String contractName;
 
+    private String contractNo;
+
     private String appealMethod;
 
     private Date createTime;
@@ -57,6 +59,18 @@ public class MemberAppealExtension {
 
     public void setContractName(String contractName) {
         this.contractName = contractName;
+    }
+
+    public String getContractNo() {
+        return contractNo;
+    }
+
+    public void setContractNo(String contractNo) {
+        this.contractNo = contractNo;
+    }
+
+    public void setStatusText(String statusText) {
+        this.statusText = statusText;
     }
 
     public String getAppealMethod() {

@@ -120,10 +120,6 @@ public class HomeAppealController extends BaseController {
             return MemberAuthFailed();
         }
         try {
-            MemberAppealDetailExtension appeal = appealService.GetMemberAppealDetail(appealId, currentMember.getMemberId());
-            if (appeal == null) {
-                return MemberAuthFailed();
-            }
             List<ProgressExtension> result = progressService.GetAllProgress(appealId, "dnt_appeal");
             return new ResponseDto(200, Message.MEMBER_APPEAL_PROGRESS_SUCCESS, result);
         } catch (Exception ex) {

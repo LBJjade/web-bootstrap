@@ -7,6 +7,7 @@
         <result column="appeal_title" jdbcType="VARCHAR" property="appealTitle"/>
         <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
         <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
+        <result column="contract_no" jdbcType="VARCHAR" property="contractNo"/>
         <result column="appeal_method" jdbcType="VARCHAR" property="appealMethod"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
     </resultMap>
@@ -18,6 +19,7 @@
         <result column="appeal_method" jdbcType="VARCHAR" property="method"/>
         <result column="appeal_content" jdbcType="VARCHAR" property="content"/>
         <result column="contract_name" jdbcType="VARCHAR" property="contractName"/>
+        <result column="contract_no" jdbcType="VARCHAR" property="contractNo"/>
         <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
@@ -29,6 +31,7 @@
             a.appeal_title,
             p.project_name,
             c.contract_name,
+            c.contract_no,
             a.appeal_method,
             a.create_time,
             a.status
@@ -39,11 +42,27 @@
         ORDER BY create_time DESC
     </select>
 
+    <select id="selectAccepterAppealByMemberId" parameterType="java.lang.Long" resultMap="MemberAppealResultMap">
+        SELECT
+        a.id_,
+        a.appeal_title,
+        c.contract_name,
+        c.contract_no,
+        a.appeal_method,
+        a.create_time,
+        a.status
+        FROM dnt_appeal a
+        LEFT JOIN dnt_appropriation_contract c on a.contract_id=c.id_
+        WHERE a.enable_ = 1 AND a.member_id =#{memberId,jdbcType=BIGINT}
+        ORDER BY create_time DESC
+    </select>
+
     <select id="SelectAppealDetail" resultMap="MemberAppealDetailResultMap">
         SELECT
             a.id_,
             a.appeal_title,
             p.project_name,
+            c.contract_no,
             c.contract_name,
             a.appeal_method,
             a.appeal_content,
@@ -52,6 +71,25 @@
         FROM dnt_appeal a
         LEFT JOIN dnt_project p on p.id_=a.project_id
         LEFT JOIN dnt_contract c on c.id_=a.contract_id
+        WHERE a.enable_ = 1
+        AND a.id_= #{param1}
+        AND a.member_id= #{param2}
+    </select>
+
+    <select id="selectAccepterAppealDetail" resultMap="MemberAppealDetailResultMap">
+        SELECT
+        a.id_,
+        a.appeal_title,
+        p.project_name,
+        c.contract_no,
+        c.contract_name,
+        a.appeal_method,
+        a.appeal_content,
+        a.`status`,
+        a.create_time
+        FROM dnt_appeal a
+        LEFT JOIN dnt_project p on p.id_=a.project_id
+        LEFT JOIN dnt_appropriation_contract c on c.id_=a.contract_id
         WHERE a.enable_ = 1
         AND a.id_= #{param1}
         AND a.member_id= #{param2}

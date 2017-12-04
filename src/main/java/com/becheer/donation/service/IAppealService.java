@@ -21,4 +21,8 @@ public interface IAppealService {
     ResponseDto InsertAppeal(String title,String method, String content,long contractId,long projectId,long memberId);
 
     ResponseDto UpdateAppealStatus(long appealId, int status);
+
+    PageInfo<MemberAppealExtension> getAccepterAppeal(long memberId,int pageNum,int pageSize);
+
+    MemberAppealDetailExtension getAccepterAppealDetail(long appealId,long memberId);
 }

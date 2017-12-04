@@ -105,7 +105,7 @@
                                     <th:block th:text="${appeal.getTitle()}"/>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:if="${session.sjax_member_session.role!=3}">
                                 <td width="150px">申诉项目：</td>
                                 <td>
                                     <th:block th:text="${appeal.getProjectName()}"/>
@@ -118,13 +118,19 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td width="150px">合同编号：</td>
+                                <td>
+                                    <th:block th:text="${appeal.getContractNo()}"/>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td width="150px">申诉类型：</td>
                                 <td>
                                     <th:block th:text="${appeal.getMethod()}"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td width="150px">申述状态：</td>
+                                <td width="150px">申诉状态：</td>
                                 <td>
                                     <th:block th:text="${appeal.getStatusText()}"/>
                                 </td>
@@ -157,7 +163,7 @@
                             <tr v-for="item in items" v-cloak>
                                 <td style="padding-right: 15px;">{{item.title}}</td>
                                 <td>{{item.createTime}}</td>
-                                <td>{{item.memberName==null?item.userName:item.memberName}}</td>
+                                <td>{{item.memberName}}{{item.userName}}{{item.accepterName}}</td>
                                 <td><a :onclick="'javascript:f_showDetail('+item.id+')'">点击查看</a></button></td>
                             </tr>
                             <tr>
