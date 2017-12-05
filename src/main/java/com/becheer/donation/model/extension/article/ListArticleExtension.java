@@ -23,7 +23,7 @@ public class ListArticleExtension {
     private String summary;
 
     //创建时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     private Date createTime;
 

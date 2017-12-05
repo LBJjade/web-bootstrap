@@ -23,7 +23,7 @@ public class ListProjectExtension {
     private String projectName;
 
     //创建日期
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     private Date createTime;
 

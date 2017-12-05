@@ -24,11 +24,11 @@ public class AppropriationContractExtension {
 
     private long contractAmount;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date beginTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endTime;
 

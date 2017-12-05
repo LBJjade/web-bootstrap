@@ -25,11 +25,11 @@ public class ProjectDetailExtension {
 
     private String projectName;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date startTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone="GMT+8")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date endTime;
 
