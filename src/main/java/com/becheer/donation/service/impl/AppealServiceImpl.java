@@ -41,7 +41,7 @@ public class AppealServiceImpl implements IAppealService {
     }
 
     @Override
-    public ResponseDto InsertAppeal(String title, String method, String content, long contractId, long projectId, long memberId) {
+    public ResponseDto InsertAppeal(String title, String method, String content, long contractId, long projectId, long memberId,int appealType,long accepterId) {
         AppealDetailExtension appealdetail = new AppealDetailExtension();
         appealdetail.setAppealTitle(title);
         appealdetail.setAppealMethod(method);
@@ -49,6 +49,8 @@ public class AppealServiceImpl implements IAppealService {
         appealdetail.setContractId(contractId);
         appealdetail.setProjectId(projectId);
         appealdetail.setMemberId(memberId);
+        appealdetail.setAppealType(appealType);
+        appealdetail.setAccepterId(accepterId);
         appealMapper.InsertAppeal(appealdetail);
         if (appealdetail.getId()!=0){
             return new ResponseDto(200, Message.SUBMIT_APPEAL_SUCCESS,appealdetail.getId());

@@ -151,7 +151,7 @@ public class HomeAppealController extends BaseController {
             }
             //TODO 还需要检查合同是否属于该会员，合同项目是否属于该会员
             long memberId = currentMember.memberId;
-            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, projectId, memberId);
+            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, projectId, memberId,1,0);
             if (result.getCode()==200){
                 progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int)result.getResult(), memberId, 1);
             }

@@ -104,9 +104,12 @@
           appeal_title,
           appeal_content,
           appeal_method,
-          appeal_type,
           enable_,
           create_time,
+          appeal_type,
+          <if test="accepterId != 0">
+              acceptor_id,
+          </if>
           status
           )
         VALUES
@@ -118,8 +121,11 @@
           #{appealContent,jdbcType=VARCHAR},
           #{appealMethod,jdbcType=VARCHAR},
           1,
-          1,
           now(),
+          #{appealType,jdbcType=INTEGER},
+          <if test="accepterId != 0">
+          #{accepterId,jdbcType=BIGINT},
+          </if>
           0
           )
     </insert>

@@ -12,6 +12,8 @@ public class AppealDetailExtension extends BaseModel {
 
     private Long memberId;
 
+    private Long accepterId;
+
     private String appealTitle;
 
     private String appealContent;
@@ -54,6 +56,14 @@ public class AppealDetailExtension extends BaseModel {
 
     public void setMemberId(Long memberId) {
         this.memberId = memberId;
+    }
+
+    public Long getAccepterId() {
+        return accepterId;
+    }
+
+    public void setAccepterId(Long accepterId) {
+        this.accepterId = accepterId;
     }
 
     public String getAppealTitle() {
