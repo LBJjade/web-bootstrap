@@ -262,6 +262,13 @@
             <version>1.9.22</version>
         </dependency>
 
+        <!--支付宝支付-->
+        <dependency>
+            <groupId>com.alipay</groupId>
+            <artifactId>sdk-JAVA</artifactId>
+            <version>20171201160035</version>
+        </dependency>
+
     </dependencies>
 
     <!-- 普通的maven打包方式 -->

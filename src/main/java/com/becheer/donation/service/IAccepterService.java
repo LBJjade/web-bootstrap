@@ -17,4 +17,6 @@ public interface IAccepterService {
     public AccepterInfoExtension getAccepterByMemberId(long mid);
 
     ResponseDto updatePw(String newPw,String acceptCode);
+
+    AccepterInfoExtension getAccepter(Long id);
 }

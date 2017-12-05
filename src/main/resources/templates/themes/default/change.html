@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
 
-    <title>修改密码</title>
+    <title>会员修改密码</title>
     <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link rel="stylesheet" th:href="@{/plugin/step/step.css}"/>
+    <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
     <style type="text/css">
         #div_menu a {
@@ -61,7 +62,7 @@
             display: none;
             height: 42px;
             margin-top: -23px;
-            margin-right: 100px;
+            margin-right: 93px;
         }
 
         .error_1 {
@@ -96,7 +97,10 @@
         <div class="col-sm-12">
             <div id="div_navbar" style="margin-top: 10px">
                 <ul>
-                    <li><a href="#">修改密码</a></li>
+                    <li><a href="/home">个人中心</a></li>
+                    <li><i class="fa fa-angle-right" aria-hidden="true"
+                           style="font-size: 20px;color: #999999; "></i></li>
+                    <li><a href="#">会员修改密码</a></li>
                 </ul>
             </div>
         </div>
@@ -289,9 +293,9 @@
     //发送短信验证码
     $(".btn_send").click(function () {
         var mobile = $("#ipt_mobile").val();
-        if(memberInfoMobile != mobile){
+        if (memberInfoMobile != mobile) {
             layer.alert("请输入您注册时的手机号");
-        }else{
+        } else {
             $.ajax({
                 url: '/forget/SendSms',
                 type: 'post',
@@ -356,7 +360,7 @@
                     }
                 }
             })
-        }else{
+        } else {
             layer.alert("您填写的信息有误。");
         }
     });
@@ -383,7 +387,7 @@
                     }
                 }
             })
-        }else{
+        } else {
             layer.alert("您填写的密码有误。");
         }
     });

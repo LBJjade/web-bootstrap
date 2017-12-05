@@ -78,23 +78,24 @@
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li><a href="#">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">个人信息</a></li>
                     </ul>
-                    <a href="home/edit"  >
+                    <a href="home/edit">
                         <button class="info_button" style="float: right">编辑</button>
                         <span id="a_edit" class="complete"
                               style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
                                 th:src="@{~/image/vector.png}"
-                                style="display: none;float: right;width: 27px;margin-right: 7px;" ></span>
+                                style="display: none;float: right;width: 27px;margin-right: 7px;"></span>
                     </a></p>
                 </div>
             </div>
             <div class="div_content" id="div_member">
                 <div id="div_avator">
-                    <img id="img_avator" :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'+r"/>
+                    <img id="img_avator"
+                         :src="fileRoot+member.avator+'?x-oss-process=image/resize,m_lfit,h_200,w_200'+r"/>
                     <br/>
                     <br/>
                     <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
@@ -191,7 +192,7 @@
                         el: "#div_member",
                         data: {
                             member: data.result,
-                            r:"&r="+Math.random()
+                            r: "&r=" + Math.random()
                         }
                     });
                 } else {
@@ -226,13 +227,14 @@
             title: '营业执照',
             skin: 'layui-layer-rim',
             area: ['800px', '600px'],
-            content: '<div style="width:100%;height: 100%;text-align: center"><img src="'+fileRoot+licenseUrl+'" /></div>'
+            content: '<div style="width:100%;height: 100%;text-align: center"><img src="' + fileRoot + licenseUrl + '" /></div>'
         });
     }
 
     function f_refreshImg(avatorName) {
-        $("#img_avator").attr("src", fileRoot+avatorName+'?x-oss-process=image/resize,m_lfit,h_200,w_200+&r='+Math.random()*4);
+        $("#img_avator").attr("src", fileRoot + avatorName + '?x-oss-process=image/resize,m_lfit,h_200,w_200+&r=' + Math.random() * 4);
     }
+
     /*]]>*/
 </script>
 </body>
