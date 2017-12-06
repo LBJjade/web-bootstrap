@@ -444,7 +444,9 @@
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
                     <a :href="'project/'+item.projectId" target="_blank">
-                        <img :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'" style="float:left;"/>
+                        <img :alt="item.projectName"
+                             :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"
+                             style="float:left;"/>
                     </a>
                     <span class="projectName">
                         <i class="fa fa-angle-right" aria-hidden="true"
@@ -626,7 +628,7 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" />
+                                <img id="qrCodeImageId" height="200" width="200"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
@@ -745,6 +747,120 @@
         </div>
     </div>
 </div>
+
+
+<!--支付弹出层-->
+<div class="model fade" id="div_pay_donate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: auto">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" id="loginTitle" style="font-weight: 600; width: 100%;text-align: center;">
+                    会员登录
+                </h4>
+            </div>
+            <div class="model-body" style="text-align: center">
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#" data-target="#div_wx_img" data-toggle="tab">微信</a></li>
+                    <li><a href="#" data-target="#div_ali_img" data-toggle="tab">支付宝</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active Content" id="div_wx_img">
+                        <img src="/image/wxPay.jpg" style="width: 300px;height: 400px" alt="">
+                        <div id="" class="btn btn-info cu">确认</div>
+                    </div>
+                    <div class="tab-pane " id="div_ali_img">
+                        <img src="/image/aliPay.jpg" style="width: 300px;height: 400px" alt="">
+                        <div id="alipay" class="btn btn-info cu">确认</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--支付宝支付弹出层-->
+<div class="model fade" id="div_ali_donate" tabindex="-1" role="dialog" aria-labelledby="lable_qr_donate"
+     aria-hidden="true" data-backdrop='static'>
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: 450px">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
+                    大额捐赠
+                </h4>
+            </div>
+
+            <div class="model-body" style="text-align: center">
+                <div style="float:left;margin-top: 20px; margin-left: 32px;"><span
+                        style="width: 115px;text-align: right;" class="cu">请选择项目类别
+                    <i style="color: red">*</i>：
+                </span>
+                    <select id="sel_project_type_second" class="cu" style="width: 166px;" onchange="f_GetProject2()">
+                        <option value="0" class="cu" selected='selected'>请选择项目类别</option>
+                        <option v-for="item in items" class="cu" id="name2" :value="item.id" v-cloak>{{item.name}}
+                        </option>
+                    </select>
+                </div>
+                <div style="float:left;clear: both;margin-top: 20px; margin-left: 39px; margin-bottom: 20px;">
+                    <span class="cu" style="width:115px; display: inline-block; text-align: right;">请选择项目：</span>
+                    <select id="sel_project_second" class="cu" style="width: 124px;width: 166px;">
+                        <option value="0" class="cu">请选择项目</option>
+                        <option class="cu" v-for="item in items" :value="item.projectId" v-cloak>{{item.projectName}}
+                        </option>
+                    </select>
+                </div>
+
+                <div style="clear: both;">
+                    <div class="row">
+                        <label for="ipt_dnt_mobile" class="col_sm_4">
+                            联系方式 <i style="color: red">*</i>：
+                        </label>
+                        <span class="col_sm_2">
+                            <input type="text" class="cu" id="ipt_dnt_mobile"
+                                   style=" width: 167px; height: 28px;margin-right: 20px;" readonly="readonly"/>
+                        </span>
+                    </div>
+                    <div style="width:80%;margin-top:20px;">
+                        <label for="ipt_dnt_amount" class="col_sm_4 cu">捐赠意向金额（元）<i style="color: red">*</i>：
+                        </label>
+                        <input type="number" class="cu" id="ipt_dnt_amount" placeholder="请输入金额数字" style="width:170px;"/>
+                        <p class="code_error error cu" style="margin-left: 60px;">捐赠意向金额不能为空</p>
+                        <p class="code_error_0 error cu" style="margin-left: 60px;">捐赠意向金额要大于0</p>
+                    </div>
+                    <div style="width:105%;margin-top:20px;">
+                        <span>
+                            <label for="ps" class="col_sm_4 cu">备注：</label>
+                        </span>
+                        <span>
+                         <textarea name="ps" id="ps" class="cu" cols="19" rows="3"></textarea>
+                        </span>
+                    </div>
+                </div>
+                <div style="margin-top:10px;clear: both; margin-bottom: 20px;">
+                    <button class="donateSubmit button" data-toggle="model" data-target="#div_qr_donate"
+                            data-dismiss="model">
+                        上一步
+                    </button>
+                    <button class="button da_donate_next" data-dismiss="model">
+                        提交捐赠意向
+                    </button>
+                </div>
+                <div class="model-footer cu" style="text-align: center;">
+                    <i style="color: red">*</i> 大额捐赠需要签订合同，金额必须输入数字 <i style="color: red">*</i>。
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!--全局JS-->
 <script th:src="@{/js/validation.js}"></script>
@@ -1059,6 +1175,7 @@
                 });
             } else {
                 $("#div_cf_donate").model('show');
+//                $("#div_pay_donate").model('show');
                 var projectTypeId = $("#sel_project_type").val();
                 var projectId = $("#sel_project").val();
                 var amount = span_money * 100;
@@ -1385,6 +1502,20 @@
 
         }
     }
+
+    //测试支付宝支付
+    $("#alipay").click(function () {
+        alert(1);
+        $.ajax({
+            url: '/donate/aliPayDonate',
+            data: {projectTypeId: 0, projectId: 2, amount: 200},
+            dataType: 'json',
+            type: 'post',
+            success: function () {
+                alert("成功");
+            }
+        })
+    })
 
     /*]]>*/
 </script>

@@ -78,14 +78,14 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayHelper.toXml(returnToWxPay);
         }
 
-
-        // 验证签名
-        if (!WxPayHelper.verifyNotify(notify)) {
-            logger.warn("微信支付结果通知: !!!签名失败!!!");
-            returnToWxPay.put("return_code", "FAIL");
-            returnToWxPay.put("return_msg", "签名失败");
-            return WxPayHelper.toXml(returnToWxPay);
-        }
+//
+//        // 验证签名
+//        if (!WxPayHelper.verifyNotify(notify)) {
+//            logger.warn("微信支付结果通知: !!!签名失败!!!");
+//            returnToWxPay.put("return_code", "FAIL");
+//            returnToWxPay.put("return_msg", "签名失败");
+//            return WxPayHelper.toXml(returnToWxPay);
+//        }
 
         // 验证appid、mch_id等
         if (!WxPayHelper.verifyAppIdAndMchId(notify)) {

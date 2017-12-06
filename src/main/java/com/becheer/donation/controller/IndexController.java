@@ -93,6 +93,9 @@ public class IndexController extends BaseController {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
             int MemberValidation = currentMember.getValidation();
+            if(MemberValidation != 3){
+                return MemberAuthFailed();
+            }
             if (currentMember == null) {
                 return MemberAuthFailed();
             } else {
