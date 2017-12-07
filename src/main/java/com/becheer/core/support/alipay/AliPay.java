@@ -1,26 +1,68 @@
 package com.becheer.core.support.alipay;
 
-import com.alibaba.fastjson.JSONObject;
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.domain.*;
-import com.alipay.api.request.*;
-import com.alipay.api.response.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.becheer.core.support.alipay.AliPayConfig;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.AlipayApiException;
+import com.alipay.api.domain.AlipayDataDataserviceBillDownloadurlQueryModel;
+import com.alipay.api.domain.AlipayFundTransOrderQueryModel;
+import com.alipay.api.domain.AlipayFundTransToaccountTransferModel;
+import com.alipay.api.domain.AlipayTradeAppPayModel;
+import com.alipay.api.domain.AlipayTradeCancelModel;
+import com.alipay.api.domain.AlipayTradeCloseModel;
+import com.alipay.api.domain.AlipayTradeCreateModel;
+import com.alipay.api.domain.AlipayTradeFastpayRefundQueryModel;
+import com.alipay.api.domain.AlipayTradeOrderSettleModel;
+import com.alipay.api.domain.AlipayTradePayModel;
+import com.alipay.api.domain.AlipayTradePrecreateModel;
+import com.alipay.api.domain.AlipayTradeQueryModel;
+import com.alipay.api.domain.AlipayTradeRefundModel;
+import com.alipay.api.domain.AlipayTradeWapPayModel;
+import com.alipay.api.request.AlipayDataDataserviceBillDownloadurlQueryRequest;
+import com.alipay.api.request.AlipayFundTransOrderQueryRequest;
+import com.alipay.api.request.AlipayFundTransToaccountTransferRequest;
+import com.alipay.api.request.AlipayTradeAppPayRequest;
+import com.alipay.api.request.AlipayTradeCancelRequest;
+import com.alipay.api.request.AlipayTradeCloseRequest;
+import com.alipay.api.request.AlipayTradeCreateRequest;
+import com.alipay.api.request.AlipayTradeFastpayRefundQueryRequest;
+import com.alipay.api.request.AlipayTradeOrderSettleRequest;
+import com.alipay.api.request.AlipayTradePagePayRequest;
+import com.alipay.api.request.AlipayTradePayRequest;
+import com.alipay.api.request.AlipayTradePrecreateRequest;
+import com.alipay.api.request.AlipayTradeQueryRequest;
+import com.alipay.api.request.AlipayTradeRefundRequest;
+import com.alipay.api.request.AlipayTradeWapPayRequest;
+import com.alipay.api.response.AlipayDataDataserviceBillDownloadurlQueryResponse;
+import com.alipay.api.response.AlipayFundTransOrderQueryResponse;
+import com.alipay.api.response.AlipayFundTransToaccountTransferResponse;
+import com.alipay.api.response.AlipayTradeAppPayResponse;
+import com.alipay.api.response.AlipayTradeCancelResponse;
+import com.alipay.api.response.AlipayTradeCloseResponse;
+import com.alipay.api.response.AlipayTradeCreateResponse;
+import com.alipay.api.response.AlipayTradeFastpayRefundQueryResponse;
+import com.alipay.api.response.AlipayTradeOrderSettleResponse;
+import com.alipay.api.response.AlipayTradePayResponse;
+import com.alipay.api.response.AlipayTradePrecreateResponse;
+import com.alipay.api.response.AlipayTradeQueryResponse;
+import com.alipay.api.response.AlipayTradeRefundResponse;
 
 public class AliPay {
 	static Logger log = LogManager.getLogger(AliPay.class);
 
 	/**
 	 * App支付
-	 * 
+	 *
 	 * @param model
 	 * @param notifyUrl
 	 * @return
@@ -34,7 +76,7 @@ public class AliPay {
 	/**
 	 * App 支付
 	 * https://doc.open.alipay.com/docs/doc.htm?treeId=54&articleId=106370&docType=1
-	 * 
+	 *
 	 * @param model
 	 * @param notifyUrl
 	 * @return
@@ -56,12 +98,12 @@ public class AliPay {
 	 * Wap支付
 	 * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.dfHHR3&
 	 * treeId=203&articleId=105285&docType=1
-	 * 
+	 *
 	 * @throws AlipayApiException
 	 * @throws IOException
 	 */
 	public static void wapPay(HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl,
-                              String notifyUrl) throws AlipayApiException, IOException {
+							  String notifyUrl) throws AlipayApiException, IOException {
 		String form = wapPayToString(response, model, returnUrl, notifyUrl);
 		HttpServletResponse httpResponse = response;
 		httpResponse.setContentType("text/html;charset=" + AliPayConfig.build().getCharset());
@@ -70,7 +112,7 @@ public class AliPay {
 	}
 
 	public static String wapPayToString(HttpServletResponse response, AlipayTradeWapPayModel model, String returnUrl,
-                                        String notifyUrl) throws AlipayApiException, IOException {
+										String notifyUrl) throws AlipayApiException, IOException {
 		AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();// 创建API对应的request
 		alipayRequest.setReturnUrl(returnUrl);
 		alipayRequest.setNotifyUrl(notifyUrl);// 在公共参数中设置回跳和通知地址
@@ -81,7 +123,7 @@ public class AliPay {
 	/**
 	 * 条形码支付、声波支付
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7629065.0.0.XVqALk&apiId=850&docType=4
-	 * 
+	 *
 	 * @param notifyUrl
 	 * @throws AlipayApiException
 	 */
@@ -101,7 +143,7 @@ public class AliPay {
 	/**
 	 * 扫码支付
 	 * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.i0UVZn&treeId=193&articleId=105170&docType=1#s4
-	 * 
+	 *
 	 * @param notifyUrl
 	 * @return
 	 * @throws AlipayApiException
@@ -113,7 +155,7 @@ public class AliPay {
 	}
 
 	public static AlipayTradePrecreateResponse tradePrecreatePayToResponse(AlipayTradePrecreateModel model,
-                                                                           String notifyUrl) throws AlipayApiException {
+																		   String notifyUrl) throws AlipayApiException {
 		AlipayTradePrecreateRequest request = new AlipayTradePrecreateRequest();
 		request.setBizModel(model);
 		request.setNotifyUrl(notifyUrl);
@@ -123,7 +165,7 @@ public class AliPay {
 	/**
 	 * 单笔转账到支付宝账户
 	 * https://doc.open.alipay.com/docs/doc.htm?spm=a219a.7629140.0.0.54Ty29&treeId=193&articleId=106236&docType=1
-	 * 
+	 *
 	 * @param content
 	 * @return
 	 * @throws AlipayApiException
@@ -158,7 +200,7 @@ public class AliPay {
 
 	/**
 	 * 转账查询接口
-	 * 
+	 *
 	 * @param content
 	 * @return
 	 * @throws AlipayApiException
@@ -182,7 +224,7 @@ public class AliPay {
 	/**
 	 * 交易查询接口
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.8H2JzG&docType=4&apiId=757
-	 * 
+	 *
 	 * @param bizContent
 	 * @return
 	 * @throws AlipayApiException
@@ -204,7 +246,7 @@ public class AliPay {
 	/**
 	 * 交易撤销接口
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.XInh6e&docType=4&apiId=866
-	 * 
+	 *
 	 * @param bizContent
 	 * @return
 	 * @throws AlipayApiException
@@ -227,7 +269,7 @@ public class AliPay {
 	/**
 	 * 关闭订单
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7629065.0.0.21yRUe&apiId=1058&docType=4
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 * @throws AlipayApiException
@@ -250,7 +292,7 @@ public class AliPay {
 	/**
 	 * 统一收单交易创建接口
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7629065.0.0.21yRUe&apiId=1046&docType=4
-	 * 
+	 *
 	 * @param model
 	 * @param notifyUrl
 	 * @return
@@ -267,7 +309,7 @@ public class AliPay {
 	/**
 	 * 退款
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.SAyEeI&docType=4&apiId=759
-	 * 
+	 *
 	 * @param content
 	 * @return
 	 * @throws AlipayApiException
@@ -287,7 +329,7 @@ public class AliPay {
 	/**
 	 * 退款查询
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7629065.0.0.KQeTSa&apiId=1049&docType=4
-	 * 
+	 *
 	 * @param model
 	 * @return
 	 * @throws AlipayApiException
@@ -306,7 +348,7 @@ public class AliPay {
 
 	/**
 	 * 查询对账单下载地址
-	 * 
+	 *
 	 * @param bizContent
 	 * @return
 	 * @throws AlipayApiException
@@ -327,7 +369,7 @@ public class AliPay {
 	/**
 	 * 交易结算接口
 	 * https://doc.open.alipay.com/docs/api.htm?spm=a219a.7395905.0.0.nl0RS3&docType=4&apiId=1147
-	 * 
+	 *
 	 * @param bizContent
 	 * @return
 	 * @throws AlipayApiException
@@ -349,7 +391,7 @@ public class AliPay {
 
 	/**
 	 * 电脑网站支付(PC支付)
-	 * 
+	 *
 	 * @param model
 	 * @param notifyUrl
 	 * @param returnUrl
@@ -358,7 +400,7 @@ public class AliPay {
 	 * @throws IOException
 	 */
 	public static void tradePage(HttpServletResponse httpResponse, AlipayTradePayModel model, String notifyUrl,
-                                 String returnUrl) throws AlipayApiException, IOException {
+								 String returnUrl) throws AlipayApiException, IOException {
 		AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
 		request.setBizModel(model);
 		request.setNotifyUrl(notifyUrl);
@@ -372,7 +414,7 @@ public class AliPay {
 
 	/**
 	 * 将异步通知的参数转化为Map
-	 * 
+	 *
 	 * @param request
 	 * @return
 	 */

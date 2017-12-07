@@ -258,7 +258,7 @@
                 </tr>
                 <tr class="tr_skip" style="margin-left: 192px;">
                     <td style="collapse: 2">
-                        <h4><a href="/index">
+                        <h4><a href="/login">
                             <button class="btn btn-info">立即跳转</button>
                         </a></h4>
                     </td>
@@ -367,9 +367,9 @@
 
 
     $(".btn_pwd").click(function () {
-        var pwd = $("#ipt_pwd").val();
+        var pwd = $(".input_pwd").val();
         newPw = pwd;
-        if ($(".input_pw").val() != "" && $("#ipt_pwd").val() != "" && $("#ipt_pw").val() == $("#ipt_pwd").val() && $(".input_pw").val().length >= 8) {
+        if ($(".input_pw").val() != "" && $(".input_pwd").val() != "" && $(".input_pw").val() == $(".input_pwd").val() && $(".input_pw").val().length >= 8) {
             loadShade = layer.load(1, {shade: [0.1, '#fff']});
             $.ajax({
                 url: '/forget/submit',
@@ -438,12 +438,12 @@
 
 
     $(".input_pwd").blur(function () {
-        if ($("#ipt_pwd").val() == "") {
+        if ($(".input_pwd").val() == "") {
             $(".p_error").hide();
             $(".pwd_error").show();
         } else {
             $(".pwd_error").hide();
-            if ($("#ipt_pw").val() !== $("#ipt_pwd").val()) {
+            if ($(".input_pw").val() !== $(".input_pwd").val()) {
                 $(".p_error").show();
             } else {
                 $(".p_error").hide();
@@ -466,9 +466,9 @@
             t = setTimeout(function () {
                 f_skip();
             }, 1000);
-            $(".skip").html("修改成功。" + time + "秒后自动跳转到主页");
+            $(".skip").html("修改成功。" + time + "秒后自动跳转到登录页面");
         } else {
-            window.location.href = "/index";
+            window.location.href = "/login";
         }
     }
 

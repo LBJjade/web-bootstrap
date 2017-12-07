@@ -113,10 +113,10 @@
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li class=""><a href="/home">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="/home">我的信息</a></li>
+                        <li class=""><a href="/home">我的信息</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">编辑个人信息</a></li>
@@ -135,7 +135,7 @@
                     <form id="defaultForm_2" method="post" class="form-horizontal">
                         <table id="table_content_info">
                             <tr>
-                                <td>真实姓名：</td>
+                                <td>真实姓名<i style="color: red">* </i>：</td>
                                 <td>
                                     <input type="text" id="ipt_name" class="form-control no_border_radius"
                                            name="ipt_name"
@@ -151,7 +151,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>身份证号：</td>
+                                <td>身份证号<i style="color: red">* </i>：</td>
                                 <td>
                                     <input type="text" id="ipt_id_card" class="form-control no_border_radius"
                                            name="ipt_id_card"
@@ -161,9 +161,9 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="border: none">身份证：</td>
+                                <td style="border: none">身份证<i style="color: red">* </i>：</td>
                                 <td style="border: none">
-                                    <span>正面</span><span style="margin-left: 95px">背面</span>
+                                    <span>正面<i style="color: red">* </i></span><span style="margin-left: 95px">背面<i style="color: red">* </i></span>
                                 </td>
                             </tr>
                             <tr>
@@ -185,7 +185,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>性别：</td>
+                                <td>性别<i style="color: red">* </i>：</td>
                                 <td>
                                     <select class="form-control no_border_radius" id="ipt_sex">
                                         <option value="0">请选择</option>
@@ -196,7 +196,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>生日：</td>
+                                <td>生日<i style="color: red">* </i>：</td>
                                 <td><input type="text" id="ipt_birthday" class="form-control no_border_radius"
                                            style="height: 34px;width: 100%"
                                            th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
@@ -320,7 +320,11 @@
     })
 
     $(".btn_save").click(function () {
-        if (f_nameValidate($("#ipt_name").val()) && f_idcardValidate($("#ipt_id_card").val())) {
+        var fileVal_f=$("#ipt_f").val();
+        var fileVal_b=$("#ipf_b").val();
+        var selectVel=$("#ipt_sex").val();
+        var dateVel=$("#ipt_birthday").val();
+        if (f_nameValidate($("#ipt_name").val()) && f_idcardValidate($("#ipt_id_card").val()) && fileVal_f != "" && fileVal_b != "" && selectVel != "请选择" && dateVel != "") {
             loadShade = layer.load(1, {
                 shade: [0.1, '#fff']
             });

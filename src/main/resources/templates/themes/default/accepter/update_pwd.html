@@ -62,7 +62,7 @@
             display: none;
             height: 42px;
             margin-top: -23px;
-            margin-right: 88px;
+            margin-right: 126px;
         }
 
         .error_1 {
@@ -70,7 +70,7 @@
             display: none;
             height: 19px;
             margin-top: 7px;
-            margin-right: 27px;
+            margin-right: 78px;
         }
 
         .pw {
@@ -155,7 +155,7 @@
                             <span class=" btn_send" style="width: 200px;padding-left: 4px"><img
                                     class="verify_code col-lg-3 login_code" th:src="@{/Verify/code.jpg}" style="float: initial;
     width: 128px;" src="" height="30" width="90"/></span>
-                            <p class="code_error error" style="margin-right: 160px;">验证码不能为空</p>
+                            <p class="code_error error" style="margin-right: 197px;">验证码不能为空</p>
                         </div>
                     </td>
                 </tr>
@@ -257,11 +257,11 @@
             <br/>
             <table class="table_member_content">
                 <tr class="tr_skip">
-                    <td style="collapse: 2"><h4><a class="skip">修改成功。5秒后自动跳转到主页</a></h4></td>
+                    <td style="collapse: 2"><h4><a class="skip">修改成功。5秒后自动跳转到登陆页面</a></h4></td>
                 </tr>
                 <tr class="tr_skip" style="margin-left: 192px;">
                     <td style="collapse: 2">
-                        <h4><a href="/index">
+                        <h4><a href="/login">
                             <button class="btn btn-info">立即跳转</button>
                         </a></h4>
                     </td>
@@ -462,9 +462,9 @@
             t = setTimeout(function () {
                 f_skip();
             }, 1000);
-            $(".skip").html("修改成功。" + time + "秒后自动跳转到主页");
+            $(".skip").html("修改成功。" + time + "秒后自动跳转到登录页面");
         } else {
-            window.location.href = "/index";
+            window.location.href = "/login";
         }
     }
 

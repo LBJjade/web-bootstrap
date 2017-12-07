@@ -274,7 +274,6 @@ public class DonateServiceImpl implements IDonateService {
     }
 
 
-
     // TODO
     /**
      * 支付宝合同捐赠
