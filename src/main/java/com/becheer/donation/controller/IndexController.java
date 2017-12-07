@@ -38,6 +38,9 @@ public class IndexController extends BaseController {
     @Resource
     IIntentionService intentionService;
 
+    @Resource
+    IContractService contractService;
+
     /**
      * 首页
      *

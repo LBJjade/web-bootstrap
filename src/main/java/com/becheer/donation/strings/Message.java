@@ -149,6 +149,7 @@ public class Message {
      * 合同
      */
     public static final String MEMBER_GET_CONTRACT_SUCCESS = "获取合同成功";
+    public static final String MEMBER_CONTRACT_ATTACH_GET_SUCCESS = "获取合同附件成功";
 
     /**
      * 三方合同

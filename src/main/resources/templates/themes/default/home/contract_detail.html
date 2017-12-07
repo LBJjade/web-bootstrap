@@ -242,6 +242,24 @@
                     <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
                 </div>
             </div>
+
+            <div class="div_member_title">
+                <p>文档附件</p>
+                <hr/>
+            </div>
+            <table class="table_member_content" ID="table_attach">
+                <tr>
+                    <td>捐赠合同</td>
+                    <td class="amount">2017-12-23</td>
+                    <td>下载</td>
+                </tr>
+            </table>
+            <div class="col-sm-10 p_no_data" style="margin-bottom: 40px;">
+                <div style="font-size: 18px;font-weight: 600;">
+                    <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -262,11 +280,8 @@
 
             <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
-
-
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 60px;color:#847f7f">捐赠金额：&yen;<span
-                            id="donateAmount" class="order_fund" style=""></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 60px;color:#847f7f">捐赠金额：&yen;<span id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
                 </div>
@@ -281,8 +296,7 @@
                                     <div class="code_lost">点击刷新</div>
                                 </div>
                                 <div class="success">
-                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body"
-                                         th:src="@{~/image/play.png}"/>
+                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body" th:src="@{~/image/play.png}"/>
                                 </div>
                             </div>
                             <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
@@ -397,7 +411,6 @@
             success: function (data) {
                 if (data.code === 200) {
                     paymentPlanId = data.result[0].id;
-//                    alert(paymentPlanId);
                     new Vue({
                         el: '#table_donate_plan',
                         data: {
@@ -412,6 +425,21 @@
             }
         });
     }
+
+    function f_getAttach() {
+        $.ajax({
+            url: '/home/contract/attach',
+            data: {contractId: contractId},
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                if (data.code === 200) {
+                }
+            }
+        })
+    }
+
+
 
     function f_openContent() {
         layer.open({
