@@ -262,6 +262,36 @@
             <version>1.9.22</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.5.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-core</artifactId>
+            <version>9.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf-itext5</artifactId>
+            <version>9.0.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf.tool</groupId>
+            <artifactId>xmlworker</artifactId>
+            <version>5.4.4</version>
+        </dependency>
+
     </dependencies>
 
     <!-- 普通的maven打包方式 -->

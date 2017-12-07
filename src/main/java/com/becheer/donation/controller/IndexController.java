@@ -2,10 +2,12 @@ package com.becheer.donation.controller;
 
 import com.becheer.donation.model.Intention;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.report.IndexReport;
 import com.becheer.donation.service.*;
 import com.becheer.donation.strings.Message;
+import com.becheer.donation.utils.PdfUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * 首页控制器
@@ -38,6 +43,9 @@ public class IndexController extends BaseController {
     @Resource
     IIntentionService intentionService;
 
+    @Resource
+    IContractService contractService;
+
     /**
      * 首页
      *
@@ -45,8 +53,18 @@ public class IndexController extends BaseController {
      */
     @GetMapping(value = "")
     public String index(HttpServletRequest request) {
-        request.setAttribute("config", fileConfig);
-        return this.render("index");
+        try{
+            MemberContractContentExtension c=contractService.GetContractContent(24);
+            byte[] pdfByte=PdfUtil.HtmlToPdf("<html><body>"+c.getContent()+"</body></html>");
+                File file = new File("/Users/amber/Desktop/2.pdf");
+                FileOutputStream fo = new FileOutputStream(file);
+                fo.write(pdfByte);
+                fo.close();
+                request.setAttribute("config", fileConfig);
+            return this.render("index");
+        }catch (Exception ex){
+            return "error";
+        }
     }
 
     /**
