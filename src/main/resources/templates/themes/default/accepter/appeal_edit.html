@@ -9,7 +9,6 @@
     <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
-    <link th:href="@{/css/style.css?v=3.0.0}" rel="stylesheet"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
 
     <style type="text/css">
@@ -76,8 +75,10 @@
                     <td>申诉类型：</td>
                     <td>
                         <select id="type" class="form-control no_border_radius" style="width: 250px;height: 32px">
+                            <option>请选择申诉类型</option>
                             <option>资金使用申诉</option>
-                            <option>合同履约申诉</option>
+                            <option>项目效率申诉</option>
+                            <option>项目信息公开申诉</option>
                             <option>批资申诉</option>
                         </select>
                     </td>
@@ -100,8 +101,6 @@
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
-<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
-<script th:src="@{/js/bootstrap.js/bootstrap.min.js}"></script>
 <script th:src="@{/plugin/layer/layer.js}"></script>
 
 <script type="text/javascript" th:inline="javascript">
@@ -111,6 +110,10 @@
     $("#btn_submit").click(function () {
         var title = $("#theme").val();
         var method = $("#type").find("option:selected").text();
+        if(method==="请选择申诉类型"){
+            layer.alert("请选择申诉类型");
+            return false;
+        }
         var content = $("#main").val();
         $.ajax({
             url: '/accepter/appeal/add',
