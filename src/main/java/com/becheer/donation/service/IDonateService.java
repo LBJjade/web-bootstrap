@@ -6,6 +6,8 @@ import com.becheer.donation.model.extension.donate.DonateContract;
 import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 public interface IDonateService {
@@ -26,7 +28,7 @@ public interface IDonateService {
     /**
      * 支付宝捐赠
      */
-    public Map<String, String> aliPaydonate(Donate donate, String ip, String memberName);
+    public Map<String, String> aliPaydonate(HttpServletRequest httpRequest, HttpServletResponse httpResponse, Donate donate, String ip, String memberName);
 
 
     /**

@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.Map;
 
@@ -179,7 +181,7 @@ public class DonateServiceImpl implements IDonateService {
      * 支付宝捐赠
      */
     @Override
-    public Map<String, String> aliPaydonate(Donate donate, String ip, String memberName) {
+    public Map<String, String> aliPaydonate(HttpServletRequest httpRequest, HttpServletResponse httpResponse,Donate donate, String ip, String memberName) {
 
         Integer projectTypeId = donate.getProjectTypeId();
         Integer projectId = donate.getProjectId();
@@ -263,7 +265,7 @@ public class DonateServiceImpl implements IDonateService {
         paymentPlanService.insert(dntPaymentPlan);
 
         try {
-            Map<String, String> map = aliPayService.pay(orderNo, dntPaymentPlan.getId().toString(), amount);
+            Map<String, String> map = aliPayService.pagePay(httpRequest,httpResponse,orderNo, dntPaymentPlan.getId().toString(), amount);
             map.put("orderNo", orderNo);
         }catch (Exception e){
             return null;
@@ -272,6 +274,8 @@ public class DonateServiceImpl implements IDonateService {
     }
 
 
+
+    // TODO
     /**
      * 支付宝合同捐赠
      */

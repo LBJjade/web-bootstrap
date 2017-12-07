@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -227,9 +228,9 @@ public class DonateController extends BaseController {
     //支付宝支付
     @ResponseBody
     @PostMapping("/aliPayDonate")
-    public ResponseDto aliPayDonate(HttpServletRequest request, @RequestParam int projectTypeId, @RequestParam int projectId, @RequestParam int amount) {
+    public ResponseDto aliPayDonate(HttpServletRequest httpRequest, HttpServletResponse httpResponse, @RequestParam int projectTypeId, @RequestParam int projectId, @RequestParam int amount) {
         try {
-            MemberSessionExtension currentMember = GetCurrentUser(request);
+            MemberSessionExtension currentMember = GetCurrentUser(httpRequest);
 
             Long memberId = null;
             String memberName = null;
@@ -242,10 +243,10 @@ public class DonateController extends BaseController {
             donate.setProjectTypeId(projectTypeId);
             donate.setProjectId(projectId);
             donate.setAmount(amount);
-            String ip = IPUtil.getIpAddress(request);
+            String ip = IPUtil.getIpAddress(httpRequest);
 
 //            Map<String, String> map = ailPayService.pay(donate, ip, memberName);
-            Map<String, String> map = donateService.aliPaydonate(donate, ip, memberName);
+            Map<String, String> map = donateService.aliPaydonate(httpRequest,httpResponse,donate, ip, memberName);
 
 
         } catch (Exception e) {

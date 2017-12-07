@@ -55,8 +55,13 @@ public class AccepterServiceImpl implements IAccepterService {
     @Override
     public ResponseDto updatePw(String newPw, String acceptCode) {
         newPw = HashUtil.GetPassword(newPw);
-        accepterMapper.updatePw(newPw, acceptCode);
-        return new ResponseDto(200, "success");
+        int result = accepterMapper.updatePw(newPw, acceptCode);
+        if (result > 0) {
+            return new ResponseDto(200, "success", result);
+        } else {
+            return new ResponseDto(500, "error", result);
+        }
+
     }
 
     @Override

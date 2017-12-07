@@ -92,13 +92,13 @@ public class IndexController extends BaseController {
     public ResponseDto AddIntention(HttpServletRequest request, @RequestParam Long projectId, @RequestParam Long projectTypeId, @RequestParam long intentionAmount, @RequestParam String contactPhone, @RequestParam String remark) {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
-            int MemberValidation = currentMember.getValidation();
-            if(MemberValidation != 3){
-                return MemberAuthFailed();
-            }
             if (currentMember == null) {
                 return MemberAuthFailed();
-            } else {
+            }
+            int MemberValidation = currentMember.getValidation();
+            if(MemberValidation != 3){
+                return new ResponseDto(405,"当前账号未授权，不能提交捐赠");
+            }else {
                 //获取memberId
                 Long memberId = currentMember.getMemberId();
                 Intention intention = new Intention();

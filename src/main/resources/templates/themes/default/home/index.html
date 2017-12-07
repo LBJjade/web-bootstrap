@@ -84,7 +84,7 @@
                         <li class="div_navbar_item"><a href="#">个人信息</a></li>
                     </ul>
                     <a href="home/edit">
-                        <button class="info_button" style="float: right">编辑</button>
+                        <button id="edit" class="info_button" style="float: right;display:none;">编辑</button>
                         <span id="a_edit" class="complete"
                               style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
                                 th:src="@{~/image/vector.png}"
@@ -185,6 +185,7 @@
                     licenseUrl = data.result.license;
                     if (data.result.validation === 1 || data.result.validation === 4) {
                         $("#a_edit").show();
+                        $("#edit").show();
                     }
                     membervalidation = data.result.validation;
                     f_cue(membervalidation);

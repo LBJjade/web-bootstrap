@@ -24,17 +24,28 @@ public class AliPayController extends BaseController {
     @Resource
     private IAliPayService ailPayService;
 
+//    @ResponseBody
+//    @PostMapping("/aliNotify")
+//    public ResponseDto aliNotify(@RequestBody String notifyXML) {
+//        try {
+//            String result = ailPayService.payNotify(notifyXML);
+//            return new ResponseDto(200, result);
+//        } catch (Exception ex) {
+//            LOGGER.error("aliNotify", ex.getMessage());
+//            return new ResponseDto(500, Message.SERVER_ERROR);
+//        }
+//    }
+
     @ResponseBody
-    @PostMapping("/aliNotify")
-    public ResponseDto aliNotify(@RequestBody String notifyXML) {
+    @PostMapping("/aliQuery")
+    public ResponseDto aliQuery(@RequestParam String outTradeNo,@RequestParam String tradeNo) {
         try {
-            String result = ailPayService.payNotify(notifyXML);
-            return new ResponseDto(200, result);
+            Map<String, String> result = ailPayService.tradeQuery(outTradeNo,tradeNo);
+            return new ResponseDto(200,"");
         } catch (Exception ex) {
-            LOGGER.error("aliNotify", ex.getMessage());
+            LOGGER.error("aliQuery", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
-
     }
 
 
