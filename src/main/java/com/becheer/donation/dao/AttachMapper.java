@@ -1,6 +1,7 @@
 package com.becheer.donation.dao;
 
 import com.becheer.donation.model.extension.attach.AttachExtension;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
  * 版本:V1.0
  * Copyright © 2017 广州品清科技有限公司
  */
+
+@Component
 public interface AttachMapper {
     List<AttachExtension> selectAttach(String refTable,long refId);
 }
