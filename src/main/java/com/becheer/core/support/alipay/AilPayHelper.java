@@ -1,5 +1,7 @@
 package com.becheer.core.support.alipay;
 
+import com.becheer.donation.service.SpringContextUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,6 +62,10 @@ public class AilPayHelper {
 
 
 
+//    public static boolean verifyAppId(Map<String, String> params){
+//        AliPayConfig aliPayConfig= (AliPayConfig)SpringContextUtil.getBean("AliPayConfig");
+//        String appId = params.get("app_id");
+//    }
 
 
 

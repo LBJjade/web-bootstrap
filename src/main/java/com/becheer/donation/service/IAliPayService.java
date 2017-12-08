@@ -18,6 +18,9 @@ public interface IAliPayService {
     //电脑支付
     Map<String, String> pagePay(HttpServletRequest httpRequest, HttpServletResponse httpResponse,String outTradeNo, String productId, long totalFee)throws ServletException, IOException;
 
+    //get return参数处理
+    ResponseDto handelReturn(String returnXML);
+
     //验签
     ResponseDto signVerfied(HttpServletRequest httpRequest,String notifyXml);
 
