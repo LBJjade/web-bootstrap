@@ -267,6 +267,8 @@
             <groupId>com.alipay</groupId>
             <artifactId>sdk-JAVA</artifactId>
             <version>20171201160035</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/alipay-sdk-java20171201160035.jar</systemPath>
         </dependency>
 
         <dependency>
