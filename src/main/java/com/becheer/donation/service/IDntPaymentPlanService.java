@@ -20,4 +20,6 @@ public interface IDntPaymentPlanService {
 
     Map updateDonate(String orderNoDate , Integer receivedAmount ,Date paymentDate);
 
+    Long selectIdByOrderNo(String no);
+
 }

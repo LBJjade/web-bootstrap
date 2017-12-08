@@ -100,4 +100,13 @@
     <select id="updateDonate" resultType="java.util.Map" statementType="CALLABLE">
         call updateDonate(#{param1},#{param2},#{param3})
     </select>
+
+    <select id="selectIdByOrderNo" resultType="java.lang.Long">
+        SELECT
+           id_
+        FROM
+        dnt_payment_plan
+        WHERE order_no=#{param1}
+
+    </select>
 </mapper>

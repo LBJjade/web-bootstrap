@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix="wxpay")
+@ConfigurationProperties(prefix = "wxpay")
 public class WxPayConfig {
 
     private String appId;

@@ -97,10 +97,10 @@
                         <li><a href="#">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li class=""><a href="/home">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="/home">我的信息</a></li>
+                        <li class=""><a href="/home">我的信息</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">编辑公司信息</a></li>
@@ -109,7 +109,8 @@
             </div>
             <div id="div_content">
                 <div id="div_avator">
-                    <img id="img_avator" th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
+                    <img id="img_avator"
+                         th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
                     <br/>
                     <br/>
                     <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
@@ -118,22 +119,24 @@
                 <div id="div_content_info">
                     <table id="table_content_info">
                         <tr>
-                            <td>公司名称：</td>
+                            <td>公司名称<i style="color: red">* </i>：</td>
                             <td>
-                                <input class="form-control no_border_radius" type="text" id="ipt_name" th:value="${member.getName()}"/>
+                                <input class="form-control no_border_radius" type="text" id="ipt_name"
+                                       th:value="${member.getName()}"/>
                                 <div class="name_error error">公司名称不能为空</div>
                             </td>
                         </tr>
                         <tr>
-                            <td>组织机构代码：</td>
+                            <td>组织机构代码<i style="color: red">* </i>：</td>
                             <td>
-                                <input class="form-control no_border_radius" type="text" id="ipt_organizationCode" th:value="${member.getOrganizationCode()}"/>
+                                <input class="form-control no_border_radius" type="text" id="ipt_organizationCode"
+                                       th:value="${member.getOrganizationCode()}"/>
                                 <div class="ipt_code_error error">组织机构代码不能为空</div>
                                 <div class="ipt_code_error_0 error">组织机构代码格式错误</div>
                             </td>
                         </tr>
                         <tr>
-                            <td>公司属性：</td>
+                            <td>公司属性<i style="color: red">* </i>：</td>
                             <td>
                                 <select id="ipt_type" class="form-control no_border_radius">
                                     <option value="0">请选择</option>
@@ -148,10 +151,13 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>营业执照：</td>
+                            <td>营业执照<i style="color: red">* </i>：</td>
                             <td>
-                                <input type="file" id="ipt_license" class="input_img" onchange="f_preImg()" accept="image/png,image/jpeg"/>
-                                <img id="img_license" th:src="${config.getFileRoot()+(member.getLicense()==null?'image/license/license.png':member.getLicense())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}" height="120" width="120" style="margin-bottom: 10px"/>
+                                <input type="file" id="ipt_license" class="input_img" onchange="f_preImg()"
+                                       accept="image/png,image/jpeg"/>
+                                <img id="img_license"
+                                     th:src="${config.getFileRoot()+(member.getLicense()==null?'image/license/license.png':member.getLicense())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
+                                     height="120" width="120" style="margin-bottom: 10px"/>
                                 <div class="img_license_error error" style="margin-right: 193px;">请上传营业执照照片</div>
                                 <p>请选择营业执照照片,照片大小不超过2M</p>
                             </td>
@@ -159,13 +165,15 @@
                         <tr>
                             <td>曾参与的公益项目：</td>
                             <td>
-                                <textarea id="ipt_project" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                                <textarea id="ipt_project" class="form-control no_border_radius" rows="5"
+                                          style="margin: 10px 0px 10px 0px;"></textarea>
                             </td>
                         </tr>
                         <tr>
                             <td>公司简介：</td>
                             <td>
-                                <textarea id="ipt_summary" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                                <textarea id="ipt_summary" class="form-control no_border_radius" rows="5"
+                                          style="margin: 10px 0px 10px 0px;"></textarea>
                             </td>
                         </tr>
                     </table>
@@ -261,7 +269,9 @@
     }
 
     $(".btn_save").click(function () {
-        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val())) {
+        var fileVal=$("#ipt_license").val();
+//        alert(fileVal);
+        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val()) && fileVal != "") {
             loadShade = layer.load(1, {
                 shade: [0.1, '#fff']
             });

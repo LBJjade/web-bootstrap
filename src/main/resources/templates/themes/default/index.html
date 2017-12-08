@@ -444,7 +444,9 @@
                 <hr class="left_item hr_10"/>
                 <div class="left_item div_project">
                     <a :href="'project/'+item.projectId" target="_blank">
-                        <img :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'" style="float:left;"/>
+                        <img :alt="item.projectName"
+                             :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_160,w_240'"
+                             style="float:left;"/>
                     </a>
                     <span class="projectName">
                         <i class="fa fa-angle-right" aria-hidden="true"
@@ -609,7 +611,7 @@
                     &times;
                 </button>
                 <h4 class="model-title" style="width: 100%;text-align: center;font-weight: 600;">
-                    扫描二维码,向基金会捐赠
+                    微信扫描二维码,向基金会捐赠
                 </h4>
             </div>
 
@@ -626,7 +628,7 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" onerror="nofind()"/>
+                                <img id="qrCodeImageId" height="200" width="200"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
@@ -745,6 +747,67 @@
         </div>
     </div>
 </div>
+
+
+<!--支付弹出层-->
+<div class="model fade" id="div_pay_donate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="model-dialog" style="margin-top:100px">
+        <div class="model-content" style="width: auto">
+            <div class="model-header">
+                <button type="button" class="close" data-dismiss="model" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="model-title" style="font-weight: 600; width: 100%;text-align: center;">
+                    选择支付方式
+                </h4>
+            </div>
+            <div class="model-body" style="text-align: center">
+
+                <div class="form-group">
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked> 微信
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">支付宝
+                        </label>
+                    </div>
+                </div>
+
+                <div style="margin-top:10px;clear: both; margin-bottom: 20px;">
+                    <button class="button" data-toggle="model" data-target="#"
+                            data-dismiss="model">
+                        上一步
+                    </button>
+                    <button id="payType" class="button" data-toggle="model" data-target="#"
+                            data-dismiss="model">
+                        确定
+                    </button>
+                </div>
+
+                <!--<ul class="nav nav-tabs">-->
+                <!--<li class="active"><a href="#" data-target="#div_wx_img" data-toggle="tab">微信</a></li>-->
+                <!--<li><a href="#" data-target="#div_ali_img" data-toggle="tab">支付宝</a></li>-->
+                <!--</ul>-->
+
+                <!--<div class="tab-content">-->
+                <!--<div class="tab-pane active Content" id="div_wx_img">-->
+                <!--<img src="/image/wxPay.jpg" style="width: 300px;height: 400px" alt="">-->
+                <!--<div id="wxpay" class="btn btn-info cu">确认</div>-->
+                <!--</div>-->
+                <!--<div class="tab-pane " id="div_ali_img">-->
+                <!--<img src="/image/aliPay.jpg" style="width: 300px;height: 400px" alt="">-->
+                <!--<div id="alipay" class="btn btn-info cu">确认</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!--全局JS-->
 <script th:src="@{/js/validation.js}"></script>
@@ -1059,6 +1122,7 @@
                 });
             } else {
                 $("#div_cf_donate").model('show');
+//                $("#div_pay_donate").model('show');
                 var projectTypeId = $("#sel_project_type").val();
                 var projectId = $("#sel_project").val();
                 var amount = span_money * 100;
@@ -1091,7 +1155,7 @@
                         }, 1000);
                         $("#waitingPayTimerText").html(timer);
                     } else {
-                        $("#qrCodeImageId").attr("src", "");
+                        $("#qrCodeImageId").attr("src", "/image/error.jpg");
                         $(".fresh").css("z-index", "3");
                         $(".code_time").html("二维码已经失效，请刷新！");
                     }
@@ -1122,7 +1186,7 @@
                             $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
                             stopCount();
                             autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
-                            $("#qrCodeImageId").attr("src", "");
+                            $("#qrCodeImageId").attr("src", "/image/error.jpg");
                             $(".success").css("z-index", "6");
                         } else {
                             $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
@@ -1152,7 +1216,7 @@
     $(".close_qr").click(function () {
         $("#div_cf_donate").model('hide');
         $("#div_de_donate_step3").model('hide');
-        $("#qrCodeImageId").attr("src", "");
+        $("#qrCodeImageId").attr("src", "/image/error.jpg");
         stopCount();
     })
 
@@ -1213,7 +1277,7 @@
                 }, 1000);
                 $(".time").html(timer);
             } else {
-                $("#qrCodeImageId").attr("src", "");
+                $("#qrCodeImageId").attr("src", "/image/error.jpg");
                 $(".fresh").css("z-index", "3");
                 $("#qrCodeImageId").attr("class", "qrCodeImageId");
                 $(".code_time").html("二维码已经失效，请刷新！");
@@ -1290,49 +1354,61 @@
             });
         } else {
             layer.confirm("您的捐赠意向金额为：<b style='color: red'>" + da_money + "</b>元<br/>" + "捐赠的项目类型：<b style='color: red'>" + projectType + "</b><br/><br/>" + "<i style=\"color: red\">*</i> 提交大额捐赠后会有工作人员与您联系，确定具体捐赠细节 <i style=\"color: red\">*</i>", {
-                btn: ['确定提交', '重新输入'] //按钮
-            }, function () {
-                $("#div_de_donate").model('hide');
-                //添加捐赠意向
-                var projectTypeId = $("#sel_project_type_second").val();
-                var projectId = $("#sel_project_second").val();
-                da_money = da_money * 100;
-                $.ajax({
-                    url: '/index/addIntention',
-                    type: 'post',
-                    data: {
-                        projectId: projectId,
-                        projectTypeId: projectTypeId,
-                        intentionAmount: da_money,
-                        contactPhone: phone,
-                        remark: remark
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.code == 200) {
-                            layer.alert("提交捐赠意向成功。",
-                                {
-                                    icon: 1,
-                                    skin: 'layer-ext-moon'
-                                },
-                                function () {
-                                    window.location.href = "/home/apply";
-                                });
-                        } else {
-                            layer.alert("提交捐赠意向失败。", {
-                                    icon: 2,
-                                    skin: 'layer-ext-moon'
-                                },
-                                function () {
-                                    window.location.href = "/index";
-                                });
+                    btn: ['确定提交', '重新输入'] //按钮
+                }, function () {
+                    $("#div_de_donate").model('hide');
+                    //添加捐赠意向
+                    var projectTypeId = $("#sel_project_type_second").val();
+                    var projectId = $("#sel_project_second").val();
+                    da_money = da_money * 100;
+                    $.ajax({
+                        url: '/index/addIntention',
+                        type: 'post',
+                        data: {
+                            projectId: projectId,
+                            projectTypeId: projectTypeId,
+                            intentionAmount: da_money,
+                            contactPhone: phone,
+                            remark: remark
+                        },
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.code == 200) {
+                                layer.alert("提交捐赠意向成功。",
+                                    {
+                                        icon: 1,
+                                        skin: 'layer-ext-moon'
+                                    },
+                                    function () {
+                                        window.location.href = "/home/apply";
+                                    });
+                            } else if (data.code == 405) {
+                                layer.alert("当前账号未授权，不能提交捐赠。", {
+                                        icon: 2,
+                                        skin: 'layer-ext-moon'
+                                    },
+                                    function () {
+                                        window.location.href = "/index";
+                                    });
+                            } else {
+                                layer.alert("提交捐赠意向失败。", {
+                                        icon: 2,
+                                        skin: 'layer-ext-moon'
+                                    },
+                                    function () {
+                                        window.location.href = "/index";
+                                    });
+                            }
                         }
-                    }
-                })
-            }, function () {
-                $("#div_de_donate").model('show');
-                layer.closeAll('dialog');
-            });
+                    })
+                }
+                ,
+
+                function () {
+                    $("#div_de_donate").model('show');
+                    layer.closeAll('dialog');
+                }
+            );
         }
     })
 
@@ -1385,6 +1461,37 @@
 
         }
     }
+
+    //测试支付宝支付
+    $("#alipay").click(function () {
+        $.ajax({
+            url: '/donate/aliPayDonate',
+            data: {projectTypeId: 0, projectId: 2, amount: 200},
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                if (data.code === 200) {
+                    setInterval("checkAliPayStatus()", 3000);
+                }
+                alert("成功");
+            }
+        });
+    })
+
+
+    //测试支付宝查询接口
+    function checkAliPayStatus() {
+        $.ajax({
+            url: '/aliPay/aliQuery',
+            data: {},
+            dataType: json,
+            type: 'post',
+            success: function () {
+
+            }
+        })
+    }
+
 
     /*]]>*/
 </script>

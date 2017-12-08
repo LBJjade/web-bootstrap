@@ -162,13 +162,13 @@
             <div class="div_member_title">
                 <div id="div_navbar" style="margin-top: 10px">
                     <ul>
-                        <li><a href="#">首页</a></li>
+                        <li><a href="/home">首页</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li class=""><a href="/home/contract">个人中心</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="/home/contract">我的合同</a></li>
+                        <li class=""><a href="/home/contract">我的合同</a></li>
                         <li><i class="fa fa-angle-right" aria-hidden="true"
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">合同详情</a></li>
@@ -233,7 +233,7 @@
                     <td>{{item.formatPaymentDate==""?"尚未捐赠":item.formatPaymentDate}}</td>
                     <td>{{item.statusText}}</td>
                     <td>
-                        <a v-on:click="f_openDoanteLayer(item.id,item.status,item.amountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
+                        <a style="cursor: pointer;" v-on:click="f_openDoanteLayer(item.id,item.status,item.receivedAmountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
                            id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
                 </tr>
             </table>
@@ -290,7 +290,7 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" onerror="nofind()"/>
+                                <img id="qrCodeImageId" height="200" width="200" />
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
@@ -360,7 +360,7 @@
     </tr>
     <tr>
         <td>捐赠金额：</td>
-        <td class="amount"></td>
+        <td class="receivedAmount"></td>
     </tr>
     <tr>
         <td>捐款日期：</td>
@@ -487,7 +487,7 @@
                     }, 1000);
                     $("#waitingPayTimerText").html(timer);
                 } else {
-                    $("#qrCodeImageId").attr("src", "");
+                    $("#qrCodeImageId").attr("src", "/image/error.jpg");
                     $(".fresh").css("z-index", "3");
                     $(".code_time").html("二维码已经失效，请刷新！");
                 }
@@ -509,7 +509,7 @@
             });
             //账单数据
             $(".title").html(title);
-            $(".amount").html(amount);
+            $(".receivedAmount").html(amount);
             $(".date").html(date);
             $(".orderNo").html(orderNo);
             $(".donate_status").html(donateStatus);
@@ -552,7 +552,7 @@
                 }, 1000);
                 $("#waitingPayTimerText").html(timer);
             } else {
-                $("#qrCodeImageId").attr("src", "");
+                $("#qrCodeImageId").attr("src", "/image/error.jpg");
                 $(".fresh").css("z-index", "3");
                 $(".code_time").html("二维码已经失效，请刷新！");
             }
@@ -614,7 +614,7 @@
                             $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
                             stopCount();
                             autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
-                            $("#qrCodeImageId").attr("src", "");
+                            $("#qrCodeImageId").attr("src", "/image/error.jpg");
                             $(".success").css("z-index", "6");
                         } else {
                             $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");

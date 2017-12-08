@@ -17,4 +17,6 @@ public interface AccepterMapper {
     AccepterInfoExtension selectAccepterById(Long mid);
 
     int updateAvator(String avatorUrl, long memberId);
+
+    int updatePw(String newPw,String acceptCode);
 }

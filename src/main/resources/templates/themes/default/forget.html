@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
 
-    <title>忘记密码</title>
+    <title>会员忘记密码</title>
     <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
@@ -96,7 +96,7 @@
         <div class="col-sm-12">
             <div id="div_navbar" style="margin-top: 10px">
                 <ul>
-                    <li><a href="#">忘记密码</a></li>
+                    <li><a href="#">会员忘记密码</a></li>
                 </ul>
             </div>
         </div>
@@ -253,7 +253,7 @@
                 </tr>
                 <tr class="tr_skip" style="margin-left: 192px;">
                     <td style="collapse: 2">
-                        <h4><a href="/index">
+                        <h4><a href="/login">
                             <button class="btn btn-info">立即跳转</button>
                         </a></h4>
                     </td>
@@ -456,9 +456,9 @@
             t = setTimeout(function () {
                 f_skip();
             }, 1000);
-            $(".skip").html("修改成功。" + time + "秒后自动跳转到主页");
+            $(".skip").html("修改成功。" + time + "秒后自动跳转到登录页面");
         } else {
-            window.location.href = "/index";
+            window.location.href = "/login";
         }
     }
 

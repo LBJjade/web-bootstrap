@@ -27,7 +27,7 @@ public interface IMemberService {
 
     int UpdatePw(String newPw, String mobile);
 
-    ResponseDto uploadAvator(long memberId, String fileStr,boolean isAccepter);
+    ResponseDto uploadAvator(long memberId, String fileStr, boolean isAccepter);
 
     int updateLoginInfo(String ip, long memberId);
 }

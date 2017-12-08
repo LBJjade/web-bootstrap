@@ -629,7 +629,7 @@
 
 
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 149px;color:#847f7f">捐赠金额：&yen;<span
+                    <span class="donate_msg orderMoney" style="margin-left: 27px;color:#847f7f">捐赠金额：&yen;<span
                             id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
@@ -639,7 +639,7 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" onerror="nofind()"/>
+                                <img id="qrCodeImageId" height="200" width="200" />
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
@@ -1068,7 +1068,7 @@
                     }, 1000);
                     $(".time").html(timer);
                 } else {
-                    $("#qrCodeImageId").attr("src", "");
+                    $("#qrCodeImageId").attr("src", "/image/error.jpg");
                     $(".fresh").css("z-index", "3");
                     $(".code_time").html("二维码已经失效，请刷新！");
                 }
@@ -1104,7 +1104,7 @@
                             $(".code_time").html("支付成功。<span id=\"autoCloseAfterPaidTimerText\" class=\"time\" style=\"color: red\">5</span>秒自动关闭。");
                             stopCount();
                             autoCloseAfterPaidInterval = setInterval("autoCloseAfterPaid()", 1000);
-                            $("#qrCodeImageId").attr("src", "");
+                            $("#qrCodeImageId").attr("src", "/image/error.jpg");
                             $(".success").css("z-index", "6");
                         } else {
                             $(".code_time").html("<span class=\"notifyErrCodeDesc\" style=\"color: red\">errCodeDesc</span>");
@@ -1137,7 +1137,7 @@
 
     $(".close_qr").click(function () {
         $("#div_cf_donate").model('hide');
-        $("#qrCodeImageId").attr("src", "");
+        $("#qrCodeImageId").attr("src", "/image/error.jpg");
         stopCount();
     })
 
@@ -1180,7 +1180,7 @@
                 }, 1000);
                 $(".time").html(timer);
             } else {
-                $("#qrCodeImageId").attr("src", "");
+                $("#qrCodeImageId").attr("src", "/image/error.jpg");
                 $(".fresh").css("z-index", "3");
                 $("#qrCodeImageId").attr("class", "qrCodeImageId");
                 $(".code_time").html("二维码已经失效，请刷新！");

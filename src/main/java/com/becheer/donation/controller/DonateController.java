@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,9 +91,7 @@ public class DonateController extends BaseController {
     public Object donate(HttpServletRequest request, @RequestParam int projectTypeId, @RequestParam int projectId, @RequestParam int amount) {
         try {
             MemberSessionExtension currentMember = GetCurrentUser(request);
-//            if (currentMember == null) {
-//                MemberAuthFailed();
-//            }
+
             Long memberId = null; // currentMember.getMemberId();
             String memberName = null;
             if (currentMember != null) {
@@ -105,21 +104,6 @@ public class DonateController extends BaseController {
             donate.setProjectId(projectId);
             donate.setAmount(amount);
 
-//            Integer projectTypeId = donate.getProjectTypeId();
-//            Integer projectId = donate.getProjectId();
-//            Integer amount = donate.getAmount();
-
-//            if (projectTypeId == null) {
-//                return new ResponseDto(400, Message.DONATE_PROJECT_TYPE_ID_IS_EMPTY);
-//            }
-//
-//            if (projectId == null) {
-//                return new ResponseDto(400, Message.DONATE_PROJECT_ID_BAD_REQUEST);
-//            }
-//
-//            if (amount == null) {
-//                return new ResponseDto(400, Message.DONATE_AMOUNT_IS_EMPTY);
-//            }
 
             String ip = IPUtil.getIpAddress(request);
             Map<String, String> map = donateService.donate(donate, ip, memberName);
@@ -150,13 +134,12 @@ public class DonateController extends BaseController {
     }
 
     /**
-     *
      * 合同捐赠
      */
     @ResponseBody
     @PostMapping("/donateContract")
     // public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
-    public Object donateContract(HttpServletRequest request,@RequestParam Long paymentPlanId) {
+    public Object donateContract(HttpServletRequest request, @RequestParam Long paymentPlanId) {
         try {
             //验证是否登陆
             MemberSessionExtension currentMember = GetCurrentUser(request);
@@ -170,9 +153,9 @@ public class DonateController extends BaseController {
             ////
             Map<String, String> map = donateService.donateContract(memberId, ip, paymentPlanId);
 //            Map<String, String> map = donateService.donateContract(donateContract, ip, memberName,paymentPlanId);
-            if(map == null){
+            if (map == null) {
                 return new ResponseDto(501, Message.CONTRACT_HAD_DONATE);
-            }else{
+            } else {
                 Map<String, String> prepay = new HashMap<>();
                 String returnCode = map.get("return_code");
                 String resultCode = map.get("result_code");
@@ -212,7 +195,7 @@ public class DonateController extends BaseController {
                 return new ResponseDto(401, Message.REGISTER_NO_EXIST);
             }
             return smsService.SendSms(mobile, tid);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             LOGGER.error("SendSms", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
@@ -236,74 +219,54 @@ public class DonateController extends BaseController {
                 ResponseDto result = smsService.CheckCode(mobile, code, tid);
                 return result;
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             LOGGER.error("CheckSms", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 
-//    @ResponseBody
-//    @PostMapping("/da_donate")
-//    // public Object donate(HttpServletRequest request, @RequestBody Donate donate) {
-//    public Object da_donate(HttpServletRequest request, @RequestParam int amount) {
-//        try {
-//            MemberSessionExtension currentMember = GetCurrentUser(request);
-//            if (currentMember == null) {
-//                MemberAuthFailed();
-//            }
-////            Long memberId = null;
-//            Long memberId = currentMember.getMemberId();
-//            String memberName = null;
-//            if (currentMember != null) {
-//                memberId = currentMember.getMemberId();
-//                memberName = currentMember.getMemberName();
-//            }
-//            Donate donate = new Donate();
-//            donate.setMemberId(memberId);
-////            donate.setProjectTypeId(projectTypeId);
-////            donate.setProjectId(projectId);
-//            donate.setAmount(amount);
-//
-////            Integer projectTypeId = donate.getProjectTypeId();
-////            Integer projectId = donate.getProjectId();
-////            Integer amount = donate.getAmount();
-//
-////            if (projectTypeId == null) {
-////                return new ResponseDto(400, Message.DONATE_PROJECT_TYPE_ID_IS_EMPTY);
-////            }
-////
-////            if (projectId == null) {
-////                return new ResponseDto(400, Message.DONATE_PROJECT_ID_BAD_REQUEST);
-////            }
-////
-////            if (amount == null) {
-////                return new ResponseDto(400, Message.DONATE_AMOUNT_IS_EMPTY);
-////            }
-//
-//            String ip = IPUtil.getIpAddress(request);
-//            Map<String, String> map = donateService.donate(donate, ip, memberName);
-//
-//
-//            Map<String, String> prepay = new HashMap<>();
-//            String returnCode = map.get("return_code");
-//            String resultCode = map.get("result_code");
-//            String qrCodeURL = null;
-//            if (WxPayHelper.codeIsOK(returnCode) && WxPayHelper.codeIsOK(resultCode)) {
-//                // responsedTradeType = wxPayResponse.get("trade_type");
-//                // preparedId = wxPayResponse.get("prepared_id");
-//                qrCodeURL = map.get("code_url");
-//                if (qrCodeURL != null) {
-//                    String qrCodeImageBase64 = ImageUtil.encodeBufferedImageToBase64(QRCodeUtil.createQRCode(qrCodeURL, 300, 300), "png");
-//                    prepay.put("qrCodeImageBase64", qrCodeImageBase64);
-//                }
-//                String orderNo = map.get("orderNo");
-//                prepay.put("orderNo", orderNo);
-//            }
-//
-//
-//            return new ResponseDto(200, Message.NOCONTRACT_GET_RECENT_SUCCESS, prepay);
-//        } catch (Exception ex) {
-//            return new ResponseDto(500, Message.SERVER_ERROR);
-//        }
-//    }
+    //支付宝支付
+    @ResponseBody
+    @PostMapping("/aliPayDonate")
+    public ResponseDto aliPayDonate(HttpServletRequest httpRequest, HttpServletResponse httpResponse, @RequestParam int projectTypeId, @RequestParam int projectId, @RequestParam int amount) {
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(httpRequest);
+
+            Long memberId = null;
+            String memberName = null;
+            if (currentMember != null) {
+                memberId = currentMember.getMemberId();
+                memberName = currentMember.getMemberName();
+            }
+            Donate donate = new Donate();
+            donate.setMemberId(memberId);
+            donate.setProjectTypeId(projectTypeId);
+            donate.setProjectId(projectId);
+            donate.setAmount(amount);
+            String ip = IPUtil.getIpAddress(httpRequest);
+
+//            Map<String, String> map = ailPayService.pay(donate, ip, memberName);
+            Map<String, String> map = donateService.aliPaydonate(httpRequest,httpResponse,donate, ip, memberName);
+
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        return null;
+    }
+
+    @ResponseBody
+    @PostMapping("/aliPayDontractDonate")
+    public ResponseDto aliPayDontractDonate() {
+        return null;
+    }
+
+    @ResponseBody
+    @PostMapping("/aliNotify")
+    public ResponseDto aliNotify(@RequestBody String notifyXML) {
+        return null;
+    }
+
+
 }

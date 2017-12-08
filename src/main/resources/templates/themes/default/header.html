@@ -87,8 +87,8 @@
                 <button type="button" class="close" data-dismiss="model" aria-hidden="true">
                     &times;
                 </button>
-                <h4 class="model-title" style="width: 100%;text-align: center;">
-                    登录
+                <h4 class="model-title" id="loginTitle" style="font-weight: 600; width: 100%;text-align: center;">
+                    会员登录
                 </h4>
             </div>
             <div class="model-body" style="text-align: center">
@@ -117,7 +117,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-5 col-lg-offset-4">
-                            <input type="checkbox" id="ipt_cookie" class="col-lg-offset-3"/>下次自动登录
+                            <input type="checkbox" id="ipt_cookie" style="font-weight: 600" class="col-lg-offset-3"/>下次自动登录
                         </div>
                     </div>
 
@@ -126,6 +126,7 @@
                             <button type="button" id="btn_login" class="btn btn-primary btn-block">登录</button>
                         </div>
                     </div>
+
 
                     <div class="form-group">
                         <div class="col-lg-6 col-lg-offset-6">
@@ -162,7 +163,7 @@
 
                     <div class="form-group">
                         <div class="col-lg-5 col-lg-offset-4">
-                            <input type="checkbox" id="ipt_ac_cookie" class="col-lg-offset-3"/>下次自动登录
+                            <input type="checkbox" id="ipt_ac_cookie" style="font-weight: 600" class="col-lg-offset-3"/>下次自动登录
                         </div>
                     </div>
 
@@ -173,10 +174,11 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-lg-6 col-lg-offset-6">
-                            <span><a href="javascript:f_loginMode()">会员登录</a></span>
-                            <span>|</span>
-                            <span><a th:href="@{/forget}">忘记密码</a></span>
+                        <div class="col-lg-6 " style="font-weight: 600"><i style="color: red">*</i> 联系基金会：020-85588189<i style="color: red">*</i></div>
+                        <div class="col-lg-6 ">
+                            <span><a href="javascript:f_MenberloginMode()">会员登录</a></span>
+                            <!--<span>|</span>-->
+                            <!--<span><a th:href="@{/forget}">忘记密码</a></span>-->
                             <span>|</span>
                             <span><a th:href="@{/register}">注册新账号</a></span>
                         </div>
@@ -346,6 +348,7 @@
 
     function f_showCode(){
         $(".login_code").attr("src", "/Verify/code.jpg?t=" + Math.random());
+        $("#loginTitle").html("会员登陆");
     }
 
     function f_autoLogin() {
@@ -415,6 +418,18 @@
     }
 
     function f_loginMode() {
+        $("#loginTitle").html("授号登陆");
+        if($("#defaultForm").is(":hidden")){
+            $("#form_accepter").slideUp();
+            $("#defaultForm").slideDown();
+        }else{
+            $("#defaultForm").slideUp();
+            $("#form_accepter").slideDown();
+        }
+    }
+
+    function f_MenberloginMode() {
+        $("#loginTitle").html("会员登陆");
         if($("#defaultForm").is(":hidden")){
             $("#form_accepter").slideUp();
             $("#defaultForm").slideDown();

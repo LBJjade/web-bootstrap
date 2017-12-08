@@ -9,6 +9,7 @@ import com.becheer.donation.service.IDntPaymentPlanService;
 import com.becheer.donation.service.IPayWxUnifiedOrderService;
 import com.becheer.donation.service.IWxPayService;
 import com.becheer.donation.utils.DateUtils;
+import com.becheer.donation.utils.RedisUtil;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,14 +78,14 @@ public class WxPayServiceImpl implements IWxPayService {
             return WxPayHelper.toXml(returnToWxPay);
         }
 
-
-        // 验证签名
-        if (!WxPayHelper.verifyNotify(notify)) {
-            logger.warn("微信支付结果通知: !!!签名失败!!!");
-            returnToWxPay.put("return_code", "FAIL");
-            returnToWxPay.put("return_msg", "签名失败");
-            return WxPayHelper.toXml(returnToWxPay);
-        }
+//
+//        // 验证签名
+//        if (!WxPayHelper.verifyNotify(notify)) {
+//            logger.warn("微信支付结果通知: !!!签名失败!!!");
+//            returnToWxPay.put("return_code", "FAIL");
+//            returnToWxPay.put("return_msg", "签名失败");
+//            return WxPayHelper.toXml(returnToWxPay);
+//        }
 
         // 验证appid、mch_id等
         if (!WxPayHelper.verifyAppIdAndMchId(notify)) {
@@ -154,13 +155,16 @@ public class WxPayServiceImpl implements IWxPayService {
         // 更新业务数据状态
         Date paymentDate = null;
         String timeEnd = notify.get("time_end");
-        String time=null;
+        String time = null;
         if (!Strings.isNullOrEmpty(timeEnd)) {
-            time=DateUtils.strToDateFormat(timeEnd);
+            time = DateUtils.strToDateFormat(timeEnd);
             paymentDate = DateUtils.StrToDate(time);
         }
         paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
         paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
+
+        Long id_ = paymentPlanService.selectIdByOrderNo(outTradeNo);
+        RedisUtil.delPaymentPlankey(id_);
 
 
         // 签名、商户信息、业务数据状态、订单金额都没问题的情况下

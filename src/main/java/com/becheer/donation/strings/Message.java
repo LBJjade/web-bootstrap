@@ -53,6 +53,8 @@ public class Message {
 
     public static final String LOGIN_CODE_NULL = "请输入验证码";
 
+    public static final String LOGIN_CODE_ERROR = "输入的授号与当前授号不符";
+
     public static final String LOGIN_CODE_ERROE = "验证码错误";
 
     public static final String LOGIN_CODE_SUCCESS = "验证码正确";
