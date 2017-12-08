@@ -1,8 +1,6 @@
 package com.becheer.donation.service;
 
-import com.alipay.api.AlipayApiException;
 import com.becheer.donation.model.base.ResponseDto;
-import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
