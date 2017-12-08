@@ -38,7 +38,7 @@ public class WxPayServiceImpl implements IWxPayService {
     @Override
     public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
 
-        Map<String, String> params = WxPayHelper.buildUnifiedOrderParasMap(outTradeNo, productId, "1");//String.valueOf(totalFee)
+        Map<String, String> params = WxPayHelper.buildUnifiedOrderParasMap(outTradeNo, productId, String.valueOf(totalFee));//String.valueOf(totalFee)
 
         String prepayXML = WxPay.unifiedOrder(params);
         Map prepayMap = XmlUtil.parseXml2Map(prepayXML);
