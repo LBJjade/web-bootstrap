@@ -232,10 +232,6 @@
         <td class="bill_type">微信</td>
     </tr>
     <tr>
-        <td>订单号：</td>
-        <td class="orderNo"></td>
-    </tr>
-    <tr>
         <td>批资状态：</td>
         <td class="bill_status"></td>
     </tr>
@@ -248,9 +244,11 @@
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var contractId =/*[[${contract.getId()}]]*/;
+    var contractStatus =/*[[${contract.getStatus()}]]*/;
 
     $(document).ready(function () {
         f_getAllocatePlan();
+//        if(contractStatuscontractStatus > =)
     })
 
     $(".close_qr").click(function () {
@@ -298,7 +296,7 @@
             layer.open({
                 type: 1,
                 title: false,
-                area: ['580px', '350px'],
+                area: ['580px', '269px'],
                 closeBtn: 1,
                 shadeClose: true,
                 skin: 'yourclass',

@@ -457,7 +457,7 @@
     function f_openDoanteLayer(id, status, amount, title, date, orderNo, donateStatus) {
         paymentPlanId = id;
         if (status === 0) {
-            if(contractStatus >= 6) {
+            if(contractStatus == 7) {
                 $("#div_cf_donate").model('show');
                 $.ajax({
                     url: '/donate/donateContract',

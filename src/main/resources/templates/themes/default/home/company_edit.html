@@ -127,12 +127,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>组织机构代码<i style="color: red">* </i>：</td>
+                            <td>统一社会信用代码<i style="color: red">* </i>：</td>
                             <td>
                                 <input class="form-control no_border_radius" type="text" id="ipt_organizationCode"
                                        th:value="${member.getOrganizationCode()}"/>
-                                <div class="ipt_code_error error">组织机构代码不能为空</div>
-                                <div class="ipt_code_error_0 error">组织机构代码格式错误</div>
+                                <div class="ipt_code_error error">统一社会信用代码不能为空</div>
+                                <div class="ipt_code_error_0 error">统一社会信用代码格式错误</div>
                             </td>
                         </tr>
                         <tr>
@@ -205,7 +205,7 @@
     var license = "";
 
 
-    //组织机构代码，由八位数字或字母组成，加一条横线，再加一位数字或字母，例如12345678-a
+    //统一社会信用代码，由八位数字或字母组成，加一条横线，再加一位数字或字母，例如12345678-a
     $("#ipt_organizationCode").blur(function () {
 //        var code = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]/;
 //        if ($("#ipt_code").val() == "") {
@@ -219,6 +219,17 @@
             $(".ipt_code_error_0").hide();
         }
     })
+
+        function f_codeValidate(a) {
+            var regx=/[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9A-Z]{10}/;
+            var re = new RegExp(regx);
+            if(re.test(a)){
+                return true;
+            }else{
+                return false;
+            }
+        }
+
 
     //公司名称
     $("#ipt_name").blur(function () {
