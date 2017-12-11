@@ -81,11 +81,11 @@
             <div class="div_member_title">
                 <div id="div_navbar" style="margin-top: 10px">
                     <ul>
-                        <li><a href="#">首页</a></li>
+                        <li><a th:href="@{~/}">首页</a></li>
                         <li>
                             <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
                         </li>
-                        <li class="div_navbar_item"><a href="#">个人中心</a></li>
+                        <li class="div_navbar_item"><a href="/accepter">个人中心</a></li>
                         <li>
                             <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
                         </li>
@@ -100,9 +100,10 @@
                     <div class="div_message_title">
                         <div>
                             <h4><span class="glyphicon glyphicon-chevron-down" style="float: right;"></span>{{item.contractName}}
-                                <p
-                                        style="float: right"><span class="amount" style=" margin-right: 5px;">{{item.contractAmount}}</span>元
-                                </p></h4>
+                                <p style="float: right">
+                                    <span class="amount" style=" margin-right: 5px;">{{item.contractAmount}}</span>元
+                                </p>
+                            </h4>
                         </div>
                     </div>
                     <div class="div_message_content">

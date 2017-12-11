@@ -161,10 +161,6 @@ a:visited, a:focus, a:hover {
     display: none;
 }
 
-.div_navbar_item a {
-    color: #666666;
-}
-
 .no_border_radius{
     border-radius: 0px;
 }
