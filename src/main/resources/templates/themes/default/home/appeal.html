@@ -129,6 +129,18 @@
     })
 
 
+    $("body").on("click", ".div_message_title", function () {
+        if ($(this).next().css("display") === "none") {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-up");
+            $(this).next().show();
+        } else {
+            $(this).find("span").eq(0).attr("class", "glyphicon glyphicon-chevron-down");
+            $(this).next().hide();
+        }
+    });
+
+
+
     function f_GetAppeal() {
         $.ajax({
             url: '/home/appeal/list',
