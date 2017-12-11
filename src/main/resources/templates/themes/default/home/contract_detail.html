@@ -233,11 +233,11 @@
                     <td>{{item.formatPaymentDate==""?"尚未捐赠":item.formatPaymentDate}}</td>
                     <td>{{item.statusText}}</td>
                     <td>
-                        <a style="cursor: pointer;" v-on:click="f_openDoanteLayer(item.id,item.status,item.receivedAmountString,item.title,item.paymentDate,item.orderNo,item.statusText)"
-                           id="donate">{{item.status==0?"捐赠":"账单"}}</a></td>
+                        <a style="cursor: pointer;" v-on:click="f_openDoanteLayer(item.id,item.status,item.receivedAmountString,item.title,item.paymentDate,item.orderNo,item.statusText)" id="donate">{{item.status==0?"捐赠":"账单"}}</a>
+                    </td>
                 </tr>
             </table>
-            <div class="col-sm-10 p_no_data" style="margin-bottom: 40px;">
+            <div class="col-sm-10 p_no_data" id="div_no_account" style="margin-bottom: 40px;">
                 <div style="font-size: 18px;font-weight: 600;">
                     <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
                 </div>
@@ -247,16 +247,21 @@
                 <p>文档附件</p>
                 <hr/>
             </div>
-            <table class="table_member_content" ID="table_attach">
+            <table class="table_member_content" ID="table_attach" v-cloak>
                 <tr>
-                    <td>捐赠合同</td>
-                    <td class="amount">2017-12-23</td>
-                    <td>下载</td>
+                    <td>名称</td>
+                    <td>添加日期</td>
+                    <td>操作</td>
+                </tr>
+                <tr v-for="item in items">
+                    <td>{{item.name}}</td>
+                    <td>{{item.createTime}}</td>
+                    <td><a :href="attachRoot+item.attachUrl" target="_blank">查看</a></td>
                 </tr>
             </table>
-            <div class="col-sm-10 p_no_data" style="margin-bottom: 40px;">
+            <div class="col-sm-10 p_no_data" id="div_no_attach" style="margin-bottom: 40px;">
                 <div style="font-size: 18px;font-weight: 600;">
-                    <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
+                    <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂无文档附件
                 </div>
             </div>
 
@@ -389,12 +394,12 @@
     /*<![CDATA[*/
     var contractId =/*[[${contract.getId()}]]*/;
 
-
     var paymentPlanId;
     var amount;
 
     $(document).ready(function () {
         f_GetDonatePlan();
+        f_getAttach();
     })
 
     $(".close_qr").click(function () {
@@ -418,7 +423,7 @@
                         }
                     });
                     if (data.result.length === 0) {
-                        $(".p_no_data").show();
+                        $("#div_no_account").show();
                         $(".table_title").hide();
                     }
                 }
@@ -428,12 +433,23 @@
 
     function f_getAttach() {
         $.ajax({
-            url: '/home/contract/attach',
+            url: '/attach/contract',
             data: {contractId: contractId},
             type: 'post',
             dataType: 'json',
             success: function (data) {
                 if (data.code === 200) {
+                    if(data.result.length===0){
+                        $("#div_no_attach").show();
+                    }else{
+                        new Vue({
+                            el:'#table_attach',
+                            data:{
+                                items:data.result,
+                                attachRoot:fileRoot
+                            }
+                        });
+                    }
                 }
             }
         })
@@ -632,5 +648,6 @@
 
     /*]]>*/
 </script>
+<iframe name="download_frame" style="display:none"></iframe>
 </body>
 </html>

@@ -17,7 +17,7 @@ import java.util.List;
  * Copyright © 2017 广州品清科技有限公司
  */
 @Service
-public class IAttachServiceImpl implements IAttachService {
+public class AttachServiceImpl implements IAttachService {
     @Resource
     private AttachMapper attachMapper;
 
