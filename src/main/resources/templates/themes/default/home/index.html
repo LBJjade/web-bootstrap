@@ -89,7 +89,9 @@
                               style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
                                 th:src="@{~/image/vector.png}"
                                 style="display: none;float: right;width: 27px;margin-right: 7px;"></span>
+
                     </a></p>
+                    <!--<div style="float: right;font-weight:600;font-size: 14px;">联系管理员:</div>-->
                 </div>
             </div>
             <div class="div_content" id="div_member">
@@ -125,7 +127,7 @@
                         </tr>
                         <tr v-if="member.role===2">
                             <td>营业执照：</td>
-                            <td><a href="javascript:f_showLicense()">点击查看</a></td>
+                            <td><a id="license" style="display: none;" href="javascript:f_showLicense()">点击查看</a></td>
                         </tr>
                         <tr v-if="member.role===1">
                             <td>性别：</td>
@@ -186,6 +188,7 @@
                     if (data.result.validation === 1 || data.result.validation === 4) {
                         $("#a_edit").show();
                         $("#edit").show();
+                        $("#license").hide();
                     }
                     membervalidation = data.result.validation;
                     f_cue(membervalidation);
@@ -198,6 +201,7 @@
                     });
                 } else {
                     layer.alert(data.msg);
+                    $("#license").show();
                 }
             }
         });

@@ -124,7 +124,12 @@ public class DonateServiceImpl implements IDonateService {
         // paylog_ref_record_id bigint null comment '付款方式流水记录标识【,.!】',
 
         // TODO 增加容错处理
-        paymentPlanService.insert(dntPaymentPlan);
+        try{
+            paymentPlanService.insert(dntPaymentPlan);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
 
         Map<String, String> map = payService.pay(orderNo, dntPaymentPlan.getId().toString(), amount);
         map.put("orderNo", orderNo);

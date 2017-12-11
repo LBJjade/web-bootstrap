@@ -38,7 +38,7 @@
             enable_,
             create_time,
             create_by,
-            payment_method_id,
+            payment_method,
             paylog_ref_table,
             paylog_ref_record_id,
             status,

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
 
-    <title>注册</title>
+    <title>捐赠系统：世纪慈善爱心基金会</title>
     <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
@@ -61,7 +61,7 @@
             display: none;
             height: 42px;
             margin-top: -23px;
-            margin-right: 101px;
+            margin-right: 67px;
         }
 
         .error_1 {
@@ -149,10 +149,10 @@
                 <tr>
                     <td>手机号码：</td>
                     <td>
-                        <div style="margin-right: 32px">
+                        <div style="margin-right: 63px">
                             <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入手机号码"
-                                   style="width: 115px; margin-right: 9px;"/>
-                            <button class="btn btn-info btn_send" style="width: 140px;padding-left: 4px">获取验证码</button>
+                                   style="width: 103px; margin-right: 11px;"/>
+                            <button class="btn btn-info btn_send" style="width:118px;padding-left: 4px">获取验证码</button>
                             <p class="mobile_error error">手机号码格式不正确</p>
                         </div>
                     </td>
@@ -271,7 +271,7 @@
                 </tr>
                 <tr class="tr_skip" style="margin-left: 192px;">
                     <td style="collapse: 2">
-                        <h4><a href="/index">
+                        <h4><a href="/home">
                             <button class="btn btn-info">立即跳转</button>
                         </a></h4>
                     </td>
@@ -492,9 +492,9 @@
             t = setTimeout(function () {
                 f_skip();
             }, 1000);
-            $(".skip").html("注册成功。" + time + "秒后自动跳转到主页");
+            $(".skip").html("注册成功。" + time + "秒后自动跳转到个人中心。");
         } else {
-            window.location.href = "/index";
+            window.location.href = "/home";
         }
     }
 
