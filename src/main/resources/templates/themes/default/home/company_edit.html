@@ -63,7 +63,7 @@
             color: red;
             display: none;
             /*margin-top: -18px;*/
-            margin-right: 173px;
+            /*margin-right: 173px;*/
             margin-bottom: -10px;
         }
 
@@ -127,12 +127,12 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>组织机构代码<i style="color: red">* </i>：</td>
+                            <td>统一社会信用代码<i style="color: red">* </i>：</td>
                             <td>
                                 <input class="form-control no_border_radius" type="text" id="ipt_organizationCode"
                                        th:value="${member.getOrganizationCode()}"/>
-                                <div class="ipt_code_error error">组织机构代码不能为空</div>
-                                <div class="ipt_code_error_0 error">组织机构代码格式错误</div>
+                                <div class="ipt_code_error error">统一社会信用代码不能为空</div>
+                                <div class="ipt_code_error_0 error">统一社会信用代码格式错误</div>
                             </td>
                         </tr>
                         <tr>
@@ -205,14 +205,8 @@
     var license = "";
 
 
-    //组织机构代码，由八位数字或字母组成，加一条横线，再加一位数字或字母，例如12345678-a
+    //统一社会信用代码
     $("#ipt_organizationCode").blur(function () {
-//        var code = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]/;
-//        if ($("#ipt_code").val() == "") {
-//            $(".ipt_code_error").show();
-//        } else {
-//            $(".ipt_code_error").hide();
-//        }
         if (!f_codeValidate($("#ipt_organizationCode").val())) {
             $(".ipt_code_error_0").show();
         } else {

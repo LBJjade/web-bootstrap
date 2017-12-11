@@ -28,9 +28,9 @@ function f_idcardValidate(inputIdcard) {
     }
 }
 
-//组织机构代码，由八位数字或字母组成，加一条横线，再加一位数字或字母，例如12345678-a
+//统一社会信用代码代码
 function f_codeValidate(inputCode) {
-    var v_code = /[a-zA-Z0-9]{8}-[a-zA-Z0-9]/;
+    var v_code = /^[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}$/;
     if(!v_code.test(inputCode)){
         return false;
     }else {
