@@ -14,5 +14,5 @@ import java.util.List;
  */
 
 public interface IAttachService {
-    public List<AttachExtension> getAttach(String refTable, long refId);
+    List<AttachExtension> getAttach(String refTable, long refId);
 }

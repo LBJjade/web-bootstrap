@@ -9,14 +9,13 @@
         <result column="ref_id" jdbcType="VARCHAR" property="refId" />
         <result column="attach_url" jdbcType="VARCHAR" property="attachUrl" />
         <result column="remark_" jdbcType="VARCHAR" property="remark" />
-        <result column="create_time" jdbcType="DATE" property="createTime" />
-        <result column="update_time" jdbcType="DATE" property="updateTime" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
         <result column="attach_type" jdbcType="VARCHAR" property="attachType" />
         <result column="attach_size" jdbcType="BIGINT" property="attachSize" />
     </resultMap>
 
     <select id="selectAttach" resultMap="ListResultMap">
-        SELECT * FROM dnt_attach WHERE id_ = #{param1} AND ref_table = #{param2} AND enable_ = 1
+        SELECT * FROM dnt_attach WHERE ref_id = #{param2} AND ref_table = #{param1} AND enable_ = 1
     </select>
-
 </mapper>

@@ -2,9 +2,10 @@ package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.attach.AttachExtension;
+import com.becheer.donation.model.extension.contract.AppropriationContractExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
-import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.service.IAppropriationContractService;
 import com.becheer.donation.service.IAttachService;
 import com.becheer.donation.service.IContractService;
 import com.becheer.donation.strings.Message;
@@ -31,7 +32,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/attach")
-public class AttachController extends BaseController{
+public class AttachController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AttachController.class);
 
@@ -40,6 +41,9 @@ public class AttachController extends BaseController{
 
     @Resource
     IContractService contractService;
+
+    @Resource
+    IAppropriationContractService appropriationContractService;
 
     @ResponseBody
     @PostMapping("/contract")
@@ -61,4 +65,23 @@ public class AttachController extends BaseController{
         }
     }
 
+    @ResponseBody
+    @PostMapping("/appropriation")
+    public ResponseDto getAppropriationAttach(HttpServletRequest request, @RequestParam long contractId){
+        try {
+            MemberSessionExtension currentMember = GetCurrentUser(request);
+            if (currentMember == null) {
+                return MemberAuthFailed();
+            }
+            AppropriationContractExtension contract = appropriationContractService.getAccepterContracttDetail(contractId);
+            if (contract == null || contract.getAccepterId() != currentMember.getAccepterId()) {
+                return MemberAuthFailed();
+            }
+            List<AttachExtension> attachList = attachService.getAttach("dnt_appropriation_contract", contractId);
+            return new ResponseDto(200,Message.MEMBER_CONTRACT_ATTACH_GET_SUCCESS,attachList);
+        }catch (Exception ex){
+            LOGGER.error("getAppropriationAttach", ex.getMessage());
+            return ResponseDto.GetResponse(500, Message.SERVER_ERROR);
+        }
+    }
 }
