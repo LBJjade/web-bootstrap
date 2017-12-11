@@ -133,7 +133,10 @@
                         </tr>
                         <tr v-if="member.role===2">
                             <td>营业执照：</td>
-                            <td><a href="javascript:f_showLicense()">点击查看</a></td>
+                            <td>
+                                <a v-if="member.license!=null" href="javascript:f_showLicense()">点击查看</a>
+                                <span v-if="member.license==null">暂未上传</span>
+                            </td>
                         </tr>
                         <tr v-if="member.role===1">
                             <td>性别：</td>
