@@ -75,13 +75,21 @@
             <div class="div_member_title">
                 <div id="div_navbar" style="margin-top: 10px;margin-bottom: 17px;">
                     <ul>
-                        <li><a href="#">首页</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li><a href="#">个人中心</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">个人信息</a></li>
+                        <li>
+                            <a th:href="@{~/}">首页</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li>
+                            <a href="/home">个人中心</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li class="div_navbar_item">
+                            <a href="#">个人信息</a>
+                        </li>
                     </ul>
                     <a href="home/edit">
                         <button id="edit" class="info_button" style="float: right;display:none;">编辑</button>
@@ -116,7 +124,7 @@
                             <td>{{member.idCard}}</td>
                         </tr>
                         <tr v-if="member.role===2">
-                            <td>组织机构代码：</td>
+                            <td>统一社会信用代码：</td>
                             <td>{{member.organizationCode}}</td>
                         </tr>
                         <tr v-if="member.role===2">
@@ -125,7 +133,10 @@
                         </tr>
                         <tr v-if="member.role===2">
                             <td>营业执照：</td>
-                            <td><a href="javascript:f_showLicense()">点击查看</a></td>
+                            <td>
+                                <a v-if="member.license!=null" href="javascript:f_showLicense()">点击查看</a>
+                                <span v-if="member.license==null">暂未上传</span>
+                            </td>
                         </tr>
                         <tr v-if="member.role===1">
                             <td>性别：</td>

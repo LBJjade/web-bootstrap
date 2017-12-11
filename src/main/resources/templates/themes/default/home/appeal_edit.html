@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
     <title>发起申诉</title>
-    <link rel="shortcut icon" th:href="@{/image/favicon.ico}" />
+    <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
@@ -38,26 +38,41 @@
             <div class="div_member_title">
                 <div id="div_navbar" style="margin-top: 10px;margin-bottom: 17px;">
                     <ul>
-                        <li><a href="#">首页</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="active"><a  href="#">个人中心</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="/home/project">我参与的项目</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">项目详情</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
-                               style="font-size: 20px;color: #999999; "></i></li>
-                        <li class="div_navbar_item"><a href="#">发起申诉</a></li>
+                        <li>
+                            <a th:href="@{~/}">首页</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li class="active">
+                            <a href="/home">个人中心</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li class="div_navbar_item">
+                            <a href="/home/project">我参与的项目</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li class="div_navbar_item">
+                            <a href="#">项目详情</a></li>
+                        <li>
+                            <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
+                        </li>
+                        <li class="div_navbar_item">
+                            <a href="#">发起申诉</a>
+                        </li>
                     </ul>
                 </div>
             </div>
             <table class="table_member_content">
                 <tr>
                     <td>申诉主题：</td>
-                    <td><input id="theme" type="text" class="form-control no_border_radius" style="width: 250px;height: 30px"/></td>
+                    <td>
+                        <input id="theme" type="text" class="form-control no_border_radius" style="width: 250px;height: 30px"/>
+                    </td>
                 </tr>
                 <tr>
                     <td>申诉项目：</td>
@@ -96,7 +111,7 @@
                 </tr>
             </table>
         </div>
-</div>
+    </div>
 </div>
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
@@ -110,7 +125,7 @@
     $("#btn_submit").click(function () {
         var title = $("#theme").val();
         var method = $("#type").find("option:selected").text();
-        if(method==="请选择申诉类型"){
+        if (method === "请选择申诉类型") {
             layer.alert("请选择申诉类型");
             return false;
         }
