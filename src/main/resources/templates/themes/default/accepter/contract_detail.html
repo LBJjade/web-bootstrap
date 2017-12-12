@@ -99,10 +99,11 @@
             color: #00a0e9;
             min-width: 86px;
             height: 30px;
-            float:right;
+            float: right;
             margin-top: -5px;
             margin-left: 600px;
         }
+
     </style>
 </head>
 <body>
@@ -185,7 +186,7 @@
                     <td>{{item.allocateAmount}}</td>
                     <td>{{item.allocateDate==null?"尚未批资":item.allocateDate}}</td>
                     <td>{{item.deadLine}}</td>
-                    <td>{{item.status}}</a></td>
+                    <td v-on:click="f_openDoanteLayer(item.title,item.allocateAmount,item.allocateDate,item.status)"><a style="cursor: pointer;"> {{item.status}}</a></td>
                 </tr>
             </table>
             <div class="col-sm-10 p_no_data" id="div_no_account" style="margin-bottom: 40px;">
@@ -220,12 +221,53 @@
     </div>
 </div>
 
+<!--弹出表格-->
+<table id="bill" class="table " style="display: none;margin-left:16px;margin-top:18px;overflow-x: hidden;width: 94%; ">
+    <thead>
+    <tr>
+        <th><img src="/image/bill.png" style=" width: 25px;"> 账单详情</th>
+    </tr>
+    </thead>
+    <!--<thead>-->
+    <!--<tr>-->
+    <!--<th>账单名称</th>-->
+    <!--<th>捐款日期</th>-->
+    <!--</tr>-->
+    <!--</thead>-->
+    <thead>
+    <tr>
+        <td>合同名称：</td>
+        <td class="bill_contract">
+        </td>
+    </tr>
+    <tr>
+        <td>已批资金额：</td>
+        <td class="bill_amoumt">
+        </td>
+    </tr>
+    <tr>
+        <td>批资日期：</td>
+        <td class="bill_date">
+        </td>
+    </tr>
+    <tr>
+        <td>付款方式：</td>
+        <td class="bill_type">微信</td>
+    </tr>
+    <tr>
+        <td>批资状态：</td>
+        <td class="bill_status"></td>
+    </tr>
+    </thead>
+</table>
+
 <div th:replace="themes/default/footer::footer"></div>
 <!--全局JS-->
 <script th:src="@{/js/date.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
     var contractId =/*[[${contract.getId()}]]*/;
+    var contractStatus =/*[[${contract.getStatus()}]]*/;
 
     $(document).ready(function () {
         f_getAllocatePlan();
@@ -293,6 +335,25 @@
             area: ['1100px', '90%'],
             content: '/accepter/contract/content/' + contractId
         });
+    }
+
+    function f_openDoanteLayer(title,amoumt,date,status) {
+        if(status == "已批资"){
+            //弹出账单
+            layer.open({
+                type: 1,
+                title: false,
+                area: ['580px', '269px'],
+                closeBtn: 1,
+                shadeClose: true,
+                skin: 'yourclass',
+                content: $("#bill")
+            });
+            $(".bill_contract").html(title);
+            $(".bill_amoumt").html(amoumt);
+            $(".bill_date").html(date);
+            $(".bill_status").html(status);
+        }
     }
 
     /*]]>*/

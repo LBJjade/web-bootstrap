@@ -264,43 +264,46 @@
 
     $(".btn_save").click(function () {
         var fileVal=$("#ipt_license").val();
-//        alert(fileVal);
-        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val()) && fileVal != "") {
-            loadShade = layer.load(1, {
-                shade: [0.1, '#fff']
-            });
-            var companyName = $("#ipt_name").val();
-            var organizationCode = $("#ipt_code").val();
-            var organizationType = $("#ipt_type").val();
-            var project = $("#ipt_project").val();
-            var summary = $("#ipt_summary").val();
+        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val())) {
+            if(fileVal == ""){
+                layer.alert("营业执照还没有上传");
+            }else {
+                loadShade = layer.load(1, {
+                    shade: [0.1, '#fff']
+                });
+                var companyName = $("#ipt_name").val();
+                var organizationCode = $("#ipt_code").val();
+                var organizationType = $("#ipt_type").val();
+                var project = $("#ipt_project").val();
+                var summary = $("#ipt_summary").val();
 
-            $.ajax({
-                url: '/home/member/submit',
-                data: {
-                    name: companyName,
-                    organizationCode: organizationCode,
-                    organizationType: organizationType,
-                    project: project,
-                    summary: summary,
-                    license: license
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function (data) {
-                    layer.close(loadShade);
-                    if (data.code === 200) {
-                        layer.alert(data.msg, function () {
-                            window.location.href = "/home";
-                        });
-                        setTimeout(function () {
-                            window.location.href = "/home";
-                        }, 3000);
-                    } else {
-                        layer.alert(data.msg);
+                $.ajax({
+                    url: '/home/member/submit',
+                    data: {
+                        name: companyName,
+                        organizationCode: organizationCode,
+                        organizationType: organizationType,
+                        project: project,
+                        summary: summary,
+                        license: license
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (data) {
+                        layer.close(loadShade);
+                        if (data.code === 200) {
+                            layer.alert(data.msg, function () {
+                                window.location.href = "/home";
+                            });
+                            setTimeout(function () {
+                                window.location.href = "/home";
+                            }, 3000);
+                        } else {
+                            layer.alert(data.msg);
+                        }
                     }
-                }
-            });
+                });
+            }
         } else {
             layer.alert("您填写的信息有误");
         }

@@ -166,6 +166,8 @@ public class WxPayServiceImpl implements IWxPayService {
         Long id_ = paymentPlanService.selectIdByOrderNo(outTradeNo);
         RedisUtil.delPaymentPlankey(id_);
 
+//        RedisUtil.delContractkey(id_);
+
 
         // 签名、商户信息、业务数据状态、订单金额都没问题的情况下
 

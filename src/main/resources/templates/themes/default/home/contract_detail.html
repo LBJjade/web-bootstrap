@@ -394,6 +394,8 @@
     /*<![CDATA[*/
     var contractId =/*[[${contract.getId()}]]*/;
 
+    var contractStatus =/*[[${contract.getStatus()}]]*/;
+
     var paymentPlanId;
     var amount;
 
@@ -472,44 +474,48 @@
     function f_openDoanteLayer(id, status, amount, title, date, orderNo, donateStatus) {
         paymentPlanId = id;
         if (status === 0) {
-            $("#div_cf_donate").model('show');
-            $.ajax({
-                url: '/donate/donateContract',
-                type: 'post',
-                data: {
-                    paymentPlanId: id
-                },
-                dataType: 'json',
-                success:
-                    function (data) {
-                        if (data.code === 200) {
-                            $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
-                            $("#orderNo").html(data.result.orderNo);
-                            amount = data.result.amount;
-                            var length = amount.length;
-                            amount = amount.substring(0, length - 2);
-                            $("#donateAmount").html(amount);
-                            checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
+            if(contractStatus == 7) {
+                $("#div_cf_donate").model('show');
+                $.ajax({
+                    url: '/donate/donateContract',
+                    type: 'post',
+                    data: {
+                        paymentPlanId: id
+                    },
+                    dataType: 'json',
+                    success:
+                        function (data) {
+                            if (data.code === 200) {
+                                $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
+                                $("#orderNo").html(data.result.orderNo);
+                                amount = data.result.amount;
+                                var length = amount.length;
+                                amount = amount.substring(0, length - 2);
+                                $("#donateAmount").html(amount);
+                                checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
+                            }
                         }
+                });
+                var timer = 120;
+
+                function Countdown() {
+                    if (timer >= 1) {
+                        timer -= 1;
+                        t = setTimeout(function () {
+                            Countdown();
+                        }, 1000);
+                        $("#waitingPayTimerText").html(timer);
+                    } else {
+                        $("#qrCodeImageId").attr("src", "/image/error.jpg");
+                        $(".fresh").css("z-index", "3");
+                        $(".code_time").html("二维码已经失效，请刷新！");
                     }
-            });
-            var timer = 120;
-
-            function Countdown() {
-                if (timer >= 1) {
-                    timer -= 1;
-                    t = setTimeout(function () {
-                        Countdown();
-                    }, 1000);
-                    $("#waitingPayTimerText").html(timer);
-                } else {
-                    $("#qrCodeImageId").attr("src", "/image/error.jpg");
-                    $(".fresh").css("z-index", "3");
-                    $(".code_time").html("二维码已经失效，请刷新！");
                 }
-            }
 
-            Countdown();
+                Countdown();
+            }else{
+                layer.alert("合同还未签订，暂时不能捐赠");
+            }
 
         } else {
             $("#div_cf_donate").model('hide');
@@ -648,6 +654,5 @@
 
     /*]]>*/
 </script>
-<iframe name="download_frame" style="display:none"></iframe>
 </body>
 </html>

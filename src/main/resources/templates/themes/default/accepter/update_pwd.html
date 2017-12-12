@@ -286,8 +286,8 @@
     var mobile;
     var newPw;
     var acceptCode
-    var memberInfoMobile = memberInfo.mobile;
-
+//    var memberInfoMobile = memberInfo.mobile;
+//    var acceptCode=memberInfo.getAcceptId();
 
     $(".verify_code").click(function () {
         $(this).attr("src", "Verify/code.jpg?t=" + Math.random());
@@ -297,6 +297,9 @@
         $(this).attr("src", "/Verify/code.jpg?t=" + Math.random());
     });
 
+//    $(document).ready(function(){
+//        $('.ipt_mobile').val(memberInfoMobile);
+//    })
 
     //发送短信验证码
     //    $(".btn_send").click(function () {

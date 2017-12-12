@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta name="renderer" content="webkit"/>
 
-    <title>登录</title>
+    <title>捐赠系统：世纪慈善爱心基金会</title>
     <link rel="shortcut icon" th:href="@{/image/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
     <link rel="stylesheet" th:href="@{/css/common.css}"/>
@@ -77,7 +77,7 @@
         <div class="col-sm-12">
             <div id="div_navbar" style="margin-top: 10px">
                 <ul>
-                    <li><a href="#">登录</a></li>
+                    <li ><a id="login_subject" href="#">会员登录</a></li>
                 </ul>
             </div>
         </div>
@@ -302,10 +302,12 @@
             $("#tab1").css("display","none");
             $("#tab2").css("display","inline-table");
             $(".error").css("display","none");
+            $("#login_subject").html("授号登陆");
         }else{
             $("#tab2").css("display","none");
             $("#tab1").css("display","inline-table");
             $(".error").css("display","none");
+            $("#login_subject").html("会员登陆");
         }
     }
     /*]]>*/
