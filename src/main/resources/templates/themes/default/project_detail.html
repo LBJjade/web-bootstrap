@@ -419,7 +419,7 @@
                             <!--<li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>&nbsp;{{item.amount|format}}元-->
                             <!--</li>-->
                             <li class="recommend_item_info">
-                                <span class="recommend_item_info_fomat">{{item.memberName==null?item.location:item.memberName}}&nbsp;</span>
+                                <span class="recommend_item_info_fomat">{{item.memberName==""?item.location:item.memberName}}&nbsp;</span>
                                 <span style="color: #00a0e9;font-weight: bold">捐赠</span>
                                 <span class="recommend_item_info_project">本项目</span>
                                 <span class="recommend_item_info_money">{{item.amount|format}}</span>
