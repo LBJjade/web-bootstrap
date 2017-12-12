@@ -81,4 +81,10 @@
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 
+    <select id="selectProjectIdById" parameterType="java.lang.Integer" resultType="java.lang.Long">
+        SELECT project_id
+        FROM dnt_no_contract_donate
+        WHERE id_=#{id}
+    </select>
+
 </mapper>

@@ -22,4 +22,6 @@ public interface DntPaymentPlanMapper {
     Map updateDonate(String orderNo, Integer receivedAmount, Date paymentDate);
 
     Long selectIdByOrderNo(String no);
+
+    DntPaymentPlan selectPaymentPlanByOrderNo(String no);
 }

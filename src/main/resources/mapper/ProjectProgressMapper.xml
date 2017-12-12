@@ -3,12 +3,12 @@
 <mapper namespace="com.becheer.donation.dao.ProjectProgressMapper">
 
     <resultMap id="BaseResultMap" type="com.becheer.donation.model.ProjectProgress">
-        <id column="id_" jdbcType="BIGINT" property="id" />
-        <result column="project_id" jdbcType="BIGINT" property="projectId" />
-        <result column="title" jdbcType="VARCHAR" property="title" />
-        <result column="summary" jdbcType="VARCHAR" property="summary" />
-        <result column="content" jdbcType="VARCHAR" property="content" />
-        <result column="type" jdbcType="INTEGER" property="type" />
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
         <result column="enable_" jdbcType="INTEGER" property="enable"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="create_by" jdbcType="BIGINT" property="createBy"/>
@@ -36,7 +36,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -48,12 +49,23 @@
         </where>
     </sql>
 
-    <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.ProjectProgressCondition" resultMap="BaseResultMap">
+    <update id="updateProjectProject" parameterType="com.becheer.donation.model.ProjectProgress">
+        UPDATE dnt_project_progress
+        SET
+        project_id=#{projectId},
+        title=#{title},
+        summary=#{summary},
+        content=#{content},
+        enable_=1
+    </update>
+
+    <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.ProjectProgressCondition"
+            resultMap="BaseResultMap">
         select
         id_,title,summary,content,type,create_time
         from dnt_project_progress
         <if test="_parameter != null">
-            <include refid="Example_Where_Clause" />
+            <include refid="Example_Where_Clause"/>
         </if>
         <if test="orderByClause != null">
             order by ${orderByClause}

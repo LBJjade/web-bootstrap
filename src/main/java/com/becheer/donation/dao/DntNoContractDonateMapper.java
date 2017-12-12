@@ -13,4 +13,6 @@ public interface DntNoContractDonateMapper {
     int insert(DntNoContractDonate dntNoContractDonate);
 
     int update(DntNoContractDonate dntNoContractDonate);
+
+    long selectProjectIdById(Integer id);
 }
