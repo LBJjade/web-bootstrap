@@ -276,4 +276,10 @@ public class Message {
      * 我的获捐页面
      */
     public static final String ACCEPTER_ACCEPTED_GET_SUCCESS = "获取我的获捐成功";
+
+    /**
+     * 省市区接口
+     */
+    public static final String AREA_GET_SUCCESS = "获取数据成功";
+
 }

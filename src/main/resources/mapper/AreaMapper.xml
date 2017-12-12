@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.AreaMapper">
+
+    <resultMap id="BaseResultMap" type="com.becheer.donation.model.Area">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="parent_id" jdbcType="BIGINT" property="parentId"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+    </resultMap>
+
+    <select id="selectAreaByParentId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT
+	      id_,
+	      name,
+	      parent_id,
+	      type
+        FROM dnt_area
+        WHERE parent_id =#{parentId,jdbcType=INTEGER}
+    </select>
+
+</mapper>
