@@ -3,6 +3,7 @@ package com.becheer.donation.dao;
 import com.becheer.donation.model.Area;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 包名: com.becheer.donation.dao
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface AreaMapper {
     List<Area> selectAreaByParentId(long parentId);
+
+    Map selectAreaByAreaId(long areaId);
 }

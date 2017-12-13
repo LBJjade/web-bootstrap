@@ -4,9 +4,11 @@ import com.becheer.donation.model.Area;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.service.IAreaService;
 import com.becheer.donation.strings.Message;
+import jdk.nashorn.internal.objects.annotations.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +35,7 @@ public class AreaController extends BaseController{
     IAreaService areaService;
 
     @ResponseBody
-    @RequestMapping("/{pid}")
+    @GetMapping("/{pid}")
     public ResponseDto getArea(HttpServletRequest request, @PathVariable long pid){
         try{
             List<Area> result=areaService.selectAreaByParentId(pid);

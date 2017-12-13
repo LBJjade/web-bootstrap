@@ -86,7 +86,10 @@
         <if test="idCardFrontImg!=null">id_card_front_img=#{idCardFrontImg},</if>
         <if test="idCardBackImg!=null">id_card_back_img=#{idCardBackImg},</if>
         <if test="license!=null">license=#{license},</if>
-        validation=#{validation,jdbcType=INTEGER}
+        validation=#{validation,jdbcType=INTEGER},
+        province=#{province,jdbcType=VARCHAR},
+        city=#{city,jdbcType=VARCHAR},
+        area=#{area,jdbcType=VARCHAR}
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 

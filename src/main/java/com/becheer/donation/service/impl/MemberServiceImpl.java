@@ -8,7 +8,9 @@ package com.becheer.donation.service.impl;
 
 import com.becheer.donation.configs.OssConfig;
 import com.becheer.donation.dao.AccepterMapper;
+import com.becheer.donation.dao.AreaMapper;
 import com.becheer.donation.dao.MemberMapper;
+import com.becheer.donation.model.Area;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
@@ -24,6 +26,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class MemberServiceImpl implements IMemberService {
@@ -33,6 +37,9 @@ public class MemberServiceImpl implements IMemberService {
 
     @Resource
     private AccepterMapper accepterMapper;
+
+    @Resource
+    private AreaMapper areaMapper;
 
     @Autowired
     OssConfig ossConfig;
@@ -193,6 +200,15 @@ public class MemberServiceImpl implements IMemberService {
             OssUtil.addByteArray(bytes, fileName);
             member.setIdCardBackImg(fileName);
         }
+        Map memberArea=areaMapper.selectAreaByAreaId(memberInfoExtension.getAreaId());
+
+        if (memberArea==null||memberArea.size()!=6){
+            return new ResponseDto(400,Message.MEMBER_AREA_ERROR);
+        }
+        member.setProvince(memberArea.get("pName").toString());
+        member.setCity(memberArea.get("cName").toString());
+        member.setArea(memberArea.get("aName").toString());
+
         int result = memberMapper.UpdateMember(member);
         if (result > 0) {
             RedisUtil.delMemberKey(member.getId());

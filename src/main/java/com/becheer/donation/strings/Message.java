@@ -136,6 +136,8 @@ public class Message {
 
     public static final String MEMBER_IMG_OVERLIMIT = "请选择2M以内的图片";
 
+    public static final String MEMBER_AREA_ERROR = "地址信息错误";
+
     /**
      * 我的消息页面
      */

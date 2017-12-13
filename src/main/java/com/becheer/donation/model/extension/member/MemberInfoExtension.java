@@ -55,6 +55,12 @@ public class MemberInfoExtension implements Serializable {
 
     private String area;
 
+    private long provinceId;
+
+    private long cityId;
+
+    private long areaId;
+
     public long getId() {
         return id;
     }
@@ -213,5 +219,29 @@ public class MemberInfoExtension implements Serializable {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public long getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(long provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(long cityId) {
+        this.cityId = cityId;
+    }
+
+    public long getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(long areaId) {
+        this.areaId = areaId;
     }
 }

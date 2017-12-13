@@ -19,4 +19,19 @@
         WHERE parent_id =#{parentId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectAreaByAreaId" parameterType="java.lang.Long" resultType="java.util.Map">
+        SELECT
+            a.id_ as aid,
+            a.`name` as aName,
+            c.id_ as cid,
+            c.`name` as cName,
+            p.id_ as pid,
+            p.`name` as pName
+        from
+            dnt_area a
+            left join dnt_area c on c.id_ = a.parent_id
+            left join dnt_area p on p.id_ = c.parent_id
+            where a.id_ = #{areaId,jdbcType=INTEGER}
+    </select>
+
 </mapper>

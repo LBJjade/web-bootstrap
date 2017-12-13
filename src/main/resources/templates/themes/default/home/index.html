@@ -93,10 +93,7 @@
                     </ul>
                     <a href="home/edit">
                         <button id="edit" class="info_button" style="float: right;display:none;">编辑</button>
-                        <span id="a_edit" class="complete"
-                              style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img
-                                th:src="@{~/image/vector.png}"
-                                style="display: none;float: right;width: 27px;margin-right: 7px;"></span>
+                        <span id="a_edit" class="complete" style="float: right;color:red;font-weight:600;display:none;opacity: 0.8;font-size: 17px;">请完善您的个人信息<img th:src="@{~/image/vector.png}" style="display: none;float: right;width: 27px;margin-right: 7px;"></span>
                     </a></p>
                 </div>
             </div>
@@ -198,7 +195,7 @@
             success: function (data) {
                 if (data.code === 200) {
                     licenseUrl = data.result.license;
-                    if (data.result.validation === 1 || data.result.validation === 4) {
+                    if (data.result.validation !== 3) {
                         $("#a_edit").show();
                         $("#edit").show();
                     }
