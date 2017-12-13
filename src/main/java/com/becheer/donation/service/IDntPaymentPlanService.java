@@ -22,4 +22,6 @@ public interface IDntPaymentPlanService {
 
     Long selectIdByOrderNo(String no);
 
+    DntPaymentPlan selectPaymentPlanByOrderNo(String no);
+
 }

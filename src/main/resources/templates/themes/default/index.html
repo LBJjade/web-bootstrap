@@ -580,10 +580,18 @@
 
                         <span id="other" class="money_1">
                             <span class="cu">其他捐赠金额(元)：</span>
-                            <input type="number" class="tx_yuan cu"
+                            <input id="in_oth_mo" type="number" class="tx_yuan cu"
                                    style="outline:none;border:none;border-color:#e41620;text-align: right;width: 52px"
                                    value=""/>
                         </span>
+                        <div class="other_money_error error"
+                             style="text-align: left;height: 40px;margin-left: 142px;margin-bottom: -24px;margin-top: -6px;">
+                            金额不能为空
+                        </div>
+                        <div class="other_money_error_1 error"
+                             style="text-align: left;height: 40px;margin-left: 142px;margin-bottom: -24px;margin-top: -6px;">
+                            金额不能超过2位小数点
+                        </div>
                     </div>
                 </div>
 
@@ -844,6 +852,12 @@
 
     });
 
+    function clear(){
+        alert(0);
+        $("#in_oth_mo").val("");
+        alert(1);
+    }
+
     function f_OnPageChange(newPage) {
         pageNum = newPage;
         f_GetArticle();
@@ -1044,6 +1058,28 @@
         });
     }
 
+    //    //捐赠意向金额
+    $("#in_oth_mo").blur(function () {
+        if (flag == 0) {
+            var oth_money = $("#in_oth_mo").val();
+            var result = oth_money.toString();
+            var spot=result.split(".")[1];
+            if (oth_money == "") {
+                $(".other_money_error_1").hide();
+                $(".other_money_error").show();
+            } else {
+                if(spot.length >= 3){
+                    $(".other_money_error").hide();
+                    $(".other_money_error_1").show();
+                }else{
+                    $(".other_money_error").hide();
+                    $(".other_money_error_1").hide();
+                }
+
+            }
+        }
+    })
+
     //选择金额
     $(".span_donation").click(function () {
         $(".money_2").removeClass("money_2");
@@ -1053,6 +1089,7 @@
         var reg = /\d+/g;
         var ms = str.match(reg);
         span_money = ms;
+        $(".other_money_error").hide();
     })
 
     //金额取消选择

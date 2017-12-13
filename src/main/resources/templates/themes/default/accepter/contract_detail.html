@@ -12,7 +12,7 @@
     <link th:href="@{/css/font-awesome.css?v=4.3.0}" rel="stylesheet"/>
     <style type="text/css">
         .table_member_content {
-            width: 70%;
+            width: 77%;
             text-align: left;
             margin-left: 120px;
             margin-bottom: 50px;
@@ -178,6 +178,7 @@
                     <td>批资日期</td>
                     <td>批资截止日期</td>
                     <td>状态</td>
+                    <td>查看账单</td>
                 </tr>
                 </thead>
                 <tr v-for="item in items" v-cloak>
@@ -186,7 +187,8 @@
                     <td>{{item.allocateAmount}}</td>
                     <td>{{item.allocateDate==null?"尚未批资":item.allocateDate}}</td>
                     <td>{{item.deadLine}}</td>
-                    <td v-on:click="f_openDoanteLayer(item.title,item.allocateAmount,item.allocateDate,item.status)"><a style="cursor: pointer;"> {{item.status}}</a></td>
+                    <td >{{item.status}}</td>
+                    <td v-on:click="f_openDoanteLayer(item.title,item.allocateAmount,item.allocateDate,item.status)"><a style="cursor: pointer;">{{item.status == "已批资"?"账单":"尚没有账单"}}</a></td>
                 </tr>
             </table>
             <div class="col-sm-10 p_no_data" id="div_no_account" style="margin-bottom: 40px;">

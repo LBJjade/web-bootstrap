@@ -2,6 +2,7 @@ package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.ProjectProgressMapper;
 import com.becheer.donation.model.ProjectProgress;
+import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.condition.ProjectProgressCondition;
 import com.becheer.donation.service.IProjectProgressService;
 import com.github.pagehelper.PageHelper;
@@ -31,5 +32,21 @@ public class ProjectProgressServiceImpl implements IProjectProgressService {
         List<ProjectProgress> data=projectProgressMapper.SelectByCondition(condition);
         PageInfo<ProjectProgress> pageInfo = new PageInfo<ProjectProgress>(data);
         return pageInfo;
+    }
+
+    @Override
+    public ResponseDto update(long id,String title,String summary,String content) {
+        ProjectProgress projectProgress=new ProjectProgress();
+        projectProgress.setProjectId(id);
+        projectProgress.setTitle(title);
+        projectProgress.setSummary(summary);
+        projectProgress.setContent(content);
+        projectProgress.setContent(content);
+        int result=projectProgressMapper.updateProjectProject(projectProgress);
+        if(result > 0){
+            return new ResponseDto(200,"success",result);
+        }else{
+            return new ResponseDto(500,"error");
+        }
     }
 }

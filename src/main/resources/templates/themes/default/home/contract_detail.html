@@ -286,7 +286,7 @@
             <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 60px;color:#847f7f">捐赠金额：&yen;<span id="donateAmount" class="order_fund" style=""></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 24px;color:#847f7f">捐赠金额：&yen;<span id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
                 </div>
@@ -490,7 +490,7 @@
                                 $("#orderNo").html(data.result.orderNo);
                                 amount = data.result.amount;
                                 var length = amount.length;
-                                amount = amount.substring(0, length - 2);
+//                                amount = amount.substring(0, length - 2);
                                 $("#donateAmount").html(amount);
                                 checkPayStatusInterval = setInterval("checkPayStatus()", 3000);
                             }

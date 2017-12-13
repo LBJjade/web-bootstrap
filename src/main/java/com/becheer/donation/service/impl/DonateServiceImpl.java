@@ -11,6 +11,7 @@ import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.service.*;
 import com.becheer.donation.utils.GenerateUtil;
 import com.becheer.donation.utils.IPUtil;
+import com.becheer.donation.utils.StringUtil;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,7 +167,8 @@ public class DonateServiceImpl implements IDonateService {
         PaymentPlanExtension paymentPlanExtension = paymentPlanMapper.selectPaymentPlanByaymentPlanId(paymentPlanId);
         Long totalFee = paymentPlanExtension.getAmount();
 //        Long totalFee=Long.parseLong(amount);
-        String amount = String.valueOf(totalFee);
+//        String amount = String.valueOf(totalFee);
+        String amount= StringUtil.formatMoney(totalFee);
         //验证是否已经捐赠
         Long receivedAmount = paymentPlanExtension.getReceivedAmount();
         if (receivedAmount == 0) {

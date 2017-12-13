@@ -44,4 +44,9 @@ public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
     public Long selectIdByOrderNo(String no) {
         return mapper.selectIdByOrderNo(no);
     }
+
+    @Override
+    public DntPaymentPlan selectPaymentPlanByOrderNo(String no) {
+        return mapper.selectPaymentPlanByOrderNo(no);
+    }
 }

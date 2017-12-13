@@ -12,4 +12,6 @@ public interface IDntNoContractDonateService {
     public int insert(DntNoContractDonate dntNoContractDonate);
 
     public int update(DntNoContractDonate dntNoContractDonate);
+
+    long selectProjectIdById(Integer id);
 }

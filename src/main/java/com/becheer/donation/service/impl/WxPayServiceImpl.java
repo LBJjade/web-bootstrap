@@ -3,11 +3,10 @@ package com.becheer.donation.service.impl;
 import com.becheer.core.support.pay.WxPay;
 import com.becheer.core.support.pay.WxPayHelper;
 import com.becheer.core.util.XmlUtil;
+import com.becheer.donation.model.DntContractProject;
+import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.PayWxUnifiedOrder;
-import com.becheer.donation.service.IDntNoContractDonateService;
-import com.becheer.donation.service.IDntPaymentPlanService;
-import com.becheer.donation.service.IPayWxUnifiedOrderService;
-import com.becheer.donation.service.IWxPayService;
+import com.becheer.donation.service.*;
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.RedisUtil;
 import com.google.common.base.Strings;
@@ -16,10 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class WxPayServiceImpl implements IWxPayService {
@@ -34,6 +30,13 @@ public class WxPayServiceImpl implements IWxPayService {
 
     @Resource
     private IDntNoContractDonateService noContractDonateService;
+
+    @Resource
+    private IProjectProgressService projectProgressService;
+
+    @Resource
+    private IDntContractProjectService dntContractProjectService;
+
 
     @Override
     public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
@@ -163,10 +166,27 @@ public class WxPayServiceImpl implements IWxPayService {
         paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
         paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
 
+        //查询poject
+        DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
+        dntPaymentPlan = paymentPlanService.selectPaymentPlanByOrderNo(outTradeNo);
+        String refTable = dntPaymentPlan.getRefTable();
+        Integer refRecordId = dntPaymentPlan.getRefRecordId();
+        long projectId = 1;
+        if (refTable.equals("dnt_contract")) {
+            try{
+                List<DntContractProject> projectIds = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
+        } else {
+            projectId = noContractDonateService.selectProjectIdById(refRecordId);
+        }
+        //写入progress
+        projectProgressService.update(projectId, "您捐赠成功了", "您对该项目捐赠了", "您对该项目捐赠了" + totalFee / 100 + "元");
+
         Long id_ = paymentPlanService.selectIdByOrderNo(outTradeNo);
         RedisUtil.delPaymentPlankey(id_);
-
-//        RedisUtil.delContractkey(id_);
 
 
         // 签名、商户信息、业务数据状态、订单金额都没问题的情况下

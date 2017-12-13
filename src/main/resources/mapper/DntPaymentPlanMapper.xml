@@ -109,4 +109,23 @@
         WHERE order_no=#{param1}
 
     </select>
+
+    <select id="selectPaymentPlanByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        id_,
+        ref_table,
+        ref_record_id,
+        title,
+        payment_date,
+        amount,
+        received_amount,
+        deadline,
+        enable_,
+        status
+        FROM
+        dnt_payment_plan
+        WHERE
+        order_no = #{no,jdbcType=VARCHAR}
+    </select>
+
 </mapper>
