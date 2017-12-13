@@ -3,6 +3,7 @@ package com.becheer.donation.service.impl;
 import com.becheer.core.support.pay.WxPay;
 import com.becheer.core.support.pay.WxPayHelper;
 import com.becheer.core.util.XmlUtil;
+import com.becheer.donation.model.DntContractProject;
 import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.PayWxUnifiedOrder;
 import com.becheer.donation.service.*;
@@ -14,10 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class WxPayServiceImpl implements IWxPayService {
@@ -35,6 +33,9 @@ public class WxPayServiceImpl implements IWxPayService {
 
     @Resource
     private IProjectProgressService projectProgressService;
+
+    @Resource
+    private IDntContractProjectService dntContractProjectService;
 
 
     @Override
@@ -171,7 +172,12 @@ public class WxPayServiceImpl implements IWxPayService {
         String refTable = dntPaymentPlan.getRefTable();
         Integer refRecordId = dntPaymentPlan.getRefRecordId();
         long projectId = 1;
-        if (refTable == "dnt_contract") {
+        if (refTable.equals("dnt_contract")) {
+            try{
+                List<DntContractProject> projectIds = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
 
         } else {
             projectId = noContractDonateService.selectProjectIdById(refRecordId);
