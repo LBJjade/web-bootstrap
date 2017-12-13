@@ -852,7 +852,7 @@
 
     });
 
-    function clear(){
+    function clear() {
         alert(0);
         $("#in_oth_mo").val("");
         alert(1);
@@ -1058,24 +1058,32 @@
         });
     }
 
+    var inp_flag = 0;
     //    //捐赠意向金额
     $("#in_oth_mo").blur(function () {
         if (flag == 0) {
             var oth_money = $("#in_oth_mo").val();
             var result = oth_money.toString();
-            var spot=result.split(".")[1];
+            var spot = result.split(".")[1];
             if (oth_money == "") {
+                inp_flag = 0;
                 $(".other_money_error_1").hide();
                 $(".other_money_error").show();
             } else {
-                if(spot.length >= 3){
-                    $(".other_money_error").hide();
+                $(".other_money_error_1").hide();
+                $(".other_money_error").hide();
+                alert(spot);
+                if(spot == undefined){
+                    inp_flag == 1;
+                }
+                if (spot.length >= 3) {
+                    inp_flag = 0;
                     $(".other_money_error_1").show();
-                }else{
-                    $(".other_money_error").hide();
+                } else {
+                    alert(1);
+                    inp_flag = 1;
                     $(".other_money_error_1").hide();
                 }
-
             }
         }
     })
@@ -1085,6 +1093,7 @@
         $(".money_2").removeClass("money_2");
         $(this).addClass("money_2");
         flag = 1;
+        inp_flag = 1;
         var str = $(this).html();
         var reg = /\d+/g;
         var ms = str.match(reg);
@@ -1143,6 +1152,15 @@
             } else if (flag === 0 && (otherMoney === "" || otherMoney === undefined) && $(".tx_yuan").val() == "") {
                 layer.confirm('您还没有选择金额', {
                     btn: ['重新选择或输入', '取消'] //按钮
+                }, function () {
+                    $("#div_qr_donate").model('show');
+                    layer.closeAll('dialog');
+                }, function () {
+                    $("#div_qr_donate").model('hide');
+                });
+            } else if ($("#in_oth_mo").val() == "" || inp_flag == 0) {
+                layer.confirm('您输入的金额有误', {
+                    btn: ['重新输入', '取消'] //按钮
                 }, function () {
                     $("#div_qr_donate").model('show');
                     layer.closeAll('dialog');
