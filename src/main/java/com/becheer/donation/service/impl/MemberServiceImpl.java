@@ -91,6 +91,9 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setAvator(member.getAvatorImg());
         memberInfoExtension.setBirthday(member.getBirthday());
         memberInfoExtension.setMobile(member.getMobile());
+        memberInfoExtension.setProvince(member.getProvince());
+        memberInfoExtension.setCity(member.getCity());
+        memberInfoExtension.setArea(member.getArea());
         if (member.getRole() == 1) {
             //个人
             memberInfoExtension.setIdCard(StringUtil.getEncryptedIdCard(member.getIdCard()));

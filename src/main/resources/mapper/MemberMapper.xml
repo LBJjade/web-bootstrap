@@ -33,6 +33,9 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
         <result column="acceptor_id" jdbcType="BIGINT" property="accepterId"/>
+        <result column="province" jdbcType="VARCHAR" property="province"/>
+        <result column="city" jdbcType="VARCHAR" property="city"/>
+        <result column="area" jdbcType="VARCHAR" property="area"/>
     </resultMap>
 
     <insert id="insertMember" parameterType="com.becheer.donation.model.Member">
