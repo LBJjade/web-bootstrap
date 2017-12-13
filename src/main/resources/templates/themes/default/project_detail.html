@@ -302,6 +302,7 @@
             -moz-opacity: 0.5;
             opacity: 0.2;
         }
+
         .success {
             position: absolute;
             left: 38px;
@@ -379,14 +380,14 @@
             color: #00a0e9
         }
 
-        .recommend_item_info_money{
+        .recommend_item_info_money {
             float: right;
             font-size: 17px;
             line-height: 0px;
-            color:#FF5A43;
+            color: #FF5A43;
         }
 
-        .recommend_item_info_project{
+        .recommend_item_info_project {
             float: left;
             font-size: 14px;
             display: -webkit-box;
@@ -415,7 +416,8 @@
                     </p>
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
-                            <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'" style="border-radius: 20px;border:1px solid #a1a1a1;"/>
+                            <img :src="fileRoot + (item.avator==null?'image/avator/default.jpg':item.avator)+'?x-oss-process=image/resize,m_fixed,h_40,w_40'"
+                                 style="border-radius: 20px;border:1px solid #a1a1a1;"/>
                             <!--<li class="recommend_item_info">{{item.memberName==null?item.location:item.memberName}}&nbsp;捐赠本项目&nbsp;<span>{{item.projectName==null?item.projectTypeName:item.projectName}}</span>&nbsp;{{item.amount|format}}元-->
                             <!--</li>-->
                             <li class="recommend_item_info">
@@ -438,7 +440,8 @@
                     <div class="recommend_item" v-for="item in items" v-cloak>
                         <ul>
                             <li>
-                                <img :alt="item.projectName" :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/>
+                                <img :alt="item.projectName"
+                                     :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_40,w_40'"/>
                             </li>
                             <li class="recommend_item_word">
                                 <a :href="'/project/'+item.projectId" target="_blank">{{item.projectName}}</a>
@@ -453,7 +456,8 @@
             <div id="div_navbar">
                 <ul>
                     <li>
-                        <a th:href="@{~/}"><i class="fa fa-home" aria-hidden="true" style=" margin-right: 5px;"></i>首页</a>
+                        <a th:href="@{~/}"><i class="fa fa-home" aria-hidden="true"
+                                              style=" margin-right: 5px;"></i>首页</a>
                     </li>
                     <li>>
                         <i class="fa fa-angle-right" aria-hidden="true" style="font-size: 20px;color: #999999; "></i>
@@ -490,8 +494,7 @@
                         </div>
                     </div>
                     <div style="width: 100%;">
-                        <button class="donate_button" data-toggle="model" data-target="#div_qr_donate"
-                                data-dismiss="model">我要捐赠
+                        <button class="donate_button" data-toggle="model" onclick="openQr()">我要捐赠
                         </button>
                     </div>
                 </div>
@@ -542,7 +545,8 @@
                                                     <!--<p id="p_no_data" style="line-height: 200px;display: none">暂无数据</p>-->
                                                     <div class="col-sm-10 p_no_data" style="margin-top: 80px;">
                                                         <div style="font-size: 18px;font-weight: 600;">
-                                                            <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
+                                                            <img src="/image/face.png"
+                                                                 style="width: 30px;height: 30px;margin-right: 10px;">暂时没有内容信息显示
                                                         </div>
                                                     </div>
                                                 </div>
@@ -589,10 +593,19 @@
                         <br/>
                         <span id="span_5" class="cu money span_donation money_1">&yen;100</span>
                         <span id="other" class="cu money_1"><span class="cu">其他捐赠金额：</span>
-                            <input type="text" class="tx_yuan cu"
+                            <input type="text" id="in_oth_mo" class="tx_yuan cu"
                                    style="outline:none;border:none;border-color:#e41620;text-align: right;width: 74px"
                                    value=""/></span>
+                        <div class="other_money_error error"
+                             style="text-align: left;height: 40px;margin-left: 142px;margin-bottom: -24px;margin-top: -6px;">
+                            金额不能为空
+                        </div>
+                        <div class="other_money_error_1 error"
+                             style="text-align: left;height: 40px;margin-left: 142px;margin-bottom: -24px;margin-top: -6px;">
+                            金额不能超过2位小数
+                        </div>
                     </div>
+
                 </div>
 
                 <div>
@@ -639,13 +652,14 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" />
+                                <img id="qrCodeImageId" height="200" width="200"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
                                 </div>
                                 <div class="success">
-                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body" th:src="@{~/image/play.png}"/>
+                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body"
+                                         th:src="@{~/image/play.png}"/>
                                 </div>
                             </div>
                             <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
@@ -783,6 +797,11 @@
         }
     });
 
+
+    function openQr() {
+        $("#div_qr_donate").model('show');
+        $("#in_oth_mo").val("");
+    }
 
     $(".btn_submit").click(function () {
         var amount = $("#ipt_dnt_amount").val();
@@ -977,6 +996,31 @@
         });
     }
 
+    var inp_flag = 0;
+    //    //捐赠意向金额
+    $("#in_oth_mo").blur(function () {
+        if (flag == 0) {
+            var oth_money = $("#in_oth_mo").val();
+            var result = oth_money.toString();
+            var spot = result.split(".")[1];
+            if (oth_money == "") {
+                $(".other_money_error_1").hide();
+                $(".other_money_error").show();
+            } else {
+                $(".other_money_error_1").hide();
+                $(".other_money_error").hide();
+                if (spot == undefined) {
+                } else {
+                }
+                if (spot.length >= 3) {
+                    $(".other_money_error_1").show();
+                } else {
+                    $(".other_money_error_1").hide();
+                }
+            }
+        }
+    })
+
 
     //选择金额
     $(".span_donation").click(function () {
@@ -1001,10 +1045,10 @@
     $("#other").change(function () {
         $(".money_2").removeClass("money_2");
         otherMoney = $(".tx_yuan").val();
-        span_money=otherMoney;
+        span_money = otherMoney;
     })
 
-    $("#other").click(function(){
+    $("#other").click(function () {
         $(".money_2").removeClass("money_2");
     })
 
@@ -1016,13 +1060,22 @@
 
 
     function f_Donate() {
+        var input_result = $("#in_oth_mo").val().toString().split(".")[1];
+        var input_lenght;
+        if (input_result != undefined) {
+            input_lenght = input_result.length;
+        } else {
+            input_lenght = -1;
+        }
+        var s = /^[0-9]*$/;
         if (projectType == "请选择项目类别") {
             layer.alert("你还没有选择项目");
-        } else if (flag == 0 && (otherMoney == "" || otherMoney == undefined)) {
-            layer.confirm('您还没有选择金额', {
+        } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && s.test(otherMoney) && (input_lenght < 3 || input_result == undefined)))) {
+            layer.confirm('您选择或输入的金额有误', {
                 btn: ['重新选择或输入', '取消'] //按钮
             }, function () {
                 $("#div_qr_donate").model('show');
+                $("#in_oth_mo").val("");
                 layer.closeAll('dialog');
             }, function () {
                 $("#div_qr_donate").model('hide');
@@ -1032,6 +1085,7 @@
                 btn: ['重新选择或输入', '取消'] //按钮
             }, function () {
                 $("#div_qr_donate").model('show');
+                $("#in_oth_mo").val("");
                 layer.closeAll('dialog');
             }, function () {
                 $("#div_qr_donate").model('hide');
@@ -1079,10 +1133,10 @@
     }
 
     //图片不存在时
-    function nofind(){
-        var img=event.srcElement;
-        img.src="/image/error.jpg";
-        img.onerror=null;
+    function nofind() {
+        var img = event.srcElement;
+        img.src = "/image/error.jpg";
+        img.onerror = null;
     }
 
     function checkPayStatus() {
@@ -1253,7 +1307,8 @@
             }, function () {
                 $("#div_de_donate").model('hide');
             });
-        }  if (da_money <= 0) {
+        }
+        if (da_money <= 0) {
             parent.layer.confirm('请输入正确金额', {
                 btn: ['重新输入', '取消'] //按钮
             }, function () {

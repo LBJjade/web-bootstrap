@@ -184,8 +184,7 @@ public class WxPayServiceImpl implements IWxPayService {
             projectId = noContractDonateService.selectProjectIdById(refRecordId);
         }
         //写入progress
-        projectProgressService.update(projectId, "您捐赠成功了", "您对该项目捐赠了", "您对该项目捐赠了" + totalFee / 100 + "元");
-
+        projectProgressService.insert(projectId, "您捐赠成功了", "您对该项目捐赠了", "您对该项目捐赠了" + totalFee / 100 + "元");
         Long id_ = paymentPlanService.selectIdByOrderNo(outTradeNo);
         RedisUtil.delPaymentPlankey(id_);
 

@@ -431,8 +431,7 @@
                         <p style="display: inline;">个</p>
                     </li>
                     <div align="center" style="position: relative;">
-                        <button type="button" class="donate_button" data-toggle="model" data-target="#div_qr_donate"
-                                data-dismiss="model" onclick="clear()">
+                        <button type="button" class="donate_button" onclick="openQr()">
                             我要捐赠
                         </button>
                     </div>
@@ -590,7 +589,7 @@
                         </div>
                         <div class="other_money_error_1 error"
                              style="text-align: left;height: 40px;margin-left: 142px;margin-bottom: -24px;margin-top: -6px;">
-                            金额不能超过2位小数点
+                            金额不能超过2位小数
                         </div>
                     </div>
                 </div>
@@ -852,10 +851,9 @@
 
     });
 
-    function clear() {
-        alert(0);
+    function openQr() {
+        $("#div_qr_donate").model('show');
         $("#in_oth_mo").val("");
-        alert(1);
     }
 
     function f_OnPageChange(newPage) {
@@ -1066,22 +1064,17 @@
             var result = oth_money.toString();
             var spot = result.split(".")[1];
             if (oth_money == "") {
-                inp_flag = 0;
                 $(".other_money_error_1").hide();
                 $(".other_money_error").show();
             } else {
                 $(".other_money_error_1").hide();
                 $(".other_money_error").hide();
-                alert(spot);
-                if(spot == undefined){
-                    inp_flag == 1;
+                if (spot == undefined) {
+                } else {
                 }
                 if (spot.length >= 3) {
-                    inp_flag = 0;
                     $(".other_money_error_1").show();
                 } else {
-                    alert(1);
-                    inp_flag = 1;
                     $(".other_money_error_1").hide();
                 }
             }
@@ -1090,6 +1083,7 @@
 
     //选择金额
     $(".span_donation").click(function () {
+        $("#in_oth_mo").val("");
         $(".money_2").removeClass("money_2");
         $(this).addClass("money_2");
         flag = 1;
@@ -1140,39 +1134,40 @@
     function f_Donate() {
         if (donateType == 0) {
             var projectType = $("#sel_project_type").find("option:selected").text();
+            var input_result = $("#in_oth_mo").val().toString().split(".")[1];
+            var input_lenght;
+            if (input_result != undefined) {
+                input_lenght = input_result.length;
+            } else {
+                input_lenght = -1;
+            }
+            var s = /^[0-9]*$/;
             if (projectType == "请选择项目类别") {
                 layer.confirm('您还没有选择项目类别', {
                     btn: ['重新选择', '取消'] //按钮
                 }, function () {
                     $("#div_qr_donate").model('show');
+                    $("#in_oth_mo").val("");
                     layer.closeAll('dialog');
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-            } else if (flag === 0 && (otherMoney === "" || otherMoney === undefined) && $(".tx_yuan").val() == "") {
-                layer.confirm('您还没有选择金额', {
+            } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && s.test(otherMoney) && (input_lenght < 3 || input_result == undefined)))) {
+                layer.confirm('您选择或输入的金额有误', {
                     btn: ['重新选择或输入', '取消'] //按钮
                 }, function () {
                     $("#div_qr_donate").model('show');
+                    $("#in_oth_mo").val("");
                     layer.closeAll('dialog');
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-            } else if ($("#in_oth_mo").val() == "" || inp_flag == 0) {
-                layer.confirm('您输入的金额有误', {
-                    btn: ['重新输入', '取消'] //按钮
-                }, function () {
-                    $("#div_qr_donate").model('show');
-                    layer.closeAll('dialog');
-                }, function () {
-                    $("#div_qr_donate").model('hide');
-                });
-            }
-            else if ($(".tx_yuan").val() !== "" && $(".tx_yuan").val() <= 0) {
+            } else if ($(".tx_yuan").val() !== "" && $(".tx_yuan").val() <= 0) {
                 layer.confirm('请输入正确金额', {
                     btn: ['重新选择或输入', '取消'] //按钮
                 }, function () {
                     $("#div_qr_donate").model('show');
+                    $("#in_oth_mo").val("");
                     layer.closeAll('dialog');
                 }, function () {
                     $("#div_qr_donate").model('hide');
@@ -1381,7 +1376,6 @@
         var projectType = $("#sel_project_type_second").find("option:selected").text();
         var phone = $("#ipt_dnt_mobile").val();
         var remark = $("#ps").val();
-
         if (projectType == "请选择项目类别") {
             parent.layer.confirm('您还没有选择项目类别', {
                 btn: ['重新选择', '取消'] //按钮

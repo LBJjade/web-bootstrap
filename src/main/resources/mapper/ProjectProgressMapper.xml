@@ -49,15 +49,24 @@
         </where>
     </sql>
 
-    <update id="updateProjectProject" parameterType="com.becheer.donation.model.ProjectProgress">
-        UPDATE dnt_project_progress
-        SET
-        project_id=#{projectId},
-        title=#{title},
-        summary=#{summary},
-        content=#{content},
-        enable_=1
-    </update>
+    <insert id="insertProjectProject" parameterType="com.becheer.donation.model.ProjectProgress" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT INTO dnt_project_progress
+       (
+        project_id,
+        title,
+        summary,
+        content,
+        enable_
+       )
+       VALUES (
+        #{projectId},
+        #{title},
+        #{summary},
+        #{content},
+        1
+       )
+    </insert>
 
     <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.ProjectProgressCondition"
             resultMap="BaseResultMap">

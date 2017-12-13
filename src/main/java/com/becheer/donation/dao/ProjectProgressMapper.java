@@ -15,5 +15,5 @@ import java.util.List;
 public interface ProjectProgressMapper {
     List<ProjectProgress> SelectByCondition(ProjectProgressCondition condition);
 
-    int updateProjectProject(ProjectProgress projectProgress);
+    int insertProjectProject(ProjectProgress projectProgress);
 }
