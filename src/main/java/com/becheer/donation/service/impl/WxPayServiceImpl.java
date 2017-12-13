@@ -172,16 +172,9 @@ public class WxPayServiceImpl implements IWxPayService {
         String refTable = dntPaymentPlan.getRefTable();
         Integer refRecordId = dntPaymentPlan.getRefRecordId();
         long projectId = 1;
-        if (refTable.equals("dnt_contract")) {
-            try{
-                List<DntContractProject> projectIds = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
-
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
-
-        } else {
+        if (refTable.equals("dnt_no_contract_donate")) {
             projectId = noContractDonateService.selectProjectIdById(refRecordId);
+        } else {
         }
         //写入progress
         projectProgressService.insert(projectId, "您捐赠成功了", "您对该项目捐赠了", "您对该项目捐赠了" + totalFee / 100 + "元");
