@@ -175,6 +175,7 @@ public class WxPayServiceImpl implements IWxPayService {
         if (refTable.equals("dnt_contract")) {
             try{
                 List<DntContractProject> projectIds = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
+
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
