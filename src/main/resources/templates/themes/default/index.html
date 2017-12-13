@@ -322,23 +322,25 @@
         #p_no_recent {
             font-size: 18px;
             font-weight: 600;
+            display: none;
         }
 
         #p_no_relative {
             font-size: 18px;
             font-weight: 600;
+            display: none;
         }
 
         #p_no_question {
             font-size: 18px;
             font-weight: 600;
+            display: none;
         }
 
         .p_tab_empty {
             line-height: 100px;
             text-align: center;
             width: 100%;
-            display: none;
         }
 
         .cu {
@@ -481,7 +483,7 @@
                                      style="border-radius: 20px;border:1px solid #a1a1a1;"/>
                             </li>
                             <li class="recommend_item_info">
-                                <span class="recommend_item_info_fomat">{{item.memberName==null?item.location:item.memberName}}&nbsp;</span>
+                                <span class="recommend_item_info_fomat">{{item.memberName==""?item.location:item.memberName}}&nbsp;</span>
                                 <span style="color: #00a0e9;font-weight: bold">捐赠</span>
                                 <span class="recommend_item_info_project">{{item.projectName==null?item.projectTypeName:item.projectName}}</span>
                                 <span class="recommend_item_info_money">{{item.amount|format}}</span>
@@ -911,7 +913,7 @@
             dataType: 'json',
             success: function (data) {
                 if (data.result.length === 0) {
-                    $("#p_no_relative").show();
+                    $("#p_no_question").show();
                 } else {
                     if (data.code === 200) {
                         new Vue({
