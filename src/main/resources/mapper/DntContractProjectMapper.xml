@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.becheer.donation.dao.DntContractProjectMapper">
+    <resultMap id="DntContractProjectMap" type="com.becheer.donation.model.DntContractProject">
+        <id column="id_" jdbcType="BIGINT" property="id"/>
+        <result column="contract_id" jdbcType="BIGINT" property="contractId"/>
+        <result column="project_id" jdbcType="BIGINT" property="projectId"/>
+        <result column="contract_amount" jdbcType="BIGINT" property="contractAmount"/>
+        <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount"/>
+        <result column="accepted_amount" jdbcType="BIGINT" property="acceptedAmount"/>
+        <result column="allocate_amount" jdbcType="BIGINT" property="allocateAmoumt"/>
+        <result column="remark_" jdbcType="VARCHAR" property="remark"/>
+        <result column="enable_" jdbcType="BIGINT" property="enable"/>
+    </resultMap>
+
+    <select id="selectProjectIdBycontraId" parameterType="java.lang.Integer"
+            resultMap="DntContractProjectMap">
+        SELECT
+         id_,
+         contract_id,
+         project_id,
+         contract_amount,
+         donated_amount,
+         accepted_amount,
+         allocate_amount,
+         remark_,
+         enable_
+        FROM dnt_contract_project
+        WHERE contract_id =#{id}
+    </select>
+</mapper>
