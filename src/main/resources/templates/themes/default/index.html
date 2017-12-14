@@ -1142,6 +1142,7 @@
             }
 //            alert(input_lenght);
 //            var s = /^[0-9]*$/;
+            var s = /^\d+(\.\d{1,2})?$/;
             if (projectType == "请选择项目类别") {
                 layer.confirm('您还没有选择项目类别', {
                     btn: ['重新选择', '取消'] //按钮
@@ -1152,7 +1153,7 @@
                 }, function () {
                     $("#div_qr_donate").model('hide');
                 });
-            } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && (input_lenght < 3 || input_result == undefined)))) {
+            } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && s.test($("#in_oth_mo").val())))) {
                 layer.confirm('您选择或输入的金额有误', {
                     btn: ['重新选择或输入', '取消'] //按钮
                 }, function () {

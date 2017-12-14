@@ -50,7 +50,11 @@ public class MemberContractDetailExtension {
         this.contractName = contractName;
     }
 
-    public String getContractAmount() {
+    public long getContractAmount() {
+        return contractAmount;
+    }
+
+    public String getStringContractAmount() {
         return StringUtil.formatMoney(contractAmount);
     }
 
@@ -67,7 +71,7 @@ public class MemberContractDetailExtension {
     }
 
     public String getBeginTime() {
-        return DateUtils.dateFormat(beginTime,"yyyy-MM-dd");
+        return DateUtils.dateFormat(beginTime, "yyyy-MM-dd");
     }
 
     public void setBeginTime(Date beginTime) {
@@ -75,7 +79,7 @@ public class MemberContractDetailExtension {
     }
 
     public String getEndTime() {
-        return DateUtils.dateFormat(endTime,"yyyy-MM-dd");
+        return DateUtils.dateFormat(endTime, "yyyy-MM-dd");
     }
 
     public void setEndTime(Date endTime) {
@@ -102,8 +106,8 @@ public class MemberContractDetailExtension {
         return status;
     }
 
-    public String getStatusText(){
-        switch (status){
+    public String getStatusText() {
+        switch (status) {
             case 0:
                 return "编辑中";
             case 1:
@@ -116,9 +120,9 @@ public class MemberContractDetailExtension {
                 return "重新编辑中";
             case 5:
                 //此处临时处理，因枚举值缺失,须同后台沟通统一。
-                if (aSignTime!=null){
+                if (aSignTime != null) {
                     return "捐赠人已签订";
-                }else {
+                } else {
                     return "待签订";
                 }
             case 6:
@@ -131,8 +135,8 @@ public class MemberContractDetailExtension {
                 return "已终止";
             case 10:
                 return "已作废";
-                default:
-                    return "";
+            default:
+                return "";
         }
     }
 

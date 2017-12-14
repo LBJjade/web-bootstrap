@@ -13,5 +13,5 @@ import com.github.pagehelper.PageInfo;
 public interface IProjectProgressService {
     PageInfo<ProjectProgress> GetProjectProgress(long projectId,int pageSize,int pageNum);
 
-    ResponseDto insert(long id, String title, String summary, String content);
+    ResponseDto insert(long id, String title, String summary, String content, int status);
 }

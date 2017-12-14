@@ -57,14 +57,16 @@
         title,
         summary,
         content,
-        enable_
+        enable_,
+        status
        )
        VALUES (
         #{projectId},
         #{title},
         #{summary},
         #{content},
-        1
+        1,
+        #{status}
        )
     </insert>
 

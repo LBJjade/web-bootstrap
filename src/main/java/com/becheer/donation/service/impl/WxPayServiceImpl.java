@@ -6,6 +6,10 @@ import com.becheer.core.util.XmlUtil;
 import com.becheer.donation.model.DntContractProject;
 import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.PayWxUnifiedOrder;
+import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
+import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
+import com.becheer.donation.model.extension.member.MemberSessionExtension;
+import com.becheer.donation.model.extension.project.ProjectDetailExtension;
 import com.becheer.donation.service.*;
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.RedisUtil;
@@ -29,13 +33,22 @@ public class WxPayServiceImpl implements IWxPayService {
     private IDntPaymentPlanService paymentPlanService;
 
     @Resource
-    private IDntNoContractDonateService noContractDonateService;
+    private IDntNoContractDonateService dntnoContractDonateService;
+
+    @Resource
+    private INoContractDonateService noContractDonateService;
 
     @Resource
     private IProjectProgressService projectProgressService;
 
     @Resource
     private IDntContractProjectService dntContractProjectService;
+
+    @Resource
+    private IProjectService projectService;
+
+    @Resource
+    private IContractService contractService;
 
 
     @Override
@@ -166,18 +179,36 @@ public class WxPayServiceImpl implements IWxPayService {
         paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
         paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
 
+
         //查询poject
         DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
         dntPaymentPlan = paymentPlanService.selectPaymentPlanByOrderNo(outTradeNo);
         String refTable = dntPaymentPlan.getRefTable();
         Integer refRecordId = dntPaymentPlan.getRefRecordId();
-        long projectId = 1;
+        long projectId;
         if (refTable.equals("dnt_no_contract_donate")) {
-            projectId = noContractDonateService.selectProjectIdById(refRecordId);
+            projectId = dntnoContractDonateService.selectProjectIdById(refRecordId);
+            List<NoContractDonateExtension> resultList = noContractDonateService.GetRecentNoContractDonate(projectId, 1);
+            NoContractDonateExtension noContractDonateExtension = resultList.get(0);
+            String location = noContractDonateExtension.getLocation();
+            //写入progress
+            projectProgressService.insert(projectId, location + "捐赠成功了", "" + "对该项目捐赠了", location + "对该项目捐赠了" + totalFee / 100 + "元", 4);
         } else {
+
+            List<DntContractProject> projects = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
+            for (DntContractProject project : projects) {
+                projectId = project.getProjectId();
+                MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
+                Integer contractAmount = project.getContractAmount();
+                Long targetAmount = memberContractDetailExtension.getContractAmount();
+                Float tAmount = Float.valueOf(targetAmount);
+                Float cAmount = Float.valueOf(contractAmount);
+                Float tfree = Float.valueOf(totalFee);
+                Float dnmateAmount = totalFee * (cAmount / tAmount);
+                projectProgressService.insert(projectId, "" + "捐赠成功了", "" + "对该项目捐赠了", "" + "对该项目捐赠了" + dnmateAmount / 100 + "元", 4);
+            }
         }
-        //写入progress
-        projectProgressService.insert(projectId, "您捐赠成功了", "您对该项目捐赠了", "您对该项目捐赠了" + totalFee / 100 + "元");
+
         Long id_ = paymentPlanService.selectIdByOrderNo(outTradeNo);
         RedisUtil.delPaymentPlankey(id_);
 

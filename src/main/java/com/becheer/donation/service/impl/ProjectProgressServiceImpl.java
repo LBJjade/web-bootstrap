@@ -35,12 +35,13 @@ public class ProjectProgressServiceImpl implements IProjectProgressService {
     }
 
     @Override
-    public ResponseDto insert(long id, String title, String summary, String content) {
+    public ResponseDto insert(long id, String title, String summary, String content, int status) {
         ProjectProgress projectProgress=new ProjectProgress();
         projectProgress.setProjectId(id);
         projectProgress.setTitle(title);
         projectProgress.setSummary(summary);
         projectProgress.setContent(content);
+        projectProgress.setStatus(status);
         int result = projectProgressMapper.insertProjectProject(projectProgress);
         if(result > 0){
             return new ResponseDto(200,"success",result);
