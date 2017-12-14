@@ -80,6 +80,11 @@
             height: 30px;
         }
 
+        .sel_area {
+            width: 105px;
+            font-size: 16px;
+        }
+
     </style>
 </head>
 <body>
@@ -163,6 +168,29 @@
                             </td>
                         </tr>
                         <tr>
+                            <td>所在地：</td>
+                            <td>
+                                <select id="sel_province" class="sel_area" onchange="f_getCity()">
+                                    <option value="0" v-cloak="">请选择省份</option>
+                                    <option :value="item.id" v-for="item in items">
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                                <select id="sel_city" class="sel_area" onchange="f_getArea()">
+                                    <option value="0" v-cloak="">请选择城市</option>
+                                    <option :value="item.id" v-for="item in items">
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                                <select id="sel_area" class="sel_area">
+                                    <option value="0" v-cloak="">请选择区域</option>
+                                    <option :value="item.id" v-for="item in items">
+                                        {{item.name}}
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>曾参与的公益项目：</td>
                             <td>
                                 <textarea id="ipt_project" class="form-control no_border_radius" rows="5"
@@ -190,6 +218,18 @@
 <script th:src="@{/plugin/laydate/laydate.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    var vueCity = null;
+    var vueArea = null;
+
+    $(document).ready(function () {
+        var province = f_getLocation(0);
+
+        new Vue({
+            el: "#sel_province",
+            data: {items: province}
+        });
+    });
+
     laydate.render({
         elem: '#ipt_birthday',
         value: $("#ipt_birthday").val()
@@ -263,6 +303,22 @@
     }
 
     $(".btn_save").click(function () {
+        var provinceId = $("#sel_province").val();
+        if (provinceId == 0) {
+            layer.alert("请选择省份");
+            return;
+        }
+        var cityId = $("#sel_city").val();
+        if (cityId == 0) {
+            layer.alert("请选择城市");
+            return;
+        }
+        var areaId = $("#sel_area").val();
+        if (areaId == 0) {
+            layer.alert("请选择区域");
+            return;
+        }
+
         var fileVal=$("#ipt_license").val();
         if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val())) {
             if(fileVal == ""){
@@ -285,6 +341,9 @@
                         organizationType: organizationType,
                         project: project,
                         summary: summary,
+                        provinceId:provinceId,
+                        cityId:cityId,
+                        areaId:areaId,
                         license: license
                     },
                     type: 'post',
@@ -324,6 +383,61 @@
         $("#img_avator").attr("src", fileRoot + avatorName + '?x-oss-process=image/resize,m_lfit,h_200,w_200+&r=' + Math.random() * 4);
     }
 
+    function f_getCity() {
+        var provinceId = $("#sel_province").val();
+        if (provinceId != 0) {
+            var city = f_getLocation(provinceId);
+            if (vueCity === null) {
+                vueCity = new Vue({
+                    el: "#sel_city",
+                    data: {items: city}
+                });
+            } else {
+                for (var i = 0; i < city.length; i++) {
+                    Vue.set(vueCity.items, i, city[i]);
+                }
+                vueCity.items.splice(city.length);
+                vueArea.items.splice(0);
+            }
+        }
+        $("#sel_city").val(0);
+        $("#sel_area").val(0);
+    }
+
+    function f_getArea() {
+        var cityId = $("#sel_city").val();
+        if (cityId != 0) {
+            var area = f_getLocation(cityId);
+            if (vueArea === null) {
+                vueArea = new Vue({
+                    el: "#sel_area",
+                    data: {items: area}
+                });
+            } else {
+                for (var i = 0; i < area.length; i++) {
+                    Vue.set(vueArea.items, i, area[i]);
+                }
+                vueArea.items.splice(area.length);
+            }
+        }
+        $("#sel_area").val(0);
+    }
+
+    function f_getLocation(pid) {
+        var result;
+        $.ajax({
+            url: '/area/' + pid,
+            type: 'get',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                if (data.code === 200) {
+                    result = data.result;
+                }
+            }
+        });
+        return result;
+    }
     /*]]>*/
 </script>
 </body>

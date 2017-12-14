@@ -12,7 +12,6 @@
     <style type="text/css">
         #div_content {
             width: 985px;
-            height: 1100px;
             border: 1px #eee solid;
             margin-left: 10px;
             padding-top: 30px;
@@ -32,6 +31,7 @@
             width: 700px;
             float: left;
             padding-top: 20px;
+            margin-bottom: 20px;
         }
 
         #table_content_info {
@@ -96,6 +96,11 @@
             height: 30px;
         }
 
+        .sel_area {
+            width: 105px;
+            font-size: 16px;
+        }
+
     </style>
 </head>
 <body>
@@ -129,7 +134,7 @@
                          th:src="${config.getFileRoot()+member.getAvator()+'?x-oss-process=image/resize,m_lfit,h_200,w_200'}"/>
                     <br/>
                     <br/>
-                    <button class="btn btn-info" onclick="f_uploadAvator()">更换头像</button>
+                    <button class="info_button" onclick="f_uploadAvator()">更换头像</button>
                 </div>
                 <div id="div_content_info">
                     <form id="defaultForm_2" method="post" class="form-horizontal">
@@ -153,14 +158,23 @@
                             <tr>
                                 <td>所在地：</td>
                                 <td>
-                                    <select>
-                                        <option>请选择</option>
+                                    <select id="sel_province" class="sel_area" onchange="f_getCity()">
+                                        <option value="0" v-cloak="">请选择省份</option>
+                                        <option :value="item.id" v-for="item in items">
+                                            {{item.name}}
+                                        </option>
                                     </select>
-                                    <select>
-                                        <option>请选择</option>
+                                    <select id="sel_city" class="sel_area" onchange="f_getArea()">
+                                        <option value="0" v-cloak="">请选择城市</option>
+                                        <option :value="item.id" v-for="item in items">
+                                            {{item.name}}
+                                        </option>
                                     </select>
-                                    <select>
-                                        <option>请选择</option>
+                                    <select id="sel_area" class="sel_area">
+                                        <option value="0" v-cloak="">请选择区域</option>
+                                        <option :value="item.id" v-for="item in items">
+                                            {{item.name}}
+                                        </option>
                                     </select>
                                 </td>
                             </tr>
@@ -177,18 +191,15 @@
                             <tr>
                                 <td style="border: none">身份证<i style="color: red">* </i>：</td>
                                 <td style="border: none">
-                                    <span>正面<i style="color: red">* </i></span><span style="margin-left: 95px">背面<i
-                                        style="color: red">* </i></span>
+                                    <span>正面<i style="color: red">* </i></span><span style="margin-left: 95px">背面<i style="color: red">* </i></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
                                     <div class="div_img">
-                                        <input type="file" id="ipt_f" class="input_img"
-                                               onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg"/>
-                                        <input type="file" id="ipf_b" class="input_img input_img2"
-                                               onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg"/>
+                                        <input type="file" id="ipt_f" class="input_img" onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg"/>
+                                        <input type="file" id="ipf_b" class="input_img input_img2" onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg"/>
                                     </div>
                                     <img id="img_f"
                                          th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
@@ -212,20 +223,21 @@
                             </tr>
                             <tr>
                                 <td>生日<i style="color: red">* </i>：</td>
-                                <td><input type="text" id="ipt_birthday" class="form-control no_border_radius"
-                                           style="height: 34px;width: 100%"
-                                           th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
+                                <td>
+                                    <input type="text" id="ipt_birthday" class="form-control no_border_radius" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>曾参与的公益项目：</td>
-                                <td><textarea id="ipt_project" class="form-control no_border_radius" rows="5"
-                                              style="margin: 10px 0px 10px 0px;"></textarea></td>
+                                <td>
+                                    <textarea id="ipt_project" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                                </td>
                             </tr>
                             <tr>
                                 <td>个人说明：</td>
-                                <td><textarea id="ipt_summary" class="form-control no_border_radius" rows="5"
-                                              style="margin: 10px 0px 10px 0px;"></textarea></td>
+                                <td>
+                                    <textarea id="ipt_summary" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                                </td>
                             </tr>
                         </table>
                     </form>
@@ -242,6 +254,19 @@
 <script th:src="@{/plugin/laydate/laydate.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    var vueCity = null;
+    var vueArea = null;
+
+    $(document).ready(function () {
+        var province = f_getLocation(0);
+
+        new Vue({
+            el: "#sel_province",
+            data: {items: province}
+        });
+    });
+
+
     laydate.render({
         elem: '#ipt_birthday',
         value: $("#ipt_birthday").val()
@@ -340,60 +365,83 @@
         var selectVel = $("#ipt_sex").val();
 //        alert(selectVel);
         var dateVel = $("#ipt_birthday").val();
-        if (f_nameValidate($("#ipt_name").val()) && f_idcardValidate($("#ipt_id_card").val())) {
-            if (fileVal_f == "") {
-                layer.alert("身份证正面还没上传");
-            } else if (fileVal_b == "") {
-                layer.alert("身份证背面还没上传");
-            } else if (selectVel == 0) {
-                layer.alert("性别不能为空");
-            } else if (dateVel == "") {
-                layer.alert("生日不能为空");
-            } else {
-                loadShade = layer.load(1, {
-                    shade: [0.1, '#fff']
-                });
-                var memberName = $("#ipt_name").val();
-                var mobile = $("#ipt_mobile").val();
-                var idCard = $("#ipt_id_card").val();
-                var sex = $("#ipt_sex").val();
-                var birthday = $("#ipt_birthday").val();
-                var project = $("#ipt_project").val();
-                var summary = $("#ipt_summary").val();
-
-                $.ajax({
-                    url: '/home/member/submit',
-                    data: {
-                        name: memberName,
-                        mobile: mobile,
-                        idCard: idCard,
-                        sex: sex,
-                        birthday: birthday,
-                        project: project,
-                        summary: summary,
-                        idCardFront: imgF,
-                        idCardBack: imgB
-                    },
-                    type: 'post',
-                    dataType: 'json',
-                    success: function (data) {
-                        layer.close(loadShade);
-                        if (data.code === 200) {
-                            layer.alert(data.msg, function () {
-                                window.location.href = "/home";
-                            });
-                            setTimeout(function () {
-                                window.location.href = "/home";
-                            }, 3000);
-                        } else {
-                            layer.alert(data.msg);
-                        }
-                    }
-                });
-            }
-        } else {
-            layer.alert("您填写的信息有误");
+        var provinceId = $("#sel_province").val();
+        if (provinceId == 0) {
+            layer.alert("请选择省份");
+            return;
         }
+        var cityId = $("#sel_city").val();
+        if (cityId == 0) {
+            layer.alert("请选择城市");
+            return;
+        }
+        var areaId = $("#sel_area").val();
+        if (areaId == 0) {
+            layer.alert("请选择区域");
+            return;
+        }
+        if (!f_nameValidate($("#ipt_name").val())) {
+            layer.alert("请输入姓名");
+            $("#ipt_name").focus();
+        }
+        if (!f_idcardValidate($("#ipt_id_card").val())) {
+            layer.alert("请输入正确的身份证号");
+            $("#ipt_id_card").focus();
+        }
+        if (fileVal_f == "") {
+            layer.alert("身份证正面还没上传");
+        } else if (fileVal_b == "") {
+            layer.alert("身份证背面还没上传");
+        } else if (selectVel == 0) {
+            layer.alert("性别不能为空");
+        } else if (dateVel == "") {
+            layer.alert("生日不能为空");
+        } else {
+            loadShade = layer.load(1, {
+                shade: [0.1, '#fff']
+            });
+            var memberName = $("#ipt_name").val();
+            var mobile = $("#ipt_mobile").val();
+            var idCard = $("#ipt_id_card").val();
+            var sex = $("#ipt_sex").val();
+            var birthday = $("#ipt_birthday").val();
+            var project = $("#ipt_project").val();
+            var summary = $("#ipt_summary").val();
+
+            $.ajax({
+                url: '/home/member/submit',
+                data: {
+                    name: memberName,
+                    mobile: mobile,
+                    idCard: idCard,
+                    sex: sex,
+                    birthday: birthday,
+                    project: project,
+                    summary: summary,
+                    provinceId:provinceId,
+                    cityId:cityId,
+                    areaId:areaId,
+                    idCardFront: imgF,
+                    idCardBack: imgB
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    layer.close(loadShade);
+                    if (data.code === 200) {
+                        layer.alert(data.msg, function () {
+                            window.location.href = "/home";
+                        });
+                        setTimeout(function () {
+                            window.location.href = "/home";
+                        }, 3000);
+                    } else {
+                        layer.alert(data.msg);
+                    }
+                }
+            });
+        }
+
     });
 
     function f_readAsDataURL(item) {
@@ -423,6 +471,62 @@
             area: ['800px', '600px'],
             content: '/home/member/avator'
         });
+    }
+
+    function f_getCity() {
+        var provinceId = $("#sel_province").val();
+        if (provinceId != 0) {
+            var city = f_getLocation(provinceId);
+            if (vueCity === null) {
+                vueCity = new Vue({
+                    el: "#sel_city",
+                    data: {items: city}
+                });
+            } else {
+                for (var i = 0; i < city.length; i++) {
+                    Vue.set(vueCity.items, i, city[i]);
+                }
+                vueCity.items.splice(city.length);
+                vueArea.items.splice(0);
+            }
+        }
+        $("#sel_city").val(0);
+        $("#sel_area").val(0);
+    }
+
+    function f_getArea() {
+        var cityId = $("#sel_city").val();
+        if (cityId != 0) {
+            var area = f_getLocation(cityId);
+            if (vueArea === null) {
+                vueArea = new Vue({
+                    el: "#sel_area",
+                    data: {items: area}
+                });
+            } else {
+                for (var i = 0; i < area.length; i++) {
+                    Vue.set(vueArea.items, i, area[i]);
+                }
+                vueArea.items.splice(area.length);
+            }
+        }
+        $("#sel_area").val(0);
+    }
+
+    function f_getLocation(pid) {
+        var result;
+        $.ajax({
+            url: '/area/' + pid,
+            type: 'get',
+            dataType: 'json',
+            async: false,
+            success: function (data) {
+                if (data.code === 200) {
+                    result = data.result;
+                }
+            }
+        });
+        return result;
     }
 
     function f_refreshImg(avatorName) {
