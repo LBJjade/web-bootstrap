@@ -13,8 +13,18 @@
         <result column="enable_" jdbcType="BIGINT" property="enable"/>
     </resultMap>
 
-    <select id="selectProjectIdBycontraId" parameterType="com.becheer.donation.model.DntContractProject" resultMap="DntContractProjectMap">
-        SELECT project_id
+    <select id="selectProjectIdBycontraId" parameterType="java.lang.Integer"
+            resultMap="DntContractProjectMap">
+        SELECT
+         id_,
+         contract_id,
+         project_id,
+         contract_amount,
+         donated_amount,
+         accepted_amount,
+         allocate_amount,
+         remark_,
+         enable_
         FROM dnt_contract_project
         WHERE contract_id =#{id}
     </select>
