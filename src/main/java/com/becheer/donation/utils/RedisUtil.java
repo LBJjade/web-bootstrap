@@ -34,6 +34,24 @@ public class RedisUtil extends RedisProvider {
     }
 
     /**
+     * 删除合同Redis缓存
+     *
+     * @param contractId
+     */
+    public static void delContractProjectkey(long contractId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT_PROJECT + ":" + contractId);
+    }
+
+    /**
+     * 删除合同Redis缓存
+     *
+     * @param contractId
+     */
+    public static void delContractProjectAcceptkey(long contractId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT_PROJECT_ACCEPTOR + ":" + contractId);
+    }
+
+    /**
      * 删除申诉Redis缓存
      *
      * @param appealId

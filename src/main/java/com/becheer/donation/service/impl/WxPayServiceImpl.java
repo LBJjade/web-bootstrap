@@ -192,12 +192,17 @@ public class WxPayServiceImpl implements IWxPayService {
             NoContractDonateExtension noContractDonateExtension = resultList.get(0);
             String location = noContractDonateExtension.getLocation();
             //写入progress
-            projectProgressService.insert(projectId, location + "捐赠成功了", "" + "对该项目捐赠了", location + "对该项目捐赠了" + totalFee / 100 + "元", 4);
+            projectProgressService.insert(projectId, location + "捐赠成功了", "" + "对该项目捐赠了", location + "对该项目捐赠了" + totalFee / 100 + "元", 5);
         } else {
-
             List<DntContractProject> projects = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
             for (DntContractProject project : projects) {
                 projectId = project.getProjectId();
+                Long contractProjectId = project.getId();
+                //清除缓存
+                RedisUtil.delContractkey(refRecordId);
+                RedisUtil.delContractProjectkey(refRecordId);
+                RedisUtil.delContractProjectAcceptkey(contractProjectId);
+                //按比例分配捐赠金额
                 MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
                 Integer contractAmount = project.getContractAmount();
                 Long targetAmount = memberContractDetailExtension.getContractAmount();
@@ -205,8 +210,10 @@ public class WxPayServiceImpl implements IWxPayService {
                 Float cAmount = Float.valueOf(contractAmount);
                 Float tfree = Float.valueOf(totalFee);
                 Float dnmateAmount = totalFee * (cAmount / tAmount);
-                projectProgressService.insert(projectId, "" + "捐赠成功了", "" + "对该项目捐赠了", "" + "对该项目捐赠了" + dnmateAmount / 100 + "元", 4);
+                //写进进程表
+                projectProgressService.insert(projectId, "" + "捐赠成功了", "" + "对该项目捐赠了", "" + "对该项目捐赠了" + dnmateAmount / 100 + "元", 5);
             }
+
         }
 
         Long id_ = paymentPlanService.selectIdByOrderNo(outTradeNo);

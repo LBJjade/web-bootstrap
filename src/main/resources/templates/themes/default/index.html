@@ -851,8 +851,20 @@
     });
 
     function openQr() {
-        $("#div_qr_donate").model('show');
-        $("#in_oth_mo").val("");
+        if (memberInfo != null) {
+            if (memberInfo.accepterId <= 0) {
+                $("#div_qr_donate").model('show');
+                $("#in_oth_mo").val("");
+            } else {
+                layer.alert("授捐人不能提交捐赠。如要捐赠，请用会员号登陆。", {
+                    icon: 2,
+                    skin: 'layer-ext-moon'
+                });
+            }
+        } else {
+            $("#div_qr_donate").model('show');
+            $("#in_oth_mo").val("");
+        }
     }
 
     function f_OnPageChange(newPage) {

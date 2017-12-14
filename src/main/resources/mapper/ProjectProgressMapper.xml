@@ -58,6 +58,7 @@
         summary,
         content,
         enable_,
+        create_time,
         status
        )
        VALUES (
@@ -66,6 +67,7 @@
         #{summary},
         #{content},
         1,
+        now(),
         #{status}
        )
     </insert>
