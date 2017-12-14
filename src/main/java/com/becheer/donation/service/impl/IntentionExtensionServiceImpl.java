@@ -3,7 +3,6 @@ package com.becheer.donation.service.impl;
 import com.becheer.donation.dao.IntentionMapper;
 import com.becheer.donation.dao.MemberMapper;
 import com.becheer.donation.model.Intention;
-import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.service.IIntentionExtensionService;
 import com.becheer.donation.strings.Message;

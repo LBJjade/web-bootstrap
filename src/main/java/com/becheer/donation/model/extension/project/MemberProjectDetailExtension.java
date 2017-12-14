@@ -5,7 +5,6 @@ import com.becheer.donation.service.SpringContextUtil;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.StringUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 

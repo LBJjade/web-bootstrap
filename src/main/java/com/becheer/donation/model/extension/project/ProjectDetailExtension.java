@@ -12,7 +12,6 @@ import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.StringUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;

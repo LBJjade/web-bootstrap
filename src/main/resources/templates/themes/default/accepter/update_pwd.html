@@ -73,10 +73,6 @@
             margin-right: 78px;
         }
 
-        .pw {
-            width: 200px;
-        }
-
         .ipt_mobile {
 
         }
@@ -98,7 +94,7 @@
             <div id="div_navbar" style="margin-top: 10px">
                 <ul>
                     <li><a href="/accepter">个人中心</a></li>
-                    <li><i class="fa fa-angle-right" aria-hidden="true"
+                    <li><i class="fa fa-angle-right"
                            style="font-size: 20px;color: #999999; "></i></li>
                     <li><a href="#">授号修改密码</a></li>
                 </ul>
@@ -141,7 +137,7 @@
                     <td>授号：</td>
                     <td>
                         <div style="margin-right: 32px">
-                            <input class="ipt_mobile" type="text" id="ipt_mobile" placeholder="请输入授号"
+                            <input class="ipt_mobile" id="ipt_mobile" placeholder="请输入授号"
                                    style="width: 200px; margin-right: 50px;"/>
                             <p class="mobile_error error">授号不能为空</p>
                         </div>
@@ -151,7 +147,7 @@
                     <td>验证码：</td>
                     <td>
                         <div style="margin-left: 55px">
-                            <input type="text" class="input_code" placeholder="请输入验证码"/>
+                            <input class="input_code" placeholder="请输入验证码"/>
                             <span class=" btn_send" style="width: 200px;padding-left: 4px"><img
                                     class="verify_code col-lg-3 login_code" th:src="@{/Verify/code.jpg}" style="float: initial;
     width: 128px;" src="" height="30" width="90"/></span>

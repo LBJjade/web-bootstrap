@@ -3,10 +3,7 @@ package com.becheer.donation.service;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
-import com.becheer.donation.model.extension.appeal.AppealDetailExtension;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 /*
 * IAppealService

@@ -2,7 +2,6 @@ package com.becheer.donation.controller;
 
 import com.becheer.donation.model.Intention;
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IIntentionService;
 import com.becheer.donation.strings.Message;
@@ -15,7 +14,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import static com.becheer.donation.utils.HttpUtil.GetCurrentUser;
 
 /*
 * ApplyController

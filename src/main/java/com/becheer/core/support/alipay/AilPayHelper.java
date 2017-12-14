@@ -1,7 +1,5 @@
 package com.becheer.core.support.alipay;
 
-import com.becheer.donation.service.SpringContextUtil;
-
 import java.util.HashMap;
 import java.util.Map;
 

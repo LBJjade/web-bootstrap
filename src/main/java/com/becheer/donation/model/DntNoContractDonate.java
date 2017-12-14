@@ -1,7 +1,5 @@
 package com.becheer.donation.model;
 
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
-
 import java.util.Date;
 
 public class DntNoContractDonate {

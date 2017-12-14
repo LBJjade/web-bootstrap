@@ -1,17 +1,12 @@
 package com.becheer.donation.utils;
 
 import com.becheer.donation.configs.RedisConfig;
-import com.becheer.donation.controller.ProjectController;
 import com.becheer.donation.service.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.exceptions.JedisConnectionException;
-
-import java.util.ResourceBundle;
 
 /*
 * RedisProvider

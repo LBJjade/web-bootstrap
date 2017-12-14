@@ -1,8 +1,6 @@
 package com.becheer.donation.service.impl;
 
 import com.becheer.donation.dao.ProjectMapper;
-import com.becheer.donation.dao.ProjectTypeMapper;
-import com.becheer.donation.model.Project;
 import com.becheer.donation.model.condition.ProjectCondition;
 import com.becheer.donation.model.extension.project.ListProjectExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;

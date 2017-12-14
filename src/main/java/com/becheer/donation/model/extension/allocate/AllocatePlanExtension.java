@@ -1,6 +1,5 @@
 package com.becheer.donation.model.extension.allocate;
 
-import com.becheer.donation.utils.DateUtils;
 import com.becheer.donation.utils.StringUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;

@@ -9,13 +9,10 @@ package com.becheer.donation.utils;
 import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSException;
 import com.becheer.donation.configs.OssConfig;
-import com.becheer.donation.configs.RedisConfig;
 import com.becheer.donation.service.SpringContextUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**

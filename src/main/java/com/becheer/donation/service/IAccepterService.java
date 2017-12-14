@@ -1,6 +1,5 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.model.Accepter;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 

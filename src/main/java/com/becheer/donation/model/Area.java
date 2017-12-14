@@ -1,7 +1,5 @@
 package com.becheer.donation.model;
 
-import java.util.Date;
-
 /**
  * 包名: com.becheer.donation.model
  * 文件说明: 区域信息类

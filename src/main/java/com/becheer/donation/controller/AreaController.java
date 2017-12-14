@@ -4,7 +4,6 @@ import com.becheer.donation.model.Area;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.service.IAreaService;
 import com.becheer.donation.strings.Message;
-import jdk.nashorn.internal.objects.annotations.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

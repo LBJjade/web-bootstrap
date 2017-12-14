@@ -1,10 +1,6 @@
 package com.becheer.donation.service;
 
-import com.becheer.core.support.pay.WxPay;
 import com.becheer.donation.model.extension.donate.Donate;
-import com.becheer.donation.model.extension.donate.DonateContract;
-import com.becheer.donation.model.extension.project.ProjectDetailExtension;
-import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

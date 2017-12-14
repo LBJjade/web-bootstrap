@@ -116,13 +116,13 @@
                 <div id="div_navbar" style="margin-top: 10px;margin-bottom: 17px;">
                     <ul>
                         <li><a th:href="@{~/}">首页</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                        <li><i class="fa fa-angle-right"
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class=""><a href="/home">个人中心</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                        <li><i class="fa fa-angle-right"
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class=""><a href="/home">我的信息</a></li>
-                        <li><i class="fa fa-angle-right" aria-hidden="true"
+                        <li><i class="fa fa-angle-right"
                                style="font-size: 20px;color: #999999; "></i></li>
                         <li class="div_navbar_item"><a href="#">编辑个人信息</a></li>
                     </ul>
@@ -142,7 +142,7 @@
                             <tr>
                                 <td>真实姓名<i style="color: red">* </i>：</td>
                                 <td>
-                                    <input type="text" id="ipt_name" class="form-control no_border_radius"
+                                    <input id="ipt_name" class="form-control no_border_radius"
                                            name="ipt_name"
                                            th:value="${member.getName()}"/>
                                     <!--<div class="name_error error">真实姓名不能为空</div>-->
@@ -181,7 +181,7 @@
                             <tr>
                                 <td>身份证号<i style="color: red">* </i>：</td>
                                 <td>
-                                    <input type="text" id="ipt_id_card" class="form-control no_border_radius"
+                                    <input id="ipt_id_card" class="form-control no_border_radius"
                                            name="ipt_id_card"
                                            th:value="${member.getIdCard()}"/>
                                     <!--<div class="id_card_error error" style="margin-right: 210px;">身份证号不能为空</div>-->
@@ -224,7 +224,7 @@
                             <tr>
                                 <td>生日<i style="color: red">* </i>：</td>
                                 <td>
-                                    <input type="text" id="ipt_birthday" class="form-control no_border_radius" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
+                                    <input id="ipt_birthday" class="form-control no_border_radius" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
                                 </td>
                             </tr>
                             <tr>

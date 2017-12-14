@@ -1,6 +1,5 @@
 package com.becheer.donation.service;
 
-import com.becheer.donation.model.Project;
 import com.becheer.donation.model.extension.project.ListProjectExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
 import com.becheer.donation.model.extension.project.MemberProjectExtension;

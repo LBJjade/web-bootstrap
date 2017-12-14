@@ -10,12 +10,10 @@ import com.becheer.donation.configs.OssConfig;
 import com.becheer.donation.dao.AccepterMapper;
 import com.becheer.donation.dao.AreaMapper;
 import com.becheer.donation.dao.MemberMapper;
-import com.becheer.donation.model.Area;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.service.IMemberService;
-import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.HashUtil;
 import com.becheer.donation.utils.OssUtil;
@@ -26,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 import java.util.Map;
 
 @Service

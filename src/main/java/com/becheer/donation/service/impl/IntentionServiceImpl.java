@@ -5,7 +5,6 @@ import com.becheer.donation.model.Intention;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.condition.IntentionCondition;
 import com.becheer.donation.model.extension.intention.IntentionExtension;
-import com.becheer.donation.model.extension.message.MessageExtension;
 import com.becheer.donation.service.IIntentionService;
 import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageHelper;

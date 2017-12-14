@@ -4,7 +4,6 @@ import com.becheer.donation.dao.ProgressMapper;
 import com.becheer.donation.model.Progress;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 import com.becheer.donation.service.IProgressService;
-import com.becheer.donation.utils.UUID;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

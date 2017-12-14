@@ -2,7 +2,6 @@ package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
-import com.becheer.donation.model.Member;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;

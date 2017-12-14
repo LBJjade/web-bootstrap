@@ -1,6 +1,5 @@
 package com.becheer.donation.dao;
 
-import com.becheer.donation.model.Project;
 import com.becheer.donation.model.condition.ProjectCondition;
 import com.becheer.donation.model.extension.project.ListProjectExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;

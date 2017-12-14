@@ -6,7 +6,6 @@ package com.becheer.donation.model.extension.member;
 * Date : 2017-09-27
 */
 
-import com.becheer.donation.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 

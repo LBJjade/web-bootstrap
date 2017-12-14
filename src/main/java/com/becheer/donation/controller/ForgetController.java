@@ -1,13 +1,9 @@
 package com.becheer.donation.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.member.MemberRegisterExtension;
-import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.service.ISmsService;
-import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.RegExUtil;
 import org.slf4j.Logger;

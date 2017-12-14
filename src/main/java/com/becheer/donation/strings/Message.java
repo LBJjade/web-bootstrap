@@ -6,8 +6,6 @@ package com.becheer.donation.strings;
 * Date : 2017-09-16
 */
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 public class Message {
 
     /*

@@ -1,12 +1,10 @@
 package com.becheer.donation.service.impl;
 
-import com.becheer.donation.dao.DntPaymentPlanMapper;
 import com.becheer.donation.dao.PaymentPlanMapper;
 import com.becheer.donation.model.AliIpDetail;
 import com.becheer.donation.model.DntNoContractDonate;
 import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.extension.donate.Donate;
-import com.becheer.donation.model.extension.donate.DonateContract;
 import com.becheer.donation.model.extension.payment.PaymentPlanExtension;
 import com.becheer.donation.service.*;
 import com.becheer.donation.utils.GenerateUtil;

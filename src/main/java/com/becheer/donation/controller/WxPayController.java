@@ -2,7 +2,6 @@ package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.service.IWxPayService;
-import com.becheer.donation.service.impl.DntPaymentPlanServiceImpl;
 import com.becheer.donation.strings.Message;
 import com.google.common.base.Strings;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.Map;
 
 /*

@@ -1,6 +1,5 @@
 package com.becheer.core.support.pay;
 
-import com.becheer.donation.model.extension.wxpay.WxPayPrepayExtension;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.becheer.core.util.HttpUtil;

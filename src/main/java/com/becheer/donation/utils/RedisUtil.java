@@ -1,12 +1,7 @@
 package com.becheer.donation.utils;
 
 import com.becheer.donation.strings.ConstString;
-import org.thymeleaf.expression.Maps;
 import redis.clients.jedis.Jedis;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /*
 * RedisUtil redis 工具类

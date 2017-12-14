@@ -2,7 +2,6 @@ package com.becheer.donation.utils;
 
 import sun.misc.BASE64Decoder;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 

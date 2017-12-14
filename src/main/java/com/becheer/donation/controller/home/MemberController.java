@@ -8,7 +8,6 @@ import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IAccepterService;
 import com.becheer.donation.service.IMemberService;
-import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.RedisUtil;

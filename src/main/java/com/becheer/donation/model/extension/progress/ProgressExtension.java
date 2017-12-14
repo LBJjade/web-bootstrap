@@ -1,11 +1,8 @@
 package com.becheer.donation.model.extension.progress;
 
-import com.becheer.donation.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.regex.Pattern;
 
 /*
 * ProgressExtension

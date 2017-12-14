@@ -3,7 +3,6 @@ package com.becheer.donation.controller.accepter;
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IAccepterService;
 import com.becheer.donation.strings.Role;

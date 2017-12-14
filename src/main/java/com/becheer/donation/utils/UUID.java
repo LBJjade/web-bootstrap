@@ -1,9 +1,6 @@
 package com.becheer.donation.utils;
 
 
-import java.util.Arrays;
-import java.util.Random;
-
 /**
  * 封装UUID
  */

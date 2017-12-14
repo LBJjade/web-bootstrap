@@ -1,11 +1,7 @@
 package com.becheer.donation.controller;
 
 import com.becheer.donation.model.base.ResponseDto;
-import com.becheer.donation.model.extension.donate.Donate;
-import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IAliPayService;
-import com.becheer.donation.strings.Message;
-import com.becheer.donation.utils.IPUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 
 @Controller
