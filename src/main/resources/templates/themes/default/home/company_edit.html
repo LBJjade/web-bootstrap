@@ -141,7 +141,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>公司属性<i style="color: red">* </i>：</td>
+                            <td>公司性质<i style="color: red">* </i>：</td>
                             <td>
                                 <select id="ipt_type" class="form-control no_border_radius">
                                     <option value="0">请选择</option>
@@ -171,20 +171,20 @@
                             <td>所在地：</td>
                             <td>
                                 <select id="sel_province" class="sel_area" onchange="f_getCity()">
-                                    <option value="0" v-cloak="">请选择省份</option>
-                                    <option :value="item.id" v-for="item in items">
+                                    <option value="0">请选择省份</option>
+                                    <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
                                         {{item.name}}
                                     </option>
                                 </select>
                                 <select id="sel_city" class="sel_area" onchange="f_getArea()">
-                                    <option value="0" v-cloak="">请选择城市</option>
-                                    <option :value="item.id" v-for="item in items">
+                                    <option value="0">请选择城市</option>
+                                    <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
                                         {{item.name}}
                                     </option>
                                 </select>
                                 <select id="sel_area" class="sel_area">
-                                    <option value="0" v-cloak="">请选择区域</option>
-                                    <option :value="item.id" v-for="item in items">
+                                    <option value="0">请选择区域</option>
+                                    <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
                                         {{item.name}}
                                     </option>
                                 </select>
@@ -218,16 +218,28 @@
 <script th:src="@{/plugin/laydate/laydate.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    var memberProject = /*[[${member.getProject()}]]*/;
+    var memberSummary = /*[[${member.getSummary()}]]*/;
+    $("#ipt_project").val(memberProject);
+    $("#ipt_summary").val(memberSummary);
+    var fileSize = 2 * 1024 * 1024;
+
+    var license = "";
     var vueCity = null;
     var vueArea = null;
 
+    var provinceId =/*[[${member.getProvinceId()}]]*/;
+    var cityId =/*[[${member.getCityId()}]]*/;
+    var areaId =/*[[${member.getAreaId()}]]*/;
+
     $(document).ready(function () {
         var province = f_getLocation(0);
-
         new Vue({
             el: "#sel_province",
-            data: {items: province}
+            data: {items: province, bindId: provinceId}
         });
+        f_getCity();
+        f_getArea();
     });
 
     laydate.render({
@@ -236,13 +248,6 @@
     });
 
 
-    var memberProject = /*[[${member.getProject()}]]*/;
-    var memberSummary = /*[[${member.getSummary()}]]*/;
-    $("#ipt_project").val(memberProject);
-    $("#ipt_summary").val(memberSummary);
-    var fileSize = 2 * 1024 * 1024;
-
-    var license = "";
 
 
     //统一社会信用代码
@@ -303,17 +308,17 @@
     }
 
     $(".btn_save").click(function () {
-        var provinceId = $("#sel_province").val();
+        provinceId = $("#sel_province").val();
         if (provinceId == 0) {
             layer.alert("请选择省份");
             return;
         }
-        var cityId = $("#sel_city").val();
+        cityId = $("#sel_city").val();
         if (cityId == 0) {
             layer.alert("请选择城市");
             return;
         }
-        var areaId = $("#sel_area").val();
+        areaId = $("#sel_area").val();
         if (areaId == 0) {
             layer.alert("请选择区域");
             return;
@@ -384,13 +389,13 @@
     }
 
     function f_getCity() {
-        var provinceId = $("#sel_province").val();
-        if (provinceId != 0) {
-            var city = f_getLocation(provinceId);
+        var pid = $("#sel_province").val();
+        if (pid != 0) {
+            var city = f_getLocation(pid);
             if (vueCity === null) {
                 vueCity = new Vue({
                     el: "#sel_city",
-                    data: {items: city}
+                    data: {items: city, bindId: cityId}
                 });
             } else {
                 for (var i = 0; i < city.length; i++) {
@@ -398,29 +403,29 @@
                 }
                 vueCity.items.splice(city.length);
                 vueArea.items.splice(0);
+                $("#sel_city").val(0);
+                $("#sel_area").val(0);
             }
         }
-        $("#sel_city").val(0);
-        $("#sel_area").val(0);
     }
 
     function f_getArea() {
-        var cityId = $("#sel_city").val();
-        if (cityId != 0) {
-            var area = f_getLocation(cityId);
+        var cid = $("#sel_city").val();
+        if (cid != 0) {
+            var area = f_getLocation(cid);
             if (vueArea === null) {
                 vueArea = new Vue({
                     el: "#sel_area",
-                    data: {items: area}
+                    data: {items: area, bindId: areaId}
                 });
             } else {
                 for (var i = 0; i < area.length; i++) {
                     Vue.set(vueArea.items, i, area[i]);
                 }
                 vueArea.items.splice(area.length);
+                $("#sel_area").val(0);
             }
         }
-        $("#sel_area").val(0);
     }
 
     function f_getLocation(pid) {

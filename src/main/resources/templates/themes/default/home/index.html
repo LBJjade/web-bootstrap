@@ -147,7 +147,7 @@
                         </tr>
                         <tr>
                             <td>所在地:</td>
-                            <td>{{member.province+" "+member.city+" "+member.area}}</td>
+                            <td>{{(member.province!=null?member.province:"")+" "+(member.city!=null?member.city:"")+" "+(member.area!=null?member.area:"")}}</td>
                         </tr>
                         <tr>
                             <td>曾参与的公益项目：</td>

@@ -134,6 +134,10 @@ public class MemberServiceImpl implements IMemberService {
         memberInfoExtension.setValidation(member.getValidation());
         memberInfoExtension.setAvator(member.getAvatorImg());
         memberInfoExtension.setBirthday(member.getBirthday());
+        memberInfoExtension.setProvinceId(member.getProvinceId());
+        memberInfoExtension.setCityId(member.getCityId());
+        memberInfoExtension.setAreaId(member.getAreaId());
+
         if (member.getRole() == 1) {
             //个人
             memberInfoExtension.setMobile(member.getMobile());
@@ -202,9 +206,13 @@ public class MemberServiceImpl implements IMemberService {
         if (memberArea==null||memberArea.size()!=6){
             return new ResponseDto(400,Message.MEMBER_AREA_ERROR);
         }
+        member.setProvinceId(Long.parseLong(String.valueOf(memberArea.get("pid"))));
+        member.setCityId(Long.parseLong(String.valueOf(memberArea.get("cid"))));
+        member.setAreaId(Long.parseLong(String.valueOf(memberArea.get("aid"))));
         member.setProvince(memberArea.get("pName").toString());
         member.setCity(memberArea.get("cName").toString());
         member.setArea(memberArea.get("aName").toString());
+
 
         int result = memberMapper.UpdateMember(member);
         if (result > 0) {

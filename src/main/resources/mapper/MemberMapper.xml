@@ -36,6 +36,9 @@
         <result column="province" jdbcType="VARCHAR" property="province"/>
         <result column="city" jdbcType="VARCHAR" property="city"/>
         <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="province_id" jdbcType="BIGINT" property="provinceId"/>
+        <result column="city_id" jdbcType="BIGINT" property="cityId"/>
+        <result column="area_id" jdbcType="BIGINT" property="areaId"/>
     </resultMap>
 
     <insert id="insertMember" parameterType="com.becheer.donation.model.Member">
@@ -89,7 +92,10 @@
         validation=#{validation,jdbcType=INTEGER},
         province=#{province,jdbcType=VARCHAR},
         city=#{city,jdbcType=VARCHAR},
-        area=#{area,jdbcType=VARCHAR}
+        area=#{area,jdbcType=VARCHAR},
+        province_id=#{provinceId,jdbcType=BIGINT},
+        city_id=#{cityId,jdbcType=BIGINT},
+        area_id=#{areaId,jdbcType=BIGINT}
         WHERE id_ = #{id,jdbcType=BIGINT}
     </update>
 

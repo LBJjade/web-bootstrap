@@ -159,20 +159,20 @@
                                 <td>所在地：</td>
                                 <td>
                                     <select id="sel_province" class="sel_area" onchange="f_getCity()">
-                                        <option value="0" v-cloak="">请选择省份</option>
-                                        <option :value="item.id" v-for="item in items">
+                                        <option value="0">请选择省份</option>
+                                        <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
                                             {{item.name}}
                                         </option>
                                     </select>
                                     <select id="sel_city" class="sel_area" onchange="f_getArea()">
-                                        <option value="0" v-cloak="">请选择城市</option>
-                                        <option :value="item.id" v-for="item in items">
+                                        <option value="0">请选择城市</option>
+                                        <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
                                             {{item.name}}
                                         </option>
                                     </select>
                                     <select id="sel_area" class="sel_area">
-                                        <option value="0" v-cloak="">请选择区域</option>
-                                        <option :value="item.id" v-for="item in items">
+                                        <option value="0">请选择区域</option>
+                                        <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
                                             {{item.name}}
                                         </option>
                                     </select>
@@ -254,24 +254,6 @@
 <script th:src="@{/plugin/laydate/laydate.js}"></script>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    var vueCity = null;
-    var vueArea = null;
-
-    $(document).ready(function () {
-        var province = f_getLocation(0);
-
-        new Vue({
-            el: "#sel_province",
-            data: {items: province}
-        });
-    });
-
-
-    laydate.render({
-        elem: '#ipt_birthday',
-        value: $("#ipt_birthday").val()
-    });
-
     var memberProject = /*[[${member.getProject()}]]*/;
     var memberSummary = /*[[${member.getSummary()}]]*/;
     $("#ipt_project").val(memberProject);
@@ -280,6 +262,27 @@
 
     var imgB = "";
     var imgF = "";
+    var vueCity = null;
+    var vueArea = null;
+    var provinceId =/*[[${member.getProvinceId()}]]*/;
+    var cityId =/*[[${member.getCityId()}]]*/;
+    var areaId =/*[[${member.getAreaId()}]]*/;
+
+    $(document).ready(function () {
+        var province = f_getLocation(0);
+        new Vue({
+            el: "#sel_province",
+            data: {items: province, bindId: provinceId}
+        });
+        f_getCity();
+        f_getArea();
+    });
+
+
+    laydate.render({
+        elem: '#ipt_birthday',
+        value: $("#ipt_birthday").val()
+    });
 
     function f_getFileUrl(sourceId) {
         var url;
@@ -310,48 +313,17 @@
         }
     }
 
-
-    //手机号码
-    //    $("#ipt_mobile").blur(function () {
-    //        var mobile =  /^1[3|4|5|7|8][0-9]{9}$/;
-    //        if (!mobile.test($("#ipt_mobile").val())) {
-    //            $(".mobile_error").show();
-    //        } else {
-    //            $(".mobile_error").hide();
-    //        }
-    //    })
-
     //身份证号
     $("#ipt_id_card").blur(function () {
-//        现在公民身份证都是18位，15位身份证号码已失效
-//        var id_card = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-//        if ($("#ipt_id_card").val() == "") {
-//            $(".id_card_error_0").hide();
-//            $(".id_card_error").show();
-//        } else {
-//            $(".id_card_error").hide();
         if (!f_idcardValidate($("#ipt_id_card").val())) {
             $(".id_card_error_0").show();
         } else {
             $(".id_card_error_0").hide();
         }
-//        }
     })
 
     //真实姓名，规定2个汉字以上，6个汉字以下
     $("#ipt_name").blur(function () {
-//        var name =  /^[\u4E00-\u9FA5]{2,6}$/;
-//        if ($("#ipt_name").val() == "") {
-//            $(".name_error").show();
-//        } else {
-//            $(".name_error").hide();
-//        }
-//        if (!name.test($("#ipt_name").val())) {
-//            $(".name_error_0").show();
-//        } else {
-//            $(".name_error_0").hide();
-//        }
-
         if (!f_nameValidate($("#ipt_name").val())) {
             $(".name_error_0").show();
         } else {
@@ -363,19 +335,18 @@
         var fileVal_f = $("#ipt_f").val();
         var fileVal_b = $("#ipf_b").val();
         var selectVel = $("#ipt_sex").val();
-//        alert(selectVel);
         var dateVel = $("#ipt_birthday").val();
-        var provinceId = $("#sel_province").val();
+        provinceId = $("#sel_province").val();
         if (provinceId == 0) {
             layer.alert("请选择省份");
             return;
         }
-        var cityId = $("#sel_city").val();
+        cityId = $("#sel_city").val();
         if (cityId == 0) {
             layer.alert("请选择城市");
             return;
         }
-        var areaId = $("#sel_area").val();
+        areaId = $("#sel_area").val();
         if (areaId == 0) {
             layer.alert("请选择区域");
             return;
@@ -418,9 +389,9 @@
                     birthday: birthday,
                     project: project,
                     summary: summary,
-                    provinceId:provinceId,
-                    cityId:cityId,
-                    areaId:areaId,
+                    provinceId: provinceId,
+                    cityId: cityId,
+                    areaId: areaId,
                     idCardFront: imgF,
                     idCardBack: imgB
                 },
@@ -474,13 +445,13 @@
     }
 
     function f_getCity() {
-        var provinceId = $("#sel_province").val();
-        if (provinceId != 0) {
-            var city = f_getLocation(provinceId);
+        var pid = $("#sel_province").val();
+        if (pid != 0) {
+            var city = f_getLocation(pid);
             if (vueCity === null) {
                 vueCity = new Vue({
                     el: "#sel_city",
-                    data: {items: city}
+                    data: {items: city, bindId: cityId}
                 });
             } else {
                 for (var i = 0; i < city.length; i++) {
@@ -488,29 +459,30 @@
                 }
                 vueCity.items.splice(city.length);
                 vueArea.items.splice(0);
+                $("#sel_city").val(0);
+                $("#sel_area").val(0);
             }
         }
-        $("#sel_city").val(0);
-        $("#sel_area").val(0);
     }
 
     function f_getArea() {
-        var cityId = $("#sel_city").val();
-        if (cityId != 0) {
-            var area = f_getLocation(cityId);
+        var cid = $("#sel_city").val();
+        if (cid != 0) {
+            var area = f_getLocation(cid);
             if (vueArea === null) {
                 vueArea = new Vue({
                     el: "#sel_area",
-                    data: {items: area}
+                    data: {items: area, bindId: areaId}
                 });
             } else {
                 for (var i = 0; i < area.length; i++) {
                     Vue.set(vueArea.items, i, area[i]);
                 }
                 vueArea.items.splice(area.length);
+                $("#sel_area").val(0);
             }
         }
-        $("#sel_area").val(0);
+
     }
 
     function f_getLocation(pid) {
