@@ -799,8 +799,20 @@
 
 
     function openQr() {
-        $("#div_qr_donate").model('show');
-        $("#in_oth_mo").val("");
+        if (memberInfo != null) {
+            if (memberInfo.accepterId <= 0) {
+                $("#div_qr_donate").model('show');
+                $("#in_oth_mo").val("");
+            } else {
+                layer.alert("授捐人不能提交捐赠。如要捐赠，请用会员号登陆。", {
+                    icon: 2,
+                    skin: 'layer-ext-moon'
+                });
+            }
+        } else {
+            $("#div_qr_donate").model('show');
+            $("#in_oth_mo").val("");
+        }
     }
 
     $(".btn_submit").click(function () {
@@ -1067,10 +1079,11 @@
         } else {
             input_lenght = -1;
         }
-        var s = /^[0-9]*$/;
+//        var s = /^[0-9]*$/;
+        var s = /^\d+(\.\d{1,2})?$/;
         if (projectType == "请选择项目类别") {
             layer.alert("你还没有选择项目");
-        } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && s.test(otherMoney) && (input_lenght < 3 || input_result == undefined)))) {
+        } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && s.test($("#in_oth_mo").val())))) {
             layer.confirm('您选择或输入的金额有误', {
                 btn: ['重新选择或输入', '取消'] //按钮
             }, function () {

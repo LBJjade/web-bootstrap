@@ -32,6 +32,12 @@ public class ConstString {
     //合同表
     public static final String TABLE_CONTRACT = "dntContract";
 
+    //合同项目表
+    public static final String TABLE_CONTRACT_PROJECT = "dntContractProject";
+
+    //合同项目捐赠人表
+    public static final String TABLE_CONTRACT_PROJECT_ACCEPTOR = "dntContractProjectAcceptor";
+
     //申诉
     public static final String TABLE_APPEAL = "dntAppeal";
 

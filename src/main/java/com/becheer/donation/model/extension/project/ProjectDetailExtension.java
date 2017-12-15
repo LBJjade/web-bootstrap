@@ -100,7 +100,11 @@ public class ProjectDetailExtension {
         this.longTerm = longTerm;
     }
 
-    public String getProjectTargetAmount(){
+    public long getProjectTargetAmount() {
+        return projectTargetAmount;
+    }
+
+    public String getProjectTargetAmountString() {
         return StringUtil.formatMoney(projectTargetAmount);
     }
 
