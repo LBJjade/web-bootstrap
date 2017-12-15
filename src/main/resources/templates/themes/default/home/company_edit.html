@@ -13,7 +13,7 @@
     <style type="text/css">
         #div_content {
             width: 985px;
-            height: 900px;
+            height: 940px;
             border: 1px #eee solid;
             margin-left: 10px;
             padding-top: 30px;
@@ -81,9 +81,16 @@
         }
 
         .sel_area {
-            width: 105px;
+            width: 100px;
             font-size: 16px;
         }
+
+        .td_title{
+            width: 150px !important;
+            padding-right: 0px !important;
+        }
+
+
 
     </style>
 </head>
@@ -124,7 +131,7 @@
                 <div id="div_content_info">
                     <table id="table_content_info">
                         <tr>
-                            <td>公司名称<i style="color: red">* </i>：</td>
+                            <td style="width: ;">公司名称<i style="color: red">* </i>：</td>
                             <td>
                                 <input class="form-control no_border_radius" id="ipt_name"
                                        th:value="${member.getName()}"/>
@@ -132,7 +139,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>统一社会信用代码<i style="color: red">* </i>：</td>
+                            <td class="td_title">统一社会信用代码<i style="color: red">* </i>：</td>
                             <td>
                                 <input class="form-control no_border_radius" id="ipt_organizationCode"
                                        th:value="${member.getOrganizationCode()}"/>
@@ -326,7 +333,7 @@
 
         var fileVal=$("#ipt_license").val();
         if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val())) {
-            if(fileVal == ""){
+            if(fileVal == ""&&memberInfo.validation === 1){
                 layer.alert("营业执照还没有上传");
             }else {
                 loadShade = layer.load(1, {

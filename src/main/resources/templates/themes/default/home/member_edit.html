@@ -17,6 +17,7 @@
             padding-top: 30px;
             margin-bottom: 20px;
             text-align: center;
+            height: 1130px;
         }
 
         #div_avator {
@@ -214,10 +215,10 @@
                                 <td>性别<i style="color: red">* </i>：</td>
                                 <td>
                                     <select class="form-control no_border_radius" id="ipt_sex">
-                                        <option value="0">请选择</option>
+                                        <option value="-1">请选择</option>
                                         <option value="1" th:selected="${member.getSex()==1}">男</option>
                                         <option value="2" th:selected="${member.getSex()==2}">女</option>
-                                        <option value="3" th:selected="${member.getSex()==3}">保密</option>
+                                        <option value="0" th:selected="${member.getSex()==3}">保密</option>
                                     </select>
                                 </td>
                             </tr>
@@ -359,11 +360,11 @@
             layer.alert("请输入正确的身份证号");
             $("#ipt_id_card").focus();
         }
-        if (fileVal_f == "") {
+        if (fileVal_f == "" && memberInfo.validation === 1) {
             layer.alert("身份证正面还没上传");
-        } else if (fileVal_b == "") {
+        } else if (fileVal_b == "" && memberInfo.validation === 1) {
             layer.alert("身份证背面还没上传");
-        } else if (selectVel == 0) {
+        } else if (selectVel == -1) {
             layer.alert("性别不能为空");
         } else if (dateVel == "") {
             layer.alert("生日不能为空");
