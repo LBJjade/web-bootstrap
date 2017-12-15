@@ -3,6 +3,7 @@ package com.becheer.donation.service.impl;
 import com.becheer.core.support.pay.WxPay;
 import com.becheer.core.support.pay.WxPayHelper;
 import com.becheer.core.util.XmlUtil;
+import com.becheer.donation.model.DntContractProject;
 import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.PayWxUnifiedOrder;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
