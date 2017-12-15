@@ -6,6 +6,7 @@ import com.becheer.core.util.XmlUtil;
 import com.becheer.donation.model.DntContractProject;
 import com.becheer.donation.model.DntPaymentPlan;
 import com.becheer.donation.model.PayWxUnifiedOrder;
+import com.becheer.donation.model.ProjectProgress;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.NoContractDonateExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
@@ -192,28 +193,41 @@ public class WxPayServiceImpl implements IWxPayService {
             NoContractDonateExtension noContractDonateExtension = resultList.get(0);
             String location = noContractDonateExtension.getLocation();
             //写入progress
-            projectProgressService.insert(projectId, location + "捐赠成功了", "" + "对该项目捐赠了", location + "对该项目捐赠了" + totalFee / 100 + "元", 5);
+            Float free = Float.valueOf(totalFee);
+            projectProgressService.insert(projectId, location + "捐赠成功了", "" + "对该项目捐赠了", location + "对该项目捐赠了" + free / 100 + "元", 5);
         } else {
+            //写进进程表
+            Integer i = 0;
+            List<ProjectProgress> projectProgresses = new ArrayList<>();
             List<DntContractProject> projects = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
+            MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
+            RedisUtil.delContractkey(refRecordId);
             for (DntContractProject project : projects) {
                 projectId = project.getProjectId();
                 Long contractProjectId = project.getId();
                 //清除缓存
-                RedisUtil.delContractkey(refRecordId);
-                RedisUtil.delContractProjectkey(refRecordId);
+                RedisUtil.delContractProjectkey(contractProjectId);
                 RedisUtil.delContractProjectAcceptkey(contractProjectId);
                 //按比例分配捐赠金额
-                MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
                 Integer contractAmount = project.getContractAmount();
                 Long targetAmount = memberContractDetailExtension.getContractAmount();
                 Float tAmount = Float.valueOf(targetAmount);
                 Float cAmount = Float.valueOf(contractAmount);
                 Float tfree = Float.valueOf(totalFee);
                 Float dnmateAmount = totalFee * (cAmount / tAmount);
-                //写进进程表
-                projectProgressService.insert(projectId, "" + "捐赠成功了", "" + "对该项目捐赠了", "" + "对该项目捐赠了" + dnmateAmount / 100 + "元", 5);
+                //projectProgress.对象
+                ProjectProgress projectProgress = new ProjectProgress();
+                projectProgress.setProjectId(projectId);
+                projectProgress.setTitle("捐赠成功了");
+                projectProgress.setSummary("对该项目捐赠了");
+                projectProgress.setContent("对该项目捐赠了" + dnmateAmount / 100 + "元");
+                projectProgress.setStatus(5);
+                //构建进程纪录
+                projectProgresses.add(projectProgress);
+//                i = i + 1;
+//                projectProgressService.insert(projectId, "" + "捐赠成功了", "" + "对该项目捐赠了", "" + "对该项目捐赠了" + dnmateAmount / 100 + "元", 5);
             }
-
+            projectProgressService.batchInsert(projectProgresses);
         }
 
         Long id_ = paymentPlanService.selectIdByOrderNo(outTradeNo);

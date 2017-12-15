@@ -1036,6 +1036,7 @@
 
     //选择金额
     $(".span_donation").click(function () {
+        $("#in_oth_mo").val("");
         $(".money_2").removeClass("money_2");
         $(this).addClass("money_2");
         flag = 1;
@@ -1043,6 +1044,9 @@
         var reg = /\d+/g;
         var ms = str.match(reg);
         span_money = ms;
+        $(".other_money_error").hide();
+        $(".other_money_error_1").hide();
+
     })
 
     //金额取消选择
@@ -1079,11 +1083,10 @@
         } else {
             input_lenght = -1;
         }
-//        var s = /^[0-9]*$/;
-        var s = /^\d+(\.\d{1,2})?$/;
+        var isMoney = /^\d+(\.\d{1,2})?$/;
         if (projectType == "请选择项目类别") {
             layer.alert("你还没有选择项目");
-        } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && s.test($("#in_oth_mo").val())))) {
+        } else if (!(flag === 1 || (otherMoney != "" && otherMoney != undefined && isMoney.test($("#in_oth_mo").val())))) {
             layer.confirm('您选择或输入的金额有误', {
                 btn: ['重新选择或输入', '取消'] //按钮
             }, function () {

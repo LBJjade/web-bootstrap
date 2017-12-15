@@ -49,4 +49,14 @@ public class ProjectProgressServiceImpl implements IProjectProgressService {
             return new ResponseDto(500,"error");
         }
     }
+
+    @Override
+    public ResponseDto batchInsert(List<ProjectProgress> projectProgresses) {
+        int result = projectProgressMapper.batchInsertProjectProject(projectProgresses);
+        if (result > 0) {
+            return new ResponseDto(200, "success", result);
+        } else {
+            return new ResponseDto(500, "error");
+        }
+    }
 }
