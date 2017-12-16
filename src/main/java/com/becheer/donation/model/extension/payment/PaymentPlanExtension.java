@@ -37,6 +37,16 @@ public class PaymentPlanExtension {
 
     private String orderNo;
 
+    private int paymentMethod;
+
+    public int getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(int paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
     public String getOrderNo() {
         return orderNo;
     }

@@ -233,7 +233,9 @@
                     <td>{{item.formatPaymentDate==""?"尚未捐赠":item.formatPaymentDate}}</td>
                     <td>{{item.statusText}}</td>
                     <td>
-                        <a style="cursor: pointer;" v-on:click="f_openDoanteLayer(item.id,item.status,item.receivedAmountString,item.title,item.paymentDate,item.orderNo,item.statusText)" id="donate">{{item.status==0?"捐赠":"账单"}}</a>
+                        <a style="cursor: pointer;"
+                           v-on:click="f_openDoanteLayer(item.id,item.status,item.receivedAmountString,item.title,item.paymentDate,item.orderNo,item.statusText,item.paymentMethod)"
+                           id="donate">{{item.status==0?"捐赠":"账单"}}</a>
                     </td>
                 </tr>
             </table>
@@ -286,7 +288,8 @@
             <div class="play">
                 <div class="ordermsg" style="margin-bottom: -34px;border-bottom: 1px solid #e0dada;">
                     <span class="donate_msg" style="font-family: 微软雅黑;">捐赠单号为：<span id="orderNo"></span></span>
-                    <span class="donate_msg orderMoney" style="margin-left: 24px;color:#847f7f">捐赠金额：&yen;<span id="donateAmount" class="order_fund" style=""></span></span>
+                    <span class="donate_msg orderMoney" style="margin-left: 24px;color:#847f7f">捐赠金额：&yen;<span
+                            id="donateAmount" class="order_fund" style=""></span></span>
                 </div>
                 <div class="code_time">距离二维码过期还有<span id="waitingPayTimerText" class="time" style="color: red"></span>秒
                 </div>
@@ -295,13 +298,14 @@
                     <div class="model-body code_img row" style="text-align: center">
                         <div class="col-sm-6">
                             <div>
-                                <img id="qrCodeImageId" height="200" width="200" />
+                                <img id="qrCodeImageId" height="200" width="200"/>
                                 <div class="fresh">
                                     <img id="fushImage" class="img-rounded panel-body" th:src="@{~/image/reflush.png}"/>
                                     <div class="code_lost">点击刷新</div>
                                 </div>
                                 <div class="success">
-                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body" th:src="@{~/image/play.png}"/>
+                                    <img id="successImage" height="200" width="200" class="img-rounded panel-body"
+                                         th:src="@{~/image/play.png}"/>
                                 </div>
                             </div>
                             <div><img id="CodeImage" th:src="@{~/image/wxsm.png}"/></div>
@@ -373,7 +377,7 @@
     </tr>
     <tr>
         <td>付款方式：</td>
-        <td>微信</td>
+        <td class="paymentMethod">微信</td>
     </tr>
     <tr>
         <td>订单号：</td>
@@ -441,14 +445,14 @@
             dataType: 'json',
             success: function (data) {
                 if (data.code === 200) {
-                    if(data.result.length===0){
+                    if (data.result.length === 0) {
                         $("#div_no_attach").show();
-                    }else{
+                    } else {
                         new Vue({
-                            el:'#table_attach',
-                            data:{
-                                items:data.result,
-                                attachRoot:fileRoot
+                            el: '#table_attach',
+                            data: {
+                                items: data.result,
+                                attachRoot: fileRoot
                             }
                         });
                     }
@@ -456,7 +460,6 @@
             }
         })
     }
-
 
 
     function f_openContent() {
@@ -471,10 +474,10 @@
     }
 
 
-    function f_openDoanteLayer(id, status, amount, title, date, orderNo, donateStatus) {
+    function f_openDoanteLayer(id, status, amount, title, date, orderNo, donateStatus, paymentMethod) {
         paymentPlanId = id;
         if (status === 0) {
-            if(contractStatus == 7) {
+            if (contractStatus == 7) {
                 $("#div_cf_donate").model('show');
                 $.ajax({
                     url: '/donate/donateContract',
@@ -513,7 +516,7 @@
                 }
 
                 Countdown();
-            }else{
+            } else {
                 layer.alert("合同还未签订，暂时不能捐赠");
             }
 
@@ -530,11 +533,22 @@
                 content: $("#bill")
             });
             //账单数据
+            var payMathod;
+            if (paymentMethod === 1) {
+                payMathod = "微信";
+            } else if (paymentMethod === 2) {
+                payMathod = "支付宝";
+            } else if (paymentMethod === 3) {
+                payMathod = "线下登记支付";
+            } else {
+                payMathod = "未知支付方式";
+            }
             $(".title").html(title);
             $(".receivedAmount").html(amount);
             $(".date").html(date);
             $(".orderNo").html(orderNo);
             $(".donate_status").html(donateStatus);
+            $(".paymentMethod").html(payMathod);
         }
     }
 

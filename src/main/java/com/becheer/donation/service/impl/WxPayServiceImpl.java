@@ -51,6 +51,9 @@ public class WxPayServiceImpl implements IWxPayService {
     @Resource
     private IContractService contractService;
 
+    @Resource
+    private IContractProjectAcceptorSerivce contractProjectAcceptorSerivce;
+
 
     @Override
     public Map<String, String> pay(String outTradeNo, String productId, long totalFee) {
@@ -202,12 +205,14 @@ public class WxPayServiceImpl implements IWxPayService {
             List<DntContractProject> projects = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
             MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
             RedisUtil.delContractkey(refRecordId);
+            List<Long> contractProjectIds = new ArrayList<>();
             for (DntContractProject project : projects) {
                 projectId = project.getProjectId();
                 Long contractProjectId = project.getId();
                 //清除缓存
+                contractProjectIds.add(contractProjectId);
                 RedisUtil.delContractProjectkey(contractProjectId);
-                RedisUtil.delContractProjectAcceptkey(contractProjectId);
+
                 //按比例分配捐赠金额
                 Integer contractAmount = project.getContractAmount();
                 Long targetAmount = memberContractDetailExtension.getContractAmount();
@@ -226,6 +231,14 @@ public class WxPayServiceImpl implements IWxPayService {
                 projectProgresses.add(projectProgress);
 //                i = i + 1;
 //                projectProgressService.insert(projectId, "" + "捐赠成功了", "" + "对该项目捐赠了", "" + "对该项目捐赠了" + dnmateAmount / 100 + "元", 5);
+            }
+            try {
+                List<Long> ids = contractProjectAcceptorSerivce.selectByContractProjectIds(contractProjectIds);
+                for (Long id : ids) {
+                    RedisUtil.delContractProjectAcceptorkey(id);
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
             projectProgressService.batchInsert(projectProgresses);
         }

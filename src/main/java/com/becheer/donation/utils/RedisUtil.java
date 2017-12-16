@@ -47,7 +47,7 @@ public class RedisUtil extends RedisProvider {
      *
      * @param contractProjectAcceptorId
      */
-    public static void delContractProjectAcceptkey(long contractProjectAcceptorId) {
+    public static void delContractProjectAcceptorkey(long contractProjectAcceptorId) {
         RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT_PROJECT_ACCEPTOR + ":" + contractProjectAcceptorId);
     }
 

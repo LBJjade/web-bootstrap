@@ -94,7 +94,7 @@
         </if>
     </select>
 
-    <insert id="batchInsertProjectProject" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+    <insert id="batchInsertProjectProject" parameterType="java.util.List">
         INSERT INTO dnt_project_progress(
         project_id,
         title,
