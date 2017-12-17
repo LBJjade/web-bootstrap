@@ -143,7 +143,7 @@ public class HomeContractController extends BaseController {
             return MemberAuthFailed();
         }
         try {
-            ResponseDto result = contractService.UpdateContractStatuas(contractId, currentMember.getMemberId());
+            ResponseDto result = contractService.signContract(contractId, currentMember.getMemberId());
             if (result.getCode() == 200) {
                 RedisUtil.delContractkey(contractId);
             }

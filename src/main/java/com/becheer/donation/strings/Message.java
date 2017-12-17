@@ -146,6 +146,8 @@ public class Message {
      */
     public static final String INTENTION_GET_SUCCESS = "获取捐赠意向成功";
     public static final String INTENTION_ADD_SUCCESS = "提交成功";
+    public static final String INTENTION_MEMBER_APPROVEING="您的资料正在审核中，请在审核通过后提交捐赠申请";
+    public static final String INTENTION_MEMBER_NOT_VAILD="您的账号尚未实名认证，请到会员中心提交实名认证资料";
 
     /**
      * 合同

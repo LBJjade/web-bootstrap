@@ -1,6 +1,7 @@
 package com.becheer.donation.controller;
 
 import com.becheer.donation.model.Intention;
+import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.report.IndexReport;
@@ -39,7 +40,7 @@ public class IndexController extends BaseController {
     IIntentionService intentionService;
 
     @Resource
-    IContractService contractService;
+    IMemberService memberService;
 
     /**
      * 首页
@@ -98,31 +99,33 @@ public class IndexController extends BaseController {
             if (currentMember == null) {
                 return MemberAuthFailed();
             }
-            int MemberValidation = currentMember.getValidation();
-            if(MemberValidation != 3){
-                return new ResponseDto(405,"当前账号未授权，不能提交捐赠");
-            }else {
-                //获取memberId
-                Long memberId = currentMember.getMemberId();
-                Intention intention = new Intention();
-                //生成捐赠意向流水号
-                String no = intentionService.generateContractNo();
-                //写入itention表
-                intention.setIntentionNo(no);
-                intention.setProjectId(projectId);
-                intention.setProjectTypeId(projectTypeId);
-                intention.setIntentionAmount(intentionAmount);
-                intention.setContactPhone(contactPhone);
-                intention.setRemark(remark);
-                intention.setEnable(1);
-                intention.setStatus(0);
-                intention.setMemberId(currentMember.getMemberId());
-                ResponseDto result = intentionExtensionService.AddIntentionExtension(intention);
-                if (result.getCode() == 200) {
-                    progressService.AddProgress("您提交了捐赠意向", "您提交了捐赠意向", "dnt_intention", (long) result.getResult(), currentMember.getMemberId(), 1);
-                }
-                return result;
+            Member member=memberService.GetMember(currentMember.getMemberId());
+            if (member.getValidation()==1){
+                return new ResponseDto(405,Message.INTENTION_MEMBER_NOT_VAILD);
             }
+            if (member.getValidation()==2){
+                return new ResponseDto(406,Message.INTENTION_MEMBER_APPROVEING);
+            }
+            //获取memberId
+            Long memberId = currentMember.getMemberId();
+            Intention intention = new Intention();
+            //生成捐赠意向流水号
+            String no = intentionService.generateContractNo();
+            //写入itention表
+            intention.setIntentionNo(no);
+            intention.setProjectId(projectId);
+            intention.setProjectTypeId(projectTypeId);
+            intention.setIntentionAmount(intentionAmount);
+            intention.setContactPhone(contactPhone);
+            intention.setRemark(remark);
+            intention.setEnable(1);
+            intention.setStatus(0);
+            intention.setMemberId(currentMember.getMemberId());
+            ResponseDto result = intentionExtensionService.AddIntentionExtension(intention);
+            if (result.getCode() == 200) {
+                progressService.AddProgress("您提交了捐赠意向", "您提交了捐赠意向", "dnt_intention", (long) result.getResult(), currentMember.getMemberId(), 1);
+            }
+            return result;
 
         } catch (Exception ex) {
             LOGGER.error("AddIntention", ex);

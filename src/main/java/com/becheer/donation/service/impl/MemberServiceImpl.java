@@ -10,7 +10,9 @@ import com.becheer.donation.configs.OssConfig;
 import com.becheer.donation.dao.AccepterMapper;
 import com.becheer.donation.dao.AreaMapper;
 import com.becheer.donation.dao.MemberMapper;
+import com.becheer.donation.dao.ProgressMapper;
 import com.becheer.donation.model.Member;
+import com.becheer.donation.model.Progress;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.service.IMemberService;
@@ -38,6 +40,9 @@ public class MemberServiceImpl implements IMemberService {
     @Resource
     private AreaMapper areaMapper;
 
+    @Resource
+    private ProgressMapper progressMapper;
+
     @Autowired
     OssConfig ossConfig;
 
@@ -53,6 +58,16 @@ public class MemberServiceImpl implements IMemberService {
         int result = memberMapper.insertMember(member);
         if (result > 0) {
             member = memberMapper.SelectMemberByMobile(mobile);
+            Progress progress=new Progress();
+            progress.setRefTable("dnt_member");
+            progress.setRefRecordId(member.getId());
+            progress.setType(3);
+            progress.setEnable(1);
+            String title ="会员注册成功";
+            progress.setTitle(title);
+            progress.setContent(title);
+            progress.setProgressType(3);
+            progressMapper.InsertProgress(progress);
             return new ResponseDto(200, Message.REGISTER_REGISTER_SUCCESS, member);
         } else {
             return new ResponseDto(400, Message.SERVER_ERROR);
