@@ -394,7 +394,7 @@
                     <li v-for="(item,index) in items" :class="[index==0?'show':'']">
                         <a :href="'project/'+item.projectId" target="_blank">
                             <img :alt="item.projectName"
-                                 :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fixed,h_600,w_900'"/>
+                                 :src="fileRoot+item.img+'?x-oss-process=image/resize,m_fill,h_400,w_900,limit_0'"/>
                         </a>
                     </li>
                 </ul>
