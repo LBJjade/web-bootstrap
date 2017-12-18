@@ -44,6 +44,8 @@ public class ProjectDetailExtension {
 
     private String projectTypeName;
 
+    private int times;
+
     public String getProjectTypeName() {
         return projectTypeName;
     }
@@ -134,5 +136,13 @@ public class ProjectDetailExtension {
 
     public void setThumbImg(String thumbImg) {
         this.thumbImg = thumbImg;
+    }
+
+    public int getTimes() {
+        return times;
+    }
+
+    public void setTimes(int times) {
+        this.times = times;
     }
 }

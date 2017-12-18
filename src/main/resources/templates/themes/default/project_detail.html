@@ -483,14 +483,11 @@
                             <th:block th:text='${(project.getStartTime()+" 至 "+project.getEndTime())}'/>
                         </p>
                         <div class="center">
-                            <p class="info"><span class="info_name">目标金额</span>：&nbsp;<span
-                                    class="info_number"><th:block th:text="${project.getProjectTargetAmountString()}"/></span>&nbsp;元
+                            <p class="info"><span class="info_name">目标金额</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getProjectTargetAmountString()}"/></span>&nbsp;元
                             </p>
-                            <p class="info"><span class="info_name">已募集金额</span>：&nbsp;<span class="info_number"><th:block
-                                    th:text="${project.getAcceptedAmount()}"/></span>&nbsp;元
+                            <p class="info"><span class="info_name">已募集金额</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getAcceptedAmount()}"/></span>&nbsp;元
                             </p>
-                            <p class="info"><span class="info_name">已参与人数</span>：&nbsp;<span
-                                    class="info_number"> 0</span>&nbsp;人</p>
+                            <p class="info"><span class="info_name">已参与人数</span>：&nbsp;<span class="info_number"><th:block th:text="${project.getTimes()}"/></span>&nbsp;人</p>
                         </div>
                     </div>
                     <div style="width: 100%;">

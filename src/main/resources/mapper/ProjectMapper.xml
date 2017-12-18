@@ -14,6 +14,7 @@
         <result column="accepted_amount" jdbcType="BIGINT" property="acceptedAmount"/>
         <result column="project_target_amount" jdbcType="BIGINT" property="projectTargetAmount"/>
         <result column="thumb_img" jdbcType="VARCHAR" property="thumbImg"/>
+        <result column="times" jdbcType="INTEGER" property="times" />
     </resultMap>
 
     <resultMap id="ListProjectResultMap" type="com.becheer.donation.model.extension.project.ListProjectExtension">
@@ -136,7 +137,8 @@
      p.content,
      p.project_target_amount,
      p.accepted_amount,
-     p.thumb_img
+     p.thumb_img,
+     (SELECT COUNT(1) FROM dnt_no_contract_donate WHERE donated_amount>0 AND project_id=p.id_) AS times
     FROM
       dnt_project p
     LEFT JOIN
