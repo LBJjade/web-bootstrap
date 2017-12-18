@@ -727,7 +727,7 @@
                     <div style="width:80%;margin-top:20px;">
                         <label for="ipt_dnt_amount" class="col_sm_4 cu">捐赠意向金额（元）<i style="color: red">*</i>：
                         </label>
-                        <input type="number" class="cu" id="ipt_dnt_amount" placeholder="请输入金额数字" style="width:170px;"/>
+                        <input type="number" class="cu" id="ipt_dnt_amount" placeholder="请输入金额" style="width:170px;"/>
                         <p class="code_error error cu" style="margin-left: 60px;">捐赠意向金额不能为空</p>
                         <p class="code_error_0 error cu" style="margin-left: 60px;">捐赠意向金额要大于0</p>
                     </div>
@@ -1360,7 +1360,7 @@
             $("#ipt_dnt_mobile").val(memberInfo.mobile);
             $("#div_de_donate").model('show');
         } else {
-            layer.alert("大额捐赠需要签订捐赠合同，请注册登录后进行大额捐赠，谢谢");
+            layer.alert("大额捐赠需要签订捐赠合同，请登录后进行大额捐赠");
             $("#div_cf_donate").model('hide');
             f_showCode();
             $("#myModal").model('show');
@@ -1450,6 +1450,15 @@
                                         function () {
                                             window.location.href = "/home/apply";
                                         });
+                                } else if (data.code === 405) {
+                                    layer.confirm(data.msg, {btn: ["现在去完善资料", "暂不"]},
+                                        function () {
+                                            window.location.href = "/home/edit"
+                                        },
+                                        function () {
+                                            layer.closeAll();
+                                        }
+                                    )
                                 } else {
                                     layer.alert(data.msg, {
                                             icon: 2,
@@ -1457,7 +1466,7 @@
                                         },
                                         function () {
                                             window.location.href = "/index";
-                                    });
+                                        });
                                 }
                             }
                         })
