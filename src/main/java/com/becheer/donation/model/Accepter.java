@@ -42,8 +42,6 @@ public class Accepter {
 
     private long updateBy;
 
-    private long acceptedAmount;
-
     private long receivedAmount;
 
     private String avator;
@@ -182,14 +180,6 @@ public class Accepter {
 
     public void setUpdateBy(long updateBy) {
         this.updateBy = updateBy;
-    }
-
-    public long getAcceptedAmount() {
-        return acceptedAmount;
-    }
-
-    public void setAcceptedAmount(long acceptedAmount) {
-        this.acceptedAmount = acceptedAmount;
     }
 
     public long getReceivedAmount() {

@@ -23,8 +23,6 @@ public class DntContractProject {
 
     private Integer donatedAmount;
 
-    private Integer acceptedAmount;
-
     private Integer allocateAmoumt;
 
     private String remark;
@@ -69,14 +67,6 @@ public class DntContractProject {
 
     public void setDonatedAmount(Integer donatedAmount) {
         this.donatedAmount = donatedAmount;
-    }
-
-    public Integer getAcceptedAmount() {
-        return acceptedAmount;
-    }
-
-    public void setAcceptedAmount(Integer acceptedAmount) {
-        this.acceptedAmount = acceptedAmount;
     }
 
     public Integer getAllocateAmoumt() {
