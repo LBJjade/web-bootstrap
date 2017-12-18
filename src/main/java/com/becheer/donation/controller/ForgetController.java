@@ -4,6 +4,7 @@ import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.service.IMemberService;
 import com.becheer.donation.service.ISmsService;
+import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.utils.RegExUtil;
 import org.slf4j.Logger;
@@ -12,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
 * RegisterController 注册控制器
@@ -40,30 +43,6 @@ public class ForgetController extends BaseController {
         request.setAttribute("config", fileConfig);
         return this.render("forget");
     }
-
-//    /**
-//     * 账户验证
-//     * @return
-//     */
-//    @PostMapping(value = "/validate")
-//    @ResponseBody
-//    public ResponseDto MenberValidate(HttpServletRequest request,  @RequestParam String mobile,@RequestParam String code) {
-//        Member member = memberService.GetMemberByMobile(mobile);
-//        if(member == null){
-//            return MemberAuthFailed();
-//        }else{
-//            Object objCode=request.getSession().getAttribute(ConstString.LOGIN_VERIFY_CODE);
-//            if (objCode==null){
-//                return new ResponseDto(408, Message.LOGIN_CODE_NULL);
-//            }
-//            String sessionCode=objCode.toString().toUpperCase();
-//            if (!sessionCode.equals(code.toUpperCase())){
-//                return new ResponseDto(403,Message.LOGIN_CODE_ERROE);
-//            }else{
-//                return new ResponseDto(200,Message.LOGIN_CODE_SUCCESS);
-//            }
-//        }
-//    }
 
     /**
      * 发送短信
@@ -93,25 +72,16 @@ public class ForgetController extends BaseController {
     @PostMapping(value = "/validate")
     @ResponseBody
     public ResponseDto CheckSms(HttpServletRequest request, @RequestParam String mobile, @RequestParam String code, @RequestParam Long tid) {
-//        ResponseDto result = smsService.CheckLoginCode(mobile,code);
-//        if (result.getCode()==200){
-//            MemberRegisterExtension memberRegisterExtension=new MemberRegisterExtension();
-//            memberRegisterExtension.setMobile(mobile);
-//            memberRegisterExtension.setRole(registerType);
-//            request.getSession().setAttribute(ConstString.REGISTER_SMS_SESSION, memberRegisterExtension);
-//        }
-//        return result;
-        //根据手机验证账号
-        try{
-        Member member = memberService.GetMemberByMobile(mobile);
-        int enable = member.getEnable();
-        if (enable == 0) {
-            return new ResponseDto(402, Message.MEMBER_UNENABLE);
-        } else {
-            //验证短信
-            ResponseDto result = smsService.CheckCode(mobile, code, tid);
-            return result;
-        }
+        try {
+            Member member = memberService.GetMemberByMobile(mobile);
+            int enable = member.getEnable();
+            if (enable == 0) {
+                return new ResponseDto(402, Message.MEMBER_UNENABLE);
+            } else {
+                //验证短信
+                ResponseDto result = smsService.CheckCode(mobile, code, tid);
+                return result;
+            }
         } catch (Exception ex) {
             LOGGER.error("CheckSms", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
@@ -124,17 +94,26 @@ public class ForgetController extends BaseController {
      */
     @PostMapping(value = "/submit")
     @ResponseBody
-    public ResponseDto ChangePw(HttpServletRequest request, @RequestParam String newPw, @RequestParam String mobile) {
+    public ResponseDto ChangePw(HttpServletRequest request, HttpServletResponse response, @RequestParam String newPw, @RequestParam String mobile) {
         try {
             if (newPw == null || newPw.trim().length() < 8) {
                 return new ResponseDto(403, "error pwd");
             }
             newPw = newPw.trim();
             int result = memberService.UpdatePw(newPw, mobile);
-            return new ResponseDto(200, Message.PASSWORD_CHANG_SUCCESS, result);
+            if (result > 0) {
+                request.getSession().removeAttribute(ConstString.LOGIN_SESSION_NAME);
+                Cookie cookie = new Cookie(ConstString.LOGIN_COOKIE_NAME, null);
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+                return new ResponseDto(200, Message.PASSWORD_CHANG_SUCCESS);
+            } else {
+                return new ResponseDto(400, Message.PASSWORD_CHANG_ERROR);
+            }
         } catch (Exception ex) {
             LOGGER.error("ChangePw", ex.getMessage());
-            return new ResponseDto(402, Message.PASSWORD_CHANG_ERROR);
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
 
     }
