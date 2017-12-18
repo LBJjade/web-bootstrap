@@ -122,9 +122,9 @@ public class RegisterController extends BaseController {
      */
     @PostMapping(value = "/getClause")
     @ResponseBody
-    public ResponseDto getClauseByTitle(HttpServletRequest request, @RequestParam String clause) {
+    public ResponseDto getClauseByTitle(HttpServletRequest request) {
         try {
-            String result = articleService.getClauseByTitle(clause);
+            String result = articleService.getClauseByTitle("网站服务条款");
             return new ResponseDto(200, Message.CLAUSE_GET_SUCCESS, result);
         }catch (Exception ex){
             LOGGER.error("getClauseByTitle", ex.getMessage());

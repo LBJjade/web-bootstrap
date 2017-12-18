@@ -98,8 +98,8 @@
             min-height: 1%
         }
 
-        .summary{
-            padding:20px;
+        .summary {
+            padding: 20px;
             font-size: 20px;
         }
 
@@ -130,24 +130,20 @@
 </body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
-    $(document).ready(function(){
+    $(document).ready(function () {
         f_getClause();
-    })
+    });
 
     function f_getClause() {
-        var clause = '网络服务条款';
         $.ajax({
-            url:'/register/getClause',
-            type:'post',
-            data:{clause:clause},
+            url: '/register/getClause',
+            type: 'post',
             dataType: 'json',
-            success:function(data){
+            success: function (data) {
                 $(".summary").html(data.result);
             }
-
-        })
+        });
     }
-
 
     /*]]>*/
 </script>
