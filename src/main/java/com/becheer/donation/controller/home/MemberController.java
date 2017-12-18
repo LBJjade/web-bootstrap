@@ -81,7 +81,7 @@ public class MemberController extends BaseController {
             return result;
         } catch (Exception ex) {
             LOGGER.error("UpdateMember", ex.getMessage());
-            return new ResponseDto(500, Message.SERVER_ERROR);
+            return new ResponseDto(500, ex.getMessage());
         }
     }
 
