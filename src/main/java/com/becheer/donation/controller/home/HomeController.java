@@ -2,6 +2,7 @@ package com.becheer.donation.controller.home;
 
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
+import com.becheer.donation.model.Member;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IMemberService;
@@ -48,6 +49,10 @@ public class HomeController extends BaseController {
             MemberSessionExtension currentMember = GetCurrentUser(request);
             MemberInfoExtension member = memberService.GetMemberExtensionById(currentMember.getMemberId());
             request.setAttribute("member", member);
+            Member memberInfo = memberService.GetMember(currentMember.getMemberId());
+            if (memberInfo.getValidation() == 3) {
+                return render_404();
+            }
             if (member.getRole() == 1) {
                 return this.render("home/member_edit");
             } else {
