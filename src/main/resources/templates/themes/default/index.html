@@ -1449,22 +1449,14 @@
                                         function () {
                                             window.location.href = "/home/apply";
                                         });
-                                } else if (data.code == 405) {
-                                    layer.alert("当前账号未授权，不能提交捐赠。", {
-                                            icon: 2,
-                                            skin: 'layer-ext-moon'
-                                        },
-                                        function () {
-                                            window.location.href = "/index";
-                                        });
                                 } else {
-                                    layer.alert("提交捐赠意向失败。", {
+                                    layer.alert(data.msg, {
                                             icon: 2,
                                             skin: 'layer-ext-moon'
                                         },
                                         function () {
                                             window.location.href = "/index";
-                                        });
+                                    });
                                 }
                             }
                         })

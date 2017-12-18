@@ -20,7 +20,6 @@
         <result column="create_by" jdbcType="BIGINT" property="createby"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
-        <result column="accepted_amount" jdbcType="BIGINT" property="acceptedAmount"/>
         <result column="received_amount" jdbcType="BIGINT" property="receivedAmount"/>
         <result column="avator_img" jdbcType="VARCHAR" property="avator"/>
     </resultMap>

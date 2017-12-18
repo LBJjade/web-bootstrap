@@ -112,7 +112,7 @@ public class AccepterAppealController extends BaseController{
                 return new ResponseDto(400, Message.SUBMIT_APPEAL_ID_NULL);
             }
             long memberId = currentMember.memberId;
-            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, 0,memberId,2,currentMember.getAccepterId());
+            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, "0" ,0,memberId,2,currentMember.getAccepterId());
             if (result.getCode()==200){
                 progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int)result.getResult(), memberId, 1);
             }
@@ -141,6 +141,4 @@ public class AccepterAppealController extends BaseController{
             return render_404();
         }
     }
-
-
 }

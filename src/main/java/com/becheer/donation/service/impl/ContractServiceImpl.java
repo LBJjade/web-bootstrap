@@ -7,6 +7,8 @@ package com.becheer.donation.service.impl;
 */
 
 import com.becheer.donation.dao.ContractMapper;
+import com.becheer.donation.dao.ProgressMapper;
+import com.becheer.donation.model.Progress;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
@@ -22,6 +24,9 @@ import java.util.List;
 
 @Service
 public class ContractServiceImpl implements IContractService {
+
+    @Resource
+    ProgressMapper progressMapper;
 
     @Resource
     ContractMapper contractMapper;
@@ -45,9 +50,21 @@ public class ContractServiceImpl implements IContractService {
     }
 
     @Override
-    public ResponseDto UpdateContractStatuas(long contractId, long memberId) {
+    public ResponseDto signContract(long contractId, long memberId) {
         int result = contractMapper.UpdateContractStatus(contractId, memberId);
         if (result > 0) {
+            MemberContractDetailExtension contract=contractMapper.selectContractByContractProjectId(contractId);
+            Progress progress=new Progress();
+            progress.setRefTable("dnt_member");
+            progress.setRefRecordId(memberId);
+            progress.setType(3);
+            progress.setEnable(1);
+            String title ="会员签订了合同，合同编号："+contract.getContractNo();
+            progress.setTitle(title);
+            progress.setContent(title);
+            progress.setProgressType(3);
+            progressMapper.InsertProgress(progress);
+
             return new ResponseDto(200, Message.CONTRACT_SIGN_SUCCESS);
         } else {
             return new ResponseDto(500, Message.CONTRACT_SIGN_FAILED);

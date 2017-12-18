@@ -1,14 +1,18 @@
 package com.becheer.donation.controller.home;
 
+import com.alipay.api.domain.Contract;
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.appeal.MemberAppealDetailExtension;
 import com.becheer.donation.model.extension.appeal.MemberAppealExtension;
+import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
+import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 import com.becheer.donation.model.extension.project.MemberProjectDetailExtension;
 import com.becheer.donation.service.IAppealService;
+import com.becheer.donation.service.IContractService;
 import com.becheer.donation.service.IProgressService;
 import com.becheer.donation.service.IProjectService;
 import com.becheer.donation.strings.Message;
@@ -43,6 +47,9 @@ public class HomeAppealController extends BaseController {
 
     @Resource
     IProjectService projectService;
+
+    @Resource
+    IContractService contractService;
 
     @Access(authorities = {Role.PERSON, Role.COMPANY, Role.ACCEPTER})
     @GetMapping("")
@@ -149,11 +156,14 @@ public class HomeAppealController extends BaseController {
             if (contractId == 0 || projectId == 0) {
                 return new ResponseDto(400, Message.SUBMIT_APPEAL_ID_NULL);
             }
-            //TODO 还需要检查合同是否属于该会员，合同项目是否属于该会员
+            MemberContractDetailExtension contract = contractService.getContractByContractProjectId(contractId);
+            if (contract.getMemberId() != currentMember.getMemberId()) {
+                return MemberAuthFailed();
+            }
             long memberId = currentMember.memberId;
-            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, projectId, memberId,1,0);
-            if (result.getCode()==200){
-                progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int)result.getResult(), memberId, 1);
+            ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, contract.getContractNo(), projectId, memberId, 1, 0);
+            if (result.getCode() == 200) {
+                progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int) result.getResult(), memberId, 1);
             }
             return result;
         } catch (Exception ex) {
@@ -237,8 +247,11 @@ public class HomeAppealController extends BaseController {
                 return new ResponseDto(400, Message.MEMBER_APPEAL_STATUS_ERROR);
             }
             //撤销
-            progressService.AddProgress("您撤销了申诉", "您撤销了申诉", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
-            return appealService.UpdateAppealStatus(appealId, 4);
+            ResponseDto result = appealService.withdrawAppeal(currentMember.getMemberId(),appealId, 4);
+            if (result.getCode() == 200) {
+                progressService.AddProgress("您撤销了申诉", "您撤销了申诉", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
+            }
+            return result;
         } catch (Exception ex) {
             LOGGER.error("withdrawProgress", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);

@@ -7,7 +7,6 @@
         <result column="project_id" jdbcType="BIGINT" property="projectId"/>
         <result column="contract_amount" jdbcType="BIGINT" property="contractAmount"/>
         <result column="donated_amount" jdbcType="BIGINT" property="donatedAmount"/>
-        <result column="accepted_amount" jdbcType="BIGINT" property="acceptedAmount"/>
         <result column="allocate_amount" jdbcType="BIGINT" property="allocateAmoumt"/>
         <result column="remark_" jdbcType="VARCHAR" property="remark"/>
         <result column="enable_" jdbcType="BIGINT" property="enable"/>
@@ -21,7 +20,6 @@
          project_id,
          contract_amount,
          donated_amount,
-         accepted_amount,
          allocate_amount,
          remark_,
          enable_

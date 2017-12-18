@@ -59,7 +59,8 @@
         type,
         module,
         record_status,
-        create_member_id
+        create_member_id,
+        progress_type
         )VALUES (
         #{id,jdbcType=BIGINT},
         #{refTable,jdbcType=VARCHAR},
@@ -68,14 +69,15 @@
         #{content,jdbcType=VARCHAR},
         #{remark,jdbcType=VARCHAR},
         #{enable,jdbcType=INTEGER},
-        #{createTime,jdbcType=TIMESTAMP},
+        now(),
         #{createBy,jdbcType=BIGINT},
         #{updateTime,jdbcType=TIMESTAMP},
         #{updateBy,jdbcType=BIGINT},
         #{type,jdbcType=INTEGER},
         #{module,jdbcType=VARCHAR},
         #{recordStatus,jdbcType=INTEGER},
-        #{createMemberId,jdbcType=BIGINT}
+        #{createMemberId,jdbcType=BIGINT},
+        #{progressType,jdbcType=INTEGER}
         )
     </insert>
 </mapper>

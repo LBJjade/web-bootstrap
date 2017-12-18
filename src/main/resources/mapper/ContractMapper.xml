@@ -23,6 +23,7 @@
         <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
         <result column="a_sign_time" jdbcType="TIMESTAMP" property="aSignTime" />
         <result column="enable_" jdbcType="INTEGER" property="enable" />
+        <result column="contract_no" jdbcType="VARCHAR" property="contractNo" />
     </resultMap>
 
     <resultMap id="MemberContractContentResultMap" type="com.becheer.donation.model.extension.contract.MemberContractContentExtension">
@@ -104,6 +105,7 @@
             member_id,
             contract_name,
             contract_amount,
+            contract_no,
             donated_amount,
             begin_time,
             end_time,

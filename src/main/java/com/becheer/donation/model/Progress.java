@@ -39,6 +39,8 @@ public class Progress {
 
     private int type;
 
+    private int progressType;
+
     public long getId() {
         return id;
     }
@@ -157,5 +159,13 @@ public class Progress {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getProgressType() {
+        return progressType;
+    }
+
+    public void setProgressType(int progressType) {
+        this.progressType = progressType;
     }
 }

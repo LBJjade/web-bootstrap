@@ -1,13 +1,16 @@
 package com.becheer.donation.controller.home;
 
+import com.alibaba.fastjson.JSON;
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
+import com.becheer.donation.model.Member;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.extension.accepter.AccepterInfoExtension;
 import com.becheer.donation.model.extension.member.MemberInfoExtension;
 import com.becheer.donation.model.extension.member.MemberSessionExtension;
 import com.becheer.donation.service.IAccepterService;
 import com.becheer.donation.service.IMemberService;
+import com.becheer.donation.strings.ConstString;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.RedisUtil;
@@ -62,7 +65,20 @@ public class MemberController extends BaseController {
             }
             memberInfoExtension.setValidation(2);
             memberInfoExtension.setId(currentMember.getMemberId());
-            return memberService.UpdateMemberInfo(memberInfoExtension);
+            ResponseDto result = memberService.UpdateMemberInfo(memberInfoExtension);
+            if (result.getCode()==200){
+                Member member = memberService.GetMember(currentMember.getMemberId());
+                MemberSessionExtension memberSessionExtension = new MemberSessionExtension();
+                memberSessionExtension.setMemberId(member.getId());
+                memberSessionExtension.setMemberName(member.getMemberName() == null ? "" : member.getMemberName());
+                memberSessionExtension.setMobile(member.getMobile());
+                memberSessionExtension.setRole(member.getRole());
+                memberSessionExtension.setValidation(member.getValidation());
+                memberSessionExtension.setAvator(member.getAvatorImg());
+                memberSessionExtension.setAccepterId(member.getAccepterId());
+                request.getSession().setAttribute(ConstString.LOGIN_SESSION_NAME, JSON.toJSON(memberSessionExtension));
+            }
+            return result;
         } catch (Exception ex) {
             LOGGER.error("UpdateMember", ex.getMessage());
             return new ResponseDto(500, Message.SERVER_ERROR);
