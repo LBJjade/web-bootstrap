@@ -183,7 +183,6 @@
       c.contract_name,
       cp.contract_amount,
       cp.donated_amount,
-      cp.accepted_amount,
       cp.allocate_amount,
       c.begin_time,
       c.end_time,

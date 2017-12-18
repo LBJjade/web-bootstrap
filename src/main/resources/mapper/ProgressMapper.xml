@@ -60,7 +60,7 @@
         module,
         record_status,
         <if test="progressType!=0">
-            progress_type
+            progress_type,
         </if>
         create_member_id
         )VALUES (
