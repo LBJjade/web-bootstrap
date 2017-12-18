@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /*
 * AccepterSecurityController
@@ -62,7 +64,15 @@ public class AccepterSecurityController extends BaseController {
 
     @ResponseBody
     @PostMapping("/updatePw")
-    public ResponseDto updatePw(HttpServletRequest request, @RequestParam String newPw, @RequestParam String acceptCode) {
-        return accepterService.updatePw(newPw, acceptCode);
+    public ResponseDto updatePw(HttpServletRequest request, HttpServletResponse response, @RequestParam String newPw, @RequestParam String acceptCode) {
+        ResponseDto result = accepterService.updatePw(newPw, acceptCode);
+        if (result.getCode() == 200) {
+            request.getSession().removeAttribute(ConstString.LOGIN_SESSION_NAME);
+            Cookie cookie = new Cookie(ConstString.LOGIN_COOKIE_NAME, null);
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
+        return result;
     }
 }

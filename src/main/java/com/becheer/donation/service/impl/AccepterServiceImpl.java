@@ -57,9 +57,9 @@ public class AccepterServiceImpl implements IAccepterService {
         newPw = HashUtil.GetPassword(newPw);
         int result = accepterMapper.updatePw(newPw, acceptCode);
         if (result > 0) {
-            return new ResponseDto(200, "success", result);
+            return new ResponseDto(200, "success");
         } else {
-            return new ResponseDto(500, "error", result);
+            return new ResponseDto(500, "error");
         }
 
     }
