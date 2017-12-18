@@ -18,6 +18,7 @@
         <result column="record_status" jdbcType="VARCHAR" property="record_status"/>
     </resultMap>
 
+
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -52,7 +53,7 @@
     <insert id="insertProjectProject" parameterType="com.becheer.donation.model.ProjectProgress" useGeneratedKeys="true"
             keyProperty="id">
         INSERT INTO dnt_project_progress
-       (
+        (
         project_id,
         title,
         summary,
@@ -60,8 +61,8 @@
         enable_,
         create_time,
         status
-       )
-       VALUES (
+        )
+        VALUES (
         #{projectId},
         #{title},
         #{summary},
@@ -69,7 +70,7 @@
         1,
         now(),
         #{status}
-       )
+        )
     </insert>
 
     <select id="SelectByCondition" parameterType="com.becheer.donation.model.condition.ProjectProgressCondition"
@@ -92,5 +93,20 @@
             </if>
         </if>
     </select>
+
+    <insert id="batchInsertProjectProject" parameterType="java.util.List">
+        INSERT INTO dnt_project_progress(
+        project_id,
+        title,
+        summary,
+        content,
+        enable_,
+        create_time,
+        status
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.projectId},#{item.title}, #{item.summary}, #{item.content}, 1,now(),#{item.status})
+        </foreach>
+    </insert>
 
 </mapper>

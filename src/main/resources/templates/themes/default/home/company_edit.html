@@ -131,7 +131,7 @@
                 <div id="div_content_info">
                     <table id="table_content_info">
                         <tr>
-                            <td style="width: ;">公司名称<i style="color: red">* </i>：</td>
+                            <td>公司名称<i style="color: red">* </i>：</td>
                             <td>
                                 <input class="form-control no_border_radius" id="ipt_name"
                                        th:value="${member.getName()}"/>
@@ -175,7 +175,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>所在地：</td>
+                            <td>所在地<i style="color: red">* </i>：</td>
                             <td>
                                 <select id="sel_province" class="sel_area" onchange="f_getCity()">
                                     <option value="0">请选择省份</option>
@@ -255,8 +255,6 @@
     });
 
 
-
-
     //统一社会信用代码
     $("#ipt_organizationCode").blur(function () {
         if (!f_codeValidate($("#ipt_organizationCode").val())) {
@@ -315,6 +313,22 @@
     }
 
     $(".btn_save").click(function () {
+        if ($("#ipt_name").val() == "") {
+            layer.alert("公司名称不能为空");
+            return;
+        }
+
+        if (!f_codeValidate($("#ipt_organizationCode").val())) {
+            layer.alert("统一社会信用代码格式错误");
+            return;
+        }
+
+        var fileVal = $("#ipt_license").val();
+        if (fileVal == ""&&memberInfo.validation === 1) {
+            layer.alert("请上传营业执照");
+            return;
+        }
+
         provinceId = $("#sel_province").val();
         if (provinceId == 0) {
             layer.alert("请选择省份");
@@ -331,53 +345,46 @@
             return;
         }
 
-        var fileVal=$("#ipt_license").val();
-        if ($("#ipt_name").val() !== "" && f_codeValidate($("#ipt_organizationCode").val())) {
-            if(fileVal == ""&&memberInfo.validation === 1){
-                layer.alert("营业执照还没有上传");
-            }else {
-                loadShade = layer.load(1, {
-                    shade: [0.1, '#fff']
-                });
-                var companyName = $("#ipt_name").val();
-                var organizationCode = $("#ipt_organizationCode").val();
-                var organizationType = $("#ipt_type").val();
-                var project = $("#ipt_project").val();
-                var summary = $("#ipt_summary").val();
+        loadShade = layer.load(1, {
+            shade: [0.1, '#fff']
+        });
+        var companyName = $("#ipt_name").val();
+        var organizationCode = $("#ipt_organizationCode").val();
+        var organizationType = $("#ipt_type").val();
+        var project = $("#ipt_project").val();
+        var summary = $("#ipt_summary").val();
 
-                $.ajax({
-                    url: '/home/member/submit',
-                    data: {
-                        name: companyName,
-                        organizationCode: organizationCode,
-                        organizationType: organizationType,
-                        project: project,
-                        summary: summary,
-                        provinceId:provinceId,
-                        cityId:cityId,
-                        areaId:areaId,
-                        license: license
-                    },
-                    type: 'post',
-                    dataType: 'json',
-                    success: function (data) {
-                        layer.close(loadShade);
-                        if (data.code === 200) {
-                            layer.alert(data.msg, function () {
-                                window.location.href = "/home";
-                            });
-                            setTimeout(function () {
-                                window.location.href = "/home";
-                            }, 3000);
-                        } else {
-                            layer.alert(data.msg);
-                        }
-                    }
-                });
+        $.ajax({
+            url: '/home/member/submit',
+            data: {
+                name: companyName,
+                organizationCode: organizationCode,
+                organizationType: organizationType,
+                project: project,
+                summary: summary,
+                provinceId: provinceId,
+                cityId: cityId,
+                areaId: areaId,
+                license: license
+            },
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                layer.close(loadShade);
+                if (data.code === 200) {
+                    layer.alert(data.msg, function () {
+                        window.location.href = "/home";
+                    });
+                    setTimeout(function () {
+                        window.location.href = "/home";
+                    }, 3000);
+                } else {
+                    layer.alert(data.msg);
+                }
             }
-        } else {
-            layer.alert("您填写的信息有误");
-        }
+        });
+
+
     });
 
     function f_uploadAvator() {

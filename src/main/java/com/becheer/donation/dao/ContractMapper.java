@@ -14,13 +14,13 @@ import java.util.List;
 */
 @Component
 public interface ContractMapper {
-    List<MemberContractExtension>SelectContractByMemberId(long memberId);
+    List<MemberContractExtension> SelectContractByMemberId(long memberId);
 
     MemberContractDetailExtension SelectContractDetail(long contractId);
 
     MemberContractContentExtension SelectContractContent(long contractId);
 
-    int UpdateContractStatus(long contractId,long memberId);
+    int UpdateContractStatus(long contractId, long memberId);
 
     MemberContractDetailExtension selectContractByContractProjectId(long contractProjectId);
 }

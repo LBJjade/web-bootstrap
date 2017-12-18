@@ -12,6 +12,8 @@ import com.becheer.donation.model.extension.contract.MemberContractDetailExtensi
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 public interface IContractService {
     /**
      *获取会员参与的项目

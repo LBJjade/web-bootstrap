@@ -1,7 +1,12 @@
 package com.becheer.donation.utils;
 
 import com.becheer.donation.strings.ConstString;
+import org.thymeleaf.expression.Maps;
 import redis.clients.jedis.Jedis;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /*
 * RedisUtil redis 工具类
@@ -31,19 +36,19 @@ public class RedisUtil extends RedisProvider {
     /**
      * 删除合同Redis缓存
      *
-     * @param contractId
+     * @param contractProjectId
      */
-    public static void delContractProjectkey(long contractId) {
-        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT_PROJECT + ":" + contractId);
+    public static void delContractProjectkey(long contractProjectId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT_PROJECT + ":" + contractProjectId);
     }
 
     /**
      * 删除合同Redis缓存
      *
-     * @param contractId
+     * @param contractProjectAcceptorId
      */
-    public static void delContractProjectAcceptkey(long contractId) {
-        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT_PROJECT_ACCEPTOR + ":" + contractId);
+    public static void delContractProjectAcceptorkey(long contractProjectAcceptorId) {
+        RedisUtil.DelKey(ConstString.REDIS_BACKEDN_KEY + ":" + ConstString.TABLE_CONTRACT_PROJECT_ACCEPTOR + ":" + contractProjectAcceptorId);
     }
 
     /**

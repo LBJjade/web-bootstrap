@@ -13,6 +13,7 @@
         <result column="enable_" jdbcType="INTEGER" property="enable"/>
         <result column="status" jdbcType="VARCHAR" property="status"/>
         <result column="order_no" jdbcType="VARCHAR" property="orderNo"/>
+        <result column="payment_method" jdbcType="INTEGER" property="paymentMethod"/>
     </resultMap>
 
     <select id="SelectPaymentPlanByContractId" parameterType="java.lang.Long" resultMap="MemberPaymentPlanListMapper">
@@ -25,7 +26,8 @@
             deadline,
             enable_,
             status,
-            order_no
+        order_no,
+        payment_method
         FROM
             dnt_payment_plan
         WHERE
