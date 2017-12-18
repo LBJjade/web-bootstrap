@@ -66,7 +66,7 @@ public class MemberController extends BaseController {
             memberInfoExtension.setValidation(2);
             memberInfoExtension.setId(currentMember.getMemberId());
             ResponseDto result = memberService.UpdateMemberInfo(memberInfoExtension);
-            if (result.getCode()==200){
+            if (result.getCode() == 200) {
                 Member member = memberService.GetMember(currentMember.getMemberId());
                 MemberSessionExtension memberSessionExtension = new MemberSessionExtension();
                 memberSessionExtension.setMemberId(member.getId());
@@ -81,7 +81,7 @@ public class MemberController extends BaseController {
             return result;
         } catch (Exception ex) {
             LOGGER.error("UpdateMember", ex.getMessage());
-            return new ResponseDto(500, ex.getMessage());
+            return new ResponseDto(500, Message.SERVER_ERROR);
         }
     }
 
