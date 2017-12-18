@@ -59,8 +59,10 @@
         type,
         module,
         record_status,
-        create_member_id,
-        progress_type
+        <if test="progressType!=0">
+            progress_type
+        </if>
+        create_member_id
         )VALUES (
         #{id,jdbcType=BIGINT},
         #{refTable,jdbcType=VARCHAR},
@@ -76,8 +78,10 @@
         #{type,jdbcType=INTEGER},
         #{module,jdbcType=VARCHAR},
         #{recordStatus,jdbcType=INTEGER},
-        #{createMemberId,jdbcType=BIGINT},
-        #{progressType,jdbcType=INTEGER}
+        <if test="progressType!=0">
+            #{progressType,jdbcType=INTEGER},
+        </if>
+        #{createMemberId,jdbcType=BIGINT}
         )
     </insert>
 </mapper>
