@@ -206,6 +206,7 @@ public class WxPayServiceImpl implements IWxPayService {
             List<DntContractProject> projects = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
             MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
             RedisUtil.delContractkey(refRecordId);
+            DecimalFormat df = new DecimalFormat("0.00");
             List<Long> contractProjectIds = new ArrayList<>();
             for (DntContractProject project : projects) {
                 projectId = project.getProjectId();
@@ -226,7 +227,7 @@ public class WxPayServiceImpl implements IWxPayService {
                 projectProgress.setProjectId(projectId);
                 projectProgress.setTitle("捐赠成功了");
                 projectProgress.setSummary("对该项目捐赠了");
-                DecimalFormat df = new DecimalFormat("0.00");
+
 //                String s = df.format((float)a/b);
                 projectProgress.setContent("对该项目捐赠了" + df.format(dnmateAmount / 100.00) + "元");
                 projectProgress.setStatus(5);
