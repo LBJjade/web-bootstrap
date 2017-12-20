@@ -338,37 +338,66 @@
         var selectVel = $("#ipt_sex").val();
         var dateVel = $("#ipt_birthday").val();
         provinceId = $("#sel_province").val();
+
+        if (!f_nameValidate($("#ipt_name").val())) {
+            layer.alert("请输入姓名");
+            $("#ipt_name").focus();
+            return;
+        }
+
         if (provinceId == 0) {
             layer.alert("请选择省份");
             return;
         }
+
         cityId = $("#sel_city").val();
         if (cityId == 0) {
             layer.alert("请选择城市");
             return;
         }
+
         areaId = $("#sel_area").val();
         if (areaId == 0) {
             layer.alert("请选择区域");
             return;
         }
-        if (!f_nameValidate($("#ipt_name").val())) {
-            layer.alert("请输入姓名");
-            $("#ipt_name").focus();
-        }
+
         if (!f_idcardValidate($("#ipt_id_card").val())) {
             layer.alert("请输入正确的身份证号");
             $("#ipt_id_card").focus();
+            return;
         }
+
         if (fileVal_f == "" && memberInfo.validation === 1) {
             layer.alert("身份证正面还没上传");
-        } else if (fileVal_b == "" && memberInfo.validation === 1) {
+            return;
+        }
+
+        if (fileVal_b == "" && memberInfo.validation === 1) {
             layer.alert("身份证背面还没上传");
-        } else if (selectVel == -1) {
+            return;
+        }
+
+        if (selectVel == -1) {
             layer.alert("性别不能为空");
-        } else if (dateVel == "") {
+            return;
+        }
+
+        if (dateVel == "") {
             layer.alert("生日不能为空");
-        } else {
+            return;
+        }
+
+
+//        if (fileVal_f == "" && memberInfo.validation === 1) {
+//            layer.alert("身份证正面还没上传");
+//        } else if (fileVal_b == "" && memberInfo.validation === 1) {
+//            layer.alert("身份证背面还没上传");
+//        } else if (selectVel == -1) {
+//            layer.alert("性别不能为空");
+//        } else if (dateVel == "") {
+//            layer.alert("生日不能为空");
+//        } else {
             loadShade = layer.load(1, {
                 shade: [0.1, '#fff']
             });
@@ -412,7 +441,7 @@
                     }
                 }
             });
-        }
+//        }
 
     });
 
