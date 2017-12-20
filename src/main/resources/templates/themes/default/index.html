@@ -519,7 +519,8 @@
                         <img src="/image/face.png" style="width: 30px;height: 30px;margin-right: 10px; float: none;">暂无捐赠流程
                     </p>
                     <a class="donate_progreee" v-for="(item,index) in items"
-                       :href="item.linkUrl!=null?item.linkUrl:'/'+'article/'+item.articleId" target="_blank" v-cloak>
+                       :href="item.linkUrl != '' ? item.linkUrl : '/'+'article/'+item.articleId " target="_blank"
+                       v-cloak>
                         <p>{{index+1}}.{{item.title}}</p>
                     </a>
                 </div>
