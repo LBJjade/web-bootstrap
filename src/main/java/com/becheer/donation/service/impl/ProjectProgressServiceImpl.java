@@ -1,10 +1,13 @@
 package com.becheer.donation.service.impl;
 
+import com.becheer.donation.configs.FileConfig;
 import com.becheer.donation.dao.ProjectProgressMapper;
 import com.becheer.donation.model.ProjectProgress;
 import com.becheer.donation.model.base.ResponseDto;
 import com.becheer.donation.model.condition.ProjectProgressCondition;
 import com.becheer.donation.service.IProjectProgressService;
+import com.becheer.donation.service.SpringContextUtil;
+import com.becheer.donation.strings.Message;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
@@ -25,11 +28,17 @@ public class ProjectProgressServiceImpl implements IProjectProgressService {
 
     @Override
     public PageInfo<ProjectProgress> GetProjectProgress(long projectId, int pageSize, int pageNum) {
-        ProjectProgressCondition condition=new ProjectProgressCondition();
+        ProjectProgressCondition condition = new ProjectProgressCondition();
         condition.setOrderByClause("create_time desc");
         condition.createCriteria().addEnable(1).andProjectIdEqualTo(projectId);
-        PageHelper.startPage(pageNum,pageSize);
-        List<ProjectProgress> data=projectProgressMapper.SelectByCondition(condition);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ProjectProgress> data = projectProgressMapper.SelectByCondition(condition);
+        String fileRoot = ((FileConfig) SpringContextUtil.getBean("fileConfig")).getFileRoot();
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getContent() != null) {
+                data.get(i).setContent(data.get(i).getContent().replaceAll(Message.REPLACE_HOLDER_PROJECT_CONTENT, fileRoot));
+            }
+        }
         PageInfo<ProjectProgress> pageInfo = new PageInfo<ProjectProgress>(data);
         return pageInfo;
     }

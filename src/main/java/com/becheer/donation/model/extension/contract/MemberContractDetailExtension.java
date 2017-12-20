@@ -54,7 +54,7 @@ public class MemberContractDetailExtension {
         return contractAmount;
     }
 
-    public String getStringContractAmount() {
+    public String getContractAmountString() {
         return StringUtil.formatMoney(contractAmount);
     }
 
