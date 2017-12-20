@@ -317,17 +317,17 @@
     //编辑表单验证
     $(".btn_save").click(function () {
         if ($("#ipt_name").val() == "") {
-            layer.alert("公司名称不能为空");
+            layer.alert("请正确输入公司名称");
             return;
         }
 
         if (!f_codeValidate($("#ipt_organizationCode").val())) {
-            layer.alert("统一社会信用代码格式错误");
+            layer.alert("请正确输入统一社会信用代码");
             return;
         }
 
         if ($("#ipt_type").val() == 0) {
-            layer.alert("公司属性还没有选");
+            layer.alert("请选择公司属性");
             return;
         }
 

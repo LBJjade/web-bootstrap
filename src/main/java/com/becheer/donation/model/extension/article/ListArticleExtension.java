@@ -23,8 +23,8 @@ public class ListArticleExtension {
     private String summary;
 
     //创建时间
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm",timezone="GMT+8")
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private Date createTime;
 
     //图片路径
@@ -35,6 +35,9 @@ public class ListArticleExtension {
 
     //附件地址
     private String attachmentUrl;
+
+    //文章链接
+    private String linkUrl;
 
     public long getArticleId() {
         return articleId;
@@ -90,5 +93,13 @@ public class ListArticleExtension {
 
     public void setAttachmentUrl(String attachmentUrl) {
         this.attachmentUrl = attachmentUrl;
+    }
+
+    public String getLinkUrl() {
+        return linkUrl;
+    }
+
+    public void setLinkUrl(String linkUrl) {
+        this.linkUrl = linkUrl;
     }
 }

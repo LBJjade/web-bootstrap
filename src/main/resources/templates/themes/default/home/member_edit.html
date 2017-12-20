@@ -161,19 +161,22 @@
                                 <td>
                                     <select id="sel_province" class="sel_area" onchange="f_getCity()">
                                         <option value="0">请选择省份</option>
-                                        <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
+                                        <option :value="item.id" :selected="bindId==item.id?'selected':''"
+                                                v-for="item in items" v-cloak="">
                                             {{item.name}}
                                         </option>
                                     </select>
                                     <select id="sel_city" class="sel_area" onchange="f_getArea()">
                                         <option value="0">请选择城市</option>
-                                        <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
+                                        <option :value="item.id" :selected="bindId==item.id?'selected':''"
+                                                v-for="item in items" v-cloak="">
                                             {{item.name}}
                                         </option>
                                     </select>
                                     <select id="sel_area" class="sel_area">
                                         <option value="0">请选择区域</option>
-                                        <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
+                                        <option :value="item.id" :selected="bindId==item.id?'selected':''"
+                                                v-for="item in items" v-cloak="">
                                             {{item.name}}
                                         </option>
                                     </select>
@@ -192,15 +195,18 @@
                             <tr>
                                 <td style="border: none">身份证<i style="color: red">* </i>：</td>
                                 <td style="border: none">
-                                    <span>正面<i style="color: red">* </i></span><span style="margin-left: 95px">背面<i style="color: red">* </i></span>
+                                    <span>正面<i style="color: red">* </i></span><span style="margin-left: 95px">背面<i
+                                        style="color: red">* </i></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td></td>
                                 <td>
                                     <div class="div_img">
-                                        <input type="file" id="ipt_f" class="input_img" onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg"/>
-                                        <input type="file" id="ipf_b" class="input_img input_img2" onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg"/>
+                                        <input type="file" id="ipt_f" class="input_img"
+                                               onchange="f_preImg(this.id,'img_f')" accept="image/png,image/jpeg"/>
+                                        <input type="file" id="ipf_b" class="input_img input_img2"
+                                               onchange="f_preImg(this.id,'img_b')" accept="image/png,image/jpeg"/>
                                     </div>
                                     <img id="img_f"
                                          th:src="${config.getFileRoot()+(member.getIdCardFront()==null?'image/idcard/id_card.png':member.getIdCardFront())+'?x-oss-process=image/resize,m_lfit,h_120,w_120'}"
@@ -225,19 +231,23 @@
                             <tr>
                                 <td>生日<i style="color: red">* </i>：</td>
                                 <td>
-                                    <input id="ipt_birthday" class="form-control no_border_radius" style="height: 34px;width: 100%" th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
+                                    <input id="ipt_birthday" class="form-control no_border_radius"
+                                           style="height: 34px;width: 100%"
+                                           th:value="${member.getBirthday()!=null?(#dates.format(member.getBirthday(),'yyyy-MM-dd')):null}"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>曾参与的公益项目：</td>
                                 <td>
-                                    <textarea id="ipt_project" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                                    <textarea id="ipt_project" class="form-control no_border_radius" rows="5"
+                                              style="margin: 10px 0px 10px 0px;"></textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <td>个人说明：</td>
                                 <td>
-                                    <textarea id="ipt_summary" class="form-control no_border_radius" rows="5" style="margin: 10px 0px 10px 0px;"></textarea>
+                                    <textarea id="ipt_summary" class="form-control no_border_radius" rows="5"
+                                              style="margin: 10px 0px 10px 0px;"></textarea>
                                 </td>
                             </tr>
                         </table>
@@ -337,14 +347,15 @@
         var fileVal_b = $("#ipf_b").val();
         var selectVel = $("#ipt_sex").val();
         var dateVel = $("#ipt_birthday").val();
-        provinceId = $("#sel_province").val();
+
 
         if (!f_nameValidate($("#ipt_name").val())) {
-            layer.alert("请输入姓名");
+            layer.alert("请正确输入姓名");
             $("#ipt_name").focus();
             return;
         }
 
+        provinceId = $("#sel_province").val();
         if (provinceId == 0) {
             layer.alert("请选择省份");
             return;
@@ -363,84 +374,74 @@
         }
 
         if (!f_idcardValidate($("#ipt_id_card").val())) {
-            layer.alert("请输入正确的身份证号");
+            layer.alert("请正确输入身份证号");
             $("#ipt_id_card").focus();
             return;
         }
 
         if (fileVal_f == "" && memberInfo.validation === 1) {
-            layer.alert("身份证正面还没上传");
+            layer.alert("请上传身份证正面");
             return;
         }
 
         if (fileVal_b == "" && memberInfo.validation === 1) {
-            layer.alert("身份证背面还没上传");
+            layer.alert("请上传身份证背面");
             return;
         }
 
         if (selectVel == -1) {
-            layer.alert("性别不能为空");
+            layer.alert("请选择性别");
             return;
         }
 
         if (dateVel == "") {
-            layer.alert("生日不能为空");
+            layer.alert("请输入生日");
             return;
         }
 
+        loadShade = layer.load(1, {
+            shade: [0.1, '#fff']
+        });
+        var memberName = $("#ipt_name").val();
+        var mobile = $("#ipt_mobile").val();
+        var idCard = $("#ipt_id_card").val();
+        var sex = $("#ipt_sex").val();
+        var birthday = $("#ipt_birthday").val();
+        var project = $("#ipt_project").val();
+        var summary = $("#ipt_summary").val();
 
-//        if (fileVal_f == "" && memberInfo.validation === 1) {
-//            layer.alert("身份证正面还没上传");
-//        } else if (fileVal_b == "" && memberInfo.validation === 1) {
-//            layer.alert("身份证背面还没上传");
-//        } else if (selectVel == -1) {
-//            layer.alert("性别不能为空");
-//        } else if (dateVel == "") {
-//            layer.alert("生日不能为空");
-//        } else {
-            loadShade = layer.load(1, {
-                shade: [0.1, '#fff']
-            });
-            var memberName = $("#ipt_name").val();
-            var mobile = $("#ipt_mobile").val();
-            var idCard = $("#ipt_id_card").val();
-            var sex = $("#ipt_sex").val();
-            var birthday = $("#ipt_birthday").val();
-            var project = $("#ipt_project").val();
-            var summary = $("#ipt_summary").val();
-
-            $.ajax({
-                url: '/home/member/submit',
-                data: {
-                    name: memberName,
-                    mobile: mobile,
-                    idCard: idCard,
-                    sex: sex,
-                    birthday: birthday,
-                    project: project,
-                    summary: summary,
-                    provinceId: provinceId,
-                    cityId: cityId,
-                    areaId: areaId,
-                    idCardFront: imgF,
-                    idCardBack: imgB
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function (data) {
-                    layer.close(loadShade);
-                    if (data.code === 200) {
-                        layer.alert(data.msg, function () {
-                            window.location.href = "/home";
-                        });
-                        setTimeout(function () {
-                            window.location.href = "/home";
-                        }, 3000);
-                    } else {
-                        layer.alert(data.msg);
-                    }
+        $.ajax({
+            url: '/home/member/submit',
+            data: {
+                name: memberName,
+                mobile: mobile,
+                idCard: idCard,
+                sex: sex,
+                birthday: birthday,
+                project: project,
+                summary: summary,
+                provinceId: provinceId,
+                cityId: cityId,
+                areaId: areaId,
+                idCardFront: imgF,
+                idCardBack: imgB
+            },
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                layer.close(loadShade);
+                if (data.code === 200) {
+                    layer.alert(data.msg, function () {
+                        window.location.href = "/home";
+                    });
+                    setTimeout(function () {
+                        window.location.href = "/home";
+                    }, 3000);
+                } else {
+                    layer.alert(data.msg);
                 }
-            });
+            }
+        });
 //        }
 
     });
