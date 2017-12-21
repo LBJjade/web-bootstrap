@@ -32,7 +32,7 @@ public class ProjectServiceImpl implements IProjectService {
     public PageInfo<ListProjectExtension> GetProjectList(int pageNum, int pageSize) {
         ProjectCondition condition = new ProjectCondition();
         condition.setOrderByClause("create_time desc");
-        condition.createCriteria().addEnable(1).addStatus(3);
+        condition.createCriteria().addEnable(1).addStatus(5);
         PageHelper.startPage(pageNum, pageSize);
         List<ListProjectExtension> data = projectMapper.SelectByCondition(condition);
         PageInfo<ListProjectExtension> pageInfo = new PageInfo<ListProjectExtension>(data);
@@ -49,7 +49,7 @@ public class ProjectServiceImpl implements IProjectService {
     public PageInfo<ListProjectExtension> GetProjectList(int pageNum, int pageSize, long projectTypeId) {
         ProjectCondition condition=new ProjectCondition();
         condition.setOrderByClause("create_time desc");
-        condition.createCriteria().addEnable(1).addProjectType(projectTypeId).addStatus(3);
+        condition.createCriteria().addEnable(1).addProjectType(projectTypeId).addStatus(5);
         PageHelper.startPage(pageNum,pageSize);
         List<ListProjectExtension> data = projectMapper.SelectByCondition(condition);
         PageInfo<ListProjectExtension> pageInfo = new PageInfo<ListProjectExtension>(data);
