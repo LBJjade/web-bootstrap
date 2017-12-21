@@ -26,7 +26,7 @@
         p.id_,p.project_name,p.summary,p.create_time,p.thumb_img,b.sort
         FROM dnt_project p
         INNER JOIN dnt_block_detail b ON p.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
-        WHERE p.enable_ = 1 AND p.status = 3
+        WHERE p.enable_ = 1 AND p.status = 5
         ORDER BY b.sort ASC
     </select>
 

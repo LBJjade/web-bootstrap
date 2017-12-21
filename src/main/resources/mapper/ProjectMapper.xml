@@ -122,7 +122,7 @@
       id_,
       project_name,
       thumb_img
-    FROM dnt_project WHERE enable_ = 1 AND status = 3 AND project_type_id= #{param1} AND  id_ != #{param2} LIMIT #{param3}
+    FROM dnt_project WHERE enable_ = 1 AND status = 5 AND project_type_id= #{param1} AND  id_ != #{param2} LIMIT #{param3}
   </select>
 
     <select id="SelectProjectDetail" parameterType="java.lang.Long" resultMap="DetailResultMap">
@@ -143,14 +143,14 @@
       dnt_project p
     LEFT JOIN
       dnt_project_type t on p.project_type_id = t.id_
-    WHERE p.id_=#{projectId,jdbcType=BIGINT} AND p.enable_ = 1 AND p.status =3
+    WHERE p.id_=#{projectId,jdbcType=BIGINT} AND p.enable_ = 1 AND p.status = 5
   </select>
 
     <select id="SelectProjectByTypeId" parameterType="java.lang.Long" resultMap="ListProjectResultMap">
     SELECT
       id_,
       project_name
-    FROM dnt_project WHERE enable_ = 1 AND status = 3 AND project_type_id = #{projectTypeId,jdbcType=BIGINT}
+    FROM dnt_project WHERE enable_ = 1 AND status = 5 AND project_type_id = #{projectTypeId,jdbcType=BIGINT}
   </select>
 
     <select id="SelectProjectByMemberId" parameterType="java.lang.Long" resultMap="MemberProjectResultMap">
