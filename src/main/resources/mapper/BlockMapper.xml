@@ -3,21 +3,22 @@
 <mapper namespace="com.becheer.donation.dao.BlockMapper">
 
     <resultMap id="BlockProjectResultMap" type="com.becheer.donation.model.extension.project.ListProjectExtension">
-        <id column="id_" jdbcType="BIGINT" property="projectId" />
-        <result column="project_name" jdbcType="VARCHAR" property="projectName" />
-        <result column="summary" jdbcType="VARCHAR" property="summary" />
-        <result column="create_time" jdbcType="DATE" property="createTime" />
-        <result column="sort" jdbcType="INTEGER" property="sort" />
-        <result column="thumb_img" jdbcType="VARCHAR" property="img" />
+        <id column="id_" jdbcType="BIGINT" property="projectId"/>
+        <result column="project_name" jdbcType="VARCHAR" property="projectName"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="thumb_img" jdbcType="VARCHAR" property="img"/>
     </resultMap>
 
     <resultMap id="BlockArticleResultMap" type="com.becheer.donation.model.extension.article.ListArticleExtension">
-        <id column="id_" jdbcType="BIGINT" property="articleId" />
-        <result column="title" jdbcType="VARCHAR" property="title" />
-        <result column="summary" jdbcType="VARCHAR" property="summary" />
-        <result column="create_time" jdbcType="DATE" property="createTime" />
-        <result column="sort" jdbcType="INTEGER" property="sort" />
-        <result column="thumb_img" jdbcType="VARCHAR" property="img" />
+        <id column="id_" jdbcType="BIGINT" property="articleId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="create_time" jdbcType="DATE" property="createTime"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="thumb_img" jdbcType="VARCHAR" property="img"/>
+        <result column="link_url" jdbcType="VARCHAR" property="linkUrl"/>
     </resultMap>
 
     <select id="selectProjectByBlockId" parameterType="java.lang.Long" resultMap="BlockProjectResultMap">
@@ -31,7 +32,7 @@
 
     <select id="selectArticleByBlockId" parameterType="java.lang.Long" resultMap="BlockArticleResultMap">
         SELECT
-        a.id_,a.title,a.summary,a.create_time,a.thumb_img,b.sort
+        a.id_,a.title,a.summary,a.create_time,a.thumb_img,b.sort,a.link_url
         FROM dnt_article a
         INNER JOIN dnt_block_detail b ON a.id_=b.ref_record_id and b.block_id=#{id,jdbcType=BIGINT}
         WHERE a.enable_ = 1

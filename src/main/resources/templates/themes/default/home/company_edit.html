@@ -85,11 +85,10 @@
             font-size: 16px;
         }
 
-        .td_title{
+        .td_title {
             width: 150px !important;
             padding-right: 0px !important;
         }
-
 
 
     </style>
@@ -179,19 +178,22 @@
                             <td>
                                 <select id="sel_province" class="sel_area" onchange="f_getCity()">
                                     <option value="0">请选择省份</option>
-                                    <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
+                                    <option :value="item.id" :selected="bindId==item.id?'selected':''"
+                                            v-for="item in items" v-cloak="">
                                         {{item.name}}
                                     </option>
                                 </select>
                                 <select id="sel_city" class="sel_area" onchange="f_getArea()">
                                     <option value="0">请选择城市</option>
-                                    <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
+                                    <option :value="item.id" :selected="bindId==item.id?'selected':''"
+                                            v-for="item in items" v-cloak="">
                                         {{item.name}}
                                     </option>
                                 </select>
                                 <select id="sel_area" class="sel_area">
                                     <option value="0">请选择区域</option>
-                                    <option :value="item.id" :selected="bindId==item.id?'selected':''" v-for="item in items" v-cloak="">
+                                    <option :value="item.id" :selected="bindId==item.id?'selected':''"
+                                            v-for="item in items" v-cloak="">
                                         {{item.name}}
                                     </option>
                                 </select>
@@ -312,20 +314,26 @@
         }
     }
 
+    //编辑表单验证
     $(".btn_save").click(function () {
         if ($("#ipt_name").val() == "") {
-            layer.alert("公司名称不能为空");
+            layer.alert("请输入公司名称");
             return;
         }
 
         if (!f_codeValidate($("#ipt_organizationCode").val())) {
-            layer.alert("统一社会信用代码格式错误");
+            layer.alert("请输入统一社会信用代码");
+            return;
+        }
+
+        if ($("#ipt_type").val() == 0) {
+            layer.alert("请选择公司属性");
             return;
         }
 
         var fileVal = $("#ipt_license").val();
-        if (fileVal == ""&&memberInfo.validation === 1) {
-            layer.alert("请上传营业执照");
+        if (fileVal == "" && memberInfo.validation === 1) {
+            layer.alert("请上传营业执照照片");
             return;
         }
 
@@ -457,6 +465,7 @@
         });
         return result;
     }
+
     /*]]>*/
 </script>
 </body>
