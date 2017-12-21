@@ -374,18 +374,18 @@
         }
 
         if (!f_idcardValidate($("#ipt_id_card").val())) {
-            layer.alert("请正确输入身份证号");
+            layer.alert("身份证号格式错误");
             $("#ipt_id_card").focus();
             return;
         }
 
         if (fileVal_f == "" && memberInfo.validation === 1) {
-            layer.alert("请上传身份证正面");
+            layer.alert("请上传身份证正面照片");
             return;
         }
 
         if (fileVal_b == "" && memberInfo.validation === 1) {
-            layer.alert("请上传身份证背面");
+            layer.alert("请上传身份证背面照片");
             return;
         }
 

@@ -317,12 +317,12 @@
     //编辑表单验证
     $(".btn_save").click(function () {
         if ($("#ipt_name").val() == "") {
-            layer.alert("请正确输入公司名称");
+            layer.alert("请输入公司名称");
             return;
         }
 
         if (!f_codeValidate($("#ipt_organizationCode").val())) {
-            layer.alert("请正确输入统一社会信用代码");
+            layer.alert("请输入统一社会信用代码");
             return;
         }
 
@@ -333,7 +333,7 @@
 
         var fileVal = $("#ipt_license").val();
         if (fileVal == "" && memberInfo.validation === 1) {
-            layer.alert("请上传营业执照");
+            layer.alert("请上传营业执照照片");
             return;
         }
 
