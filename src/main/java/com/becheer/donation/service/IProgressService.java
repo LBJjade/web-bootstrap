@@ -1,5 +1,6 @@
 package com.becheer.donation.service;
 
+import com.becheer.donation.model.Progress;
 import com.becheer.donation.model.extension.progress.ProgressExtension;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface IProgressService {
     List<ProgressExtension>GetAllProgress(long refRecordId,String refTable);
 
     long AddProgress(String title,String content,String refTable,long refRecordId,long memberId,int enable);
+
+    int batchInsert(List<Progress> progresses);
 }

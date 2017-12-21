@@ -84,4 +84,19 @@
         #{createMemberId,jdbcType=BIGINT}
         )
     </insert>
+
+    <insert id="batchAdd" parameterType="java.util.List">
+        INSERT INTO dnt_progress(
+        ref_table,
+        ref_record_id,
+        title,
+        content,
+        enable_,
+        progress_type
+        )VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.refTable},#{item.refRecordId},#{item.title},#{item.content},#{item.enable},#{item.progressType})
+        </foreach>
+    </insert>
+
 </mapper>

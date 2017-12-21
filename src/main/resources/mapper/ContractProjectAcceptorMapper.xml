@@ -7,7 +7,7 @@
         WHERE contract_project_id=#{id}
     </select>
 
-    <select id="selectIdByContractProjectIds" parameterType="java.util.List" resultType="java.util.List">
+    <select id="selectIdByContractProjectIds" parameterType="java.util.List" resultType="java.lang.Long">
         SELECT id_
         FROM dnt_contract_project_acceptor
         WHERE
