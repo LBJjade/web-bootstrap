@@ -16,4 +16,6 @@ public interface ProgressMapper {
     List<ProgressExtension>SelectAllProgress(long refRecordId,String refTable);
 
     long InsertProgress(Progress progress);
+
+    int batchAdd(List<Progress> progresses);
 }
