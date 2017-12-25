@@ -27,6 +27,8 @@ public class OssConfig {
 
     private String licensePath;
 
+    private String attachPath;
+
     public String getEndpoint() {
         return endpoint;
     }
@@ -81,5 +83,13 @@ public class OssConfig {
 
     public void setLicensePath(String licensePath) {
         this.licensePath = licensePath;
+    }
+
+    public String getAttachPath() {
+        return attachPath;
+    }
+
+    public void setAttachPath(String attachPath) {
+        this.attachPath = attachPath;
     }
 }

@@ -50,7 +50,7 @@ public class ContractServiceImpl implements IContractService {
     }
 
     @Override
-    public ResponseDto signContract(long contractId, long memberId) {
+    public ResponseDto signContract(long contractId, long memberId,String imgArray) {
         int result = contractMapper.UpdateContractStatus(contractId, memberId);
         if (result > 0) {
             MemberContractDetailExtension contract=contractMapper.selectContractByContractProjectId(contractId);

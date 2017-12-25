@@ -3,6 +3,7 @@ package com.becheer.donation.controller.home;
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.attach.AttachAddExtension;
 import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
@@ -13,6 +14,7 @@ import com.becheer.donation.service.IPaymentPlanService;
 import com.becheer.donation.strings.Message;
 import com.becheer.donation.strings.Role;
 import com.becheer.donation.utils.RedisUtil;
+import com.becheer.donation.utils.StringUtil;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -133,17 +135,20 @@ public class HomeContractController extends BaseController {
 
     @PostMapping("/sign")
     @ResponseBody
-    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId) {
+    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId,@RequestParam("attachList[]") List<AttachAddExtension> attachList) {
         MemberSessionExtension currentMember = GetCurrentUser(request);
         if (currentMember == null) {
             return MemberAuthFailed();
+        }
+        if (StringUtil.isNull("")){
+            return new ResponseDto(400, Message.CONTRACT_IMG_NULL);
         }
         MemberContractContentExtension contract = contractService.GetContractContent(contractId);
         if (contract.getMemberId() != currentMember.getMemberId()) {
             return MemberAuthFailed();
         }
         try {
-            ResponseDto result = contractService.signContract(contractId, currentMember.getMemberId());
+            ResponseDto result = contractService.signContract(contractId, currentMember.getMemberId(),"");
             if (result.getCode() == 200) {
                 RedisUtil.delContractkey(contractId);
             }

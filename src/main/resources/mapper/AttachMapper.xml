@@ -18,4 +18,25 @@
     <select id="selectAttach" resultMap="ListResultMap">
         SELECT * FROM dnt_attach WHERE ref_id = #{param2} AND ref_table = #{param1} AND enable_ = 1
     </select>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO dnt_attach VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+              #{item.name},
+              #{item.refTable},
+              #{item.refId},
+              #{item.url},
+              #{item.attach_url},
+              #{item.enable},
+              #{item.remark},
+              #{item.createTime},
+              #{item.createBy},
+              #{item.updateTime},
+              #{item.updateBy},
+              #{item.attachType},
+              #{item.attachSize}
+            )
+        </foreach>
+    </insert>
 </mapper>

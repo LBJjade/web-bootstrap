@@ -1,5 +1,6 @@
 package com.becheer.donation.dao;
 
+import com.becheer.donation.model.Attach;
 import com.becheer.donation.model.extension.attach.AttachExtension;
 import org.springframework.stereotype.Component;
 
@@ -17,4 +18,6 @@ import java.util.List;
 @Component
 public interface AttachMapper {
     List<AttachExtension> selectAttach(String refTable,long refId);
+
+    int batchInsert(List<Attach> attachList);
 }
