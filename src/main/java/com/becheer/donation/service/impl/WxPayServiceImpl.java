@@ -100,13 +100,13 @@ public class WxPayServiceImpl implements IWxPayService {
         }
 
 
-        // 验证签名
-//        if (!WxPayHelper.verifyNotify(notify)) {
-//            logger.warn("微信支付结果通知: !!!签名失败!!!");
-//            returnToWxPay.put("return_code", "FAIL");
-//            returnToWxPay.put("return_msg", "签名失败");
-//            return WxPayHelper.toXml(returnToWxPay);
-//        }
+//         验证签名
+        if (!WxPayHelper.verifyNotify(notify)) {
+            logger.warn("微信支付结果通知: !!!签名失败!!!");
+            returnToWxPay.put("return_code", "FAIL");
+            returnToWxPay.put("return_msg", "签名失败");
+            return WxPayHelper.toXml(returnToWxPay);
+        }
 
         // 验证appid、mch_id等
         if (!WxPayHelper.verifyAppIdAndMchId(notify)) {
@@ -192,14 +192,17 @@ public class WxPayServiceImpl implements IWxPayService {
         Integer refRecordId = dntPaymentPlan.getRefRecordId();
         long projectId;
         if (refTable.equals("dnt_no_contract_donate")) {
+            Long noContractDonateId;
             projectId = dntnoContractDonateService.selectProjectIdById(refRecordId);
-            List<NoContractDonateExtension> resultList = noContractDonateService.GetRecentNoContractDonate(projectId, 1);
-            NoContractDonateExtension noContractDonateExtension = resultList.get(0);
-            String location = noContractDonateExtension.getLocation();
+//            List<NoContractDonateExtension> resultList = noContractDonateService.GetRecentNoContractDonate(projectId, 1);
+//            NoContractDonateExtension noContractDonateExtension = resultList.get(0);
+//            String location = noContractDonateExtension.getLocation();
+            noContractDonateId = dntnoContractDonateService.selectMemberIdById(56);
             //写入progress
             Float free = Float.valueOf(totalFee);
-            projectProgressService.insert(projectId, location + "捐赠成功了", location + "对该项目捐赠了", location + "对该项目捐赠了" + free / 100.00 + "元", 5);
-            progressService.AddProgress(location + "捐赠成功了", location + "对该项目捐赠了", "dnt_member", 1, 1, 1);
+            projectProgressService.insert(projectId, "捐赠成功了", "对该项目捐赠了", "对该项目捐赠了" + free / 100.00 + "元", 5);
+
+            progressService.AddProgress("捐赠成功了", "对该项目捐赠了", "dnt_member", noContractDonateId, noContractDonateId, 1);
         } else {
             //写进进程表
             Integer i = 0;
@@ -207,35 +210,49 @@ public class WxPayServiceImpl implements IWxPayService {
             List<Progress> progresses = new ArrayList<>();
             List<DntContractProject> projects = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
             MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
+            Long memberId = memberContractDetailExtension.getMemberId();
             RedisUtil.delContractkey(refRecordId);
             DecimalFormat df = new DecimalFormat("0.00");
             List<Long> contractProjectIds = new ArrayList<>();
+            //按比例分配捐赠金额
+            Float donate;
+            Float donateAmountbefore = 0.00f;
+            String donatemoney;
+            int x = 0;
+//            Long memberId1=contractService.selectMemberIdById(refRecordId);
             for (DntContractProject project : projects) {
                 projectId = project.getProjectId();
                 Long contractProjectId = project.getId();
                 //清除缓存
                 contractProjectIds.add(contractProjectId);
                 RedisUtil.delContractProjectkey(contractProjectId);
-
-                //按比例分配捐赠金额
-                Integer contractAmount = project.getContractAmount();
-                Long targetAmount = memberContractDetailExtension.getContractAmount();
-                Float tAmount = Float.valueOf(targetAmount);
-                Float cAmount = Float.valueOf(contractAmount);
-                Float tfree = Float.valueOf(totalFee);
-                Float dnmateAmount = totalFee * (cAmount / tAmount);
                 //projectProgress.对象
                 ProjectProgress projectProgress = new ProjectProgress();
                 projectProgress.setProjectId(projectId);
                 projectProgress.setTitle("捐赠成功了");
                 projectProgress.setSummary("对该项目捐赠了");
-
-//                String s = df.format((float)a/b);
-                projectProgress.setContent("对该项目捐赠了" + df.format(dnmateAmount / 100.00) + "元");
                 projectProgress.setStatus(5);
 
+                if (x < projects.size() - 1) {
+                    Integer contractAmount = project.getContractAmount();
+                    Long targetAmount = memberContractDetailExtension.getContractAmount();
+                    Float tAmount = Float.valueOf(targetAmount);
+                    Float cAmount = Float.valueOf(contractAmount);
+                    Float tfree = Float.valueOf(totalFee);
+                    donate = totalFee * (cAmount / tAmount);
+                    donatemoney = df.format(donate / 100.00);
+                    projectProgress.setContent("对该项目捐赠了" + donatemoney + "元");
+                    donateAmountbefore = donateAmountbefore + donate;
+                } else {
+                    Float tfree = Float.valueOf(totalFee);
+                    donate = tfree - donateAmountbefore;
+                    donatemoney = df.format(donate / 100.00);
+                    projectProgress.setContent("对该项目捐赠了" + donatemoney + "元");
+                }
+//                String s = df.format((float)a/b);
                 //progress对象
                 Progress progress = new Progress();
+                progress.setRefRecordId(memberId);
                 progress.setTitle("捐赠成功了");
                 progress.setContent("对该项目捐赠了");
                 progress.setRefTable("dnt_member");
@@ -246,21 +263,16 @@ public class WxPayServiceImpl implements IWxPayService {
                 progresses.add(progress);
                 //构建进程纪录
                 projectProgresses.add(projectProgress);
+                x++;
             }
-            try {
-                List<Long> ids = contractProjectAcceptorSerivce.selectByContractProjectIds(contractProjectIds);
-                for (Long id : ids) {
-                    RedisUtil.delContractProjectAcceptorkey(id);
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+
+            List<Long> ids = contractProjectAcceptorSerivce.selectByContractProjectIds(contractProjectIds);
+            for (Long id : ids) {
+                RedisUtil.delContractProjectAcceptorkey(id);
             }
+
             projectProgressService.batchInsert(projectProgresses);
-            try {
-                progressService.batchInsert(progresses);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+            progressService.batchInsert(progresses);
 
         }
 

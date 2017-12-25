@@ -116,4 +116,10 @@
         WHERE id_=(SELECT contract_id FROM dnt_contract_project WHERE id_ = #{contractProjectId,jdbcType=BIGINT} AND enable_ = 1)
          AND enable_ = 1 AND status >= 5
     </select>
+
+    <select id="selectMemberIdById" parameterType="java.lang.Integer" resultType="java.lang.Long">
+        SELECT member_id
+        FROM dnt_contract
+        WHERE id_=#{id}
+    </select>
 </mapper>

@@ -32,4 +32,9 @@ public class DntNoContractDonateServiceImpl implements IDntNoContractDonateServi
     public long selectProjectIdById(Integer id) {
         return mapper.selectProjectIdById(id);
     }
+
+    @Override
+    public Long selectMemberIdById(Integer id) {
+        return mapper.selectMemberIdById(id);
+    }
 }

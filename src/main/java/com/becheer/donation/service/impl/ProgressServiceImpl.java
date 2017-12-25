@@ -38,7 +38,7 @@ public class ProgressServiceImpl implements IProgressService{
         progress.setCreateMemberId(memberId);
         progress.setEnable(1);
         progress.setCreateTime(new Date());
-//        progress.setProgressType(3);
+        progress.setProgressType(3);
         progressMapper.InsertProgress(progress);
         return progress.getId();
     }
