@@ -24,7 +24,7 @@ public interface IContractService {
 
     MemberContractContentExtension GetContractContent(long contractId);
 
-    ResponseDto signContract(long contractId,long memberId);
+    ResponseDto signContract(long contractId,long memberId,String imgArray);
 
     MemberContractDetailExtension getContractByContractProjectId(long contractProjectId);
 

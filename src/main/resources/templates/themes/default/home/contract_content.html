@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <script th:src="@{/js/jquery-2.1.1.min.js}"></script>
     <script th:src="@{/plugin/layer/layer.js}"></script>
+    <script th:src="@{/plugin/vue/vue.min.js}"></script>
     <title>
         合同明细
     </title>
@@ -202,11 +203,40 @@
             width: 355px
         }
 
+        #div_img {
+            padding-left: 5px;
+            padding-top: 4px;
+            border: 1px #ccc solid;
+            min-height: 150px;
+            overflow: auto;
+            display: none;
+        }
+
+        #div_img span{
+            position: absolute;
+            height: 20px;
+            /*width: 120px;*/
+            background: rgba( 0, 0, 0, 0.2 );
+            /*width: 120px;*/
+            padding-left: 100px;
+            padding-right: 3px;
+            padding-top: 3px;
+        }
+
+        #div_img li{
+            list-style: none;
+            float: left;
+            padding: 10px;
+            position: relative;
+        }
+
         .info_button {
             display: inline-block;
             *display: inline;
             *zoom: 1;
-            width: 56px;
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 3px;
             height: 35px;
             line-height: 30px;
             background: #439fe4;
@@ -258,7 +288,7 @@
                 </tr>
             </table>
         </div>
-        <div class="m m2" style="margin-bottom: 50px;">
+        <div class="m m2" style="margin-bottom: 20px;">
             <div style="min-height: 450px">
                 <table class="tb4">
                     <tr>
@@ -274,10 +304,21 @@
                 </table>
             </div>
         </div>
+        <div id="div_img">
+            <ul id="ul_img">
+                <li v-for="item in items">
+                    <span>
+                        <img src="/image/icon/delete.png" v-on:click="f_delImg(item.url)"/>
+                    </span>
+                    <img :src="'http://becheer-donation.oss-cn-shenzhen.aliyuncs.com/'+item.url+'?x-oss-process=image/resize,m_fill,h_120,w_120,limit_0'"/>
+                </li>
+            </ul>
+        </div>
     </div>
         <div class="v-h">
             <div id="div_sign" th:if="${(contract.getStatus()==5||contract.getStatus()==6)&&contract.getaSignTime()==null}" class="w">
                 <span style="font-size: 14px;"><input type="checkbox" id="ipt_agree" />&nbsp;&nbsp;我已详细阅读并同意合同条款</span>
+                <button class="info_button" id="btn_add" onclick="f_showUpload()">上传签订材料</button>
                 <button class="info_button" id="btn_sign" onclick="f_sign()">签订</button>
             </div>
         </div>
@@ -286,18 +327,23 @@
 </body>
 <script type="text/javascript" th:inline="javascript">
     /*<![CDATA[*/
+    var vueContent;
     var contractId =/*[[${contract.getId()}]]*/;
 
+    var imgArray=new Array();
+
     function f_sign() {
-        if (!$("#ipt_agree").get(0).checked) {
-            layer.alert("请先仔细阅读并勾选'我已详细阅读并同意合同条款'");
+        if (imgArray.length===0){
+            layer.alert("请上传签订材料");
+        }else if (!$("#ipt_agree").get(0).checked) {
+            layer.alert("请细阅读并勾选'我已详细阅读并同意合同条款'");
         } else {
             layer.confirm("确定签订合同？", function () {
                 loadShade = layer.load(1, {shade: [0.1,'#fff']});
                     $.ajax({
                         url: '/home/contract/sign',
                         type: 'post',
-                        data: {contractId: contractId},
+                        data: {contractId: contractId,attachList:imgArray},
                         dataType: 'json',
                         success: function (data) {
                             layer.close(loadShade);
@@ -321,10 +367,40 @@
         }
     }
 
-//    function f_export() {
-//        layer.alert("导出功能正在完善");
-//    }
+    function f_delImg(imgUrl) {
+        for(var i=0;i<imgArray.length;i++){
+            if (imgArray[i].url===imgUrl){
+                imgArray.splice(i,1);
+                break;
+            }
+        }
+        if(imgArray.length===0){
+            $("#div_img").hide();
+        }
+    }
 
+
+    function f_showUpload(){
+        layer.open({
+            type: 2,
+            title: '上传签订材料',
+            shadeClose: true,
+            shade: 0.6,
+            area: ['900px', '400px'],
+            content: '/home/upload',
+            cancel:function () {
+                if (vueContent===undefined){
+                    vueContent=new Vue({
+                        el:'#ul_img',
+                        data:{items:imgArray}
+                    });
+                }else{
+                    vueContent.items.splice(imgArray.length);
+                }
+                $("#div_img").show();
+            }
+        });
+    }
     /*]]>*/
 </script>
 </html>

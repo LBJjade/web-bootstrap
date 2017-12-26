@@ -146,8 +146,8 @@ public class Message {
      */
     public static final String INTENTION_GET_SUCCESS = "获取捐赠意向成功";
     public static final String INTENTION_ADD_SUCCESS = "提交成功";
-    public static final String INTENTION_MEMBER_APPROVEING="您的资料正在审核中，请在审核通过后提交捐赠申请";
-    public static final String INTENTION_MEMBER_NOT_VAILD="您的账号尚未实名认证，请到会员中心提交实名认证资料";
+    public static final String INTENTION_MEMBER_APPROVEING = "您的资料正在审核中，请在审核通过后提交捐赠申请";
+    public static final String INTENTION_MEMBER_NOT_VAILD = "您的账号尚未实名认证，请到会员中心提交实名认证资料";
 
     /**
      * 合同
@@ -254,6 +254,7 @@ public class Message {
      */
     public static final String CONTRACT_SIGN_SUCCESS = "合同签订成功";
     public static final String CONTRACT_SIGN_FAILED = "合同签订失败";
+    public static final String CONTRACT_IMG_NULL = "请上传签订资料";
 
     /**
      * 文章
@@ -283,5 +284,12 @@ public class Message {
      * 省市区接口
      */
     public static final String AREA_GET_SUCCESS = "获取数据成功";
+
+    /**
+     * 文件上传
+     */
+    public static final String FILE_UPLOAD_SUCCESS = "上传成功";
+
+    public static final String FILE_UPLOAD_FAILED = "上传失败";
 
 }
