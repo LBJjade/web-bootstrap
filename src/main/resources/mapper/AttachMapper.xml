@@ -20,17 +20,19 @@
     </select>
 
     <insert id="batchInsert" parameterType="java.util.List">
-        INSERT INTO dnt_attach VALUES
+        INSERT INTO dnt_attach
+        (name, ref_table, ref_id, url, attach_url, enable_, remark_, create_time, create_by, update_time, update_by, attach_type, attach_size)
+        VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (
               #{item.name},
               #{item.refTable},
               #{item.refId},
               #{item.url},
-              #{item.attach_url},
+              #{item.attachUrl},
               #{item.enable},
               #{item.remark},
-              #{item.createTime},
+              now(),
               #{item.createBy},
               #{item.updateTime},
               #{item.updateBy},

@@ -497,7 +497,7 @@
         uploader;
 
     if (!WebUploader.Uploader.support()) {
-        layer.alert('Web Uploader 不支持您的浏览器');
+        layer.alert('请升级您的浏览器');
     }
 
     // 实例化
@@ -511,14 +511,14 @@
 
         accept: {
             title: 'Images',
-            extensions: 'gif,jpg,jpeg,bmp,png',
+            extensions: 'jpg,jpeg,png',
             mimeTypes: 'image/*'
         },
 
         disableGlobalDnd: true,
 
         chunked: true,
-        server: 'http://localhost:8080/home/upload/submit',
+        server: '/home/upload/submit',
         fileNumLimit: 300,
         fileSizeLimit: 5 * 1024 * 1024,    // 200 M
         fileSingleSizeLimit: 1 * 1024 * 1024    // 50 M
@@ -757,7 +757,9 @@
             case 'finish':
                 stats = uploader.getStats();
                 if (stats.successNum) {
-                    layer.alert('上传成功');
+                    layer.alert('上传成功',function () {
+                        parent.f_closeUpload();
+                    });
                 } else {
                     // 没有成功的图片，重设
                     state = 'done';
@@ -824,7 +826,7 @@
     });
 
     uploader.onError = function (code) {
-        layer.alert('Eroor: ' + code);
+        layer.alert(code);
     };
 
     $upload.on('click', function () {

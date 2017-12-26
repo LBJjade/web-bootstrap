@@ -343,7 +343,7 @@
                     $.ajax({
                         url: '/home/contract/sign',
                         type: 'post',
-                        data: {contractId: contractId,attachList:imgArray},
+                        data: {contractId: contractId,imgArray:JSON.stringify(imgArray)},
                         dataType: 'json',
                         success: function (data) {
                             layer.close(loadShade);
@@ -388,18 +388,21 @@
             shade: 0.6,
             area: ['900px', '400px'],
             content: '/home/upload',
-            cancel:function () {
-                if (vueContent===undefined){
-                    vueContent=new Vue({
-                        el:'#ul_img',
-                        data:{items:imgArray}
-                    });
-                }else{
-                    vueContent.items.splice(imgArray.length);
-                }
-                $("#div_img").show();
-            }
+            cancel:f_closeUpload()
         });
+    }
+
+    function f_closeUpload() {
+        if (vueContent===undefined){
+            vueContent=new Vue({
+                el:'#ul_img',
+                data:{items:imgArray}
+            });
+        }else{
+            vueContent.items.splice(imgArray.length);
+        }
+        $("#div_img").show();
+        layer.closeAll();
     }
     /*]]>*/
 </script>

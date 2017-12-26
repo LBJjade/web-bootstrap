@@ -1,5 +1,6 @@
 package com.becheer.donation.controller.home;
 
+import com.alibaba.fastjson.JSON;
 import com.becheer.donation.controller.BaseController;
 import com.becheer.donation.interfaces.Access;
 import com.becheer.donation.model.base.ResponseDto;
@@ -135,12 +136,13 @@ public class HomeContractController extends BaseController {
 
     @PostMapping("/sign")
     @ResponseBody
-    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId,@RequestParam("attachList[]") List<AttachAddExtension> attachList) {
+    public ResponseDto SignContract(HttpServletRequest request, @RequestParam long contractId,@RequestParam String imgArray) {
         MemberSessionExtension currentMember = GetCurrentUser(request);
         if (currentMember == null) {
             return MemberAuthFailed();
         }
-        if (StringUtil.isNull("")){
+        List<AttachAddExtension> attachList= JSON.parseArray(imgArray, AttachAddExtension.class);
+        if (attachList==null||attachList.size()==0){
             return new ResponseDto(400, Message.CONTRACT_IMG_NULL);
         }
         MemberContractContentExtension contract = contractService.GetContractContent(contractId);
@@ -148,7 +150,7 @@ public class HomeContractController extends BaseController {
             return MemberAuthFailed();
         }
         try {
-            ResponseDto result = contractService.signContract(contractId, currentMember.getMemberId(),"");
+            ResponseDto result = contractService.signContract(contractId, currentMember.getMemberId(),attachList);
             if (result.getCode() == 200) {
                 RedisUtil.delContractkey(contractId);
             }
