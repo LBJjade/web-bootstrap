@@ -14,4 +14,6 @@ public interface IDntNoContractDonateService {
     int update(DntNoContractDonate dntNoContractDonate);
 
     long selectProjectIdById(Integer id);
+
+    Long selectMemberIdById(Integer id);
 }

@@ -87,4 +87,10 @@
         WHERE id_=#{id}
     </select>
 
+    <select id="selectMemberIdById" parameterType="java.lang.Integer" resultType="java.lang.Long">
+        SELECT member_id
+        FROM dnt_no_contract_donate
+        WHERE id_=#{id}
+    </select>
+
 </mapper>

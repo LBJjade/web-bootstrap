@@ -75,4 +75,9 @@ public class ContractServiceImpl implements IContractService {
     public MemberContractDetailExtension getContractByContractProjectId(long contractProjectId) {
         return contractMapper.selectContractByContractProjectId(contractProjectId);
     }
+
+    @Override
+    public Long selectMemberIdById(Integer id) {
+        return contractMapper.selectMemberIdById(id);
+    }
 }

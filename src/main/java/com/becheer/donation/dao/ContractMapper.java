@@ -23,4 +23,6 @@ public interface ContractMapper {
     int UpdateContractStatus(long contractId, long memberId);
 
     MemberContractDetailExtension selectContractByContractProjectId(long contractProjectId);
+
+    Long selectMemberIdById(Integer Id);
 }

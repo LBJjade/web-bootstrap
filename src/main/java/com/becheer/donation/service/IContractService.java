@@ -27,4 +27,6 @@ public interface IContractService {
     ResponseDto signContract(long contractId,long memberId);
 
     MemberContractDetailExtension getContractByContractProjectId(long contractProjectId);
+
+    Long selectMemberIdById(Integer id);
 }
