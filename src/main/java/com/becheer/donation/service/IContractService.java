@@ -7,6 +7,7 @@ package com.becheer.donation.service;
 */
 
 import com.becheer.donation.model.base.ResponseDto;
+import com.becheer.donation.model.extension.attach.AttachAddExtension;
 import com.becheer.donation.model.extension.contract.MemberContractContentExtension;
 import com.becheer.donation.model.extension.contract.MemberContractDetailExtension;
 import com.becheer.donation.model.extension.contract.MemberContractExtension;
@@ -24,7 +25,7 @@ public interface IContractService {
 
     MemberContractContentExtension GetContractContent(long contractId);
 
-    ResponseDto signContract(long contractId,long memberId,String imgArray);
+    ResponseDto signContract(long contractId, long memberId, List<AttachAddExtension> attachList);
 
     MemberContractDetailExtension getContractByContractProjectId(long contractProjectId);
 

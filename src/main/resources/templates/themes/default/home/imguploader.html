@@ -757,7 +757,9 @@
             case 'finish':
                 stats = uploader.getStats();
                 if (stats.successNum) {
-                    layer.alert('上传成功');
+                    layer.alert('上传成功',function () {
+                        parent.f_closeUpload();
+                    });
                 } else {
                     // 没有成功的图片，重设
                     state = 'done';
