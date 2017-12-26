@@ -101,12 +101,12 @@ public class WxPayServiceImpl implements IWxPayService {
 
 
 //         验证签名
-        if (!WxPayHelper.verifyNotify(notify)) {
-            logger.warn("微信支付结果通知: !!!签名失败!!!");
-            returnToWxPay.put("return_code", "FAIL");
-            returnToWxPay.put("return_msg", "签名失败");
-            return WxPayHelper.toXml(returnToWxPay);
-        }
+//        if (!WxPayHelper.verifyNotify(notify)) {
+//            logger.warn("微信支付结果通知: !!!签名失败!!!");
+//            returnToWxPay.put("return_code", "FAIL");
+//            returnToWxPay.put("return_msg", "签名失败");
+//            return WxPayHelper.toXml(returnToWxPay);
+//        }
 
         // 验证appid、mch_id等
         if (!WxPayHelper.verifyAppIdAndMchId(notify)) {
@@ -202,7 +202,7 @@ public class WxPayServiceImpl implements IWxPayService {
             Float free = Float.valueOf(totalFee);
             projectProgressService.insert(projectId, "捐赠成功了", "对该项目捐赠了", "对该项目捐赠了" + free / 100.00 + "元", 5);
 
-            progressService.AddProgress("捐赠成功了", "对该项目捐赠了", "dnt_member", noContractDonateId, noContractDonateId, 1);
+            progressService.AddProgress("捐赠成功了", "对该项目捐赠了", "dnt_member", noContractDonateId, noContractDonateId, 1, 3);
         } else {
             //写进进程表
             Integer i = 0;

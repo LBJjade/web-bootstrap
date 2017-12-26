@@ -123,7 +123,7 @@ public class IndexController extends BaseController {
             intention.setMemberId(currentMember.getMemberId());
             ResponseDto result = intentionExtensionService.AddIntentionExtension(intention);
             if (result.getCode() == 200) {
-                progressService.AddProgress("您提交了捐赠意向", "您提交了捐赠意向", "dnt_intention", (long) result.getResult(), currentMember.getMemberId(), 1);
+                progressService.AddProgress("您提交了捐赠意向", "您提交了捐赠意向", "dnt_intention", (long) result.getResult(), currentMember.getMemberId(), 1, 0);
             }
             return result;
 

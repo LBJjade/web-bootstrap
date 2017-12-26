@@ -125,7 +125,7 @@ public class HomeApplyController extends BaseController {
             if (title.length() > 30) {
                 title = title.substring(0, 30);
             }
-            long result = progressService.AddProgress(title, content, "dnt_intention", applyId, currentMember.getMemberId(), 1);
+            long result = progressService.AddProgress(title, content, "dnt_intention", applyId, currentMember.getMemberId(), 1, 0);
             if (result > 0) {
                 return new ResponseDto(200, Message.MEMBER_INTENTION_PROGRESS_ADD_SUCCESS, result);
             } else {

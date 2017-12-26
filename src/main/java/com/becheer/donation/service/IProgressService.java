@@ -13,7 +13,7 @@ import java.util.List;
 public interface IProgressService {
     List<ProgressExtension>GetAllProgress(long refRecordId,String refTable);
 
-    long AddProgress(String title,String content,String refTable,long refRecordId,long memberId,int enable);
+    long AddProgress(String title, String content, String refTable, long refRecordId, long memberId, int enable, int progressType);
 
     int batchInsert(List<Progress> progresses);
 }
