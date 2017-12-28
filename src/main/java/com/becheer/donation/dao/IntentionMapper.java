@@ -21,6 +21,6 @@ public interface IntentionMapper {
 
     int InsertIntention(Intention intention);
 
-    String generateContractNo(String iNamePre, String iModule, int iNum, int iNoLength, String oNewNo);
+    String generateNo(String iNamePre, String iModule, int iNum, int iNoLength, String oNewNo);
 
 }

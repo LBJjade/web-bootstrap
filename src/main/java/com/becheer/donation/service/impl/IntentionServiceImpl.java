@@ -52,10 +52,10 @@ public class IntentionServiceImpl implements IIntentionService {
     }
 
     @Override
-    public String generateContractNo() {
+    public String generateNo() {
         String iNamePre = "", iModule = "IT";
         int iNum = 8, iNoLength = 6;
-        return intentionMapper.generateContractNo(iNamePre, iModule, iNum, iNoLength, "");
+        return intentionMapper.generateNo(iNamePre, iModule, iNum, iNoLength, "");
     }
 
 }

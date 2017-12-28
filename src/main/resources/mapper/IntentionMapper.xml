@@ -147,7 +147,7 @@
         )
     </insert>
 
-    <select id="generateContractNo" resultType="String" statementType="CALLABLE">
+    <select id="generateNo" resultType="String" statementType="CALLABLE">
         call sp_generate_no(#{param1},#{param2},#{param3},#{param4},#{param5});
     </select>
 
