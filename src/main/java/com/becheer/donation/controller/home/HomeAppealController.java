@@ -163,7 +163,7 @@ public class HomeAppealController extends BaseController {
             long memberId = currentMember.memberId;
             ResponseDto result = appealService.InsertAppeal(title, method, content, contractId, contract.getContractNo(), projectId, memberId, 1, 0);
             if (result.getCode() == 200) {
-                progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int) result.getResult(), memberId, 1);
+                progressService.AddProgress("您提交了申诉", "您提交了申诉", "dnt_appeal", (int) result.getResult(), memberId, 1, 0);
             }
             return result;
         } catch (Exception ex) {
@@ -191,7 +191,7 @@ public class HomeAppealController extends BaseController {
             if (title.length() > 30) {
                 title = title.substring(0, 30);
             }
-            long result = progressService.AddProgress(title, content, "dnt_appeal", appealId, currentMember.getMemberId(), 1);
+            long result = progressService.AddProgress(title, content, "dnt_appeal", appealId, currentMember.getMemberId(), 1, 0);
             if (result > 0) {
                 //已驳回的申述,如果用户继续提交资料,则状态变为处理中
                 if (appeal.getStatus() == 1) {
@@ -223,7 +223,7 @@ public class HomeAppealController extends BaseController {
                 return new ResponseDto(400, Message.MEMBER_APPEAL_STATUS_ERROR);
             }
             //解决
-            progressService.AddProgress("申诉已解决", "申诉已解决", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
+            progressService.AddProgress("申诉已解决", "申诉已解决", "dnt_appeal", appealId, currentMember.getMemberId(), 1, 0);
             return appealService.UpdateAppealStatus(appealId, 3);
         } catch (Exception ex) {
             LOGGER.error("solveProgress", ex.getMessage());
@@ -249,7 +249,7 @@ public class HomeAppealController extends BaseController {
             //撤销
             ResponseDto result = appealService.withdrawAppeal(currentMember.getMemberId(),appealId, 4);
             if (result.getCode() == 200) {
-                progressService.AddProgress("您撤销了申诉", "您撤销了申诉", "dnt_appeal", appealId, currentMember.getMemberId(), 1);
+                progressService.AddProgress("您撤销了申诉", "您撤销了申诉", "dnt_appeal", appealId, currentMember.getMemberId(), 1, 0);
             }
             return result;
         } catch (Exception ex) {
