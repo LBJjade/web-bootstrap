@@ -34,6 +34,13 @@ public class DntNoContractDonateServiceImpl implements IDntNoContractDonateServi
     }
 
     @Override
+    public String generateNo() {
+        String iNamePre = "", iModule = "NCD";
+        int iNum = 8, iNoLength = 6;
+        return mapper.generateNo(iNamePre, iModule, iNum, iNoLength, "");
+    }
+
+    @Override
     public Long selectMemberIdById(Integer id) {
         return mapper.selectMemberIdById(id);
     }

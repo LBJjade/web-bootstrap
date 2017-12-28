@@ -18,6 +18,6 @@ public interface IIntentionService {
 
     ResponseDto AddIntention(Intention intention);
 
-    String generateContractNo();
+    String generateNo();
 
 }

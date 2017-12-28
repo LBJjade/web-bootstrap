@@ -17,4 +17,6 @@ public interface DntNoContractDonateMapper {
     long selectProjectIdById(Integer id);
 
     Long selectMemberIdById(Integer id);
+
+    String generateNo(String iNamePre, String iModule, int iNum, int iNoLength, String oNewNo);
 }

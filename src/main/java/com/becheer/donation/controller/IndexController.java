@@ -110,7 +110,7 @@ public class IndexController extends BaseController {
             Long memberId = currentMember.getMemberId();
             Intention intention = new Intention();
             //生成捐赠意向流水号
-            String no = intentionService.generateContractNo();
+            String no = intentionService.generateNo();
             //写入itention表
             intention.setIntentionNo(no);
             intention.setProjectId(projectId);
