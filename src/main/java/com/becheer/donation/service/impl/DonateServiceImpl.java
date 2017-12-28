@@ -68,7 +68,9 @@ public class DonateServiceImpl implements IDonateService {
         // Integer appropriationContractId;
         dntNoContractDonate.setProjectTypeId(projectTypeId);
         dntNoContractDonate.setProjectId(projectId);
-        dntNoContractDonate.setNoContractDonateNo(GenerateUtil.genNoContractDonateNo());
+        //流水号
+        String no = noContractDonateService.generateNo();
+        dntNoContractDonate.setNoContractDonateNo(no);
         dntNoContractDonate.setMemberId(memberId);
         dntNoContractDonate.setAmount(amount);
         dntNoContractDonate.setDonatedAmount(0);

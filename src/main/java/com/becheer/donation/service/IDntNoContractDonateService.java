@@ -16,4 +16,6 @@ public interface IDntNoContractDonateService {
     long selectProjectIdById(Integer id);
 
     Long selectMemberIdById(Integer id);
+
+    String generateNo();
 }
