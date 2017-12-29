@@ -263,7 +263,42 @@ public class WxPayServiceImpl implements IWxPayService {
                         projectProgress.setContent("对该项目捐赠了" + donatemoney + "元");
                     }
                 } else {
-
+                    if (x < projects.size() - 1) {
+                        Integer contractAmount = project.getContractAmount();
+                        Long targetAmount = memberContractDetailExtension.getContractAmount();
+                        Long donateAmount = memberContractDetailExtension.getDonatedAmount();
+                        BigDecimal tAmount = new BigDecimal(Double.valueOf(targetAmount));
+                        BigDecimal dAmount = new BigDecimal(Double.valueOf(donateAmount));
+                        double donateCash = tAmount.subtract(dAmount).doubleValue();
+                        BigDecimal dc = new BigDecimal(Double.valueOf(donateCash));
+                        tfree = tfree.subtract(dc);
+//                        double pro = cAmount.divide(tAmount, 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                        BigDecimal pr = new BigDecimal(Double.valueOf(pro));
+//                        donate = pr.multiply(tfree).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                        BigDecimal don = new BigDecimal(Double.valueOf(donate));
+//                        BigDecimal one = new BigDecimal(100);
+//                        double donateCash = don.divide(one, 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                        donatemoney = df.format(donateCash);
+                        projectProgress.setContent("对该项目捐赠了" + donateCash + "元");
+//                        BigDecimal donateBefore = new BigDecimal(Double.valueOf(donateAmountbefore));
+//                        BigDecimal donateCa = new BigDecimal(Double.valueOf(donateCash));
+//                        donateAmountbefore = donateBefore.add(donateCa).doubleValue();
+                    } else {
+//                        BigDecimal one = new BigDecimal(100);
+//                        BigDecimal donateBefore = new BigDecimal(Double.valueOf(donateAmountbefore));
+//                        double donateFee = tfree.divide(one, 2, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                        BigDecimal donateTfee = new BigDecimal(Double.valueOf(donateFee));
+//                        donate = donateTfee.subtract(donateBefore).setScale(10, BigDecimal.ROUND_HALF_UP).doubleValue();
+//                        donatemoney = df.format(donate);
+//                        projectProgress.setContent("对该项目捐赠了" + donatemoney + "元");
+                        Integer contractAmount = project.getContractAmount();
+                        Long targetAmount = memberContractDetailExtension.getContractAmount();
+                        Long donateAmount = memberContractDetailExtension.getDonatedAmount();
+                        BigDecimal tAmount = new BigDecimal(Double.valueOf(targetAmount));
+                        BigDecimal dAmount = new BigDecimal(Double.valueOf(donateAmount));
+                        double donateCash = tAmount.subtract(dAmount).doubleValue();
+                        BigDecimal dc = new BigDecimal(Double.valueOf(donateCash));
+                    }
                 }
 
                 //progress对象

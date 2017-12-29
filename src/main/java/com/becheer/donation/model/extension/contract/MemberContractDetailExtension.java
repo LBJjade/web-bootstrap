@@ -62,8 +62,12 @@ public class MemberContractDetailExtension {
         this.contractAmount = contractAmount;
     }
 
-    public String getDonatedAmount() {
+    public String getDonatedStringAmount() {
         return StringUtil.formatMoney(donatedAmount);
+    }
+
+    public long getDonatedAmount() {
+        return donatedAmount;
     }
 
     public void setDonatedAmount(long donatedAmount) {
