@@ -122,4 +122,10 @@
         FROM dnt_contract
         WHERE id_=#{id}
     </select>
+
+    <select id="selectTimeById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT time
+        FROM dnt_contract
+        WHERE id_=#{id}
+    </select>
 </mapper>

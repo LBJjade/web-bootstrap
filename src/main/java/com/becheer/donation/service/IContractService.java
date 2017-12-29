@@ -30,4 +30,6 @@ public interface IContractService {
     MemberContractDetailExtension getContractByContractProjectId(long contractProjectId);
 
     Long selectMemberIdById(Integer id);
+
+    Integer selectTimeById(Integer id);
 }

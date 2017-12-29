@@ -103,4 +103,9 @@ public class ContractServiceImpl implements IContractService {
     public Long selectMemberIdById(Integer id) {
         return contractMapper.selectMemberIdById(id);
     }
+
+    @Override
+    public Integer selectTimeById(Integer id) {
+        return contractMapper.selectTimeById(id);
+    }
 }
