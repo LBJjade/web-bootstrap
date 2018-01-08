@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -181,8 +182,7 @@ public class WxPayServiceImpl implements IWxPayService {
             time = DateUtils.strToDateFormat(timeEnd);
             paymentDate = DateUtils.StrToDate(time);
         }
-        paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
-        paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
+
 
 
         //查询poject
@@ -212,44 +212,20 @@ public class WxPayServiceImpl implements IWxPayService {
             MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
             Long memberId = memberContractDetailExtension.getMemberId();
             RedisUtil.delContractkey(refRecordId);
-            DecimalFormat df = new DecimalFormat("0.00");
+
             List<Long> contractProjectIds = new ArrayList<>();
-            //按比例分配捐赠金额
-            Float donate;
-            Float donateAmountbefore = 0.00f;
-            String donatemoney;
-            int x = 0;
-//            Long memberId1=contractService.selectMemberIdById(refRecordId);
+
+            //合同期数
+            Integer contractTime = contractService.selectTimeById(refRecordId);
+            //合同缺的金额
+
             for (DntContractProject project : projects) {
                 projectId = project.getProjectId();
                 Long contractProjectId = project.getId();
                 //清除缓存
                 contractProjectIds.add(contractProjectId);
                 RedisUtil.delContractProjectkey(contractProjectId);
-                //projectProgress.对象
-                ProjectProgress projectProgress = new ProjectProgress();
-                projectProgress.setProjectId(projectId);
-                projectProgress.setTitle("捐赠成功了");
-                projectProgress.setSummary("对该项目捐赠了");
-                projectProgress.setStatus(5);
 
-                if (x < projects.size() - 1) {
-                    Integer contractAmount = project.getContractAmount();
-                    Long targetAmount = memberContractDetailExtension.getContractAmount();
-                    Float tAmount = Float.valueOf(targetAmount);
-                    Float cAmount = Float.valueOf(contractAmount);
-                    Float tfree = Float.valueOf(totalFee);
-                    donate = totalFee * (cAmount / tAmount);
-                    donatemoney = df.format(donate / 100.00);
-                    projectProgress.setContent("对该项目捐赠了" + donatemoney + "元");
-                    donateAmountbefore = donateAmountbefore + donate;
-                } else {
-                    Float tfree = Float.valueOf(totalFee);
-                    donate = tfree - donateAmountbefore;
-                    donatemoney = df.format(donate / 100.00);
-                    projectProgress.setContent("对该项目捐赠了" + donatemoney + "元");
-                }
-//                String s = df.format((float)a/b);
                 //progress对象
                 Progress progress = new Progress();
                 progress.setRefRecordId(memberId);
@@ -258,20 +234,19 @@ public class WxPayServiceImpl implements IWxPayService {
                 progress.setRefTable("dnt_member");
                 progress.setEnable(1);
                 progress.setProgressType(3);
-//                progress.setRefRecordId();
-                //
+
                 progresses.add(progress);
-                //构建进程纪录
-                projectProgresses.add(projectProgress);
-                x++;
+
             }
+
+            paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
+            paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
 
             List<Long> ids = contractProjectAcceptorSerivce.selectByContractProjectIds(contractProjectIds);
             for (Long id : ids) {
                 RedisUtil.delContractProjectAcceptorkey(id);
             }
 
-            projectProgressService.batchInsert(projectProgresses);
             progressService.batchInsert(progresses);
 
         }

@@ -25,4 +25,6 @@ public interface ContractMapper {
     MemberContractDetailExtension selectContractByContractProjectId(long contractProjectId);
 
     Long selectMemberIdById(Integer Id);
+
+    Integer selectTimeById(Integer id);
 }
