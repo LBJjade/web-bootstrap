@@ -1234,6 +1234,7 @@
                 function (data) {
                     if (data.code === 200) {
                         $("#qrCodeImageId").attr("src", data.result.qrCodeImageBase64);
+                        $("#orderNo").html(data.result.orderNo);
                     }
                 }
         });
