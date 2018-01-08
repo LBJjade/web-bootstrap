@@ -11,7 +11,7 @@ public class GenerateUtil {
     }
 
     public static String genOrderNo() {
-        return "DNT_" + UUID.getRandomNumber(10);
+        return "DNT_" + UUID.GetInt64UUID();
     }
 
     public static String genLoginCookie(long userId){

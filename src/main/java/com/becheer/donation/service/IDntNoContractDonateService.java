@@ -7,6 +7,8 @@ package com.becheer.donation.service;
 
 import com.becheer.donation.model.DntNoContractDonate;
 
+import java.util.Map;
+
 public interface IDntNoContractDonateService {
 
     int insert(DntNoContractDonate dntNoContractDonate);
@@ -18,4 +20,6 @@ public interface IDntNoContractDonateService {
     Long selectMemberIdById(Integer id);
 
     String generateNo();
+
+    Map selectNoContractDonateById(Integer id);
 }

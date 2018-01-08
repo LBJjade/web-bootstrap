@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 @Service
 public class DntNoContractDonateServiceImpl implements IDntNoContractDonateService {
@@ -43,5 +44,10 @@ public class DntNoContractDonateServiceImpl implements IDntNoContractDonateServi
     @Override
     public Long selectMemberIdById(Integer id) {
         return mapper.selectMemberIdById(id);
+    }
+
+    @Override
+    public Map selectNoContractDonateById(Integer id) {
+        return mapper.selectNoContractDonateById(id);
     }
 }

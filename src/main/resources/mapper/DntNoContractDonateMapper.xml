@@ -93,6 +93,18 @@
         WHERE id_=#{id}
     </select>
 
+    <select id="selectNoContractDonateById" parameterType="java.lang.Integer" resultType ="java.util.Map">
+        SELECT
+        member_id,
+        member_name,
+        project_id,
+        p.project_name
+        FROM dnt_no_contract_donate ncd
+        LEFT JOIN dnt_member m on m.id_ = ncd.member_id
+        LEFT JOIN dnt_project p on p.id_ = ncd.project_id
+        WHERE ncd.id_=#{id}
+    </select>
+
 
     <select id="generateNo" resultType="String" statementType="CALLABLE">
         call sp_generate_no(#{param1},#{param2},#{param3},#{param4},#{param5});

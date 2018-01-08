@@ -8,6 +8,8 @@ package com.becheer.donation.dao;
 import com.becheer.donation.model.DntNoContractDonate;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public interface DntNoContractDonateMapper {
     int insert(DntNoContractDonate dntNoContractDonate);
@@ -15,6 +17,8 @@ public interface DntNoContractDonateMapper {
     int update(DntNoContractDonate dntNoContractDonate);
 
     long selectProjectIdById(Integer id);
+
+    Map selectNoContractDonateById(Integer id);
 
     Long selectMemberIdById(Integer id);
 
