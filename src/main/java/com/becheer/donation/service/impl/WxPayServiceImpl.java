@@ -187,14 +187,22 @@ public class WxPayServiceImpl implements IWxPayService {
         }
 
 
-        paymentPlanService.updateReceived("pay_wx_unified_order", outTradeNo, paymentDate, totalFee);
-        paymentPlanService.updateDonate(outTradeNo, totalFee, paymentDate);
-
         //查询poject
         DntPaymentPlan dntPaymentPlan = new DntPaymentPlan();
         dntPaymentPlan = paymentPlanService.selectPaymentPlanByOrderNo(outTradeNo);
         String refTable = dntPaymentPlan.getRefTable();
         Integer refRecordId = dntPaymentPlan.getRefRecordId();
+
+        //支付成功的通知重复发送
+        if (dntPaymentPlan.getStatus() == 1) {
+            logger.warn("微信支付结果通知: !!!重复通知【out_trade_no=" + outTradeNo + "】");
+            returnToWxPay.put("return_code", "FAIL");
+            returnToWxPay.put("return_msg", "重复通知");
+            return WxPayHelper.toXml(returnToWxPay);
+        }
+
+        //回写付款表及分摊金额
+        paymentPlanService.payment(outTradeNo, totalFee, paymentDate, "pay_wx_unified_order", unifiedOrder.getId(), 1);
 
         Float free = Float.valueOf(totalFee);
 
@@ -227,7 +235,7 @@ public class WxPayServiceImpl implements IWxPayService {
 
         } else {
             //写进进程表
-            Integer i = 0;
+//            Integer i = 0; //注释没有使用的代码 -- by liaojianhong
             List<DntContractProject> projects = dntContractProjectService.selectProjectIdBycontraId(refRecordId);
             MemberContractDetailExtension memberContractDetailExtension = contractService.GetContractContent(refRecordId);
             Long memberId = memberContractDetailExtension.getMemberId();

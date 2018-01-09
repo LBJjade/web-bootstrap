@@ -3,6 +3,7 @@ package com.becheer.donation.model;
 import com.becheer.donation.model.base.BaseModel;
 
 public class PayWxUnifiedOrder extends BaseModel {
+    private Integer id;
     private String appid; //'公众账号ID',
     private String mchId; //'商户号',
     private String deviceInfo; //'设备号',
@@ -37,6 +38,14 @@ public class PayWxUnifiedOrder extends BaseModel {
     private String notifyErrCode; //错误代码
     private String notifyErrCodeDes; //错误代码描述
     private String notifyXML; //微信支付结果通知XML
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getAppid() {
         return appid;

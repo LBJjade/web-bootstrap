@@ -41,6 +41,11 @@ public class DntPaymentPlanServiceImpl implements IDntPaymentPlanService {
     }
 
     @Override
+    public Map payment(String orderNo, Integer receivedAmount, Date paymentDate, String paylogRefTable, Integer paylogRefRecordId, Integer paymentMethod) {
+        return mapper.payment(orderNo, receivedAmount, paymentDate, paylogRefTable, paylogRefRecordId, paymentMethod);
+    }
+
+    @Override
     public Long selectIdByOrderNo(String no) {
         return mapper.selectIdByOrderNo(no);
     }

@@ -3,6 +3,7 @@ package com.becheer.core.support.pay;
 import com.baomidou.mybatisplus.toolkit.IdWorker;
 import com.becheer.donation.configs.WxPayConfig;
 import com.becheer.donation.service.SpringContextUtil;
+import com.becheer.donation.utils.DateUtils;
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.lang3.StringUtils;
 import com.becheer.core.util.HashUtil;
@@ -10,6 +11,7 @@ import com.becheer.core.util.XmlUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -96,6 +98,9 @@ public class WxPayHelper {
         String notify_url = config.getNotifyURL();
         String trade_type = config.getTradeType();
         String wxPayApiSecret = config.getApiSecret();
+        Date date = new Date();
+        String timeStart = DateUtils.dateFormat(date, "yyyyMMddHHmmss");
+        String timeExpire = DateUtils.dateFormat(new Date(date.getTime() + 300000), "yyyyMMddHHmmss");
 
 
         params.put("appid", appid);
@@ -112,6 +117,8 @@ public class WxPayHelper {
         params.put("notify_url", notify_url);
         params.put("trade_type", trade_type);
         params.put("product_id", product_id);
+        params.put("time_start", timeStart);
+        params.put("time_expire", timeExpire);
 
         return buildSignAfterParasMap(params, wxPayApiSecret);
     }

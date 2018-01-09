@@ -146,6 +146,7 @@
     </update>
     <select id="getPayWxUnifiedOrderByOutTradeNo" resultMap="BaseResultMap">
     SELECT
+        id_,
         appid,
         mch_id,
         device_info,

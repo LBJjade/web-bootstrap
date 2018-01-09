@@ -18,7 +18,9 @@ public interface IDntPaymentPlanService {
 
     int updateReceived(String paylogRefTable, String orderNo, Date paymentDate, Integer receivedAmount);
 
-    Map updateDonate(String orderNoDate , Integer receivedAmount ,Date paymentDate);
+    Map updateDonate(String orderNoDate, Integer receivedAmount, Date paymentDate);
+
+    Map payment(String orderNo, Integer receivedAmount, Date paymentDate, String paylogRefTable, Integer paylogRefRecordId, Integer paymentMethod);
 
     Long selectIdByOrderNo(String no);
 

@@ -101,6 +101,10 @@
         call updateDonate(#{param1},#{param2},#{param3})
     </select>
 
+    <select id="payment" resultType="java.util.Map" statementType="CALLABLE">
+        call sp_payment(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6})
+    </select>
+
     <select id="selectIdByOrderNo" resultType="java.lang.Long">
         SELECT
            id_
